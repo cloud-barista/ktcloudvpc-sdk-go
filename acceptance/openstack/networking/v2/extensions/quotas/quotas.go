@@ -1,8 +1,8 @@
 package quotas
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/quotas"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/quotas"
 )
 
 var updateOpts = quotas.UpdateOpts{

@@ -1,7 +1,7 @@
 package limits
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // GetOptsBuilder allows extensions to add additional parameters to the

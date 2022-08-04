@@ -6,12 +6,12 @@ package portsbinding
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	networking "github.com/innodreamer/ktvpc-sdk_poc/acceptance/openstack/networking/v2"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/portsbinding"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/ports"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	networking "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/openstack/networking/v2"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/portsbinding"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/ports"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestPortsbindingCRUD(t *testing.T) {

@@ -1,6 +1,6 @@
 package oauth1
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 func consumersURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL("OS-OAUTH1", "consumers")

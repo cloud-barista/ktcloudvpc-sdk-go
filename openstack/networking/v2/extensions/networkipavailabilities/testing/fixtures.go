@@ -1,8 +1,8 @@
 package testing
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/networkipavailabilities"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/networkipavailabilities"
 )
 
 // NetworkIPAvailabilityListResult represents raw server response from a server to a list call.

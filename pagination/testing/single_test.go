@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
-	"github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 // SinglePage sample and test cases.

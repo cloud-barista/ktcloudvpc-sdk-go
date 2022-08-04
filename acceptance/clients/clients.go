@@ -9,11 +9,11 @@ import (
 	"os"
 	"strings"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack"
-	baremetalHTTPBasic "github.com/innodreamer/ktvpc-sdk_poc/openstack/baremetal/httpbasic"
-	baremetalNoAuth "github.com/innodreamer/ktvpc-sdk_poc/openstack/baremetal/noauth"
-	blockstorageNoAuth "github.com/innodreamer/ktvpc-sdk_poc/openstack/blockstorage/noauth"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack"
+	baremetalHTTPBasic "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/baremetal/httpbasic"
+	baremetalNoAuth "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/baremetal/noauth"
+	blockstorageNoAuth "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/noauth"
 )
 
 // AcceptanceTestChoices contains image and flavor selections for use by the acceptance tests.
@@ -89,7 +89,7 @@ func AcceptanceTestChoicesFromEnv() (*AcceptanceTestChoices, error) {
 		missing = append(missing, "OS_EXTGW_ID")
 	}
 
-	/* // Temporarily disabled, see https://github.com/innodreamer/ktvpc-sdk_poc/issues/1345
+	/* // Temporarily disabled, see https://github.com/cloud-barista/ktcloudvpc-sdk-for-drv/issues/1345
 	if networkID == "" {
 		missing = append(missing, "OS_NETWORK_ID")
 	}

@@ -1,6 +1,6 @@
 package tags
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 // List all tags on a server.
 func List(client *gophercloud.ServiceClient, serverID string) (r ListResult) {

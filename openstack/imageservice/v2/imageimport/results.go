@@ -1,6 +1,6 @@
 package imageimport
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 type commonResult struct {
 	gophercloud.Result

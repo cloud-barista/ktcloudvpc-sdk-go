@@ -1,6 +1,6 @@
 package pauseunpause
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 // PauseResult is the response from a Pause operation. Call its ExtractErr
 // method to determine if the request succeeded or failed.

@@ -1,6 +1,6 @@
 package servers
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 // WaitForStatus will continually poll a server until it successfully
 // transitions to a specified status. It will do this for at most the number

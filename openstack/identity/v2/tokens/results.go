@@ -3,8 +3,8 @@ package tokens
 import (
 	"time"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v2/tenants"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v2/tenants"
 )
 
 // Token provides only the most basic information related to an authentication

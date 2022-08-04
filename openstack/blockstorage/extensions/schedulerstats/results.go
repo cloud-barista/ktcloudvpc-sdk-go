@@ -5,7 +5,7 @@ import (
 	"math"
 	"strconv"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
 )
 
 // Capabilities represents the information of an individual StoragePool.

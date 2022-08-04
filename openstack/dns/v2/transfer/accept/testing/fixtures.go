@@ -7,10 +7,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	transferAccepts "github.com/innodreamer/ktvpc-sdk_poc/openstack/dns/v2/transfer/accept"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	"github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	transferAccepts "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/dns/v2/transfer/accept"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 // ListOutput is a sample response to a List call.

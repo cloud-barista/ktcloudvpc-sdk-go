@@ -3,10 +3,10 @@ package testing
 import (
 	"testing"
 
-	transferRequests "github.com/innodreamer/ktvpc-sdk_poc/openstack/dns/v2/transfer/request"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	"github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	transferRequests "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/dns/v2/transfer/request"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 func TestList(t *testing.T) {

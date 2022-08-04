@@ -3,11 +3,11 @@ package testing
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack"
-	tokens2 "github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v2/tokens"
-	tokens3 "github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v3/tokens"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack"
+	tokens2 "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v2/tokens"
+	tokens3 "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/tokens"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 // Service catalog fixtures take too much vertical space!

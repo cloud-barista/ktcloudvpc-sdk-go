@@ -1,6 +1,6 @@
 package ec2tokens
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 func ec2tokensURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL("ec2tokens")

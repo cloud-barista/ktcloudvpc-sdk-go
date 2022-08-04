@@ -6,11 +6,11 @@ package extensions
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	blockstorage "github.com/innodreamer/ktvpc-sdk_poc/acceptance/openstack/blockstorage/v3"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/blockstorage/extensions/volumetenants"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/blockstorage/v3/volumes"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	blockstorage "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/openstack/blockstorage/v3"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/extensions/volumetenants"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/v3/volumes"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestVolumeTenants(t *testing.T) {

@@ -1,8 +1,8 @@
 package rescueunrescue
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/compute/v2/extensions"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/compute/v2/extensions"
 )
 
 // RescueOptsBuilder is an interface that allows extensions to override the

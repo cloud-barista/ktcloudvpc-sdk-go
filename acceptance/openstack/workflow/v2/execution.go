@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/workflow/v2/executions"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/workflow/v2/workflows"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/workflow/v2/executions"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/workflow/v2/workflows"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 // CreateExecution creates an execution for the given workflow.

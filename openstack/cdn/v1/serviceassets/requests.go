@@ -3,7 +3,7 @@ package serviceassets
 import (
 	"strings"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // DeleteOptsBuilder allows extensions to add additional parameters to the Delete

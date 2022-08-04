@@ -3,11 +3,11 @@ package v1
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/baremetal/v1/allocations"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/baremetal/v1/nodes"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/baremetal/v1/ports"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/baremetal/v1/allocations"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/baremetal/v1/nodes"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/baremetal/v1/ports"
 )
 
 // CreateNode creates a basic node with a randomly generated name.

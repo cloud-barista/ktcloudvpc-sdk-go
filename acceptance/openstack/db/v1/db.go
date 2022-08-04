@@ -6,12 +6,12 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/db/v1/databases"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/db/v1/instances"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/db/v1/users"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/db/v1/databases"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/db/v1/instances"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/db/v1/users"
 )
 
 // CreateDatabase will create a database with a randomly generated name.

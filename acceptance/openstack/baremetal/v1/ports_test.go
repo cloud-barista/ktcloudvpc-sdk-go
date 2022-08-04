@@ -6,11 +6,11 @@ package v1
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/baremetal/v1/ports"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/baremetal/v1/ports"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
 
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestPortsCreateDestroy(t *testing.T) {

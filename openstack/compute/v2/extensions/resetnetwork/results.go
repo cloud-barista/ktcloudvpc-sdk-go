@@ -1,7 +1,7 @@
 package resetnetwork
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // ResetResult is the response of a ResetNetwork operation. Call its ExtractErr

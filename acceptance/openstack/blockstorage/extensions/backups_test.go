@@ -6,11 +6,11 @@ package extensions
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/blockstorage/extensions/backups"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/extensions/backups"
 
-	blockstorage "github.com/innodreamer/ktvpc-sdk_poc/acceptance/openstack/blockstorage/v3"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	blockstorage "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/openstack/blockstorage/v3"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestBackupsCRUD(t *testing.T) {

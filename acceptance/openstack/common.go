@@ -5,7 +5,7 @@ package openstack
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/common/extensions"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/common/extensions"
 )
 
 // PrintExtension prints an extension and all of its attributes.

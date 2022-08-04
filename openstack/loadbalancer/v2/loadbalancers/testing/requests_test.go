@@ -3,16 +3,16 @@ package testing
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/loadbalancer/v2/l7policies"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/loadbalancer/v2/listeners"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/loadbalancer/v2/monitors"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/loadbalancer/v2/pools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/loadbalancer/v2/l7policies"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/loadbalancer/v2/listeners"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/loadbalancer/v2/monitors"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/loadbalancer/v2/pools"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/loadbalancer/v2/loadbalancers"
-	fake "github.com/innodreamer/ktvpc-sdk_poc/openstack/loadbalancer/v2/testhelper"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/loadbalancer/v2/loadbalancers"
+	fake "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/loadbalancer/v2/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestListLoadbalancers(t *testing.T) {

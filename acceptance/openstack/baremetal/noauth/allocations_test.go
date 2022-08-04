@@ -6,11 +6,11 @@ package noauth
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	v1 "github.com/innodreamer/ktvpc-sdk_poc/acceptance/openstack/baremetal/v1"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/baremetal/v1/allocations"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	v1 "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/openstack/baremetal/v1"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/baremetal/v1/allocations"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestAllocationsCreateDestroy(t *testing.T) {

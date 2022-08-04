@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/lbaas/members"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/lbaas/monitors"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/lbaas/pools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/lbaas/vips"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/lbaas/members"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/lbaas/monitors"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/lbaas/pools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/lbaas/vips"
 )
 
 // CreateMember will create a load balancer member in a specified pool on a

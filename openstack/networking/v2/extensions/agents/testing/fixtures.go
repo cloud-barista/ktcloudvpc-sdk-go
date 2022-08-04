@@ -3,7 +3,7 @@ package testing
 import (
 	"time"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/agents"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/agents"
 )
 
 // AgentsListResult represents raw response for the List request.

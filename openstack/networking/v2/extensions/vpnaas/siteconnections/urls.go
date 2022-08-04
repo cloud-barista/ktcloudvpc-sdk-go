@@ -1,6 +1,6 @@
 package siteconnections
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 const (
 	rootPath     = "vpn"

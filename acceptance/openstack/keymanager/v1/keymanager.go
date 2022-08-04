@@ -14,12 +14,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/keymanager/v1/containers"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/keymanager/v1/orders"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/keymanager/v1/secrets"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/keymanager/v1/containers"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/keymanager/v1/orders"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/keymanager/v1/secrets"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 // CreateAsymmetric Order will create a random asymmetric order.

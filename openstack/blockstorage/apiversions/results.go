@@ -3,7 +3,7 @@ package apiversions
 import (
 	"time"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
 )
 
 // APIVersion represents an API version for Cinder.

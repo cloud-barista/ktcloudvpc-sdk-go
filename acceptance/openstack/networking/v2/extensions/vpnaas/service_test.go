@@ -6,11 +6,11 @@ package vpnaas
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	layer3 "github.com/innodreamer/ktvpc-sdk_poc/acceptance/openstack/networking/v2/extensions/layer3"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/vpnaas/services"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	layer3 "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/openstack/networking/v2/extensions/layer3"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/vpnaas/services"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestServiceList(t *testing.T) {

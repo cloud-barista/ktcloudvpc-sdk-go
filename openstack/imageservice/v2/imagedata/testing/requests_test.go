@@ -6,9 +6,9 @@ import (
 	"io/ioutil"
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/imageservice/v2/imagedata"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	fakeclient "github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/imageservice/v2/imagedata"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	fakeclient "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 func TestUpload(t *testing.T) {

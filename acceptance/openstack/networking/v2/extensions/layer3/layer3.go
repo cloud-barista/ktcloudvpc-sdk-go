@@ -3,17 +3,17 @@ package layer3
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/layer3/addressscopes"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/layer3/addressscopes"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/layer3/floatingips"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/layer3/portforwarding"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/layer3/floatingips"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/layer3/portforwarding"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/layer3/routers"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/ports"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/layer3/routers"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/ports"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 // CreateFloatingIP creates a floating IP on a given network and port. An error

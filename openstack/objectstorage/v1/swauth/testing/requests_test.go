@@ -3,9 +3,9 @@ package testing
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/objectstorage/v1/swauth"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/objectstorage/v1/swauth"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestAuth(t *testing.T) {

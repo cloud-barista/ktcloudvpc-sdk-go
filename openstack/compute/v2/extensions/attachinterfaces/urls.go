@@ -1,6 +1,6 @@
 package attachinterfaces
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 func listInterfaceURL(client *gophercloud.ServiceClient, serverID string) string {
 	return client.ServiceURL("servers", serverID, "os-interface")

@@ -1,7 +1,7 @@
 package swauth
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // GetAuthResult contains the response from the Auth request. Call its Extract

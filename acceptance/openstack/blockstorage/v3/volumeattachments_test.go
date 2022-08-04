@@ -6,10 +6,10 @@ package v3
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	compute "github.com/innodreamer/ktvpc-sdk_poc/acceptance/openstack/compute/v2"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/blockstorage/v3/volumes"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	compute "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/openstack/compute/v2"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/v3/volumes"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestVolumeAttachments(t *testing.T) {

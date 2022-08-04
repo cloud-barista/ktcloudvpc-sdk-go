@@ -1,7 +1,7 @@
 package resourcetypes
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // SupportStatus is a type for specifying by which support status to filter the

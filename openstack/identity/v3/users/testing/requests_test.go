@@ -3,12 +3,12 @@ package testing
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v3/groups"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v3/projects"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v3/users"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	"github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/groups"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/projects"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/users"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 func TestListUsers(t *testing.T) {

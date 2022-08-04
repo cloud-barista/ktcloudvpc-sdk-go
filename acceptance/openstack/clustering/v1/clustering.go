@@ -6,16 +6,16 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/clustering/v1/actions"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/clustering/v1/clusters"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/clustering/v1/nodes"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/clustering/v1/policies"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/clustering/v1/profiles"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/clustering/v1/receivers"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/clustering/v1/actions"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/clustering/v1/clusters"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/clustering/v1/nodes"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/clustering/v1/policies"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/clustering/v1/profiles"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/clustering/v1/receivers"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 var TestPolicySpec = policies.Spec{

@@ -1,7 +1,7 @@
 package attachments
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // WaitForStatus will continually poll the resource, checking for a particular

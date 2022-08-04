@@ -1,6 +1,6 @@
 package ec2credentials
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 func listURL(client *gophercloud.ServiceClient, userID string) string {
 	return client.ServiceURL("users", userID, "credentials", "OS-EC2")

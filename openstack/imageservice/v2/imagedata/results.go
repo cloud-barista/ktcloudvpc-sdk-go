@@ -3,7 +3,7 @@ package imagedata
 import (
 	"io"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // UploadResult is the result of an upload image operation. Call its ExtractErr

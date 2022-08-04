@@ -1,6 +1,6 @@
 package quotas
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 // Get returns Networking Quotas for a project.
 func Get(client *gophercloud.ServiceClient, projectID string) (r GetResult) {

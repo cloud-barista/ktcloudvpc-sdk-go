@@ -7,7 +7,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // PageResult stores the HTTP response that returned the current page of results.

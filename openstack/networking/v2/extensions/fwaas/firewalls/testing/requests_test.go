@@ -5,12 +5,12 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	fake "github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/common"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/fwaas/firewalls"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/fwaas/routerinsertion"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	fake "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/common"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/fwaas/firewalls"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/fwaas/routerinsertion"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestList(t *testing.T) {

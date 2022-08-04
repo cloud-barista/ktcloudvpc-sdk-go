@@ -3,8 +3,8 @@ package testing
 import (
 	"time"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/security/groups"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/security/rules"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/security/groups"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/security/rules"
 )
 
 const SecurityGroupListResponse = `

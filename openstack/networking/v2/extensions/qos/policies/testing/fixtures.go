@@ -3,7 +3,7 @@ package testing
 import (
 	"time"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/qos/policies"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/qos/policies"
 )
 
 const GetPortResponse = `

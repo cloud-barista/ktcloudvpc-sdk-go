@@ -7,11 +7,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v3/extensions/ec2tokens"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v3/tokens"
-	tokens_testing "github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v3/tokens/testing"
-	"github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/extensions/ec2tokens"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/tokens"
+	tokens_testing "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/tokens/testing"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 // authTokenPost verifies that providing certain AuthOptions and Scope results in an expected JSON structure.

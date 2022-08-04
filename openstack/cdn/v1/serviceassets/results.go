@@ -1,6 +1,6 @@
 package serviceassets
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 // DeleteResult represents the result of a Delete operation.
 type DeleteResult struct {

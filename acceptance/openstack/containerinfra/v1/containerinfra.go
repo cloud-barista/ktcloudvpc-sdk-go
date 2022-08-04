@@ -7,14 +7,14 @@ import (
 	"testing"
 	"time"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	idv3 "github.com/innodreamer/ktvpc-sdk_poc/acceptance/openstack/identity/v3"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/containerinfra/v1/clusters"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/containerinfra/v1/clustertemplates"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/containerinfra/v1/quotas"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	idv3 "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/openstack/identity/v3"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/containerinfra/v1/clusters"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/containerinfra/v1/clustertemplates"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/containerinfra/v1/quotas"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 // CreateClusterTemplateCOE will create a random cluster template for the specified orchestration engine.

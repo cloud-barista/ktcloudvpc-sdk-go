@@ -3,11 +3,11 @@ package testing
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/db/v1/datastores"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	fake "github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
-	"github.com/innodreamer/ktvpc-sdk_poc/testhelper/fixture"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/db/v1/datastores"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	fake "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/fixture"
 )
 
 func TestList(t *testing.T) {

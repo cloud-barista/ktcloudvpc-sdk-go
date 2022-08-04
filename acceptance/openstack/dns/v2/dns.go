@@ -3,13 +3,13 @@ package v2
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/dns/v2/recordsets"
-	transferAccepts "github.com/innodreamer/ktvpc-sdk_poc/openstack/dns/v2/transfer/accept"
-	transferRequests "github.com/innodreamer/ktvpc-sdk_poc/openstack/dns/v2/transfer/request"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/dns/v2/zones"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/dns/v2/recordsets"
+	transferAccepts "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/dns/v2/transfer/accept"
+	transferRequests "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/dns/v2/transfer/request"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/dns/v2/zones"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 // CreateRecordSet will create a RecordSet with a random name. An error will

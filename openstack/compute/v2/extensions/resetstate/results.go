@@ -1,7 +1,7 @@
 package resetstate
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // ResetResult is the response of a ResetState operation. Call its ExtractErr

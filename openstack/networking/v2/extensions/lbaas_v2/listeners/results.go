@@ -1,10 +1,10 @@
 package listeners
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/lbaas_v2/l7policies"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/lbaas_v2/pools"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/lbaas_v2/l7policies"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/lbaas_v2/pools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
 )
 
 type LoadBalancerID struct {
@@ -58,7 +58,7 @@ type Listener struct {
 
 	// L7policies are the L7 policies which are part of this listener.
 	// This field seems to only be returned during a call to a load balancer's /status
-	// see: https://github.com/innodreamer/ktvpc-sdk_poc/issues/1352
+	// see: https://github.com/cloud-barista/ktcloudvpc-sdk-for-drv/issues/1352
 	L7Policies []l7policies.L7Policy `json:"l7policies"`
 
 	// The provisioning status of the listener.

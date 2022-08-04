@@ -1,7 +1,7 @@
 package lockunlock
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // LockResult and UnlockResult are the responses from a Lock and Unlock
