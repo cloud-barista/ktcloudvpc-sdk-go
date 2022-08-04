@@ -16,7 +16,7 @@ Then update your `go.mod`:
 go mod tidy
 ```
 
-## Modified from original code (Gophercloud)
+## Modified from original code
 The followings are modified from original code.
 - Connection client codes
   - Modified : v3auth(), NewIdentityV3(), initClientOpts(), NewImageServiceV2()  
@@ -33,3 +33,10 @@ Gophercloud is an OpenStack Go SDK.
 [https://github.com/gophercloud/gophercloud](https://github.com/gophercloud/gophercloud)
 
 Gophercloud is licensed under the Apache License, Version 2.0
+
+
+## KT Cloud VPC connection driver repository (Private repo.)
+The 'KT Cloud VPC connection driver' using this Go SDK (ktcloudvpc-sdk-for-drv)
+```
+https://github.com/cloud-barista/ktcloudvpc
+```
