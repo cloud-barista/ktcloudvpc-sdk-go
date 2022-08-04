@@ -4,9 +4,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/blockstorage/apiversions"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	"github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/apiversions"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 func TestListVersions(t *testing.T) {

@@ -1,6 +1,6 @@
 package base
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 // HomeDocument is a resource that contains all the resources for the CDN API.
 type HomeDocument map[string]interface{}

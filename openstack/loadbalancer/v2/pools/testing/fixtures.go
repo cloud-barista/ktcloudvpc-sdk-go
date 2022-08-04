@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/loadbalancer/v2/pools"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	"github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/loadbalancer/v2/pools"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 // PoolsListBody contains the canned body of a pool list response.

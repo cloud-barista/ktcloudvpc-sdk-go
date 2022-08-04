@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"testing"
 
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	"github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 func mockInjectNetworkInfoResponse(t *testing.T, id string) {

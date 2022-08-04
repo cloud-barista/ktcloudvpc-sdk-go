@@ -1,7 +1,7 @@
 package limits
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
 )
 
 // A limit is the limit that override the registered limit for each project.

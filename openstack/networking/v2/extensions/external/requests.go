@@ -4,8 +4,8 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/networks"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/networks"
 )
 
 // ListOptsExt adds the external network options to the base ListOpts.

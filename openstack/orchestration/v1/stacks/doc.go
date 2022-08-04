@@ -11,9 +11,9 @@ Prepare required import packages
 
 import (
   "fmt"
-  "github.com/innodreamer/ktvpc-sdk_poc"
-  "github.com/innodreamer/ktvpc-sdk_poc/openstack"
-  "github.com/innodreamer/ktvpc-sdk_poc/openstack/orchestration/v1/stacks"
+  "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+  "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack"
+  "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/orchestration/v1/stacks"
 )
 
 Example of Preparing Orchestration client:

@@ -5,10 +5,10 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/compute/v2/extensions/quotasets"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	"github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/compute/v2/extensions/quotasets"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 // GetOutput is a sample response to a Get call.

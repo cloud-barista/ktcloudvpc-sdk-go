@@ -1,7 +1,7 @@
 package testing
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/rbacpolicies"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/rbacpolicies"
 )
 
 const ListResponse = `

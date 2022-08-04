@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/compute/v2/extensions/usage"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	"github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/compute/v2/extensions/usage"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 const FirstTenantID = "aabbccddeeff112233445566"

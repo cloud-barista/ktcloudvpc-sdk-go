@@ -1,6 +1,6 @@
 package extensions
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 // ExtensionURL generates the URL for an extension resource by name.
 func ExtensionURL(c *gophercloud.ServiceClient, name string) string {

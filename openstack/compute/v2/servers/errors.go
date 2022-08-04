@@ -3,7 +3,7 @@ package servers
 import (
 	"fmt"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // ErrNeitherImageIDNorImageNameProvided is the error when neither the image

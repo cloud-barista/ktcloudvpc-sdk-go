@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // AttachResult contains the response body and error from an Attach request.

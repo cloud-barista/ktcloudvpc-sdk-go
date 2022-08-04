@@ -1,8 +1,8 @@
 package extradhcpopts
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/ports"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/ports"
 )
 
 // CreateOptsExt adds extra DHCP options to the base ports.CreateOpts.

@@ -6,13 +6,13 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/compute/v2/extensions/availabilityzones"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/compute/v2/extensions/diskconfig"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/compute/v2/extensions/extendedstatus"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/compute/v2/servers"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	"github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/compute/v2/extensions/availabilityzones"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/compute/v2/extensions/diskconfig"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/compute/v2/extensions/extendedstatus"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/compute/v2/servers"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 func TestListServers(t *testing.T) {

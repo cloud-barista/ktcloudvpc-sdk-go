@@ -6,9 +6,9 @@ package lbaas_v2
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/lbaas_v2/l7policies"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/lbaas_v2/l7policies"
 )
 
 func TestL7PoliciesList(t *testing.T) {

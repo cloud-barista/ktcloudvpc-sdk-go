@@ -6,12 +6,12 @@ package v2
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	identity "github.com/innodreamer/ktvpc-sdk_poc/acceptance/openstack/identity/v3"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	transferAccepts "github.com/innodreamer/ktvpc-sdk_poc/openstack/dns/v2/transfer/accept"
-	transferRequests "github.com/innodreamer/ktvpc-sdk_poc/openstack/dns/v2/transfer/request"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	identity "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/openstack/identity/v3"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	transferAccepts "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/dns/v2/transfer/accept"
+	transferRequests "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/dns/v2/transfer/request"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestTransferRequestCRUD(t *testing.T) {

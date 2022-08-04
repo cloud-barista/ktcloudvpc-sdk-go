@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/keymanager/v1/orders"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	"github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/keymanager/v1/orders"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 // ListResponse provides a single page of RESOURCE results.

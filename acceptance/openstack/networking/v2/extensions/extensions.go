@@ -3,14 +3,14 @@ package extensions
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/external"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/security/groups"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/security/rules"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/networks"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/ports"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/external"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/security/groups"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/security/rules"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/networks"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/ports"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 // CreateExternalNetwork will create an external network. An error will be

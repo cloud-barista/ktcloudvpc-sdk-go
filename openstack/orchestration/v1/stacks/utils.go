@@ -9,7 +9,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 	yaml "gopkg.in/yaml.v2"
 )
 

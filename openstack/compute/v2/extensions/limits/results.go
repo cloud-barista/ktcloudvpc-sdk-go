@@ -1,7 +1,7 @@
 package limits
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // Limits is a struct that contains the response of a limit query.

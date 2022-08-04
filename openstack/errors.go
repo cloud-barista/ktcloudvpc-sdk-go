@@ -3,7 +3,7 @@ package openstack
 import (
 	"fmt"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // ErrEndpointNotFound is the error when no suitable endpoint can be found

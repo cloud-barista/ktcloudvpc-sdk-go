@@ -6,12 +6,12 @@ package rbacpolicies
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	projects "github.com/innodreamer/ktvpc-sdk_poc/acceptance/openstack/identity/v3"
-	networking "github.com/innodreamer/ktvpc-sdk_poc/acceptance/openstack/networking/v2"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/rbacpolicies"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	projects "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/openstack/identity/v3"
+	networking "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/openstack/networking/v2"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/rbacpolicies"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestRBACPolicyCRUD(t *testing.T) {

@@ -1,6 +1,6 @@
 package testing
 
-import "github.com/innodreamer/ktvpc-sdk_poc/openstack/loadbalancer/v2/quotas"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/loadbalancer/v2/quotas"
 
 const GetResponseRaw_1 = `
 {

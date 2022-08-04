@@ -3,9 +3,9 @@ package testing
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/compute/v2/extensions/resetnetwork"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	"github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/compute/v2/extensions/resetnetwork"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 const serverID = "b16ba811-199d-4ffd-8839-ba96c1185a67"

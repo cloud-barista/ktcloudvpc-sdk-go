@@ -1,6 +1,6 @@
 package shelveunshelve
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 // ShelveResult is the response from a Shelve operation. Call its ExtractErr
 // method to determine if the request succeeded or failed.

@@ -3,10 +3,10 @@ package testing
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/loadbalancer/v2/providers"
-	fake "github.com/innodreamer/ktvpc-sdk_poc/openstack/loadbalancer/v2/testhelper"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/loadbalancer/v2/providers"
+	fake "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/loadbalancer/v2/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestListProviders(t *testing.T) {

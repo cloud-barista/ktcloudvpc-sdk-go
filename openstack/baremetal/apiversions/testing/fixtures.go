@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/baremetal/apiversions"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	"github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/baremetal/apiversions"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 const IronicAPIAllVersionResponse = `

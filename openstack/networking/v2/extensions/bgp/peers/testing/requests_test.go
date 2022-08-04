@@ -5,10 +5,10 @@ import (
 	"net/http"
 	"testing"
 
-	fake "github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/common"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/bgp/peers"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	fake "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/common"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/bgp/peers"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestList(t *testing.T) {

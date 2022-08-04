@@ -3,7 +3,7 @@ package tokens
 import (
 	"time"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // Endpoint represents a single API endpoint offered by a service.

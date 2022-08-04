@@ -7,11 +7,11 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/objectstorage/v1/containers"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/objectstorage/v1/containers"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 // numContainers is the number of containers to create for testing.

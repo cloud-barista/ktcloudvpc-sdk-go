@@ -6,9 +6,9 @@ package v2
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/compute/v2/extensions/migrate"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/compute/v2/extensions/migrate"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestMigrate(t *testing.T) {

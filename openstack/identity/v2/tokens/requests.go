@@ -1,6 +1,6 @@
 package tokens
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 // PasswordCredentialsV2 represents the required options to authenticate
 // with a username and password.

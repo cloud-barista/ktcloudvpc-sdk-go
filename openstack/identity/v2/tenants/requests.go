@@ -1,8 +1,8 @@
 package tenants
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
 )
 
 // ListOpts filters the Tenants that are returned by the List call.

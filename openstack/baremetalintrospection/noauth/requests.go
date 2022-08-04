@@ -3,7 +3,7 @@ package noauth
 import (
 	"fmt"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // EndpointOpts specifies a "noauth" Ironic Inspector Endpoint.

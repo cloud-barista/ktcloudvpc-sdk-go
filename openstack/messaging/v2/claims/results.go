@@ -1,6 +1,6 @@
 package claims
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 func (r CreateResult) Extract() ([]Messages, error) {
 	var s struct {

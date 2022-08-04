@@ -1,8 +1,8 @@
 package messages
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
 )
 
 // Delete will delete the existing Message with the provided ID.

@@ -1,9 +1,9 @@
 package pools
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/loadbalancer/v2/monitors"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/loadbalancer/v2/monitors"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
 )
 
 // ListOptsBuilder allows extensions to add additional parameters to the

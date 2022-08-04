@@ -3,10 +3,10 @@ package v3
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v3/catalog"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/catalog"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestCatalogList(t *testing.T) {

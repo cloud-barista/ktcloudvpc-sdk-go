@@ -3,9 +3,9 @@ package v2
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/sharedfilesystems/v2/securityservices"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/sharedfilesystems/v2/securityservices"
 )
 
 // CreateSecurityService will create a security service with a random name. An

@@ -3,7 +3,7 @@ package testing
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestExtractToken(t *testing.T) {

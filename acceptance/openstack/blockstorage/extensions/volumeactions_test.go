@@ -6,13 +6,13 @@ package extensions
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	blockstorage "github.com/innodreamer/ktvpc-sdk_poc/acceptance/openstack/blockstorage/v2"
-	blockstorageV3 "github.com/innodreamer/ktvpc-sdk_poc/acceptance/openstack/blockstorage/v3"
-	compute "github.com/innodreamer/ktvpc-sdk_poc/acceptance/openstack/compute/v2"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/blockstorage/v2/volumes"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	blockstorage "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/openstack/blockstorage/v2"
+	blockstorageV3 "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/openstack/blockstorage/v3"
+	compute "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/openstack/compute/v2"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/v2/volumes"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestVolumeActionsUploadImageDestroy(t *testing.T) {

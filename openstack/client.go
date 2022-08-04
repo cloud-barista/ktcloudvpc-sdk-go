@@ -17,12 +17,12 @@ import (
 	"github.com/davecgh/go-spew/spew"
 	cblog "github.com/cloud-barista/cb-log"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	tokens2 "github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v2/tokens"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v3/extensions/ec2tokens"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v3/extensions/oauth1"
-	tokens3 "github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v3/tokens"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/utils"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	tokens2 "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v2/tokens"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/extensions/ec2tokens"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/extensions/oauth1"
+	tokens3 "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/tokens"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/utils"
 )
 
 const (

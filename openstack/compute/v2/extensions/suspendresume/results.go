@@ -1,6 +1,6 @@
 package suspendresume
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 // SuspendResult is the response from a Suspend operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.

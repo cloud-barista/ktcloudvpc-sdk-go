@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
 )
 
 // Service represents a Compute service in the OpenStack cloud.

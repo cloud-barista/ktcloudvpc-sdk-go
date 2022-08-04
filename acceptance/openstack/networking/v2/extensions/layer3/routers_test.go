@@ -6,11 +6,11 @@ package layer3
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	networking "github.com/innodreamer/ktvpc-sdk_poc/acceptance/openstack/networking/v2"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/layer3/routers"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	networking "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/openstack/networking/v2"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/layer3/routers"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestLayer3RouterCreateDelete(t *testing.T) {

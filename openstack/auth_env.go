@@ -3,7 +3,7 @@ package openstack
 import (
 	"os"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 var nilOptions = gophercloud.AuthOptions{}

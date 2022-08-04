@@ -3,17 +3,17 @@ package v3
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v3/domains"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v3/extensions/trusts"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v3/groups"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v3/projects"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v3/regions"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v3/roles"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v3/services"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v3/users"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/domains"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/extensions/trusts"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/groups"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/projects"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/regions"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/roles"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/services"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/users"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 // CreateProject will create a project with a random name.

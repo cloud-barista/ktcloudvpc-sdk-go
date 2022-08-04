@@ -1,7 +1,7 @@
 package attributestags
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // ReplaceAllOptsBuilder allows extensions to add additional parameters to

@@ -4,10 +4,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/imageservice/v2/members"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	fakeclient "github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/imageservice/v2/members"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	fakeclient "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 const createdAtString = "2013-09-20T19:22:19Z"

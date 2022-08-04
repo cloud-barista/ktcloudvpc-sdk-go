@@ -1,6 +1,6 @@
 package ports
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 func createURL(client *gophercloud.ServiceClient) string {
 	return client.ServiceURL("ports")

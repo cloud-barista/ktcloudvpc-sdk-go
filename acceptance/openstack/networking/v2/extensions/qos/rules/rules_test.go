@@ -3,13 +3,13 @@ package rules
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	accpolicies "github.com/innodreamer/ktvpc-sdk_poc/acceptance/openstack/networking/v2/extensions/qos/policies"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/common/extensions"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/qos/policies"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/qos/rules"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	accpolicies "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/openstack/networking/v2/extensions/qos/policies"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/common/extensions"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/qos/policies"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/qos/rules"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestBandwidthLimitRulesCRUD(t *testing.T) {

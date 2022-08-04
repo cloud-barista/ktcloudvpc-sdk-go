@@ -3,7 +3,7 @@ package quotasets
 import (
 	"fmt"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // Get returns public data about a previously created QuotaSet.

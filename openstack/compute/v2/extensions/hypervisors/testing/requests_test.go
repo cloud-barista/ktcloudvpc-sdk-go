@@ -3,10 +3,10 @@ package testing
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/compute/v2/extensions/hypervisors"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
-	"github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	"github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/compute/v2/extensions/hypervisors"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 func TestListHypervisorsPre253(t *testing.T) {

@@ -6,10 +6,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v2/tenants"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v2/tokens"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	thclient "github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v2/tenants"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v2/tokens"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	thclient "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 // ExpectedToken is the token that should be parsed from TokenCreationResponse.

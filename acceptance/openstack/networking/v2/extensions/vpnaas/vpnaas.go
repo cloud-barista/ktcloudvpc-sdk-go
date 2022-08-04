@@ -3,14 +3,14 @@ package vpnaas
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/vpnaas/endpointgroups"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/vpnaas/ikepolicies"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/vpnaas/ipsecpolicies"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/vpnaas/services"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/vpnaas/siteconnections"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/vpnaas/endpointgroups"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/vpnaas/ikepolicies"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/vpnaas/ipsecpolicies"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/vpnaas/services"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/vpnaas/siteconnections"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 // CreateService will create a Service with a random name and a specified router ID

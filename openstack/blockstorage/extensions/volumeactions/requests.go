@@ -1,7 +1,7 @@
 package volumeactions
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // AttachOptsBuilder allows extensions to add additional parameters to the

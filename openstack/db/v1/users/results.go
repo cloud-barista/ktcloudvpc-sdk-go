@@ -1,9 +1,9 @@
 package users
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	db "github.com/innodreamer/ktvpc-sdk_poc/openstack/db/v1/databases"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	db "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/db/v1/databases"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
 )
 
 // User represents a database user

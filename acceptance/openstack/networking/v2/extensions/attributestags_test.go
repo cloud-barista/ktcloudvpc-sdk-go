@@ -8,13 +8,13 @@ import (
 	"sort"
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	networking "github.com/innodreamer/ktvpc-sdk_poc/acceptance/openstack/networking/v2"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/attributestags"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/networks"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	networking "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/openstack/networking/v2"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/attributestags"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/networks"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func createNetworkWithTags(t *testing.T, client *gophercloud.ServiceClient, tags []string) (network *networks.Network) {

@@ -1,6 +1,6 @@
 package hypervisors
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 func hypervisorsListDetailURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL("os-hypervisors", "detail")

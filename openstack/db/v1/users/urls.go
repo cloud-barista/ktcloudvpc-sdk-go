@@ -1,6 +1,6 @@
 package users
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 func baseURL(c *gophercloud.ServiceClient, instanceID string) string {
 	return c.ServiceURL("instances", instanceID, "users")

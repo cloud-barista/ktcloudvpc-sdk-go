@@ -1,6 +1,6 @@
 package tokens
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 // CreateURL generates the URL used to create new Tokens.
 func CreateURL(client *gophercloud.ServiceClient) string {

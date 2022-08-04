@@ -1,7 +1,7 @@
 package remoteconsoles
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // ConsoleProtocol represents valid remote console protocol.

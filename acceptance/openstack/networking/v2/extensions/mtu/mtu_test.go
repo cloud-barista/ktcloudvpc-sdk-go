@@ -6,14 +6,14 @@ package mtu
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/clients"
-	networking "github.com/innodreamer/ktvpc-sdk_poc/acceptance/openstack/networking/v2"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/common/extensions"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/mtu"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/networks"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
+	networking "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/openstack/networking/v2"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/common/extensions"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/mtu"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/networks"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestMTUNetworkCRUDL(t *testing.T) {

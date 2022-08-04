@@ -6,10 +6,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/orchestration/v1/stackevents"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	fake "github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/orchestration/v1/stackevents"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	fake "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 var Timestamp1, _ = time.Parse(time.RFC3339, "2018-06-26T07:58:17Z")

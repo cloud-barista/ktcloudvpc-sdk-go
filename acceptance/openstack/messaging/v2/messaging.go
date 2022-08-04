@@ -4,12 +4,12 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/messaging/v2/claims"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/messaging/v2/messages"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/messaging/v2/queues"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/messaging/v2/claims"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/messaging/v2/messages"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/messaging/v2/queues"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
 )
 
 func CreateQueue(t *testing.T, client *gophercloud.ServiceClient) (string, error) {

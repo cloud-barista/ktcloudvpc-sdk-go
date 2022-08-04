@@ -8,16 +8,16 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/blockstorage/extensions/backups"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/blockstorage/extensions/volumeactions"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/blockstorage/v2/volumes"
-	v3 "github.com/innodreamer/ktvpc-sdk_poc/openstack/blockstorage/v3/volumes"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/blockstorage/v3/volumetypes"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/compute/v2/images"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/compute/v2/servers"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/extensions/backups"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/extensions/volumeactions"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/v2/volumes"
+	v3 "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/v3/volumes"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/v3/volumetypes"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/compute/v2/images"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/compute/v2/servers"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 // CreateUploadImage will upload volume it as volume-baked image. An name of new image or err will be

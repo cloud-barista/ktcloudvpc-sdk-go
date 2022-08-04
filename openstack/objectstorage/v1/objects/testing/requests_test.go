@@ -11,12 +11,12 @@ import (
 	"testing"
 	"time"
 
-	accountTesting "github.com/innodreamer/ktvpc-sdk_poc/openstack/objectstorage/v1/accounts/testing"
-	containerTesting "github.com/innodreamer/ktvpc-sdk_poc/openstack/objectstorage/v1/containers/testing"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/objectstorage/v1/objects"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	fake "github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	accountTesting "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/objectstorage/v1/accounts/testing"
+	containerTesting "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/objectstorage/v1/containers/testing"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/objectstorage/v1/objects"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	fake "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 func TestDownloadReader(t *testing.T) {

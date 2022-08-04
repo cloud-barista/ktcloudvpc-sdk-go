@@ -1,7 +1,7 @@
 package apiversions
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // APIVersions represents the result from getting a list of all versions available

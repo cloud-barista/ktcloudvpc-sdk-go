@@ -1,6 +1,6 @@
 package actions
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 var apiVersion = "v1"
 var apiName = "actions"

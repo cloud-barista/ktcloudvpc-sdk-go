@@ -1,6 +1,6 @@
 package buildinfo
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 // Get retreives data for the given stack template.
 func Get(c *gophercloud.ServiceClient) (r GetResult) {

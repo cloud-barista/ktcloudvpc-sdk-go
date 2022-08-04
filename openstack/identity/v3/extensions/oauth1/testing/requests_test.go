@@ -4,11 +4,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v3/extensions/oauth1"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/identity/v3/tokens"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	"github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/extensions/oauth1"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/tokens"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 func TestCreateConsumer(t *testing.T) {

@@ -1,10 +1,10 @@
 package loadbalancers
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/lbaas_v2/listeners"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/lbaas_v2/pools"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/lbaas_v2/listeners"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/lbaas_v2/pools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
 )
 
 // LoadBalancer is the primary load balancing configuration object that

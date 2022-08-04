@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"testing"
 
-	fake "github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/common"
-	porttest "github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/ports/testing"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	fake "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/common"
+	porttest "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/ports/testing"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func HandleListSuccessfully(t *testing.T) {

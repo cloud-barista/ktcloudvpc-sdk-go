@@ -4,14 +4,14 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/extradhcpopts"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/extensions/portsecurity"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/networks"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/ports"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/subnets"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/extradhcpopts"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/portsecurity"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/networks"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/ports"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/subnets"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 // PortWithExtraDHCPOpts represents a port with extra DHCP options configuration.

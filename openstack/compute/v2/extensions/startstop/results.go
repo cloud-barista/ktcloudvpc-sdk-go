@@ -1,6 +1,6 @@
 package startstop
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 // StartResult is the response from a Start operation. Call its ExtractErr
 // method to determine if the request succeeded or failed.

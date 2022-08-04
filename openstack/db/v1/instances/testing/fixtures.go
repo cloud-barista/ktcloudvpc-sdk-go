@@ -5,10 +5,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/db/v1/datastores"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/db/v1/instances"
-	"github.com/innodreamer/ktvpc-sdk_poc/testhelper/fixture"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/db/v1/datastores"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/db/v1/instances"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/fixture"
 )
 
 var (

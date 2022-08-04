@@ -3,7 +3,7 @@ package testing
 import (
 	"testing"
 
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestBootFromNewVolume(t *testing.T) {

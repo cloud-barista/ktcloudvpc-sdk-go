@@ -1,7 +1,7 @@
 package injectnetworkinfo
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // InjectNetworkResult is the response of a InjectNetworkInfo operation. Call

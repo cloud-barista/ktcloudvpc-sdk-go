@@ -1,9 +1,9 @@
 package extensions
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	common "github.com/innodreamer/ktvpc-sdk_poc/openstack/common/extensions"
-	"github.com/innodreamer/ktvpc-sdk_poc/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	common "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/common/extensions"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
 )
 
 // Extension is a single OpenStack extension.

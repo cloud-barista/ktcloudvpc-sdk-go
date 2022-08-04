@@ -1,6 +1,6 @@
 package apiversions
 
-import "github.com/innodreamer/ktvpc-sdk_poc/pagination"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
 
 // APIVersion represents an API version for load balancer. It contains
 // the status of the API, and its unique ID.

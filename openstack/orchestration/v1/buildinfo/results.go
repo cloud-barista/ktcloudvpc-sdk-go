@@ -1,7 +1,7 @@
 package buildinfo
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // Revision represents the API/Engine revision of a Heat deployment.

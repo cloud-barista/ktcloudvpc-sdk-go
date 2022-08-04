@@ -1,8 +1,8 @@
 package portsecurity
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/networks"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/networking/v2/ports"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/networks"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/ports"
 )
 
 // PortCreateOptsExt adds port security options to the base ports.CreateOpts.

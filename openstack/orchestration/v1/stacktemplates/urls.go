@@ -1,6 +1,6 @@
 package stacktemplates
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 func getURL(c *gophercloud.ServiceClient, stackName, stackID string) string {
 	return c.ServiceURL("stacks", stackName, stackID, "template")

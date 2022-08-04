@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/baremetalintrospection/v1/introspection"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/baremetalintrospection/v1/introspection"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
 func TestLLDPTLVErrors(t *testing.T) {

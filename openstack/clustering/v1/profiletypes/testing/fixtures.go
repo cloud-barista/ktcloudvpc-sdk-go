@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/clustering/v1/profiletypes"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	fake "github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/clustering/v1/profiletypes"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	fake "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 const ProfileTypeRequestID = "req-7328d1b0-9945-456f-b2cd-5166b77d14a8"

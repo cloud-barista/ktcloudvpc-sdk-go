@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"testing"
 
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	fake "github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	fake "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 // HandleDeleteCDNAssetSuccessfully creates an HTTP handler at `/services/{id}/assets` on the test handler mux

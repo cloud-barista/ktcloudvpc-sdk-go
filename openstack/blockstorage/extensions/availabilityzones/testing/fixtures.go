@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"testing"
 
-	az "github.com/innodreamer/ktvpc-sdk_poc/openstack/blockstorage/extensions/availabilityzones"
-	th "github.com/innodreamer/ktvpc-sdk_poc/testhelper"
-	"github.com/innodreamer/ktvpc-sdk_poc/testhelper/client"
+	az "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/extensions/availabilityzones"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
 const GetOutput = `

@@ -1,6 +1,6 @@
 package accounts
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 // GetOptsBuilder allows extensions to add additional headers to the Get
 // request.

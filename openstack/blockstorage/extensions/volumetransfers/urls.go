@@ -1,6 +1,6 @@
 package volumetransfers
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 func transferURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL("os-volume-transfer")

@@ -1,7 +1,7 @@
 package quotas
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // Get returns load balancer Quotas for a project.

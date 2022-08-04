@@ -6,11 +6,11 @@ package v1
 import (
 	"testing"
 
-	"github.com/innodreamer/ktvpc-sdk_poc"
-	"github.com/innodreamer/ktvpc-sdk_poc/acceptance/tools"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/blockstorage/v1/snapshots"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/blockstorage/v1/volumes"
-	"github.com/innodreamer/ktvpc-sdk_poc/openstack/blockstorage/v1/volumetypes"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/v1/snapshots"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/v1/volumes"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/v1/volumetypes"
 )
 
 // CreateSnapshot will create a volume snapshot based off of a given volume and

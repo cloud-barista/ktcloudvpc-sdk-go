@@ -1,7 +1,7 @@
 package migrate
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 // MigrateResult is the response from a Migrate operation. Call its ExtractErr

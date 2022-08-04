@@ -1,7 +1,7 @@
 package bootfromvolume
 
 import (
-	os "github.com/innodreamer/ktvpc-sdk_poc/openstack/compute/v2/servers"
+	os "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/compute/v2/servers"
 )
 
 // CreateResult temporarily contains the response from a Create call.

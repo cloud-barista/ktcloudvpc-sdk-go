@@ -1,7 +1,7 @@
 package objects
 
 import (
-	"github.com/innodreamer/ktvpc-sdk_poc"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
 func listURL(c *gophercloud.ServiceClient, container string) string {

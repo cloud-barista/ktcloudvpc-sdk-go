@@ -1,6 +1,6 @@
 package base
 
-import "github.com/innodreamer/ktvpc-sdk_poc"
+import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 // Get retrieves the home document, allowing the user to discover the
 // entire API.
