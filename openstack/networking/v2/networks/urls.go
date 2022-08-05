@@ -7,7 +7,10 @@ func resourceURL(c *gophercloud.ServiceClient, id string) string {
 }
 
 func rootURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("networks")
+	return c.ServiceURL("VPC")  // Modified by B.T. Oh
+	// return c.ServiceURL("Network")  // Modified by B.T. Oh
+
+	// return c.ServiceURL("networks") // Origin
 }
 
 func getURL(c *gophercloud.ServiceClient, id string) string {

@@ -24,6 +24,10 @@ The followings are modified from original code.
   - Added : List()
 - Compute v2 > Image URL code
   - Added : listURL()
+- Networking v2 > networks
+  - Modified : rootURL()
+- service_client
+  - Modified : ResourceBaseURL()
 - CommonFunction
   - Added : InitLog()
 

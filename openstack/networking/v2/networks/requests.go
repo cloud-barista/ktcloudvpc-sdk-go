@@ -2,10 +2,18 @@ package networks
 
 import (
 	"fmt"
+	"github.com/sirupsen/logrus"
+	cblog "github.com/cloud-barista/cb-log"
 
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
 )
+
+var cblogger *logrus.Logger
+
+func init() {
+	cblogger = cblog.GetLogger("OpenStack Client")
+}
 
 // ListOptsBuilder allows extensions to add additional parameters to the
 // List request.
@@ -48,6 +56,8 @@ func (opts ListOpts) ToNetworkListQuery() (string, error) {
 // the returned collection for greater efficiency.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(c)
+	cblogger.Infof("\n\n### Network list URL : %s", url)
+
 	if opts != nil {
 		query, err := opts.ToNetworkListQuery()
 		if err != nil {
