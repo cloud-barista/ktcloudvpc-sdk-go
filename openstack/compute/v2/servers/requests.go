@@ -137,6 +137,11 @@ type Network struct {
 	Tag string
 }
 
+
+
+
+
+
 // Personality is an array of files that are injected into the server at launch.
 type Personality []*File
 
@@ -165,25 +170,15 @@ func (f *File) MarshalJSON() ([]byte, error) {
 }
 
 // CreateOpts specifies server creation parameters.
-type CreateOpts struct {
+type CreateOpts struct {								// Modified by B.T. Oh
 	// Name is the name to assign to the newly launched server.
 	Name string `json:"name" required:"true"`
 
-	// ImageRef is the ID or full URL to the image that contains the
-	// server's OS and initial state.
-	// Also optional if using the boot-from-volume extension.
-	ImageRef string `json:"imageRef"`
-
+	// KeyName is the Keypair name to assign to the newly launched server.   
+	KeyName string `json:"key_name" required:"true"`	// Added by B.T. Oh.
+	
 	// FlavorRef is the ID or full URL to the flavor that describes the server's specs.
 	FlavorRef string `json:"flavorRef"`
-
-	// SecurityGroups lists the names of the security groups to which this server
-	// should belong.
-	SecurityGroups []string `json:"-"`
-
-	// UserData contains configuration information or scripts to use upon launch.
-	// Create will base64-encode it for you, if it isn't already.
-	UserData []byte `json:"-"`
 
 	// AvailabilityZone in which to launch the server.
 	AvailabilityZone string `json:"availability_zone,omitempty"`
@@ -194,63 +189,14 @@ type CreateOpts struct {
 	// Starting with microversion 2.37 networks can also be an "auto" or "none"
 	// string.
 	Networks interface{} `json:"-"`
-
-	// Metadata contains key-value pairs (up to 255 bytes each) to attach to the
-	// server.
-	Metadata map[string]string `json:"metadata,omitempty"`
-
-	// Personality includes files to inject into the server at launch.
-	// Create will base64-encode file contents for you.
-	Personality Personality `json:"personality,omitempty"`
-
-	// ConfigDrive enables metadata injection through a configuration drive.
-	ConfigDrive *bool `json:"config_drive,omitempty"`
-
-	// AdminPass sets the root user password. If not set, a randomly-generated
-	// password will be created and returned in the response.
-	AdminPass string `json:"adminPass,omitempty"`
-
-	// AccessIPv4 specifies an IPv4 address for the instance.
-	AccessIPv4 string `json:"accessIPv4,omitempty"`
-
-	// AccessIPv6 specifies an IPv6 address for the instance.
-	AccessIPv6 string `json:"accessIPv6,omitempty"`
-
-	// Min specifies Minimum number of servers to launch.
-	Min int `json:"min_count,omitempty"`
-
-	// Max specifies Maximum number of servers to launch.
-	Max int `json:"max_count,omitempty"`
-
-	// Tags allows a server to be tagged with single-word metadata.
-	// Requires microversion 2.52 or later.
-	Tags []string `json:"tags,omitempty"`
 }
 
 // ToServerCreateMap assembles a request body based on the contents of a
 // CreateOpts.
-func (opts CreateOpts) ToServerCreateMap() (map[string]interface{}, error) {
+func (opts CreateOpts) ToServerCreateMap() (map[string]interface{}, error) {  // Modified by B.T. Oh
 	b, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
-	}
-
-	if opts.UserData != nil {
-		var userData string
-		if _, err := base64.StdEncoding.DecodeString(string(opts.UserData)); err != nil {
-			userData = base64.StdEncoding.EncodeToString(opts.UserData)
-		} else {
-			userData = string(opts.UserData)
-		}
-		b["user_data"] = &userData
-	}
-
-	if len(opts.SecurityGroups) > 0 {
-		securityGroups := make([]map[string]interface{}, len(opts.SecurityGroups))
-		for i, groupName := range opts.SecurityGroups {
-			securityGroups[i] = map[string]interface{}{"name": groupName}
-		}
-		b["security_groups"] = securityGroups
 	}
 
 	switch v := opts.Networks.(type) {
@@ -280,14 +226,6 @@ func (opts CreateOpts) ToServerCreateMap() (map[string]interface{}, error) {
 		} else {
 			return nil, fmt.Errorf(`networks must be a slice of Network struct or a string with "auto" or "none" values, current value is %q`, v)
 		}
-	}
-
-	if opts.Min != 0 {
-		b["min_count"] = opts.Min
-	}
-
-	if opts.Max != 0 {
-		b["max_count"] = opts.Max
 	}
 
 	return map[string]interface{}{"server": b}, nil
