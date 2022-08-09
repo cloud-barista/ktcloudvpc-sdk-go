@@ -184,6 +184,10 @@ type CreateOpts struct {								// Modified by B.T. Oh
 	// Starting with microversion 2.37 networks can also be an "auto" or "none"
 	// string.
 	Networks interface{} `json:"-"`
+
+	// UserData contains configuration information or scripts to use upon launch.
+	// Create will base64-encode it for you, if it isn't already.
+	UserData []byte `json:"-"`
 }
 
 // ToServerCreateMap assembles a request body based on the contents of a CreateOpts.
@@ -191,6 +195,16 @@ func (opts CreateOpts) ToServerCreateMap() (map[string]interface{}, error) {  	/
 	b, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
+	}
+	
+	if opts.UserData != nil {
+		var userData string
+		if _, err := base64.StdEncoding.DecodeString(string(opts.UserData)); err != nil {
+			userData = base64.StdEncoding.EncodeToString(opts.UserData)
+		} else {
+			userData = string(opts.UserData)
+		}
+		b["user_data"] = &userData
 	}
 
 	switch v := opts.Networks.(type) {
