@@ -20,6 +20,10 @@ go mod tidy
 The followings are modified from original code.
 - Connection client codes
   - Modified : v3auth(), NewIdentityV3(), initClientOpts(), NewImageServiceV2()  
+- Compute v2 > Servers > request code
+  - Updated :  server CreateOpts structure
+- Compute v2 > bootfromvolume > request code
+  - Updated :  BlockDevice structure
 - Compute v2 > Image list request code
   - Added : List()
 - Compute v2 > Image URL code
