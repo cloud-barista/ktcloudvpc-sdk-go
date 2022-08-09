@@ -137,11 +137,6 @@ type Network struct {
 	Tag string
 }
 
-
-
-
-
-
 // Personality is an array of files that are injected into the server at launch.
 type Personality []*File
 
@@ -191,9 +186,8 @@ type CreateOpts struct {								// Modified by B.T. Oh
 	Networks interface{} `json:"-"`
 }
 
-// ToServerCreateMap assembles a request body based on the contents of a
-// CreateOpts.
-func (opts CreateOpts) ToServerCreateMap() (map[string]interface{}, error) {  // Modified by B.T. Oh
+// ToServerCreateMap assembles a request body based on the contents of a CreateOpts.
+func (opts CreateOpts) ToServerCreateMap() (map[string]interface{}, error) {  	// Modified by B.T. Oh
 	b, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err

@@ -43,30 +43,32 @@ const (
 // or existing volume. The destination may be a new volume, existing volume
 // which will be attached to the instance, ephemeral disk, or boot device.
 type BlockDevice struct {
+	// DestinationType is the type that gets created. Possible values are "volume"
+	// and "local".
+	DestinationType DestinationType `json:"destination_type,omitempty"`
+	
+	// BootIndex is the boot index. It defaults to 0.
+	BootIndex int `json:"boot_index"`
+
 	// SourceType must be one of: "volume", "snapshot", "image", or "blank".
 	SourceType SourceType `json:"source_type" required:"true"`
+
+	// VolumeSize is the size of the volume to create (in gigabytes). This can be
+	// omitted for existing volumes.
+	VolumeSize string `json:"volume_size,omitempty"`			// Modified by B.T. Oh
 
 	// UUID is the unique identifier for the existing volume, snapshot, or
 	// image (see above).
 	UUID string `json:"uuid,omitempty"`
 
-	// BootIndex is the boot index. It defaults to 0.
-	BootIndex int `json:"boot_index"`
+
 
 	// DeleteOnTermination specifies whether or not to delete the attached volume
 	// when the server is deleted. Defaults to `false`.
 	DeleteOnTermination bool `json:"delete_on_termination"`
 
-	// DestinationType is the type that gets created. Possible values are "volume"
-	// and "local".
-	DestinationType DestinationType `json:"destination_type,omitempty"`
-
 	// GuestFormat specifies the format of the block device.
 	GuestFormat string `json:"guest_format,omitempty"`
-
-	// VolumeSize is the size of the volume to create (in gigabytes). This can be
-	// omitted for existing volumes.
-	VolumeSize int `json:"volume_size,omitempty"`
 
 	// DeviceType specifies the device type of the block devices.
 	// Examples of this are disk, cdrom, floppy, lun, etc.
