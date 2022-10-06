@@ -51,7 +51,7 @@ func (r *Group) UnmarshalJSON(b []byte) error {
 			return err
 		}
 		if resultMap, ok := result.(map[string]interface{}); ok {
-			r.Extra = gophercloud.RemainingKeys(Group{}, resultMap)
+			r.Extra = ktvpcsdk.RemainingKeys(Group{}, resultMap)
 		}
 	}
 
@@ -59,7 +59,7 @@ func (r *Group) UnmarshalJSON(b []byte) error {
 }
 
 type groupResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // GetResult is the response from a Get operation. Call its Extract method
@@ -83,7 +83,7 @@ type UpdateResult struct {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr to
 // determine if the request succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // GroupPage is a single page of Group results.

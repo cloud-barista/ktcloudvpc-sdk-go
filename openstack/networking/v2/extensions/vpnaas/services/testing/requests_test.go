@@ -58,7 +58,7 @@ func TestCreate(t *testing.T) {
 		TenantID:     "10039663455a446d8ba2cbb058b0f578",
 		Name:         "vpn",
 		Description:  "OpenStack VPN service",
-		AdminStateUp: gophercloud.Enabled,
+		AdminStateUp: ktvpcsdk.Enabled,
 		RouterID:     "66e3b16c-8ce5-40fb-bb49-ab6d8dc3f2aa",
 	}
 	actual, err := services.Create(fake.ServiceClient(), options).Extract()
@@ -244,7 +244,7 @@ func TestUpdate(t *testing.T) {
 	options := services.UpdateOpts{
 		Name:         &updatedName,
 		Description:  &updatedServiceDescription,
-		AdminStateUp: gophercloud.Disabled,
+		AdminStateUp: ktvpcsdk.Disabled,
 	}
 
 	actual, err := services.Update(fake.ServiceClient(), "5c561d9d-eaea-45f6-ae3e-08d1a7080828", options).Extract()

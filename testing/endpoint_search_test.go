@@ -8,13 +8,13 @@ import (
 )
 
 func TestApplyDefaultsToEndpointOpts(t *testing.T) {
-	eo := gophercloud.EndpointOpts{Availability: gophercloud.AvailabilityPublic}
+	eo := ktvpcsdk.EndpointOpts{Availability: ktvpcsdk.AvailabilityPublic}
 	eo.ApplyDefaults("compute")
-	expected := gophercloud.EndpointOpts{Availability: gophercloud.AvailabilityPublic, Type: "compute"}
+	expected := ktvpcsdk.EndpointOpts{Availability: ktvpcsdk.AvailabilityPublic, Type: "compute"}
 	th.CheckDeepEquals(t, expected, eo)
 
-	eo = gophercloud.EndpointOpts{Type: "compute"}
+	eo = ktvpcsdk.EndpointOpts{Type: "compute"}
 	eo.ApplyDefaults("object-store")
-	expected = gophercloud.EndpointOpts{Availability: gophercloud.AvailabilityPublic, Type: "compute"}
+	expected = ktvpcsdk.EndpointOpts{Availability: ktvpcsdk.AvailabilityPublic, Type: "compute"}
 	th.CheckDeepEquals(t, expected, eo)
 }

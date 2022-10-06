@@ -2,78 +2,78 @@ package nodes
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-func createURL(client *gophercloud.ServiceClient) string {
+func createURL(client *ktvpcsdk.ServiceClient) string {
 	return client.ServiceURL("nodes")
 }
 
-func listURL(client *gophercloud.ServiceClient) string {
+func listURL(client *ktvpcsdk.ServiceClient) string {
 	return createURL(client)
 }
 
-func listDetailURL(client *gophercloud.ServiceClient) string {
+func listDetailURL(client *ktvpcsdk.ServiceClient) string {
 	return client.ServiceURL("nodes", "detail")
 }
 
-func deleteURL(client *gophercloud.ServiceClient, id string) string {
+func deleteURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return client.ServiceURL("nodes", id)
 }
 
-func getURL(client *gophercloud.ServiceClient, id string) string {
+func getURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return deleteURL(client, id)
 }
 
-func updateURL(client *gophercloud.ServiceClient, id string) string {
+func updateURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return deleteURL(client, id)
 }
 
-func validateURL(client *gophercloud.ServiceClient, id string) string {
+func validateURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return client.ServiceURL("nodes", id, "validate")
 }
 
-func injectNMIURL(client *gophercloud.ServiceClient, id string) string {
+func injectNMIURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return client.ServiceURL("nodes", id, "management", "inject_nmi")
 }
 
-func bootDeviceURL(client *gophercloud.ServiceClient, id string) string {
+func bootDeviceURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return client.ServiceURL("nodes", id, "management", "boot_device")
 }
 
-func supportedBootDeviceURL(client *gophercloud.ServiceClient, id string) string {
+func supportedBootDeviceURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return client.ServiceURL("nodes", id, "management", "boot_device", "supported")
 }
 
-func statesResourceURL(client *gophercloud.ServiceClient, id string, state string) string {
+func statesResourceURL(client *ktvpcsdk.ServiceClient, id string, state string) string {
 	return client.ServiceURL("nodes", id, "states", state)
 }
 
-func powerStateURL(client *gophercloud.ServiceClient, id string) string {
+func powerStateURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return statesResourceURL(client, id, "power")
 }
 
-func provisionStateURL(client *gophercloud.ServiceClient, id string) string {
+func provisionStateURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return statesResourceURL(client, id, "provision")
 }
 
-func raidConfigURL(client *gophercloud.ServiceClient, id string) string {
+func raidConfigURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return statesResourceURL(client, id, "raid")
 }
 
-func biosListSettingsURL(client *gophercloud.ServiceClient, id string) string {
+func biosListSettingsURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return client.ServiceURL("nodes", id, "bios")
 }
 
-func biosGetSettingURL(client *gophercloud.ServiceClient, id string, setting string) string {
+func biosGetSettingURL(client *ktvpcsdk.ServiceClient, id string, setting string) string {
 	return client.ServiceURL("nodes", id, "bios", setting)
 }
 
-func vendorPassthruMethodsURL(client *gophercloud.ServiceClient, id string) string {
+func vendorPassthruMethodsURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return client.ServiceURL("nodes", id, "vendor_passthru", "methods")
 }
 
-func vendorPassthruCallURL(client *gophercloud.ServiceClient, id string) string {
+func vendorPassthruCallURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return client.ServiceURL("nodes", id, "vendor_passthru")
 }
 
-func maintenanceURL(client *gophercloud.ServiceClient, id string) string {
+func maintenanceURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return client.ServiceURL("nodes", id, "maintenance")
 }

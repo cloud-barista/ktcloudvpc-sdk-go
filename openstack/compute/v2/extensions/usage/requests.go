@@ -33,7 +33,7 @@ type SingleTenantOptsBuilder interface {
 
 // ToUsageSingleTenantQuery formats a SingleTenantOpts into a query string.
 func (opts SingleTenantOpts) ToUsageSingleTenantQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	if err != nil {
 		return "", err
 	}
@@ -41,11 +41,11 @@ func (opts SingleTenantOpts) ToUsageSingleTenantQuery() (string, error) {
 	params := q.Query()
 
 	if opts.Start != nil {
-		params.Add("start", opts.Start.Format(gophercloud.RFC3339MilliNoZ))
+		params.Add("start", opts.Start.Format(ktvpcsdk.RFC3339MilliNoZ))
 	}
 
 	if opts.End != nil {
-		params.Add("end", opts.End.Format(gophercloud.RFC3339MilliNoZ))
+		params.Add("end", opts.End.Format(ktvpcsdk.RFC3339MilliNoZ))
 	}
 
 	q = &url.URL{RawQuery: params.Encode()}
@@ -53,7 +53,7 @@ func (opts SingleTenantOpts) ToUsageSingleTenantQuery() (string, error) {
 }
 
 // SingleTenant returns usage data about a single tenant.
-func SingleTenant(client *gophercloud.ServiceClient, tenantID string, opts SingleTenantOptsBuilder) pagination.Pager {
+func SingleTenant(client *ktvpcsdk.ServiceClient, tenantID string, opts SingleTenantOptsBuilder) pagination.Pager {
 	url := getTenantURL(client, tenantID)
 	if opts != nil {
 		query, err := opts.ToUsageSingleTenantQuery()
@@ -95,7 +95,7 @@ type AllTenantsOptsBuilder interface {
 
 // ToUsageAllTenantsQuery formats a AllTenantsOpts into a query string.
 func (opts AllTenantsOpts) ToUsageAllTenantsQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	if err != nil {
 		return "", err
 	}
@@ -103,11 +103,11 @@ func (opts AllTenantsOpts) ToUsageAllTenantsQuery() (string, error) {
 	params := q.Query()
 
 	if opts.Start != nil {
-		params.Add("start", opts.Start.Format(gophercloud.RFC3339MilliNoZ))
+		params.Add("start", opts.Start.Format(ktvpcsdk.RFC3339MilliNoZ))
 	}
 
 	if opts.End != nil {
-		params.Add("end", opts.End.Format(gophercloud.RFC3339MilliNoZ))
+		params.Add("end", opts.End.Format(ktvpcsdk.RFC3339MilliNoZ))
 	}
 
 	if opts.Detailed == true {
@@ -119,7 +119,7 @@ func (opts AllTenantsOpts) ToUsageAllTenantsQuery() (string, error) {
 }
 
 // AllTenants returns usage data about all tenants.
-func AllTenants(client *gophercloud.ServiceClient, opts AllTenantsOptsBuilder) pagination.Pager {
+func AllTenants(client *ktvpcsdk.ServiceClient, opts AllTenantsOptsBuilder) pagination.Pager {
 	url := allTenantsURL(client)
 	if opts != nil {
 		query, err := opts.ToUsageAllTenantsQuery()

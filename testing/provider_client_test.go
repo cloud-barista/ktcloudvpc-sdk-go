@@ -20,7 +20,7 @@ import (
 )
 
 func TestAuthenticatedHeaders(t *testing.T) {
-	p := &gophercloud.ProviderClient{
+	p := &ktvpcsdk.ProviderClient{
 		TokenID: "1234",
 	}
 	expected := map[string]string{"X-Auth-Token": "1234"}
@@ -29,20 +29,20 @@ func TestAuthenticatedHeaders(t *testing.T) {
 }
 
 func TestUserAgent(t *testing.T) {
-	p := &gophercloud.ProviderClient{}
+	p := &ktvpcsdk.ProviderClient{}
 
 	p.UserAgent.Prepend("custom-user-agent/2.4.0")
-	expected := "custom-user-agent/2.4.0 gophercloud/2.0.0"
+	expected := "custom-user-agent/2.4.0 ktvpcsdk/2.0.0"
 	actual := p.UserAgent.Join()
 	th.CheckEquals(t, expected, actual)
 
 	p.UserAgent.Prepend("another-custom-user-agent/0.3.0", "a-third-ua/5.9.0")
-	expected = "another-custom-user-agent/0.3.0 a-third-ua/5.9.0 custom-user-agent/2.4.0 gophercloud/2.0.0"
+	expected = "another-custom-user-agent/0.3.0 a-third-ua/5.9.0 custom-user-agent/2.4.0 ktvpcsdk/2.0.0"
 	actual = p.UserAgent.Join()
 	th.CheckEquals(t, expected, actual)
 
-	p.UserAgent = gophercloud.UserAgent{}
-	expected = "gophercloud/2.0.0"
+	p.UserAgent = ktvpcsdk.UserAgent{}
+	expected = "ktvpcsdk/2.0.0"
 	actual = p.UserAgent.Join()
 	th.CheckEquals(t, expected, actual)
 }
@@ -63,7 +63,7 @@ func TestConcurrentReauth(t *testing.T) {
 	prereauthTok := client.TokenID
 	postreauthTok := "12345678"
 
-	p := new(gophercloud.ProviderClient)
+	p := new(ktvpcsdk.ProviderClient)
 	p.UseTokenLock()
 	p.SetToken(prereauthTok)
 	p.ReauthFunc = func() error {
@@ -102,7 +102,7 @@ func TestConcurrentReauth(t *testing.T) {
 	})
 
 	wg := new(sync.WaitGroup)
-	reqopts := new(gophercloud.RequestOpts)
+	reqopts := new(ktvpcsdk.RequestOpts)
 	reqopts.KeepResponseBody = true
 	reqopts.MoreHeaders = map[string]string{
 		"X-Auth-Token": prereauthTok,
@@ -151,7 +151,7 @@ func TestReauthEndLoop(t *testing.T) {
 	numconc := 20
 	mut := new(sync.RWMutex)
 
-	p := new(gophercloud.ProviderClient)
+	p := new(ktvpcsdk.ProviderClient)
 	p.UseTokenLock()
 	p.SetToken(client.TokenID)
 	p.ReauthFunc = func() error {
@@ -179,7 +179,7 @@ func TestReauthEndLoop(t *testing.T) {
 		return
 	})
 
-	reqopts := new(gophercloud.RequestOpts)
+	reqopts := new(ktvpcsdk.RequestOpts)
 
 	// counters for the upcoming errors
 	errAfter := 0
@@ -197,13 +197,13 @@ func TestReauthEndLoop(t *testing.T) {
 
 			// ErrErrorAfter... will happen after a successful reauthentication,
 			// but the service still responds with a 401.
-			if _, ok := err.(*gophercloud.ErrErrorAfterReauthentication); ok {
+			if _, ok := err.(*ktvpcsdk.ErrErrorAfterReauthentication); ok {
 				errAfter++
 			}
 
 			// ErrErrorUnable... will happen when the custom reauth func reports
 			// an error.
-			if _, ok := err.(*gophercloud.ErrUnableToReauthenticate); ok {
+			if _, ok := err.(*ktvpcsdk.ErrUnableToReauthenticate); ok {
 				errUnable++
 			}
 		}()
@@ -234,7 +234,7 @@ func TestRequestThatCameDuringReauthWaitsUntilItIsCompleted(t *testing.T) {
 	prereauthTok := client.TokenID
 	postreauthTok := "12345678"
 
-	p := new(gophercloud.ProviderClient)
+	p := new(ktvpcsdk.ProviderClient)
 	p.UseTokenLock()
 	p.SetToken(prereauthTok)
 	p.ReauthFunc = func() error {
@@ -280,7 +280,7 @@ func TestRequestThatCameDuringReauthWaitsUntilItIsCompleted(t *testing.T) {
 	})
 
 	wg := new(sync.WaitGroup)
-	reqopts := new(gophercloud.RequestOpts)
+	reqopts := new(ktvpcsdk.RequestOpts)
 	reqopts.KeepResponseBody = true
 	reqopts.MoreHeaders = map[string]string{
 		"X-Auth-Token": prereauthTok,
@@ -328,7 +328,7 @@ func TestRequestReauthsAtMostOnce(t *testing.T) {
 	reauthCounter := 0
 	var reauthCounterMutex sync.Mutex
 
-	p := new(gophercloud.ProviderClient)
+	p := new(ktvpcsdk.ProviderClient)
 	p.UseTokenLock()
 	p.SetToken(client.TokenID)
 	p.ReauthFunc = func() error {
@@ -363,7 +363,7 @@ func TestRequestReauthsAtMostOnce(t *testing.T) {
 	// the part before the colon), but when encountering another 401 response, we
 	// did not attempt reauthentication again and just passed that 401 response to
 	// the caller as ErrDefault401.
-	_, err := p.Request("GET", th.Endpoint()+"/route", &gophercloud.RequestOpts{})
+	_, err := p.Request("GET", th.Endpoint()+"/route", &ktvpcsdk.RequestOpts{})
 	expectedErrorMessage := "Successfully re-authenticated, but got error executing request: Authentication failed"
 	th.AssertEquals(t, expectedErrorMessage, err.Error())
 }
@@ -375,9 +375,9 @@ func TestRequestWithContext(t *testing.T) {
 	defer ts.Close()
 
 	ctx, cancel := context.WithCancel(context.Background())
-	p := &gophercloud.ProviderClient{Context: ctx}
+	p := &ktvpcsdk.ProviderClient{Context: ctx}
 
-	res, err := p.Request("GET", ts.URL, &gophercloud.RequestOpts{KeepResponseBody: true})
+	res, err := p.Request("GET", ts.URL, &ktvpcsdk.RequestOpts{KeepResponseBody: true})
 	th.AssertNoErr(t, err)
 	_, err = ioutil.ReadAll(res.Body)
 	th.AssertNoErr(t, err)
@@ -385,7 +385,7 @@ func TestRequestWithContext(t *testing.T) {
 	th.AssertNoErr(t, err)
 
 	cancel()
-	res, err = p.Request("GET", ts.URL, &gophercloud.RequestOpts{})
+	res, err = p.Request("GET", ts.URL, &ktvpcsdk.RequestOpts{})
 	if err == nil {
 		t.Fatal("expecting error, got nil")
 	}
@@ -413,9 +413,9 @@ func TestRequestConnectionReuse(t *testing.T) {
 	ts.Start()
 	defer ts.Close()
 
-	p := &gophercloud.ProviderClient{}
+	p := &ktvpcsdk.ProviderClient{}
 	for i := 0; i < iter; i++ {
-		_, err := p.Request("GET", ts.URL, &gophercloud.RequestOpts{KeepResponseBody: false})
+		_, err := p.Request("GET", ts.URL, &ktvpcsdk.RequestOpts{KeepResponseBody: false})
 		th.AssertNoErr(t, err)
 	}
 
@@ -441,17 +441,17 @@ func TestRequestConnectionClose(t *testing.T) {
 	ts.Start()
 	defer ts.Close()
 
-	p := &gophercloud.ProviderClient{}
+	p := &ktvpcsdk.ProviderClient{}
 	for i := 0; i < iter; i++ {
-		_, err := p.Request("GET", ts.URL, &gophercloud.RequestOpts{KeepResponseBody: true})
+		_, err := p.Request("GET", ts.URL, &ktvpcsdk.RequestOpts{KeepResponseBody: true})
 		th.AssertNoErr(t, err)
 	}
 
 	th.AssertEquals(t, int64(iter), connections)
 }
 
-func retryBackoffTest(retryCounter *uint, t *testing.T) gophercloud.RetryBackoffFunc {
-	return func(ctx context.Context, respErr *gophercloud.ErrUnexpectedResponseCode, e error, retries uint) error {
+func retryBackoffTest(retryCounter *uint, t *testing.T) ktvpcsdk.RetryBackoffFunc {
+	return func(ctx context.Context, respErr *ktvpcsdk.ErrUnexpectedResponseCode, e error, retries uint) error {
 		retryAfter := respErr.ResponseHeader.Get("Retry-After")
 		if retryAfter == "" {
 			return e
@@ -492,7 +492,7 @@ func retryBackoffTest(retryCounter *uint, t *testing.T) gophercloud.RetryBackoff
 func TestRequestRetry(t *testing.T) {
 	var retryCounter uint
 
-	p := &gophercloud.ProviderClient{}
+	p := &ktvpcsdk.ProviderClient{}
 	p.UseTokenLock()
 	p.SetToken(client.TokenID)
 	p.MaxBackoffRetries = 3
@@ -509,7 +509,7 @@ func TestRequestRetry(t *testing.T) {
 		http.Error(w, "retry later", http.StatusTooManyRequests)
 	})
 
-	_, err := p.Request("GET", th.Endpoint()+"/route", &gophercloud.RequestOpts{})
+	_, err := p.Request("GET", th.Endpoint()+"/route", &ktvpcsdk.RequestOpts{})
 	if err == nil {
 		t.Fatal("expecting error, got nil")
 	}
@@ -519,7 +519,7 @@ func TestRequestRetry(t *testing.T) {
 func TestRequestRetryHTTPDate(t *testing.T) {
 	var retryCounter uint
 
-	p := &gophercloud.ProviderClient{}
+	p := &ktvpcsdk.ProviderClient{}
 	p.UseTokenLock()
 	p.SetToken(client.TokenID)
 	p.MaxBackoffRetries = 3
@@ -536,7 +536,7 @@ func TestRequestRetryHTTPDate(t *testing.T) {
 		http.Error(w, "retry later", http.StatusTooManyRequests)
 	})
 
-	_, err := p.Request("GET", th.Endpoint()+"/route", &gophercloud.RequestOpts{})
+	_, err := p.Request("GET", th.Endpoint()+"/route", &ktvpcsdk.RequestOpts{})
 	if err == nil {
 		t.Fatal("expecting error, got nil")
 	}
@@ -546,7 +546,7 @@ func TestRequestRetryHTTPDate(t *testing.T) {
 func TestRequestRetryError(t *testing.T) {
 	var retryCounter uint
 
-	p := &gophercloud.ProviderClient{}
+	p := &ktvpcsdk.ProviderClient{}
 	p.UseTokenLock()
 	p.SetToken(client.TokenID)
 	p.MaxBackoffRetries = 3
@@ -563,7 +563,7 @@ func TestRequestRetryError(t *testing.T) {
 		http.Error(w, "retry later", http.StatusTooManyRequests)
 	})
 
-	_, err := p.Request("GET", th.Endpoint()+"/route", &gophercloud.RequestOpts{})
+	_, err := p.Request("GET", th.Endpoint()+"/route", &ktvpcsdk.RequestOpts{})
 	if err == nil {
 		t.Fatal("expecting error, got nil")
 	}
@@ -573,7 +573,7 @@ func TestRequestRetryError(t *testing.T) {
 func TestRequestRetrySuccess(t *testing.T) {
 	var retryCounter uint
 
-	p := &gophercloud.ProviderClient{}
+	p := &ktvpcsdk.ProviderClient{}
 	p.UseTokenLock()
 	p.SetToken(client.TokenID)
 	p.MaxBackoffRetries = 3
@@ -588,7 +588,7 @@ func TestRequestRetrySuccess(t *testing.T) {
 		http.Error(w, "retry later", http.StatusOK)
 	})
 
-	_, err := p.Request("GET", th.Endpoint()+"/route", &gophercloud.RequestOpts{})
+	_, err := p.Request("GET", th.Endpoint()+"/route", &ktvpcsdk.RequestOpts{})
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -605,7 +605,7 @@ func TestRequestRetryContext(t *testing.T) {
 		cancel()
 	}()
 
-	p := &gophercloud.ProviderClient{
+	p := &ktvpcsdk.ProviderClient{
 		Context: ctx,
 	}
 	p.UseTokenLock()
@@ -624,7 +624,7 @@ func TestRequestRetryContext(t *testing.T) {
 		http.Error(w, "retry later", http.StatusTooManyRequests)
 	})
 
-	_, err := p.Request("GET", th.Endpoint()+"/route", &gophercloud.RequestOpts{})
+	_, err := p.Request("GET", th.Endpoint()+"/route", &ktvpcsdk.RequestOpts{})
 	if err == nil {
 		t.Fatal("expecting error, got nil")
 	}
@@ -633,10 +633,10 @@ func TestRequestRetryContext(t *testing.T) {
 }
 
 func TestRequestGeneralRetry(t *testing.T) {
-	p := &gophercloud.ProviderClient{}
+	p := &ktvpcsdk.ProviderClient{}
 	p.UseTokenLock()
 	p.SetToken(client.TokenID)
-	p.RetryFunc = func(context context.Context, method, url string, options *gophercloud.RequestOpts, err error, failCount uint) error {
+	p.RetryFunc = func(context context.Context, method, url string, options *ktvpcsdk.RequestOpts, err error, failCount uint) error {
 		if failCount >= 5 {
 			return err
 		}
@@ -656,7 +656,7 @@ func TestRequestGeneralRetry(t *testing.T) {
 		}
 	})
 
-	_, err := p.Request("GET", th.Endpoint()+"/route", &gophercloud.RequestOpts{})
+	_, err := p.Request("GET", th.Endpoint()+"/route", &ktvpcsdk.RequestOpts{})
 	if err != nil {
 		t.Fatal("expecting nil, got err")
 	}
@@ -664,10 +664,10 @@ func TestRequestGeneralRetry(t *testing.T) {
 }
 
 func TestRequestGeneralRetryAbort(t *testing.T) {
-	p := &gophercloud.ProviderClient{}
+	p := &ktvpcsdk.ProviderClient{}
 	p.UseTokenLock()
 	p.SetToken(client.TokenID)
-	p.RetryFunc = func(context context.Context, method, url string, options *gophercloud.RequestOpts, err error, failCount uint) error {
+	p.RetryFunc = func(context context.Context, method, url string, options *ktvpcsdk.RequestOpts, err error, failCount uint) error {
 		return err
 	}
 
@@ -684,7 +684,7 @@ func TestRequestGeneralRetryAbort(t *testing.T) {
 		}
 	})
 
-	_, err := p.Request("GET", th.Endpoint()+"/route", &gophercloud.RequestOpts{})
+	_, err := p.Request("GET", th.Endpoint()+"/route", &ktvpcsdk.RequestOpts{})
 	if err == nil {
 		t.Fatal("expecting err, got nil")
 	}
@@ -698,15 +698,15 @@ func TestRequestWrongOkCode(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	p := &gophercloud.ProviderClient{}
+	p := &ktvpcsdk.ProviderClient{}
 
-	_, err := p.Request("DELETE", ts.URL, &gophercloud.RequestOpts{})
+	_, err := p.Request("DELETE", ts.URL, &ktvpcsdk.RequestOpts{})
 	th.AssertErr(t, err)
-	if urErr, ok := err.(gophercloud.ErrUnexpectedResponseCode); ok {
+	if urErr, ok := err.(ktvpcsdk.ErrUnexpectedResponseCode); ok {
 		// DELETE expects a 202 or 204 by default
 		// Make sure returned error contains the expected OK codes
 		th.AssertDeepEquals(t, []int{202, 204}, urErr.Expected)
 	} else {
-		t.Fatalf("expected error type gophercloud.ErrUnexpectedResponseCode but got %T", err)
+		t.Fatalf("expected error type ktvpcsdk.ErrUnexpectedResponseCode but got %T", err)
 	}
 }

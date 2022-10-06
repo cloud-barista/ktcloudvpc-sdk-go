@@ -6,7 +6,7 @@ import (
 )
 
 // List the bgp peers
-func List(c *gophercloud.ServiceClient) pagination.Pager {
+func List(c *ktvpcsdk.ServiceClient) pagination.Pager {
 	url := listURL(c)
 	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
 		return BGPPeerPage{pagination.SinglePageBase(r)}
@@ -14,9 +14,9 @@ func List(c *gophercloud.ServiceClient) pagination.Pager {
 }
 
 // Get retrieve the specific bgp peer by its uuid
-func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
 	resp, err := c.Get(getURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -37,25 +37,25 @@ type CreateOpts struct {
 
 // ToPeerCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToPeerCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, jroot)
+	return ktvpcsdk.BuildRequestBody(opts, jroot)
 }
 
 // Create a BGP Peer
-func Create(c *gophercloud.ServiceClient, opts CreateOpts) (r CreateResult) {
+func Create(c *ktvpcsdk.ServiceClient, opts CreateOpts) (r CreateResult) {
 	b, err := opts.ToPeerCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Post(createURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete accepts a unique ID and deletes the bgp Peer associated with it.
-func Delete(c *gophercloud.ServiceClient, bgpPeerID string) (r DeleteResult) {
+func Delete(c *ktvpcsdk.ServiceClient, bgpPeerID string) (r DeleteResult) {
 	resp, err := c.Delete(deleteURL(c, bgpPeerID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -73,19 +73,19 @@ type UpdateOpts struct {
 
 // ToPeerUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToPeerUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, jroot)
+	return ktvpcsdk.BuildRequestBody(opts, jroot)
 }
 
 // Update accept a BGP Peer ID and an UpdateOpts and update the BGP Peer
-func Update(c *gophercloud.ServiceClient, bgpPeerID string, opts UpdateOpts) (r UpdateResult) {
+func Update(c *ktvpcsdk.ServiceClient, bgpPeerID string, opts UpdateOpts) (r UpdateResult) {
 	b, err := opts.ToPeerUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(updateURL(c, bgpPeerID), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := c.Put(updateURL(c, bgpPeerID), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

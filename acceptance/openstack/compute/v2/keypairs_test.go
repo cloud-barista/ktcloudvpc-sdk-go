@@ -15,7 +15,7 @@ import (
 	"golang.org/x/crypto/ssh"
 )
 
-const keyName = "gophercloud_test_key_pair"
+const keyName = "ktvpcsdk_test_key_pair"
 
 func TestKeyPairsParse(t *testing.T) {
 	client, err := clients.NewComputeV2Client()

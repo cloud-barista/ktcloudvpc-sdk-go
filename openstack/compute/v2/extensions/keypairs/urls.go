@@ -4,22 +4,22 @@ import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 const resourcePath = "os-keypairs"
 
-func resourceURL(c *gophercloud.ServiceClient) string {
+func resourceURL(c *ktvpcsdk.ServiceClient) string {
 	return c.ServiceURL(resourcePath)
 }
 
-func listURL(c *gophercloud.ServiceClient) string {
+func listURL(c *ktvpcsdk.ServiceClient) string {
 	return resourceURL(c)
 }
 
-func createURL(c *gophercloud.ServiceClient) string {
+func createURL(c *ktvpcsdk.ServiceClient) string {
 	return resourceURL(c)
 }
 
-func getURL(c *gophercloud.ServiceClient, name string) string {
+func getURL(c *ktvpcsdk.ServiceClient, name string) string {
 	return c.ServiceURL(resourcePath, name)
 }
 
-func deleteURL(c *gophercloud.ServiceClient, name string) string {
+func deleteURL(c *ktvpcsdk.ServiceClient, name string) string {
 	return getURL(c, name)
 }

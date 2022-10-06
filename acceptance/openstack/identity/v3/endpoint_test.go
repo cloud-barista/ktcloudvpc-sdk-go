@@ -63,7 +63,7 @@ func TestEndpointsNavigateCatalog(t *testing.T) {
 
 	// Enumerate the endpoints available for this service.
 	endpointListOpts := endpoints.ListOpts{
-		Availability: gophercloud.AvailabilityPublic,
+		Availability: ktvpcsdk.AvailabilityPublic,
 		ServiceID:    computeService.ID,
 	}
 

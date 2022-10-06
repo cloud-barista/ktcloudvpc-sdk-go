@@ -64,16 +64,16 @@ func TestUpdate(t *testing.T) {
 	})
 
 	q, err := quotas.Update(fake.ServiceClient(), "0a73845280574ad389c292f6a74afa76", quotas.UpdateOpts{
-		FloatingIP:        gophercloud.IntToPointer(0),
-		Network:           gophercloud.IntToPointer(-1),
-		Port:              gophercloud.IntToPointer(5),
-		RBACPolicy:        gophercloud.IntToPointer(10),
-		Router:            gophercloud.IntToPointer(15),
-		SecurityGroup:     gophercloud.IntToPointer(20),
-		SecurityGroupRule: gophercloud.IntToPointer(-1),
-		Subnet:            gophercloud.IntToPointer(25),
-		SubnetPool:        gophercloud.IntToPointer(0),
-		Trunk:             gophercloud.IntToPointer(5),
+		FloatingIP:        ktvpcsdk.IntToPointer(0),
+		Network:           ktvpcsdk.IntToPointer(-1),
+		Port:              ktvpcsdk.IntToPointer(5),
+		RBACPolicy:        ktvpcsdk.IntToPointer(10),
+		Router:            ktvpcsdk.IntToPointer(15),
+		SecurityGroup:     ktvpcsdk.IntToPointer(20),
+		SecurityGroupRule: ktvpcsdk.IntToPointer(-1),
+		Subnet:            ktvpcsdk.IntToPointer(25),
+		SubnetPool:        ktvpcsdk.IntToPointer(0),
+		Trunk:             ktvpcsdk.IntToPointer(5),
 	}).Extract()
 
 	th.AssertNoErr(t, err)

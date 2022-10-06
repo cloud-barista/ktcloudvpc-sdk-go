@@ -2,17 +2,17 @@ package attachinterfaces
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-func listInterfaceURL(client *gophercloud.ServiceClient, serverID string) string {
+func listInterfaceURL(client *ktvpcsdk.ServiceClient, serverID string) string {
 	return client.ServiceURL("servers", serverID, "os-interface")
 }
 
-func getInterfaceURL(client *gophercloud.ServiceClient, serverID, portID string) string {
+func getInterfaceURL(client *ktvpcsdk.ServiceClient, serverID, portID string) string {
 	return client.ServiceURL("servers", serverID, "os-interface", portID)
 }
 
-func createInterfaceURL(client *gophercloud.ServiceClient, serverID string) string {
+func createInterfaceURL(client *ktvpcsdk.ServiceClient, serverID string) string {
 	return client.ServiceURL("servers", serverID, "os-interface")
 }
-func deleteInterfaceURL(client *gophercloud.ServiceClient, serverID, portID string) string {
+func deleteInterfaceURL(client *ktvpcsdk.ServiceClient, serverID, portID string) string {
 	return client.ServiceURL("servers", serverID, "os-interface", portID)
 }

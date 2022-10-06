@@ -46,12 +46,12 @@ type ListOpts struct {
 
 // ToKeyPairListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToKeyPairListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List returns a Pager that allows you to iterate over a collection of KeyPairs.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToKeyPairListQuery()
@@ -92,21 +92,21 @@ type CreateOpts struct {
 
 // ToKeyPairCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToKeyPairCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "keypair")
+	return ktvpcsdk.BuildRequestBody(opts, "keypair")
 }
 
 // Create requests the creation of a new KeyPair on the server, or to import a
 // pre-existing keypair.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToKeyPairCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200, 201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -125,12 +125,12 @@ type GetOpts struct {
 
 // ToKeyPairGetQuery formats a GetOpts into a query string.
 func (opts GetOpts) ToKeyPairGetQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // Get returns public data about a previously uploaded KeyPair.
-func Get(client *gophercloud.ServiceClient, name string, opts GetOptsBuilder) (r GetResult) {
+func Get(client *ktvpcsdk.ServiceClient, name string, opts GetOptsBuilder) (r GetResult) {
 	url := getURL(client, name)
 	if opts != nil {
 		query, err := opts.ToKeyPairGetQuery()
@@ -142,7 +142,7 @@ func Get(client *gophercloud.ServiceClient, name string, opts GetOptsBuilder) (r
 	}
 
 	resp, err := client.Get(url, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -161,12 +161,12 @@ type DeleteOpts struct {
 
 // ToKeyPairDeleteQuery formats a DeleteOpts into a query string.
 func (opts DeleteOpts) ToKeyPairDeleteQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // Delete requests the deletion of a previous stored KeyPair from the server.
-func Delete(client *gophercloud.ServiceClient, name string, opts DeleteOptsBuilder) (r DeleteResult) {
+func Delete(client *ktvpcsdk.ServiceClient, name string, opts DeleteOptsBuilder) (r DeleteResult) {
 	url := deleteURL(client, name)
 	if opts != nil {
 		query, err := opts.ToKeyPairDeleteQuery()
@@ -178,6 +178,6 @@ func Delete(client *gophercloud.ServiceClient, name string, opts DeleteOptsBuild
 	}
 
 	resp, err := client.Delete(url, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

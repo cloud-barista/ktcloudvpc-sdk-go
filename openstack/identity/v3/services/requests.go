@@ -25,7 +25,7 @@ type CreateOpts struct {
 
 // ToServiceCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToServiceCreateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "service")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "service")
 	if err != nil {
 		return nil, err
 	}
@@ -42,16 +42,16 @@ func (opts CreateOpts) ToServiceCreateMap() (map[string]interface{}, error) {
 }
 
 // Create adds a new service of the requested type to the catalog.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToServiceCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), &b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createURL(client), &b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -72,12 +72,12 @@ type ListOpts struct {
 
 // ToServiceListMap builds a list query from the list options.
 func (opts ListOpts) ToServiceListMap() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List enumerates the services available to a specific user.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToServiceListMap()
@@ -92,9 +92,9 @@ func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pa
 }
 
 // Get returns additional information about a service, given its ID.
-func Get(client *gophercloud.ServiceClient, serviceID string) (r GetResult) {
+func Get(client *ktvpcsdk.ServiceClient, serviceID string) (r GetResult) {
 	resp, err := client.Get(serviceURL(client, serviceID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -118,7 +118,7 @@ type UpdateOpts struct {
 
 // ToServiceUpdateMap formats a UpdateOpts into an update request.
 func (opts UpdateOpts) ToServiceUpdateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "service")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "service")
 	if err != nil {
 		return nil, err
 	}
@@ -135,24 +135,24 @@ func (opts UpdateOpts) ToServiceUpdateMap() (map[string]interface{}, error) {
 }
 
 // Update updates an existing Service.
-func Update(client *gophercloud.ServiceClient, serviceID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *ktvpcsdk.ServiceClient, serviceID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToServiceUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Patch(updateURL(client, serviceID), &b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Patch(updateURL(client, serviceID), &b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete removes an existing service.
 // It either deletes all associated endpoints, or fails until all endpoints
 // are deleted.
-func Delete(client *gophercloud.ServiceClient, serviceID string) (r DeleteResult) {
+func Delete(client *ktvpcsdk.ServiceClient, serviceID string) (r DeleteResult) {
 	resp, err := client.Delete(serviceURL(client, serviceID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

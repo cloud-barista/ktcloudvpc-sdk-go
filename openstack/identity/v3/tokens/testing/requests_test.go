@@ -16,8 +16,8 @@ func authTokenPost(t *testing.T, options tokens.AuthOptions, scope *tokens.Scope
 	testhelper.SetupHTTP()
 	defer testhelper.TeardownHTTP()
 
-	client := gophercloud.ServiceClient{
-		ProviderClient: &gophercloud.ProviderClient{},
+	client := ktvpcsdk.ServiceClient{
+		ProviderClient: &ktvpcsdk.ProviderClient{},
 		Endpoint:       testhelper.Endpoint(),
 	}
 
@@ -51,8 +51,8 @@ func authTokenPostErr(t *testing.T, options tokens.AuthOptions, scope *tokens.Sc
 	testhelper.SetupHTTP()
 	defer testhelper.TeardownHTTP()
 
-	client := gophercloud.ServiceClient{
-		ProviderClient: &gophercloud.ProviderClient{},
+	client := ktvpcsdk.ServiceClient{
+		ProviderClient: &ktvpcsdk.ProviderClient{},
 		Endpoint:       testhelper.Endpoint(),
 	}
 	if includeToken {
@@ -408,8 +408,8 @@ func TestCreateExtractsTokenFromResponse(t *testing.T) {
 	testhelper.SetupHTTP()
 	defer testhelper.TeardownHTTP()
 
-	client := gophercloud.ServiceClient{
-		ProviderClient: &gophercloud.ProviderClient{},
+	client := ktvpcsdk.ServiceClient{
+		ProviderClient: &ktvpcsdk.ProviderClient{},
 		Endpoint:       testhelper.Endpoint(),
 	}
 
@@ -436,28 +436,28 @@ func TestCreateExtractsTokenFromResponse(t *testing.T) {
 }
 
 func TestCreateFailureEmptyAuth(t *testing.T) {
-	authTokenPostErr(t, tokens.AuthOptions{}, nil, false, gophercloud.ErrMissingPassword{})
+	authTokenPostErr(t, tokens.AuthOptions{}, nil, false, ktvpcsdk.ErrMissingPassword{})
 }
 
 func TestCreateFailureTokenIDUsername(t *testing.T) {
-	authTokenPostErr(t, tokens.AuthOptions{Username: "something", TokenID: "12345"}, nil, true, gophercloud.ErrUsernameWithToken{})
+	authTokenPostErr(t, tokens.AuthOptions{Username: "something", TokenID: "12345"}, nil, true, ktvpcsdk.ErrUsernameWithToken{})
 }
 
 func TestCreateFailureTokenIDUserID(t *testing.T) {
-	authTokenPostErr(t, tokens.AuthOptions{UserID: "something", TokenID: "12345"}, nil, true, gophercloud.ErrUserIDWithToken{})
+	authTokenPostErr(t, tokens.AuthOptions{UserID: "something", TokenID: "12345"}, nil, true, ktvpcsdk.ErrUserIDWithToken{})
 }
 
 func TestCreateFailureTokenIDDomainID(t *testing.T) {
-	authTokenPostErr(t, tokens.AuthOptions{DomainID: "something", TokenID: "12345"}, nil, true, gophercloud.ErrDomainIDWithToken{})
+	authTokenPostErr(t, tokens.AuthOptions{DomainID: "something", TokenID: "12345"}, nil, true, ktvpcsdk.ErrDomainIDWithToken{})
 }
 
 func TestCreateFailureTokenIDDomainName(t *testing.T) {
-	authTokenPostErr(t, tokens.AuthOptions{DomainName: "something", TokenID: "12345"}, nil, true, gophercloud.ErrDomainNameWithToken{})
+	authTokenPostErr(t, tokens.AuthOptions{DomainName: "something", TokenID: "12345"}, nil, true, ktvpcsdk.ErrDomainNameWithToken{})
 }
 
 func TestCreateFailureMissingUser(t *testing.T) {
 	options := tokens.AuthOptions{Password: "supersecure"}
-	authTokenPostErr(t, options, nil, false, gophercloud.ErrUsernameOrUserID{})
+	authTokenPostErr(t, options, nil, false, ktvpcsdk.ErrUsernameOrUserID{})
 }
 
 func TestCreateFailureBothUser(t *testing.T) {
@@ -466,7 +466,7 @@ func TestCreateFailureBothUser(t *testing.T) {
 		Username: "oops",
 		UserID:   "redundancy",
 	}
-	authTokenPostErr(t, options, nil, false, gophercloud.ErrUsernameOrUserID{})
+	authTokenPostErr(t, options, nil, false, ktvpcsdk.ErrUsernameOrUserID{})
 }
 
 func TestCreateFailureMissingDomain(t *testing.T) {
@@ -474,7 +474,7 @@ func TestCreateFailureMissingDomain(t *testing.T) {
 		Password: "supersecure",
 		Username: "notuniqueenough",
 	}
-	authTokenPostErr(t, options, nil, false, gophercloud.ErrDomainIDOrDomainName{})
+	authTokenPostErr(t, options, nil, false, ktvpcsdk.ErrDomainIDOrDomainName{})
 }
 
 func TestCreateFailureBothDomain(t *testing.T) {
@@ -484,7 +484,7 @@ func TestCreateFailureBothDomain(t *testing.T) {
 		DomainID:   "hurf",
 		DomainName: "durf",
 	}
-	authTokenPostErr(t, options, nil, false, gophercloud.ErrDomainIDOrDomainName{})
+	authTokenPostErr(t, options, nil, false, ktvpcsdk.ErrDomainIDOrDomainName{})
 }
 
 func TestCreateFailureUserIDDomainID(t *testing.T) {
@@ -493,7 +493,7 @@ func TestCreateFailureUserIDDomainID(t *testing.T) {
 		Password: "stuff",
 		DomainID: "oops",
 	}
-	authTokenPostErr(t, options, nil, false, gophercloud.ErrDomainIDWithUserID{})
+	authTokenPostErr(t, options, nil, false, ktvpcsdk.ErrDomainIDWithUserID{})
 }
 
 func TestCreateFailureUserIDDomainName(t *testing.T) {
@@ -502,44 +502,44 @@ func TestCreateFailureUserIDDomainName(t *testing.T) {
 		Password:   "sssh",
 		DomainName: "oops",
 	}
-	authTokenPostErr(t, options, nil, false, gophercloud.ErrDomainNameWithUserID{})
+	authTokenPostErr(t, options, nil, false, ktvpcsdk.ErrDomainNameWithUserID{})
 }
 
 func TestCreateFailureScopeProjectNameAlone(t *testing.T) {
 	options := tokens.AuthOptions{UserID: "myself", Password: "swordfish"}
 	scope := &tokens.Scope{ProjectName: "notenough"}
-	authTokenPostErr(t, options, scope, false, gophercloud.ErrScopeDomainIDOrDomainName{})
+	authTokenPostErr(t, options, scope, false, ktvpcsdk.ErrScopeDomainIDOrDomainName{})
 }
 
 func TestCreateFailureScopeProjectNameAndID(t *testing.T) {
 	options := tokens.AuthOptions{UserID: "myself", Password: "swordfish"}
 	scope := &tokens.Scope{ProjectName: "whoops", ProjectID: "toomuch", DomainID: "1234"}
-	authTokenPostErr(t, options, scope, false, gophercloud.ErrScopeProjectIDOrProjectName{})
+	authTokenPostErr(t, options, scope, false, ktvpcsdk.ErrScopeProjectIDOrProjectName{})
 }
 
 func TestCreateFailureScopeProjectIDAndDomainID(t *testing.T) {
 	options := tokens.AuthOptions{UserID: "myself", Password: "swordfish"}
 	scope := &tokens.Scope{ProjectID: "toomuch", DomainID: "notneeded"}
-	authTokenPostErr(t, options, scope, false, gophercloud.ErrScopeProjectIDAlone{})
+	authTokenPostErr(t, options, scope, false, ktvpcsdk.ErrScopeProjectIDAlone{})
 }
 
 func TestCreateFailureScopeProjectIDAndDomainNAme(t *testing.T) {
 	options := tokens.AuthOptions{UserID: "myself", Password: "swordfish"}
 	scope := &tokens.Scope{ProjectID: "toomuch", DomainName: "notneeded"}
-	authTokenPostErr(t, options, scope, false, gophercloud.ErrScopeProjectIDAlone{})
+	authTokenPostErr(t, options, scope, false, ktvpcsdk.ErrScopeProjectIDAlone{})
 }
 
 func TestCreateFailureScopeDomainIDAndDomainName(t *testing.T) {
 	options := tokens.AuthOptions{UserID: "myself", Password: "swordfish"}
 	scope := &tokens.Scope{DomainID: "toomuch", DomainName: "notneeded"}
-	authTokenPostErr(t, options, scope, false, gophercloud.ErrScopeDomainIDOrDomainName{})
+	authTokenPostErr(t, options, scope, false, ktvpcsdk.ErrScopeDomainIDOrDomainName{})
 }
 
 /*
 func TestCreateFailureEmptyScope(t *testing.T) {
 	options := tokens.AuthOptions{UserID: "myself", Password: "swordfish"}
 	scope := &tokens.Scope{}
-	authTokenPostErr(t, options, scope, false, gophercloud.ErrScopeEmpty{})
+	authTokenPostErr(t, options, scope, false, ktvpcsdk.ErrScopeEmpty{})
 }
 */
 
@@ -547,8 +547,8 @@ func TestGetRequest(t *testing.T) {
 	testhelper.SetupHTTP()
 	defer testhelper.TeardownHTTP()
 
-	client := gophercloud.ServiceClient{
-		ProviderClient: &gophercloud.ProviderClient{
+	client := ktvpcsdk.ServiceClient{
+		ProviderClient: &ktvpcsdk.ProviderClient{
 			TokenID: "12345abcdef",
 		},
 		Endpoint: testhelper.Endpoint(),
@@ -578,9 +578,9 @@ func TestGetRequest(t *testing.T) {
 	}
 }
 
-func prepareAuthTokenHandler(t *testing.T, expectedMethod string, status int) gophercloud.ServiceClient {
-	client := gophercloud.ServiceClient{
-		ProviderClient: &gophercloud.ProviderClient{
+func prepareAuthTokenHandler(t *testing.T, expectedMethod string, status int) ktvpcsdk.ServiceClient {
+	client := ktvpcsdk.ServiceClient{
+		ProviderClient: &ktvpcsdk.ProviderClient{
 			TokenID: "12345abcdef",
 		},
 		Endpoint: testhelper.Endpoint(),
@@ -664,8 +664,8 @@ func TestNoTokenInResponse(t *testing.T) {
 	testhelper.SetupHTTP()
 	defer testhelper.TeardownHTTP()
 
-	client := gophercloud.ServiceClient{
-		ProviderClient: &gophercloud.ProviderClient{},
+	client := ktvpcsdk.ServiceClient{
+		ProviderClient: &ktvpcsdk.ProviderClient{},
 		Endpoint:       testhelper.Endpoint(),
 	}
 

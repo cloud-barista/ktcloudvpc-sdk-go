@@ -2,30 +2,30 @@ package snapshots
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-func createURL(c *gophercloud.ServiceClient) string {
+func createURL(c *ktvpcsdk.ServiceClient) string {
 	return c.ServiceURL("snapshots")
 }
 
-func deleteURL(c *gophercloud.ServiceClient, id string) string {
+func deleteURL(c *ktvpcsdk.ServiceClient, id string) string {
 	return c.ServiceURL("snapshots", id)
 }
 
-func getURL(c *gophercloud.ServiceClient, id string) string {
+func getURL(c *ktvpcsdk.ServiceClient, id string) string {
 	return deleteURL(c, id)
 }
 
-func listURL(c *gophercloud.ServiceClient) string {
+func listURL(c *ktvpcsdk.ServiceClient) string {
 	return createURL(c)
 }
 
-func updateURL(c *gophercloud.ServiceClient, id string) string {
+func updateURL(c *ktvpcsdk.ServiceClient, id string) string {
 	return deleteURL(c, id)
 }
 
-func metadataURL(c *gophercloud.ServiceClient, id string) string {
+func metadataURL(c *ktvpcsdk.ServiceClient, id string) string {
 	return c.ServiceURL("snapshots", id, "metadata")
 }
 
-func updateMetadataURL(c *gophercloud.ServiceClient, id string) string {
+func updateMetadataURL(c *ktvpcsdk.ServiceClient, id string) string {
 	return metadataURL(c, id)
 }

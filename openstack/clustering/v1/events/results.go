@@ -27,7 +27,7 @@ type Event struct {
 
 // commonResult is the response of a base result.
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets any commonResult-based result as an Event.

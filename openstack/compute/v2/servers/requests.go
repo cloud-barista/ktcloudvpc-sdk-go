@@ -90,12 +90,12 @@ type ListOpts struct {
 
 // ToServerListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToServerListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List makes a request against the API to list servers accessible to you.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listDetailURL(client)
 	if opts != nil {
 		query, err := opts.ToServerListQuery()
@@ -192,7 +192,7 @@ type CreateOpts struct {								// Modified by B.T. Oh
 
 // ToServerCreateMap assembles a request body based on the contents of a CreateOpts.
 func (opts CreateOpts) ToServerCreateMap() (map[string]interface{}, error) {  	// Modified by B.T. Oh
-	b, err := gophercloud.BuildRequestBody(opts, "")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -240,38 +240,38 @@ func (opts CreateOpts) ToServerCreateMap() (map[string]interface{}, error) {  	/
 }
 
 // Create requests a server to be provisioned to the user in the current tenant.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	reqBody, err := opts.ToServerCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := client.Post(listURL(client), reqBody, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete requests that a server previously provisioned be removed from your
 // account.
-func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // ForceDelete forces the deletion of a server.
-func ForceDelete(client *gophercloud.ServiceClient, id string) (r ActionResult) {
+func ForceDelete(client *ktvpcsdk.ServiceClient, id string) (r ActionResult) {
 	resp, err := client.Post(actionURL(client, id), map[string]interface{}{"forceDelete": ""}, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Get requests details on a single server, by ID.
-func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(getURL(client, id), &r.Body, &gophercloud.RequestOpts{
+func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+	resp, err := client.Get(getURL(client, id), &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200, 203},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -298,33 +298,33 @@ type UpdateOpts struct {
 
 // ToServerUpdateMap formats an UpdateOpts structure into a request body.
 func (opts UpdateOpts) ToServerUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "server")
+	return ktvpcsdk.BuildRequestBody(opts, "server")
 }
 
 // Update requests that various attributes of the indicated server be changed.
-func Update(client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToServerUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Put(updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Put(updateURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // ChangeAdminPassword alters the administrator or root password for a specified
 // server.
-func ChangeAdminPassword(client *gophercloud.ServiceClient, id, newPassword string) (r ActionResult) {
+func ChangeAdminPassword(client *ktvpcsdk.ServiceClient, id, newPassword string) (r ActionResult) {
 	b := map[string]interface{}{
 		"changePassword": map[string]string{
 			"adminPass": newPassword,
 		},
 	}
 	resp, err := client.Post(actionURL(client, id), b, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -354,7 +354,7 @@ type RebootOpts struct {
 
 // ToServerRebootMap builds a body for the reboot request.
 func (opts RebootOpts) ToServerRebootMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "reboot")
+	return ktvpcsdk.BuildRequestBody(opts, "reboot")
 }
 
 /*
@@ -372,14 +372,14 @@ func (opts RebootOpts) ToServerRebootMap() (map[string]interface{}, error) {
 	E.g., in Linux, asking it to enter runlevel 6, or executing
 	"sudo shutdown -r now", or by asking Windows to rtart the machine.
 */
-func Reboot(client *gophercloud.ServiceClient, id string, opts RebootOptsBuilder) (r ActionResult) {
+func Reboot(client *ktvpcsdk.ServiceClient, id string, opts RebootOptsBuilder) (r ActionResult) {
 	b, err := opts.ToServerRebootMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := client.Post(actionURL(client, id), b, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -418,7 +418,7 @@ type RebuildOpts struct {
 
 // ToServerRebuildMap formats a RebuildOpts struct into a map for use in JSON
 func (opts RebuildOpts) ToServerRebuildMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -428,14 +428,14 @@ func (opts RebuildOpts) ToServerRebuildMap() (map[string]interface{}, error) {
 
 // Rebuild will reprovision the server according to the configuration options
 // provided in the RebuildOpts struct.
-func Rebuild(client *gophercloud.ServiceClient, id string, opts RebuildOptsBuilder) (r RebuildResult) {
+func Rebuild(client *ktvpcsdk.ServiceClient, id string, opts RebuildOptsBuilder) (r RebuildResult) {
 	b, err := opts.ToServerRebuildMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := client.Post(actionURL(client, id), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -455,7 +455,7 @@ type ResizeOpts struct {
 // ToServerResizeMap formats a ResizeOpts as a map that can be used as a JSON
 // request body for the Resize request.
 func (opts ResizeOpts) ToServerResizeMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "resize")
+	return ktvpcsdk.BuildRequestBody(opts, "resize")
 }
 
 // Resize instructs the provider to change the flavor of the server.
@@ -467,32 +467,32 @@ func (opts ResizeOpts) ToServerResizeMap() (map[string]interface{}, error) {
 // While in this state, you can explore the use of the new server's
 // configuration. If you like it, call ConfirmResize() to commit the resize
 // permanently. Otherwise, call RevertResize() to restore the old configuration.
-func Resize(client *gophercloud.ServiceClient, id string, opts ResizeOptsBuilder) (r ActionResult) {
+func Resize(client *ktvpcsdk.ServiceClient, id string, opts ResizeOptsBuilder) (r ActionResult) {
 	b, err := opts.ToServerResizeMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := client.Post(actionURL(client, id), b, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // ConfirmResize confirms a previous resize operation on a server.
 // See Resize() for more details.
-func ConfirmResize(client *gophercloud.ServiceClient, id string) (r ActionResult) {
-	resp, err := client.Post(actionURL(client, id), map[string]interface{}{"confirmResize": nil}, nil, &gophercloud.RequestOpts{
+func ConfirmResize(client *ktvpcsdk.ServiceClient, id string) (r ActionResult) {
+	resp, err := client.Post(actionURL(client, id), map[string]interface{}{"confirmResize": nil}, nil, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{201, 202, 204},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // RevertResize cancels a previous resize operation on a server.
 // See Resize() for more details.
-func RevertResize(client *gophercloud.ServiceClient, id string) (r ActionResult) {
+func RevertResize(client *ktvpcsdk.ServiceClient, id string) (r ActionResult) {
 	resp, err := client.Post(actionURL(client, id), map[string]interface{}{"revertResize": nil}, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -522,23 +522,23 @@ func (opts MetadataOpts) ToMetadataUpdateMap() (map[string]interface{}, error) {
 // Note: Using this operation will erase any already-existing metadata and
 // create the new metadata provided. To keep any already-existing metadata,
 // use the UpdateMetadatas or UpdateMetadata function.
-func ResetMetadata(client *gophercloud.ServiceClient, id string, opts ResetMetadataOptsBuilder) (r ResetMetadataResult) {
+func ResetMetadata(client *ktvpcsdk.ServiceClient, id string, opts ResetMetadataOptsBuilder) (r ResetMetadataResult) {
 	b, err := opts.ToMetadataResetMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Put(metadataURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Put(metadataURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Metadata requests all the metadata for the given server ID.
-func Metadata(client *gophercloud.ServiceClient, id string) (r GetMetadataResult) {
+func Metadata(client *ktvpcsdk.ServiceClient, id string) (r GetMetadataResult) {
 	resp, err := client.Get(metadataURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -551,16 +551,16 @@ type UpdateMetadataOptsBuilder interface {
 // UpdateMetadata updates (or creates) all the metadata specified by opts for
 // the given server ID. This operation does not affect already-existing metadata
 // that is not specified by opts.
-func UpdateMetadata(client *gophercloud.ServiceClient, id string, opts UpdateMetadataOptsBuilder) (r UpdateMetadataResult) {
+func UpdateMetadata(client *ktvpcsdk.ServiceClient, id string, opts UpdateMetadataOptsBuilder) (r UpdateMetadataResult) {
 	b, err := opts.ToMetadataUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(metadataURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(metadataURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -577,7 +577,7 @@ type MetadatumOpts map[string]string
 // contents of a MetadataumOpts.
 func (opts MetadatumOpts) ToMetadatumCreateMap() (map[string]interface{}, string, error) {
 	if len(opts) != 1 {
-		err := gophercloud.ErrInvalidInput{}
+		err := ktvpcsdk.ErrInvalidInput{}
 		err.Argument = "servers.MetadatumOpts"
 		err.Info = "Must have 1 and only 1 key-value pair"
 		return nil, "", err
@@ -592,38 +592,38 @@ func (opts MetadatumOpts) ToMetadatumCreateMap() (map[string]interface{}, string
 
 // CreateMetadatum will create or update the key-value pair with the given key
 // for the given server ID.
-func CreateMetadatum(client *gophercloud.ServiceClient, id string, opts MetadatumOptsBuilder) (r CreateMetadatumResult) {
+func CreateMetadatum(client *ktvpcsdk.ServiceClient, id string, opts MetadatumOptsBuilder) (r CreateMetadatumResult) {
 	b, key, err := opts.ToMetadatumCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Put(metadatumURL(client, id, key), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Put(metadatumURL(client, id, key), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Metadatum requests the key-value pair with the given key for the given
 // server ID.
-func Metadatum(client *gophercloud.ServiceClient, id, key string) (r GetMetadatumResult) {
+func Metadatum(client *ktvpcsdk.ServiceClient, id, key string) (r GetMetadatumResult) {
 	resp, err := client.Get(metadatumURL(client, id, key), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // DeleteMetadatum will delete the key-value pair with the given key for the
 // given server ID.
-func DeleteMetadatum(client *gophercloud.ServiceClient, id, key string) (r DeleteMetadatumResult) {
+func DeleteMetadatum(client *ktvpcsdk.ServiceClient, id, key string) (r DeleteMetadatumResult) {
 	resp, err := client.Delete(metadatumURL(client, id, key), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // ListAddresses makes a request against the API to list the servers IP
 // addresses.
-func ListAddresses(client *gophercloud.ServiceClient, id string) pagination.Pager {
+func ListAddresses(client *ktvpcsdk.ServiceClient, id string) pagination.Pager {
 	return pagination.NewPager(client, listAddressesURL(client, id), func(r pagination.PageResult) pagination.Page {
 		return AddressPage{pagination.SinglePageBase(r)}
 	})
@@ -631,7 +631,7 @@ func ListAddresses(client *gophercloud.ServiceClient, id string) pagination.Page
 
 // ListAddressesByNetwork makes a request against the API to list the servers IP
 // addresses for the given network.
-func ListAddressesByNetwork(client *gophercloud.ServiceClient, id, network string) pagination.Pager {
+func ListAddressesByNetwork(client *ktvpcsdk.ServiceClient, id, network string) pagination.Pager {
 	return pagination.NewPager(client, listAddressesByNetworkURL(client, id, network), func(r pagination.PageResult) pagination.Page {
 		return NetworkAddressPage{pagination.SinglePageBase(r)}
 	})
@@ -656,29 +656,29 @@ type CreateImageOpts struct {
 // ToServerCreateImageMap formats a CreateImageOpts structure into a request
 // body.
 func (opts CreateImageOpts) ToServerCreateImageMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "createImage")
+	return ktvpcsdk.BuildRequestBody(opts, "createImage")
 }
 
 // CreateImage makes a request against the nova API to schedule an image to be
 // created of the server
-func CreateImage(client *gophercloud.ServiceClient, id string, opts CreateImageOptsBuilder) (r CreateImageResult) {
+func CreateImage(client *ktvpcsdk.ServiceClient, id string, opts CreateImageOptsBuilder) (r CreateImageResult) {
 	b, err := opts.ToServerCreateImageMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(actionURL(client, id), b, nil, &gophercloud.RequestOpts{
+	resp, err := client.Post(actionURL(client, id), b, nil, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // GetPassword makes a request against the nova API to get the encrypted
 // administrative password.
-func GetPassword(client *gophercloud.ServiceClient, serverId string) (r GetPasswordResult) {
+func GetPassword(client *ktvpcsdk.ServiceClient, serverId string) (r GetPasswordResult) {
 	resp, err := client.Get(passwordURL(client, serverId), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -697,19 +697,19 @@ type ShowConsoleOutputOpts struct {
 
 // ToServerShowConsoleOutputMap formats a ShowConsoleOutputOpts structure into a request body.
 func (opts ShowConsoleOutputOpts) ToServerShowConsoleOutputMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "os-getConsoleOutput")
+	return ktvpcsdk.BuildRequestBody(opts, "os-getConsoleOutput")
 }
 
 // ShowConsoleOutput makes a request against the nova API to get console log from the server
-func ShowConsoleOutput(client *gophercloud.ServiceClient, id string, opts ShowConsoleOutputOptsBuilder) (r ShowConsoleOutputResult) {
+func ShowConsoleOutput(client *ktvpcsdk.ServiceClient, id string, opts ShowConsoleOutputOptsBuilder) (r ShowConsoleOutputResult) {
 	b, err := opts.ToServerShowConsoleOutputMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(actionURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(actionURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

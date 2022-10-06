@@ -97,7 +97,7 @@ func TestOAuth1CRUD(t *testing.T) {
 	}
 }
 
-func oauth1MethodTest(t *testing.T, client *gophercloud.ServiceClient, consumer *oauth1.Consumer, method oauth1.SignatureMethod, user *tokens.User, project *tokens.Project, roles []tokens.Role, identityEndpoint string) {
+func oauth1MethodTest(t *testing.T, client *ktvpcsdk.ServiceClient, consumer *oauth1.Consumer, method oauth1.SignatureMethod, user *tokens.User, project *tokens.Project, roles []tokens.Role, identityEndpoint string) {
 	// Request a token
 	requestTokenOpts := oauth1.RequestTokenOpts{
 		OAuthConsumerKey:     consumer.ID,
@@ -205,7 +205,7 @@ func oauth1MethodTest(t *testing.T, client *gophercloud.ServiceClient, consumer 
 		OAuthTokenSecret:     accessToken.OAuthTokenSecret,
 		OAuthSignatureMethod: method,
 	}
-	err = openstack.AuthenticateV3(newClient.ProviderClient, authOptions, gophercloud.EndpointOpts{})
+	err = openstack.AuthenticateV3(newClient.ProviderClient, authOptions, ktvpcsdk.EndpointOpts{})
 	th.AssertNoErr(t, err)
 
 	// Test OAuth1 token extract

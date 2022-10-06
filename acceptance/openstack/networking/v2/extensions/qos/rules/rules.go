@@ -10,7 +10,7 @@ import (
 
 // CreateBandwidthLimitRule will create a QoS BandwidthLimitRule associated with the provided QoS policy.
 // An error will be returned if the QoS rule could not be created.
-func CreateBandwidthLimitRule(t *testing.T, client *gophercloud.ServiceClient, policyID string) (*rules.BandwidthLimitRule, error) {
+func CreateBandwidthLimitRule(t *testing.T, client *ktvpcsdk.ServiceClient, policyID string) (*rules.BandwidthLimitRule, error) {
 	maxKBps := 3000
 	maxBurstKBps := 300
 
@@ -36,7 +36,7 @@ func CreateBandwidthLimitRule(t *testing.T, client *gophercloud.ServiceClient, p
 
 // CreateDSCPMarkingRule will create a QoS DSCPMarkingRule associated with the provided QoS policy.
 // An error will be returned if the QoS rule could not be created.
-func CreateDSCPMarkingRule(t *testing.T, client *gophercloud.ServiceClient, policyID string) (*rules.DSCPMarkingRule, error) {
+func CreateDSCPMarkingRule(t *testing.T, client *ktvpcsdk.ServiceClient, policyID string) (*rules.DSCPMarkingRule, error) {
 	dscpMark := 26
 
 	createOpts := rules.CreateDSCPMarkingRuleOpts{
@@ -59,7 +59,7 @@ func CreateDSCPMarkingRule(t *testing.T, client *gophercloud.ServiceClient, poli
 
 // CreateMinimumBandwidthRule will create a QoS MinimumBandwidthRule associated with the provided QoS policy.
 // An error will be returned if the QoS rule could not be created.
-func CreateMinimumBandwidthRule(t *testing.T, client *gophercloud.ServiceClient, policyID string) (*rules.MinimumBandwidthRule, error) {
+func CreateMinimumBandwidthRule(t *testing.T, client *ktvpcsdk.ServiceClient, policyID string) (*rules.MinimumBandwidthRule, error) {
 	minKBps := 1000
 
 	createOpts := rules.CreateMinimumBandwidthRuleOpts{

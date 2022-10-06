@@ -25,19 +25,19 @@ type EvacuateOpts struct {
 
 // ToServerGroupCreateMap constructs a request body from CreateOpts.
 func (opts EvacuateOpts) ToEvacuateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "evacuate")
+	return ktvpcsdk.BuildRequestBody(opts, "evacuate")
 }
 
 // Evacuate will Evacuate a failed instance to another host.
-func Evacuate(client *gophercloud.ServiceClient, id string, opts EvacuateOptsBuilder) (r EvacuateResult) {
+func Evacuate(client *ktvpcsdk.ServiceClient, id string, opts EvacuateOptsBuilder) (r EvacuateResult) {
 	b, err := opts.ToEvacuateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(extensions.ActionURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(extensions.ActionURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

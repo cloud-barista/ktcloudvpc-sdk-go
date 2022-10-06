@@ -11,7 +11,7 @@ import (
 )
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a function that accepts a result and extracts a subnetpool resource.
@@ -44,7 +44,7 @@ type UpdateResult struct {
 // DeleteResult represents the result of a delete operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // SubnetPool represents a Neutron subnetpool.
@@ -126,8 +126,8 @@ func (r *SubnetPool) UnmarshalJSON(b []byte) error {
 		MinPrefixLen     interface{} `json:"min_prefixlen"`
 		MaxPrefixLen     interface{} `json:"max_prefixlen"`
 
-		CreatedAt gophercloud.JSONRFC3339NoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339NoZ `json:"updated_at"`
+		CreatedAt ktvpcsdk.JSONRFC3339NoZ `json:"created_at"`
+		UpdatedAt ktvpcsdk.JSONRFC3339NoZ `json:"updated_at"`
 	}
 
 	err := json.Unmarshal(b, &s1)
@@ -240,13 +240,13 @@ type SubnetPoolPage struct {
 // In order to do this, it needs to construct the next page's URL.
 func (r SubnetPoolPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"subnetpools_links"`
+		Links []ktvpcsdk.Link `json:"subnetpools_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // IsEmpty determines whether or not a SubnetPoolPage is empty.

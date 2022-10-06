@@ -29,12 +29,12 @@ type ListOpts struct {
 
 // ToPoolsListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToPoolsListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List makes a request against the API to list pool information.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := poolsListURL(client)
 	if opts != nil {
 		query, err := opts.ToPoolsListQuery()
@@ -72,12 +72,12 @@ type ListDetailOpts struct {
 
 // ToPoolsListQuery formats a ListDetailOpts into a query string.
 func (opts ListDetailOpts) ToPoolsListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // ListDetail makes a request against the API to list detailed pool information.
-func ListDetail(client *gophercloud.ServiceClient, opts ListDetailOptsBuilder) pagination.Pager {
+func ListDetail(client *ktvpcsdk.ServiceClient, opts ListDetailOptsBuilder) pagination.Pager {
 	url := poolsListDetailURL(client)
 	if opts != nil {
 		query, err := opts.ToPoolsListQuery()

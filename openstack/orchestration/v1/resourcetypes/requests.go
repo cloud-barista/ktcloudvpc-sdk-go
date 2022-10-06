@@ -46,12 +46,12 @@ type ListOpts struct {
 
 // ToResourceTypeListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToResourceTypeListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List makes a request against the API to list available resource types.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) (r ListResult) {
+func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) (r ListResult) {
 	url := listURL(client)
 
 	if opts == nil {
@@ -65,14 +65,14 @@ func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) (r ListResult
 	url += query
 
 	resp, err := client.Get(url, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // GetSchema retreives the schema for a given resource type.
-func GetSchema(client *gophercloud.ServiceClient, resourceType string) (r GetSchemaResult) {
+func GetSchema(client *ktvpcsdk.ServiceClient, resourceType string) (r GetSchemaResult) {
 	resp, err := client.Get(getSchemaURL(client, resourceType), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -99,12 +99,12 @@ func (opts GenerateTemplateOpts) ToGenerateTemplateQuery() (string, error) {
 	if opts.TemplateType == "" {
 		opts.TemplateType = TemplateTypeHOT
 	}
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // GenerateTemplate retreives an example template for a given resource type.
-func GenerateTemplate(client *gophercloud.ServiceClient, resourceType string, opts GenerateTemplateOptsBuilder) (r TemplateResult) {
+func GenerateTemplate(client *ktvpcsdk.ServiceClient, resourceType string, opts GenerateTemplateOptsBuilder) (r TemplateResult) {
 	url := generateTemplateURL(client, resourceType)
 	if opts == nil {
 		opts = GenerateTemplateOpts{}
@@ -116,6 +116,6 @@ func GenerateTemplate(client *gophercloud.ServiceClient, resourceType string, op
 	}
 	url += query
 	resp, err := client.Get(url, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

@@ -36,7 +36,7 @@ type ListOpts struct {
 
 // ToGroupListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToGroupListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	if err != nil {
 		return "", err
 	}
@@ -49,7 +49,7 @@ func (opts ListOpts) ToGroupListQuery() (string, error) {
 //
 // Default group settings return only those firewall groups that are owned by the
 // tenant who submits the request, unless an admin user submits the request.
-func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := rootURL(c)
 
 	if opts != nil {
@@ -66,7 +66,7 @@ func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 }
 
 // Get retrieves a particular firewall group based on its unique ID.
-func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
 	_, r.Err = c.Get(resourceURL(c, id), &r.Body, nil)
 	return
 }
@@ -95,11 +95,11 @@ type CreateOpts struct {
 
 // ToFirewallGroupCreateMap casts a CreateOpts struct to a map.
 func (opts CreateOpts) ToFirewallGroupCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "firewall_group")
+	return ktvpcsdk.BuildRequestBody(opts, "firewall_group")
 }
 
 // Create accepts a CreateOpts struct and uses the values to create a new firewall group
-func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToFirewallGroupCreateMap()
 	if err != nil {
 		r.Err = err
@@ -130,24 +130,24 @@ type UpdateOpts struct {
 
 // ToFirewallGroupUpdateMap casts a CreateOpts struct to a map.
 func (opts UpdateOpts) ToFirewallGroupUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "firewall_group")
+	return ktvpcsdk.BuildRequestBody(opts, "firewall_group")
 }
 
 // Update allows firewall groups to be updated.
-func Update(c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToFirewallGroupUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	_, r.Err = c.Put(resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
+	_, r.Err = c.Put(resourceURL(c, id), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
 	return
 }
 
 // Delete will permanently delete a particular firewall group based on its unique ID.
-func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
+func Delete(c *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
 	_, r.Err = c.Delete(resourceURL(c, id), nil)
 	return
 }

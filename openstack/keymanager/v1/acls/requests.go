@@ -5,16 +5,16 @@ import (
 )
 
 // GetContainerACL retrieves the ACL of a container.
-func GetContainerACL(client *gophercloud.ServiceClient, containerID string) (r ACLResult) {
+func GetContainerACL(client *ktvpcsdk.ServiceClient, containerID string) (r ACLResult) {
 	resp, err := client.Get(containerURL(client, containerID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // GetSecretACL retrieves the ACL of a secret.
-func GetSecretACL(client *gophercloud.ServiceClient, secretID string) (r ACLResult) {
+func GetSecretACL(client *ktvpcsdk.ServiceClient, secretID string) (r ACLResult) {
 	resp, err := client.Get(secretURL(client, secretID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -43,7 +43,7 @@ type SetOpts []SetOpt
 func (opts SetOpts) ToACLSetMap() (map[string]interface{}, error) {
 	b := make(map[string]interface{})
 	for _, v := range opts {
-		m, err := gophercloud.BuildRequestBody(v, v.Type)
+		m, err := ktvpcsdk.BuildRequestBody(v, v.Type)
 		if err != nil {
 			return nil, err
 		}
@@ -53,79 +53,79 @@ func (opts SetOpts) ToACLSetMap() (map[string]interface{}, error) {
 }
 
 // SetContainerACL will set an ACL on a container.
-func SetContainerACL(client *gophercloud.ServiceClient, containerID string, opts SetOptsBuilder) (r ACLRefResult) {
+func SetContainerACL(client *ktvpcsdk.ServiceClient, containerID string, opts SetOptsBuilder) (r ACLRefResult) {
 	b, err := opts.ToACLSetMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Put(containerURL(client, containerID), &b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Put(containerURL(client, containerID), &b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // SetSecretACL will set an ACL on a secret.
-func SetSecretACL(client *gophercloud.ServiceClient, secretID string, opts SetOptsBuilder) (r ACLRefResult) {
+func SetSecretACL(client *ktvpcsdk.ServiceClient, secretID string, opts SetOptsBuilder) (r ACLRefResult) {
 	b, err := opts.ToACLSetMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Put(secretURL(client, secretID), &b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Put(secretURL(client, secretID), &b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // UpdateContainerACL will update an ACL on a container.
-func UpdateContainerACL(client *gophercloud.ServiceClient, containerID string, opts SetOptsBuilder) (r ACLRefResult) {
+func UpdateContainerACL(client *ktvpcsdk.ServiceClient, containerID string, opts SetOptsBuilder) (r ACLRefResult) {
 	b, err := opts.ToACLSetMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Patch(containerURL(client, containerID), &b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Patch(containerURL(client, containerID), &b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // UpdateSecretACL will update an ACL on a secret.
-func UpdateSecretACL(client *gophercloud.ServiceClient, secretID string, opts SetOptsBuilder) (r ACLRefResult) {
+func UpdateSecretACL(client *ktvpcsdk.ServiceClient, secretID string, opts SetOptsBuilder) (r ACLRefResult) {
 	b, err := opts.ToACLSetMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Patch(secretURL(client, secretID), &b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Patch(secretURL(client, secretID), &b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // DeleteContainerACL will delete an ACL from a conatiner.
-func DeleteContainerACL(client *gophercloud.ServiceClient, containerID string) (r DeleteResult) {
-	resp, err := client.Delete(containerURL(client, containerID), &gophercloud.RequestOpts{
+func DeleteContainerACL(client *ktvpcsdk.ServiceClient, containerID string) (r DeleteResult) {
+	resp, err := client.Delete(containerURL(client, containerID), &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // DeleteSecretACL will delete an ACL from a secret.
-func DeleteSecretACL(client *gophercloud.ServiceClient, secretID string) (r DeleteResult) {
-	resp, err := client.Delete(secretURL(client, secretID), &gophercloud.RequestOpts{
+func DeleteSecretACL(client *ktvpcsdk.ServiceClient, secretID string) (r DeleteResult) {
+	resp, err := client.Delete(secretURL(client, secretID), &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

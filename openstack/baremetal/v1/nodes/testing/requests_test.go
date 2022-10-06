@@ -164,7 +164,7 @@ func TestUpdateRequiredOp(t *testing.T) {
 		},
 	}).Extract()
 
-	if _, ok := err.(gophercloud.ErrMissingInput); !ok {
+	if _, ok := err.(ktvpcsdk.ErrMissingInput); !ok {
 		t.Fatal("ErrMissingInput was expected to occur")
 	}
 
@@ -179,7 +179,7 @@ func TestUpdateRequiredPath(t *testing.T) {
 		},
 	}).Extract()
 
-	if _, ok := err.(gophercloud.ErrMissingInput); !ok {
+	if _, ok := err.(ktvpcsdk.ErrMissingInput); !ok {
 		t.Fatal("ErrMissingInput was expected to occur")
 	}
 }
@@ -334,7 +334,7 @@ func TestNodeChangeProvisionStateCleanWithConflict(t *testing.T) {
 		},
 	}).ExtractErr()
 
-	if _, ok := err.(gophercloud.ErrDefault409); !ok {
+	if _, ok := err.(ktvpcsdk.ErrDefault409); !ok {
 		t.Fatal("ErrDefault409 was expected to occur")
 	}
 }
@@ -353,7 +353,7 @@ func TestCleanStepRequiresInterface(t *testing.T) {
 		},
 	}).ExtractErr()
 
-	if _, ok := err.(gophercloud.ErrMissingInput); !ok {
+	if _, ok := err.(ktvpcsdk.ErrMissingInput); !ok {
 		t.Fatal("ErrMissingInput was expected to occur")
 	}
 }
@@ -372,7 +372,7 @@ func TestCleanStepRequiresStep(t *testing.T) {
 		},
 	}).ExtractErr()
 
-	if _, ok := err.(gophercloud.ErrMissingInput); !ok {
+	if _, ok := err.(ktvpcsdk.ErrMissingInput); !ok {
 		t.Fatal("ErrMissingInput was expected to occur")
 	}
 }
@@ -404,7 +404,7 @@ func TestChangePowerStateWithConflict(t *testing.T) {
 
 	c := client.ServiceClient()
 	err := nodes.ChangePowerState(c, "1234asdf", opts).ExtractErr()
-	if _, ok := err.(gophercloud.ErrDefault409); !ok {
+	if _, ok := err.(ktvpcsdk.ErrDefault409); !ok {
 		t.Fatal("ErrDefault409 was expected to occur")
 	}
 }
@@ -647,7 +647,7 @@ func TestCreateSubscriptionAllParameters(t *testing.T) {
 	}
 	createOpt := nodes.CreateSubscriptionOpts{
 		Destination: "https://someurl",
-		Context:     "gophercloud",
+		Context:     "ktvpcsdk",
 		Protocol:    "Redfish",
 		EventTypes:  []string{"Alert"},
 		HttpHeaders: []map[string]string{{"Content-Type": "application/json"}},

@@ -32,12 +32,12 @@ type CreateOpts struct {
 
 // ToWorkflowCreateParams constructs a request query string from CreateOpts.
 func (opts CreateOpts) ToWorkflowCreateParams() (io.Reader, string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return opts.Definition, q.String(), err
 }
 
 // Create requests the creation of a new execution.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	url := createURL(client)
 	var b io.Reader
 	if opts != nil {
@@ -50,28 +50,28 @@ func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r Create
 		b = tmpB
 	}
 
-	resp, err := client.Post(url, b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(url, b, &r.Body, &ktvpcsdk.RequestOpts{
 		MoreHeaders: map[string]string{
 			"Content-Type": "text/plain",
 			"Accept":       "", // Drop default JSON Accept header
 		},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes the specified execution.
-func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Get retrieves details of a single execution.
 // Use Extract to convert its result into an Workflow.
-func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
 	resp, err := client.Get(getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -136,7 +136,7 @@ type ListDateFilter struct {
 }
 
 func (l ListDateFilter) String() string {
-	v := l.Value.Format(gophercloud.RFC3339ZNoTNoZ)
+	v := l.Value.Format(ktvpcsdk.RFC3339ZNoTNoZ)
 	if l.Filter != "" {
 		return fmt.Sprintf("%s:%s", l.Filter, v)
 	}
@@ -169,7 +169,7 @@ const (
 
 // ToWorkflowListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToWorkflowListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	if err != nil {
 		return "", err
 	}
@@ -198,7 +198,7 @@ func (opts ListOpts) ToWorkflowListQuery() (string, error) {
 
 // List performs a call to list cron triggers.
 // You may provide options to filter the results.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToWorkflowListQuery()

@@ -6,7 +6,7 @@ import (
 )
 
 type nodeResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets any nodeResult as a Node, if possible.
@@ -254,13 +254,13 @@ func (r NodePage) IsEmpty() (bool, error) {
 // next page of results.
 func (r NodePage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"nodes_links"`
+		Links []ktvpcsdk.Link `json:"nodes_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // ExtractNodes interprets the results of a single page from a List() call,
@@ -291,79 +291,79 @@ type UpdateResult struct {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // ValidateResult is the response from a Validate operation. Call its Extract
 // method to interpret it as a NodeValidation struct.
 type ValidateResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // InjectNMIResult is the response from an InjectNMI operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type InjectNMIResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // BootDeviceResult is the response from a GetBootDevice operation. Call its Extract
 // method to interpret it as a BootDeviceOpts struct.
 type BootDeviceResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // SetBootDeviceResult is the response from a SetBootDevice operation. Call its Extract
 // method to interpret it as a BootDeviceOpts struct.
 type SetBootDeviceResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // SupportedBootDeviceResult is the response from a GetSupportedBootDevices operation. Call its Extract
 // method to interpret it as an array of supported boot device values.
 type SupportedBootDeviceResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // ChangePowerStateResult is the response from a ChangePowerState operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type ChangePowerStateResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // ListBIOSSettingsResult is the response from a ListBIOSSettings operation. Call its Extract
 // method to interpret it as an array of BIOSSetting structs.
 type ListBIOSSettingsResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // GetBIOSSettingResult is the response from a GetBIOSSetting operation. Call its Extract
 // method to interpret it as a BIOSSetting struct.
 type GetBIOSSettingResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // VendorPassthruMethodsResult is the response from a GetVendorPassthruMethods operation. Call its Extract
 // method to interpret it as an array of allowed vendor methods.
 type VendorPassthruMethodsResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // GetAllSubscriptionsVendorPassthruResult is the response from GetAllSubscriptions operation. Call its
 // Extract method to interpret it as a GetAllSubscriptionsVendorPassthru struct.
 type GetAllSubscriptionsVendorPassthruResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // SubscriptionVendorPassthruResult is the response from GetSubscription and CreateSubscription operation. Call its Extract
 // method to interpret it as a SubscriptionVendorPassthru struct.
 type SubscriptionVendorPassthruResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // DeleteSubscriptionVendorPassthruResult is the response from DeleteSubscription operation. Call its
 // ExtractErr method to determine if the call succeeded of failed.
 type DeleteSubscriptionVendorPassthruResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // Each element in the response will contain a “result” variable, which will have a value of “true” or “false”, and
@@ -437,7 +437,7 @@ type SingleBIOSSetting struct {
 // ChangeStateResult is the response from any state change operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type ChangeStateResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 type VendorPassthruMethods struct {
@@ -505,5 +505,5 @@ type SubscriptionVendorPassthru struct {
 // SetMaintenanceResult is the response from a SetMaintenance operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type SetMaintenanceResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }

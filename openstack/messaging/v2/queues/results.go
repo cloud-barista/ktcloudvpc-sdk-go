@@ -9,7 +9,7 @@ import (
 
 // commonResult is the response of a base result.
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // QueuePage contains a single page of all queues from a List operation.
@@ -19,7 +19,7 @@ type QueuePage struct {
 
 // CreateResult is the response of a Create operation.
 type CreateResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // UpdateResult is the response of a Update operation.
@@ -34,23 +34,23 @@ type GetResult struct {
 
 // StatResult contains the result of a Share operation.
 type StatResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // DeleteResult is the result from a Delete operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // ShareResult contains the result of a Share operation.
 type ShareResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // PurgeResult is the response of a Purge operation.
 type PurgeResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // Queue represents a messaging queue.
@@ -158,14 +158,14 @@ func (r QueuePage) IsEmpty() (bool, error) {
 // next page of results.
 func (r QueuePage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"links"`
+		Links []ktvpcsdk.Link `json:"links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
 
-	next, err := gophercloud.ExtractNextURL(s.Links)
+	next, err := ktvpcsdk.ExtractNextURL(s.Links)
 	if err != nil {
 		return "", err
 	}
@@ -207,7 +207,7 @@ func (r *QueueDetails) UnmarshalJSON(b []byte) error {
 			return err
 		}
 		if resultMap, ok := result.(map[string]interface{}); ok {
-			r.Extra = gophercloud.RemainingKeys(QueueDetails{}, resultMap)
+			r.Extra = ktvpcsdk.RemainingKeys(QueueDetails{}, resultMap)
 		}
 	}
 

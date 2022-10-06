@@ -33,7 +33,7 @@ version: '2.0'
 
 // CreateWorkflow creates a workflow on Mistral API.
 // The created workflow is a dummy workflow that performs a simple echo.
-func CreateWorkflow(t *testing.T, client *gophercloud.ServiceClient) (*workflows.Workflow, error) {
+func CreateWorkflow(t *testing.T, client *ktvpcsdk.ServiceClient) (*workflows.Workflow, error) {
 	workflowName := tools.RandomString("workflow_echo_", 5)
 
 	definition := GetEchoWorkflowDefinition(workflowName)
@@ -61,7 +61,7 @@ func CreateWorkflow(t *testing.T, client *gophercloud.ServiceClient) (*workflows
 }
 
 // DeleteWorkflow deletes the given workflow.
-func DeleteWorkflow(t *testing.T, client *gophercloud.ServiceClient, workflow *workflows.Workflow) {
+func DeleteWorkflow(t *testing.T, client *ktvpcsdk.ServiceClient, workflow *workflows.Workflow) {
 	err := workflows.Delete(client, workflow.ID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete workflows %s: %v", workflow.Name, err)
@@ -71,7 +71,7 @@ func DeleteWorkflow(t *testing.T, client *gophercloud.ServiceClient, workflow *w
 }
 
 // GetWorkflow gets a workflow.
-func GetWorkflow(t *testing.T, client *gophercloud.ServiceClient, id string) (*workflows.Workflow, error) {
+func GetWorkflow(t *testing.T, client *ktvpcsdk.ServiceClient, id string) (*workflows.Workflow, error) {
 	workflow, err := workflows.Get(client, id).Extract()
 	if err != nil {
 		t.Fatalf("Unable to get workflow %s: %v", id, err)
@@ -81,7 +81,7 @@ func GetWorkflow(t *testing.T, client *gophercloud.ServiceClient, id string) (*w
 }
 
 // ListWorkflows lists the workflows.
-func ListWorkflows(t *testing.T, client *gophercloud.ServiceClient, opts workflows.ListOptsBuilder) ([]workflows.Workflow, error) {
+func ListWorkflows(t *testing.T, client *ktvpcsdk.ServiceClient, opts workflows.ListOptsBuilder) ([]workflows.Workflow, error) {
 	allPages, err := workflows.List(client, opts).AllPages()
 	if err != nil {
 		t.Fatalf("Unable to list workflows: %v", err)

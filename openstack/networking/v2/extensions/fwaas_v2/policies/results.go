@@ -17,11 +17,11 @@ type Policy struct {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 type shortResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a function that accepts a result and extracts a firewall policy.
@@ -51,13 +51,13 @@ type PolicyPage struct {
 // In order to do this, it needs to construct the next page's URL.
 func (r PolicyPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"firewall_policies_links"`
+		Links []ktvpcsdk.Link `json:"firewall_policies_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether a PolicyPage struct is empty.
@@ -89,7 +89,7 @@ type UpdateResult struct {
 
 // DeleteResult represents the result of a delete operation.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // CreateResult represents the result of a create operation.

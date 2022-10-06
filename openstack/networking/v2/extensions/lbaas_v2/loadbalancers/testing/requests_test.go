@@ -60,7 +60,7 @@ func TestCreateLoadbalancer(t *testing.T) {
 
 	actual, err := loadbalancers.Create(fake.ServiceClient(), loadbalancers.CreateOpts{
 		Name:         "db_lb",
-		AdminStateUp: gophercloud.Enabled,
+		AdminStateUp: ktvpcsdk.Enabled,
 		VipSubnetID:  "9cedb85d-0759-4898-8a4b-fa5a5ea10086",
 		VipAddress:   "10.30.176.48",
 		FlavorID:     "bba40eb2-ee8c-11e9-81b4-2a2ae2dbcce4",

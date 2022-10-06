@@ -99,7 +99,7 @@ func (opts CreateOptsExt) ToServerCreateMap() (map[string]interface{}, error) {
 	}
 
 	if len(opts.BlockDevice) == 0 {
-		err := gophercloud.ErrMissingInput{}
+		err := ktvpcsdk.ErrMissingInput{}
 		err.Argument = "bootfromvolume.CreateOptsExt.BlockDevice"
 		return nil, err
 	}
@@ -109,7 +109,7 @@ func (opts CreateOptsExt) ToServerCreateMap() (map[string]interface{}, error) {
 	blockDevice := make([]map[string]interface{}, len(opts.BlockDevice))
 
 	for i, bd := range opts.BlockDevice {
-		b, err := gophercloud.BuildRequestBody(bd, "")
+		b, err := ktvpcsdk.BuildRequestBody(bd, "")
 		if err != nil {
 			return nil, err
 		}
@@ -121,15 +121,15 @@ func (opts CreateOptsExt) ToServerCreateMap() (map[string]interface{}, error) {
 }
 
 // Create requests the creation of a server from the given block device mapping.
-func Create(client *gophercloud.ServiceClient, opts servers.CreateOptsBuilder) (r servers.CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts servers.CreateOptsBuilder) (r servers.CreateResult) {
 	b, err := opts.ToServerCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200, 202},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

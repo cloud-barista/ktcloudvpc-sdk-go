@@ -92,13 +92,13 @@ type VIPPage struct {
 // to do this, it needs to construct the next page's URL.
 func (r VIPPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"vips_links"`
+		Links []ktvpcsdk.Link `json:"vips_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether a VIPPage struct is empty.
@@ -119,7 +119,7 @@ func ExtractVIPs(r pagination.Page) ([]VirtualIP, error) {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a function that accepts a result and extracts a VirtualIP.
@@ -152,5 +152,5 @@ type UpdateResult struct {
 // DeleteResult represents the result of a delete operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }

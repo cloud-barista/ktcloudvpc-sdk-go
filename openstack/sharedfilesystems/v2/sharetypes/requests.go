@@ -34,29 +34,29 @@ type ExtraSpecsOpts struct {
 // ToShareTypeCreateMap assembles a request body based on the contents of a
 // CreateOpts.
 func (opts CreateOpts) ToShareTypeCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "share_type")
+	return ktvpcsdk.BuildRequestBody(opts, "share_type")
 }
 
 // Create will create a new ShareType based on the values in CreateOpts. To
 // extract the ShareType object from the response, call the Extract method
 // on the CreateResult.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToShareTypeCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200, 202},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete will delete the existing ShareType with the provided ID.
-func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -75,12 +75,12 @@ type ListOpts struct {
 
 // ToShareTypeListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToShareTypeListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List returns ShareTypes optionally limited by the conditions provided in ListOpts.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToShareTypeListQuery()
@@ -96,16 +96,16 @@ func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pa
 }
 
 // GetDefault will retrieve the default ShareType.
-func GetDefault(client *gophercloud.ServiceClient) (r GetDefaultResult) {
+func GetDefault(client *ktvpcsdk.ServiceClient) (r GetDefaultResult) {
 	resp, err := client.Get(getDefaultURL(client), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // GetExtraSpecs will retrieve the extra specifications for a given ShareType.
-func GetExtraSpecs(client *gophercloud.ServiceClient, id string) (r GetExtraSpecsResult) {
+func GetExtraSpecs(client *ktvpcsdk.ServiceClient, id string) (r GetExtraSpecsResult) {
 	resp, err := client.Get(getExtraSpecsURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -123,37 +123,37 @@ type SetExtraSpecsOpts struct {
 // ToShareTypeSetExtraSpecsMap assembles a request body based on the contents of a
 // SetExtraSpecsOpts.
 func (opts SetExtraSpecsOpts) ToShareTypeSetExtraSpecsMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return ktvpcsdk.BuildRequestBody(opts, "")
 }
 
 // SetExtraSpecs will set new specifications for a ShareType based on the values
 // in SetExtraSpecsOpts. To extract the extra specifications object from the response,
 // call the Extract method on the SetExtraSpecsResult.
-func SetExtraSpecs(client *gophercloud.ServiceClient, id string, opts SetExtraSpecsOptsBuilder) (r SetExtraSpecsResult) {
+func SetExtraSpecs(client *ktvpcsdk.ServiceClient, id string, opts SetExtraSpecsOptsBuilder) (r SetExtraSpecsResult) {
 	b, err := opts.ToShareTypeSetExtraSpecsMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Post(setExtraSpecsURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(setExtraSpecsURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200, 202},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // UnsetExtraSpecs will unset an extra specification for an existing ShareType.
-func UnsetExtraSpecs(client *gophercloud.ServiceClient, id string, key string) (r UnsetExtraSpecsResult) {
+func UnsetExtraSpecs(client *ktvpcsdk.ServiceClient, id string, key string) (r UnsetExtraSpecsResult) {
 	resp, err := client.Delete(unsetExtraSpecsURL(client, id, key), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // ShowAccess will show access details for an existing ShareType.
-func ShowAccess(client *gophercloud.ServiceClient, id string) (r ShowAccessResult) {
+func ShowAccess(client *ktvpcsdk.ServiceClient, id string) (r ShowAccessResult) {
 	resp, err := client.Get(showAccessURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -171,22 +171,22 @@ type AccessOpts struct {
 // ToAddAccessMap assembles a request body based on the contents of a
 // AccessOpts.
 func (opts AccessOpts) ToAddAccessMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "addProjectAccess")
+	return ktvpcsdk.BuildRequestBody(opts, "addProjectAccess")
 }
 
 // AddAccess will add access to a ShareType based on the values
 // in AccessOpts.
-func AddAccess(client *gophercloud.ServiceClient, id string, opts AddAccessOptsBuilder) (r AddAccessResult) {
+func AddAccess(client *ktvpcsdk.ServiceClient, id string, opts AddAccessOptsBuilder) (r AddAccessResult) {
 	b, err := opts.ToAddAccessMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Post(addAccessURL(client, id), b, nil, &gophercloud.RequestOpts{
+	resp, err := client.Post(addAccessURL(client, id), b, nil, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200, 202},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -199,21 +199,21 @@ type RemoveAccessOptsBuilder interface {
 // ToRemoveAccessMap assembles a request body based on the contents of a
 // AccessOpts.
 func (opts AccessOpts) ToRemoveAccessMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "removeProjectAccess")
+	return ktvpcsdk.BuildRequestBody(opts, "removeProjectAccess")
 }
 
 // RemoveAccess will remove access to a ShareType based on the values
 // in AccessOpts.
-func RemoveAccess(client *gophercloud.ServiceClient, id string, opts RemoveAccessOptsBuilder) (r RemoveAccessResult) {
+func RemoveAccess(client *ktvpcsdk.ServiceClient, id string, opts RemoveAccessOptsBuilder) (r RemoveAccessResult) {
 	b, err := opts.ToRemoveAccessMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Post(removeAccessURL(client, id), b, nil, &gophercloud.RequestOpts{
+	resp, err := client.Post(removeAccessURL(client, id), b, nil, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200, 202},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

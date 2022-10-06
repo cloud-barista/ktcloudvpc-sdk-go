@@ -10,7 +10,7 @@ const CreateRequest = `
 {
   "trunk": {
     "admin_state_up": true,
-    "description": "Trunk created by gophercloud",
+    "description": "Trunk created by ktvpcsdk",
     "name": "gophertrunk",
     "port_id": "c373d2fa-3d3b-4492-924c-aff54dea19b6",
     "sub_ports": [
@@ -33,7 +33,7 @@ const CreateResponse = `
   "trunk": {
     "admin_state_up": true,
     "created_at": "2018-10-03T13:57:24Z",
-    "description": "Trunk created by gophercloud",
+    "description": "Trunk created by ktvpcsdk",
     "id": "f6a9718c-5a64-43e3-944f-4deccad8e78c",
     "name": "gophertrunk",
     "port_id": "c373d2fa-3d3b-4492-924c-aff54dea19b6",
@@ -62,7 +62,7 @@ const CreateNoSubportsRequest = `
 {
   "trunk": {
     "admin_state_up": true,
-    "description": "Trunk created by gophercloud",
+    "description": "Trunk created by ktvpcsdk",
     "name": "gophertrunk",
     "port_id": "c373d2fa-3d3b-4492-924c-aff54dea19b6",
     "sub_ports": []
@@ -74,7 +74,7 @@ const CreateNoSubportsResponse = `
   "trunk": {
     "admin_state_up": true,
     "created_at": "2018-10-03T13:57:24Z",
-    "description": "Trunk created by gophercloud",
+    "description": "Trunk created by ktvpcsdk",
     "id": "f6a9718c-5a64-43e3-944f-4deccad8e78c",
     "name": "gophertrunk",
     "port_id": "c373d2fa-3d3b-4492-924c-aff54dea19b6",
@@ -115,7 +115,7 @@ const ListResponse = `
     {
       "admin_state_up": true,
       "created_at": "2018-10-03T13:57:24Z",
-      "description": "Trunk created by gophercloud",
+      "description": "Trunk created by ktvpcsdk",
       "id": "f6a9718c-5a64-43e3-944f-4deccad8e78c",
       "name": "gophertrunk",
       "port_id": "c373d2fa-3d3b-4492-924c-aff54dea19b6",
@@ -146,7 +146,7 @@ const GetResponse = `
   "trunk": {
     "admin_state_up": true,
     "created_at": "2018-10-03T13:57:24Z",
-    "description": "Trunk created by gophercloud",
+    "description": "Trunk created by ktvpcsdk",
     "id": "f6a9718c-5a64-43e3-944f-4deccad8e78c",
     "name": "gophertrunk",
     "port_id": "c373d2fa-3d3b-4492-924c-aff54dea19b6",
@@ -175,7 +175,7 @@ const UpdateRequest = `
 {
   "trunk": {
     "admin_state_up": false,
-    "description": "gophertrunk updated by gophercloud",
+    "description": "gophertrunk updated by ktvpcsdk",
     "name": "updated_gophertrunk"
   }
 }`
@@ -185,7 +185,7 @@ const UpdateResponse = `
   "trunk": {
     "admin_state_up": false,
     "created_at": "2018-10-03T13:57:24Z",
-    "description": "gophertrunk updated by gophercloud",
+    "description": "gophertrunk updated by ktvpcsdk",
     "id": "f6a9718c-5a64-43e3-944f-4deccad8e78c",
     "name": "updated_gophertrunk",
     "port_id": "c373d2fa-3d3b-4492-924c-aff54dea19b6",
@@ -232,7 +232,7 @@ const AddSubportsResponse = `
 {
   "admin_state_up": true,
   "created_at": "2018-10-03T13:57:24Z",
-  "description": "Trunk created by gophercloud",
+  "description": "Trunk created by ktvpcsdk",
   "id": "f6a9718c-5a64-43e3-944f-4deccad8e78c",
   "name": "gophertrunk",
   "port_id": "c373d2fa-3d3b-4492-924c-aff54dea19b6",
@@ -272,7 +272,7 @@ const RemoveSubportsResponse = `
 {
   "admin_state_up": true,
   "created_at": "2018-10-03T13:57:24Z",
-  "description": "Trunk created by gophercloud",
+  "description": "Trunk created by ktvpcsdk",
   "id": "f6a9718c-5a64-43e3-944f-4deccad8e78c",
   "name": "gophertrunk",
   "port_id": "c373d2fa-3d3b-4492-924c-aff54dea19b6",
@@ -342,7 +342,7 @@ func ExpectedTrunkSlice() (exp []trunks.Trunk, err error) {
 	}
 	exp[1] = trunks.Trunk{
 		AdminStateUp:   true,
-		Description:    "Trunk created by gophercloud",
+		Description:    "Trunk created by ktvpcsdk",
 		ID:             "f6a9718c-5a64-43e3-944f-4deccad8e78c",
 		Name:           "gophertrunk",
 		PortID:         "c373d2fa-3d3b-4492-924c-aff54dea19b6",

@@ -37,8 +37,8 @@ func (r *Attachment) UnmarshalJSON(b []byte) error {
 	type tmp Attachment
 	var s struct {
 		tmp
-		AttachedAt gophercloud.JSONRFC3339MilliNoZ `json:"attached_at"`
-		DetachedAt gophercloud.JSONRFC3339MilliNoZ `json:"detached_at"`
+		AttachedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"attached_at"`
+		DetachedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"detached_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -73,7 +73,7 @@ func ExtractAttachments(r pagination.Page) ([]Attachment, error) {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract will get the Attachment object out of the commonResult object.
@@ -111,10 +111,10 @@ type UpdateResult struct {
 
 // DeleteResult contains the response body and error from a Delete request.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // CompleteResult contains the response body and error from a Complete request.
 type CompleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }

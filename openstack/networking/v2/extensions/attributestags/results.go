@@ -5,7 +5,7 @@ import (
 )
 
 type tagResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets tagResult to return the list of tags
@@ -30,25 +30,25 @@ type ListResult struct {
 // DeleteResult is the result from a Delete/DeleteAll operation.
 // Call its ExtractErr method to determine if the call succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // AddResult is the result from an Add operation.
 // Call its ExtractErr method to determine if the call succeeded or failed.
 type AddResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // ConfirmResult is the result from an Confirm operation.
 type ConfirmResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 func (r ConfirmResult) Extract() (bool, error) {
 	exists := r.Err == nil
 
 	if r.Err != nil {
-		if _, ok := r.Err.(gophercloud.ErrDefault404); ok {
+		if _, ok := r.Err.(ktvpcsdk.ErrDefault404); ok {
 			r.Err = nil
 		}
 	}

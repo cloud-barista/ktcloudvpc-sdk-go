@@ -14,21 +14,21 @@ type EndpointOpts struct {
 	IronicEndpoint string
 }
 
-func initClientOpts(client *gophercloud.ProviderClient, eo EndpointOpts) (*gophercloud.ServiceClient, error) {
-	sc := new(gophercloud.ServiceClient)
+func initClientOpts(client *ktvpcsdk.ProviderClient, eo EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+	sc := new(ktvpcsdk.ServiceClient)
 	if eo.IronicEndpoint == "" {
 		return nil, fmt.Errorf("IronicEndpoint is required")
 	}
 
-	sc.Endpoint = gophercloud.NormalizeURL(eo.IronicEndpoint)
+	sc.Endpoint = ktvpcsdk.NormalizeURL(eo.IronicEndpoint)
 	sc.ProviderClient = client
 	return sc, nil
 }
 
 // NewBareMetalNoAuth creates a ServiceClient that may be used to access a
 // "noauth" bare metal service.
-func NewBareMetalNoAuth(eo EndpointOpts) (*gophercloud.ServiceClient, error) {
-	sc, err := initClientOpts(&gophercloud.ProviderClient{}, eo)
+func NewBareMetalNoAuth(eo EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+	sc, err := initClientOpts(&ktvpcsdk.ProviderClient{}, eo)
 	if err != nil {
 		return nil, err
 	}

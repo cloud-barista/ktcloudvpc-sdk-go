@@ -5,54 +5,54 @@ import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 var apiVersion = "v1"
 var apiName = "clusters"
 
-func commonURL(client *gophercloud.ServiceClient) string {
+func commonURL(client *ktvpcsdk.ServiceClient) string {
 	return client.ServiceURL(apiVersion, apiName)
 }
 
-func idURL(client *gophercloud.ServiceClient, id string) string {
+func idURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return client.ServiceURL(apiVersion, apiName, id)
 }
 
-func actionURL(client *gophercloud.ServiceClient, id string) string {
+func actionURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return client.ServiceURL(apiVersion, apiName, id, "actions")
 }
 
-func createURL(client *gophercloud.ServiceClient) string {
+func createURL(client *ktvpcsdk.ServiceClient) string {
 	return commonURL(client)
 }
 
-func getURL(client *gophercloud.ServiceClient, id string) string {
+func getURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return idURL(client, id)
 }
 
-func listURL(client *gophercloud.ServiceClient) string {
+func listURL(client *ktvpcsdk.ServiceClient) string {
 	return commonURL(client)
 }
 
-func updateURL(client *gophercloud.ServiceClient, id string) string {
+func updateURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return idURL(client, id)
 }
 
-func deleteURL(client *gophercloud.ServiceClient, id string) string {
+func deleteURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return idURL(client, id)
 }
 
-func listPoliciesURL(client *gophercloud.ServiceClient, clusterID string) string {
+func listPoliciesURL(client *ktvpcsdk.ServiceClient, clusterID string) string {
 	return client.ServiceURL(apiVersion, apiName, clusterID, "policies")
 }
 
-func getPolicyURL(client *gophercloud.ServiceClient, clusterID string, policyID string) string {
+func getPolicyURL(client *ktvpcsdk.ServiceClient, clusterID string, policyID string) string {
 	return client.ServiceURL(apiVersion, apiName, clusterID, "policies", policyID)
 }
 
-func nodeURL(client *gophercloud.ServiceClient, id string) string {
+func nodeURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return actionURL(client, id)
 }
 
-func collectURL(client *gophercloud.ServiceClient, clusterID string, path string) string {
+func collectURL(client *ktvpcsdk.ServiceClient, clusterID string, path string) string {
 	return client.ServiceURL(apiVersion, apiName, clusterID, "attrs", path)
 }
 
-func opsURL(client *gophercloud.ServiceClient, id string) string {
+func opsURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return client.ServiceURL(apiVersion, apiName, id, "ops")
 }

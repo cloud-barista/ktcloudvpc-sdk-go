@@ -23,13 +23,13 @@ type Network struct {
 	CIDRv6 string `json:"cidr_v6"`
 
 	// CreatedAt is when the network was created..
-	CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at,omitempty"`
+	CreatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"created_at,omitempty"`
 
 	// Deleted shows if the network has been deleted.
 	Deleted bool `json:"deleted"`
 
 	// DeletedAt is the time when the network was deleted.
-	DeletedAt gophercloud.JSONRFC3339MilliNoZ `json:"deleted_at,omitempty"`
+	DeletedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"deleted_at,omitempty"`
 
 	// DHCPStart is the start of the DHCP address range.
 	DHCPStart string `json:"dhcp_start"`
@@ -77,7 +77,7 @@ type Network struct {
 	RXTXBase int `json:"rxtx_base"`
 
 	// UpdatedAt is the time when the network was last updated.
-	UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at,omitempty"`
+	UpdatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"updated_at,omitempty"`
 
 	// VLAN is the vlan this network runs on.
 	VLAN int `json:"vlan"`
@@ -113,7 +113,7 @@ func ExtractNetworks(r pagination.Page) ([]Network, error) {
 }
 
 type NetworkResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a method that attempts to interpret any Network resource

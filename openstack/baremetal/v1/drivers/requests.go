@@ -22,12 +22,12 @@ type ListDriversOpts struct {
 
 // ToListDriversOptsQuery formats a ListOpts into a query string
 func (opts ListDriversOpts) ToListDriversOptsQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // ListDrivers makes a request against the API to list all drivers
-func ListDrivers(client *gophercloud.ServiceClient, opts ListDriversOptsBuilder) pagination.Pager {
+func ListDrivers(client *ktvpcsdk.ServiceClient, opts ListDriversOptsBuilder) pagination.Pager {
 	url := driversURL(client)
 	if opts != nil {
 		query, err := opts.ToListDriversOptsQuery()
@@ -42,32 +42,32 @@ func ListDrivers(client *gophercloud.ServiceClient, opts ListDriversOptsBuilder)
 }
 
 // GetDriverDetails Shows details for a driver
-func GetDriverDetails(client *gophercloud.ServiceClient, driverName string) (r GetDriverResult) {
-	resp, err := client.Get(driverDetailsURL(client, driverName), &r.Body, &gophercloud.RequestOpts{
+func GetDriverDetails(client *ktvpcsdk.ServiceClient, driverName string) (r GetDriverResult) {
+	resp, err := client.Get(driverDetailsURL(client, driverName), &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // GetDriverProperties Shows the required and optional parameters that
 // driverName expects to be supplied in the driver_info field for every
 // Node it manages
-func GetDriverProperties(client *gophercloud.ServiceClient, driverName string) (r GetPropertiesResult) {
-	resp, err := client.Get(driverPropertiesURL(client, driverName), &r.Body, &gophercloud.RequestOpts{
+func GetDriverProperties(client *ktvpcsdk.ServiceClient, driverName string) (r GetPropertiesResult) {
+	resp, err := client.Get(driverPropertiesURL(client, driverName), &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // GetDriverDiskProperties Show the required and optional parameters that
 // driverName expects to be supplied in the node’s raid_config field, if a
 // RAID configuration change is requested.
-func GetDriverDiskProperties(client *gophercloud.ServiceClient, driverName string) (r GetDiskPropertiesResult) {
-	resp, err := client.Get(driverDiskPropertiesURL(client, driverName), &r.Body, &gophercloud.RequestOpts{
+func GetDriverDiskProperties(client *ktvpcsdk.ServiceClient, driverName string) (r GetDiskPropertiesResult) {
+	resp, err := client.Get(driverDiskPropertiesURL(client, driverName), &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

@@ -82,7 +82,7 @@ func TestList(t *testing.T) {
 				FlavorID: "asia",
 				Status:   "deployed",
 				Errors:   []services.Error{},
-				Links: []gophercloud.Link{
+				Links: []ktvpcsdk.Link{
 					{
 						Href: "https://www.poppycdn.io/v1.0/services/96737ae3-cfc1-4c72-be88-5d0e7cc9a3f0",
 						Rel:  "self",
@@ -132,7 +132,7 @@ func TestList(t *testing.T) {
 				Restrictions: []services.Restriction{},
 				FlavorID:     "europe",
 				Status:       "deployed",
-				Links: []gophercloud.Link{
+				Links: []ktvpcsdk.Link{
 					{
 						Href: "https://www.poppycdn.io/v1.0/services/96737ae3-cfc1-4c72-be88-5d0e7cc9a3f1",
 						Rel:  "self",
@@ -271,7 +271,7 @@ func TestGet(t *testing.T) {
 		FlavorID: "cdn",
 		Status:   "deployed",
 		Errors:   []services.Error{},
-		Links: []gophercloud.Link{
+		Links: []ktvpcsdk.Link{
 			{
 				Href: "https://global.cdn.api.rackspacecloud.com/v1.0/110011/services/96737ae3-cfc1-4c72-be88-5d0e7cc9a3f0",
 				Rel:  "self",

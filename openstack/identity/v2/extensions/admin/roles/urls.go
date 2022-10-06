@@ -8,14 +8,14 @@ const (
 	UserPath = "users"
 )
 
-func resourceURL(c *gophercloud.ServiceClient, id string) string {
+func resourceURL(c *ktvpcsdk.ServiceClient, id string) string {
 	return c.ServiceURL(ExtPath, RolePath, id)
 }
 
-func rootURL(c *gophercloud.ServiceClient) string {
+func rootURL(c *ktvpcsdk.ServiceClient) string {
 	return c.ServiceURL(ExtPath, RolePath)
 }
 
-func userRoleURL(c *gophercloud.ServiceClient, tenantID, userID, roleID string) string {
+func userRoleURL(c *ktvpcsdk.ServiceClient, tenantID, userID, roleID string) string {
 	return c.ServiceURL("tenants", tenantID, UserPath, userID, RolePath, ExtPath, roleID)
 }

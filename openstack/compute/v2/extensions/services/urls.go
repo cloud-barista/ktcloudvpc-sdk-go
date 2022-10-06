@@ -2,10 +2,10 @@ package services
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-func listURL(c *gophercloud.ServiceClient) string {
+func listURL(c *ktvpcsdk.ServiceClient) string {
 	return c.ServiceURL("os-services")
 }
 
-func updateURL(c *gophercloud.ServiceClient, id string) string {
+func updateURL(c *ktvpcsdk.ServiceClient, id string) string {
 	return c.ServiceURL("os-services", id)
 }

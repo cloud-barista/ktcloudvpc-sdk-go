@@ -49,7 +49,7 @@ func ExtractAPIVersions(r pagination.Page) ([]APIVersion, error) {
 
 // GetResult represents the result of a get operation.
 type GetResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a function that accepts a result and extracts an API version resource.

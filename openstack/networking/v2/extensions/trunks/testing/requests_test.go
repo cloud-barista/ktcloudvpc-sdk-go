@@ -30,7 +30,7 @@ func TestCreate(t *testing.T) {
 	iTrue := true
 	options := trunks.CreateOpts{
 		Name:         "gophertrunk",
-		Description:  "Trunk created by gophercloud",
+		Description:  "Trunk created by ktvpcsdk",
 		AdminStateUp: &iTrue,
 		Subports: []trunks.Subport{
 			{
@@ -78,7 +78,7 @@ func TestCreateNoSubports(t *testing.T) {
 	iTrue := true
 	options := trunks.CreateOpts{
 		Name:         "gophertrunk",
-		Description:  "Trunk created by gophercloud",
+		Description:  "Trunk created by ktvpcsdk",
 		AdminStateUp: &iTrue,
 		PortID:       "c373d2fa-3d3b-4492-924c-aff54dea19b6",
 	}
@@ -180,7 +180,7 @@ func TestUpdate(t *testing.T) {
 
 	iFalse := false
 	name := "updated_gophertrunk"
-	description := "gophertrunk updated by gophercloud"
+	description := "gophertrunk updated by ktvpcsdk"
 	options := trunks.UpdateOpts{
 		Name:         &name,
 		AdminStateUp: &iFalse,
@@ -220,7 +220,7 @@ func TestMissingFields(t *testing.T) {
 	opts := trunks.CreateOpts{
 		Name:         "gophertrunk",
 		PortID:       "c373d2fa-3d3b-4492-924c-aff54dea19b6",
-		Description:  "Trunk created by gophercloud",
+		Description:  "Trunk created by ktvpcsdk",
 		AdminStateUp: &iTrue,
 		Subports: []trunks.Subport{
 			{

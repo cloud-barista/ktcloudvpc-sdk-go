@@ -78,7 +78,7 @@ func TestCreate(t *testing.T) {
 	opts.AuthType = "md5"
 	opts.Password = "notSoStrong"
 	opts.RemoteAS = 20000
-	opts.Name = "gophercloud-testing-bgp-peer"
+	opts.Name = "ktvpcsdk-testing-bgp-peer"
 	opts.PeerIP = "192.168.0.1"
 
 	r, err := peers.Create(fake.ServiceClient(), opts).Extract()

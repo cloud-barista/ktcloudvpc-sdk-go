@@ -45,7 +45,7 @@ func TestHostRoute(t *testing.T) {
 		t.Fatalf("%s", err)
 	}
 
-	resp := gophercloud.Result{Body: dejson}
+	resp := ktvpcsdk.Result{Body: dejson}
 	var subnetWrapper struct {
 		Subnet subnets.Subnet `json:"subnet"`
 	}

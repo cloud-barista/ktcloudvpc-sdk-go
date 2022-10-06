@@ -202,7 +202,7 @@ const DomainToken = `
 }
 `
 
-var expectedTokenTime, _ = time.Parse(gophercloud.RFC3339Milli,
+var expectedTokenTime, _ = time.Parse(ktvpcsdk.RFC3339Milli,
 	"2017-06-03T02:19:49.000000Z")
 var ExpectedToken = tokens.Token{
 	ID:        testTokenID,

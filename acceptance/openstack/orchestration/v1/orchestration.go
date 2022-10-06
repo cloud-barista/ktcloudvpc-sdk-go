@@ -55,7 +55,7 @@ const validateTemplate = `
 
 // CreateStack will create a heat stack with a randomly generated name.
 // An error will be returned if the stack failed to be created.
-func CreateStack(t *testing.T, client *gophercloud.ServiceClient) (*stacks.RetrievedStack, error) {
+func CreateStack(t *testing.T, client *ktvpcsdk.ServiceClient) (*stacks.RetrievedStack, error) {
 	stackName := tools.RandomString("ACCPTEST", 8)
 	t.Logf("Attempting to create stack %s", stackName)
 
@@ -66,7 +66,7 @@ func CreateStack(t *testing.T, client *gophercloud.ServiceClient) (*stacks.Retri
 		Name:            stackName,
 		Timeout:         60,
 		TemplateOpts:    template,
-		DisableRollback: gophercloud.Disabled,
+		DisableRollback: ktvpcsdk.Disabled,
 	}
 
 	stack, err := stacks.Create(client, createOpts).Extract()
@@ -83,7 +83,7 @@ func CreateStack(t *testing.T, client *gophercloud.ServiceClient) (*stacks.Retri
 // DeleteStack deletes a stack via its ID.
 // A fatal error will occur if the stack failed to be deleted. This works
 // best when used as a deferred function.
-func DeleteStack(t *testing.T, client *gophercloud.ServiceClient, stackName, stackID string) {
+func DeleteStack(t *testing.T, client *ktvpcsdk.ServiceClient, stackName, stackID string) {
 	t.Logf("Attempting to delete stack %s (%s)", stackName, stackID)
 
 	err := stacks.Delete(client, stackName, stackID).ExtractErr()
@@ -95,7 +95,7 @@ func DeleteStack(t *testing.T, client *gophercloud.ServiceClient, stackName, sta
 }
 
 // WaitForStackStatus will wait until a stack has reached a certain status.
-func WaitForStackStatus(client *gophercloud.ServiceClient, stackName, stackID, status string) error {
+func WaitForStackStatus(client *ktvpcsdk.ServiceClient, stackName, stackID, status string) error {
 	return tools.WaitFor(func() (bool, error) {
 		latest, err := stacks.Get(client, stackName, stackID).Extract()
 		if err != nil {
@@ -116,7 +116,7 @@ func WaitForStackStatus(client *gophercloud.ServiceClient, stackName, stackID, s
 
 // CreateStackWithFile will create a heat stack with a randomly generated name that uses get_file.
 // An error will be returned if the stack failed to be created.
-func CreateStackWithFile(t *testing.T, client *gophercloud.ServiceClient) (*stacks.RetrievedStack, error) {
+func CreateStackWithFile(t *testing.T, client *ktvpcsdk.ServiceClient) (*stacks.RetrievedStack, error) {
 	stackName := tools.RandomString("ACCPTEST", 8)
 	t.Logf("Attempting to create stack %s", stackName)
 
@@ -132,7 +132,7 @@ resources:
 		Name:            stackName,
 		Timeout:         1,
 		TemplateOpts:    template,
-		DisableRollback: gophercloud.Disabled,
+		DisableRollback: ktvpcsdk.Disabled,
 	}
 
 	stack, err := stacks.Create(client, createOpts).Extract()

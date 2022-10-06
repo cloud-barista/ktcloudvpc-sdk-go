@@ -11,7 +11,7 @@ import (
 
 // CreateSubnetPool will create a subnetpool. An error will be returned if the
 // subnetpool could not be created.
-func CreateSubnetPool(t *testing.T, client *gophercloud.ServiceClient) (*subnetpools.SubnetPool, error) {
+func CreateSubnetPool(t *testing.T, client *ktvpcsdk.ServiceClient) (*subnetpools.SubnetPool, error) {
 	subnetPoolName := tools.RandomString("TESTACC-", 8)
 	subnetPoolDescription := tools.RandomString("TESTACC-DESC-", 8)
 	subnetPoolPrefixes := []string{
@@ -41,7 +41,7 @@ func CreateSubnetPool(t *testing.T, client *gophercloud.ServiceClient) (*subnetp
 
 // DeleteSubnetPool will delete a subnetpool with a specified ID.
 // A fatal error will occur if the delete was not successful.
-func DeleteSubnetPool(t *testing.T, client *gophercloud.ServiceClient, subnetPoolID string) {
+func DeleteSubnetPool(t *testing.T, client *ktvpcsdk.ServiceClient, subnetPoolID string) {
 	t.Logf("Attempting to delete the subnetpool: %s", subnetPoolID)
 
 	err := subnetpools.Delete(client, subnetPoolID).ExtractErr()

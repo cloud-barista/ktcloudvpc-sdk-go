@@ -31,12 +31,12 @@ type ListOpts struct {
 
 // ToQueueListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToQueueListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List instructs OpenStack to provide a list of queues.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToQueueListQuery()
@@ -100,7 +100,7 @@ type CreateOpts struct {
 
 // ToQueueCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToQueueCreateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -115,7 +115,7 @@ func (opts CreateOpts) ToQueueCreateMap() (map[string]interface{}, error) {
 }
 
 // Create requests the creation of a new queue.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToQueueCreateMap()
 	if err != nil {
 		r.Err = err
@@ -125,10 +125,10 @@ func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r Create
 	queueName := b["queue_name"].(string)
 	delete(b, "queue_name")
 
-	resp, err := client.Put(createURL(client, queueName), b, r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Put(createURL(client, queueName), b, r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{201, 204},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -171,44 +171,44 @@ func (opts BatchUpdateOpts) ToQueueUpdateMap() ([]map[string]interface{}, error)
 
 // ToMap constructs a request body from UpdateOpts.
 func (opts UpdateOpts) ToMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return ktvpcsdk.BuildRequestBody(opts, "")
 }
 
 // Update Updates the specified queue.
-func Update(client *gophercloud.ServiceClient, queueName string, opts UpdateOptsBuilder) (r UpdateResult) {
-	resp, err := client.Patch(updateURL(client, queueName), opts, &r.Body, &gophercloud.RequestOpts{
+func Update(client *ktvpcsdk.ServiceClient, queueName string, opts UpdateOptsBuilder) (r UpdateResult) {
+	resp, err := client.Patch(updateURL(client, queueName), opts, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200, 201, 204},
 		MoreHeaders: map[string]string{
 			"Content-Type": "application/openstack-messaging-v2.0-json-patch"},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Get requests details on a single queue, by name.
-func Get(client *gophercloud.ServiceClient, queueName string) (r GetResult) {
-	resp, err := client.Get(getURL(client, queueName), &r.Body, &gophercloud.RequestOpts{
+func Get(client *ktvpcsdk.ServiceClient, queueName string) (r GetResult) {
+	resp, err := client.Get(getURL(client, queueName), &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes the specified queue.
-func Delete(client *gophercloud.ServiceClient, queueName string) (r DeleteResult) {
-	resp, err := client.Delete(deleteURL(client, queueName), &gophercloud.RequestOpts{
+func Delete(client *ktvpcsdk.ServiceClient, queueName string) (r DeleteResult) {
+	resp, err := client.Delete(deleteURL(client, queueName), &ktvpcsdk.RequestOpts{
 		OkCodes: []int{204},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // GetStats returns statistics for the specified queue.
-func GetStats(client *gophercloud.ServiceClient, queueName string) (r StatResult) {
-	resp, err := client.Get(statURL(client, queueName), &r.Body, &gophercloud.RequestOpts{
+func GetStats(client *ktvpcsdk.ServiceClient, queueName string) (r StatResult) {
+	resp, err := client.Get(statURL(client, queueName), &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -244,7 +244,7 @@ type ShareOptsBuilder interface {
 
 // ToShareQueueMap formats a ShareOpts structure into a request body.
 func (opts ShareOpts) ToQueueShareMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -252,16 +252,16 @@ func (opts ShareOpts) ToQueueShareMap() (map[string]interface{}, error) {
 }
 
 // Share creates a pre-signed URL for a given queue.
-func Share(client *gophercloud.ServiceClient, queueName string, opts ShareOptsBuilder) (r ShareResult) {
+func Share(client *ktvpcsdk.ServiceClient, queueName string, opts ShareOptsBuilder) (r ShareResult) {
 	b, err := opts.ToQueueShareMap()
 	if err != nil {
 		r.Err = err
 		return r
 	}
-	resp, err := client.Post(shareURL(client, queueName), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(shareURL(client, queueName), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -285,7 +285,7 @@ type PurgeOptsBuilder interface {
 
 // ToPurgeQueueMap formats a PurgeOpts structure into a request body
 func (opts PurgeOpts) ToQueuePurgeMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -294,16 +294,16 @@ func (opts PurgeOpts) ToQueuePurgeMap() (map[string]interface{}, error) {
 }
 
 // Purge purges particular resource of the queue.
-func Purge(client *gophercloud.ServiceClient, queueName string, opts PurgeOptsBuilder) (r PurgeResult) {
+func Purge(client *ktvpcsdk.ServiceClient, queueName string, opts PurgeOptsBuilder) (r PurgeResult) {
 	b, err := opts.ToQueuePurgeMap()
 	if err != nil {
 		r.Err = err
 		return r
 	}
 
-	resp, err := client.Post(purgeURL(client, queueName), b, nil, &gophercloud.RequestOpts{
+	resp, err := client.Post(purgeURL(client, queueName), b, nil, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{204},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

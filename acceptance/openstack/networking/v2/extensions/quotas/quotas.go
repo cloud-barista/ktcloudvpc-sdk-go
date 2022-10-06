@@ -6,13 +6,13 @@ import (
 )
 
 var updateOpts = quotas.UpdateOpts{
-	FloatingIP:        gophercloud.IntToPointer(10),
-	Network:           gophercloud.IntToPointer(-1),
-	Port:              gophercloud.IntToPointer(11),
-	RBACPolicy:        gophercloud.IntToPointer(0),
-	Router:            gophercloud.IntToPointer(-1),
-	SecurityGroup:     gophercloud.IntToPointer(12),
-	SecurityGroupRule: gophercloud.IntToPointer(13),
-	Subnet:            gophercloud.IntToPointer(14),
-	SubnetPool:        gophercloud.IntToPointer(15),
+	FloatingIP:        ktvpcsdk.IntToPointer(10),
+	Network:           ktvpcsdk.IntToPointer(-1),
+	Port:              ktvpcsdk.IntToPointer(11),
+	RBACPolicy:        ktvpcsdk.IntToPointer(0),
+	Router:            ktvpcsdk.IntToPointer(-1),
+	SecurityGroup:     ktvpcsdk.IntToPointer(12),
+	SecurityGroupRule: ktvpcsdk.IntToPointer(13),
+	Subnet:            ktvpcsdk.IntToPointer(14),
+	SubnetPool:        ktvpcsdk.IntToPointer(15),
 }

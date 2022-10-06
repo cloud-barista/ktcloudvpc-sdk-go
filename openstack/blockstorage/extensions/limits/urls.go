@@ -6,6 +6,6 @@ import (
 
 const resourcePath = "limits"
 
-func getURL(c *gophercloud.ServiceClient) string {
+func getURL(c *ktvpcsdk.ServiceClient) string {
 	return c.ServiceURL(resourcePath)
 }

@@ -18,7 +18,7 @@ type PortListOptsExt struct {
 
 // ToPortListQuery adds the DNS options to the base port list options.
 func (opts PortListOptsExt) ToPortListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts.ListOptsBuilder)
+	q, err := ktvpcsdk.BuildQueryString(opts.ListOptsBuilder)
 	if err != nil {
 		return "", err
 	}

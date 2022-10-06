@@ -2,26 +2,26 @@ package projects
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-func listAvailableURL(client *gophercloud.ServiceClient) string {
+func listAvailableURL(client *ktvpcsdk.ServiceClient) string {
 	return client.ServiceURL("auth", "projects")
 }
 
-func listURL(client *gophercloud.ServiceClient) string {
+func listURL(client *ktvpcsdk.ServiceClient) string {
 	return client.ServiceURL("projects")
 }
 
-func getURL(client *gophercloud.ServiceClient, projectID string) string {
+func getURL(client *ktvpcsdk.ServiceClient, projectID string) string {
 	return client.ServiceURL("projects", projectID)
 }
 
-func createURL(client *gophercloud.ServiceClient) string {
+func createURL(client *ktvpcsdk.ServiceClient) string {
 	return client.ServiceURL("projects")
 }
 
-func deleteURL(client *gophercloud.ServiceClient, projectID string) string {
+func deleteURL(client *ktvpcsdk.ServiceClient, projectID string) string {
 	return client.ServiceURL("projects", projectID)
 }
 
-func updateURL(client *gophercloud.ServiceClient, projectID string) string {
+func updateURL(client *ktvpcsdk.ServiceClient, projectID string) string {
 	return client.ServiceURL("projects", projectID)
 }

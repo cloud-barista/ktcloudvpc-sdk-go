@@ -3,9 +3,9 @@ package stacktemplates
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 // Get retreives data for the given stack template.
-func Get(c *gophercloud.ServiceClient, stackName, stackID string) (r GetResult) {
+func Get(c *ktvpcsdk.ServiceClient, stackName, stackID string) (r GetResult) {
 	resp, err := c.Get(getURL(c, stackName, stackID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -23,19 +23,19 @@ type ValidateOpts struct {
 
 // ToStackTemplateValidateMap assembles a request body based on the contents of a ValidateOpts.
 func (opts ValidateOpts) ToStackTemplateValidateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return ktvpcsdk.BuildRequestBody(opts, "")
 }
 
 // Validate validates the given stack template.
-func Validate(c *gophercloud.ServiceClient, opts ValidateOptsBuilder) (r ValidateResult) {
+func Validate(c *ktvpcsdk.ServiceClient, opts ValidateOptsBuilder) (r ValidateResult) {
 	b, err := opts.ToStackTemplateValidateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Post(validateURL(c), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := c.Post(validateURL(c), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

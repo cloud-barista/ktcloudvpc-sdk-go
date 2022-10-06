@@ -7,7 +7,7 @@ import (
 
 // commonResult is the response of a base result.
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // GetResult is the response of a Get operations.

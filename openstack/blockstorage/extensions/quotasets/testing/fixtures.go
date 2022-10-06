@@ -104,13 +104,13 @@ var fullUpdateExpectedJSONBody = `
 }`
 
 var fullUpdateOpts = quotasets.UpdateOpts{
-	Volumes:            gophercloud.IntToPointer(8),
-	Snapshots:          gophercloud.IntToPointer(9),
-	Gigabytes:          gophercloud.IntToPointer(10),
-	PerVolumeGigabytes: gophercloud.IntToPointer(11),
-	Backups:            gophercloud.IntToPointer(12),
-	BackupGigabytes:    gophercloud.IntToPointer(13),
-	Groups:             gophercloud.IntToPointer(14),
+	Volumes:            ktvpcsdk.IntToPointer(8),
+	Snapshots:          ktvpcsdk.IntToPointer(9),
+	Gigabytes:          ktvpcsdk.IntToPointer(10),
+	PerVolumeGigabytes: ktvpcsdk.IntToPointer(11),
+	Backups:            ktvpcsdk.IntToPointer(12),
+	BackupGigabytes:    ktvpcsdk.IntToPointer(13),
+	Groups:             ktvpcsdk.IntToPointer(14),
 	Extra:              make(map[string]interface{}),
 }
 
@@ -138,12 +138,12 @@ var partialUpdateExpectedJSONBody = `
 }`
 
 var partialUpdateOpts = quotasets.UpdateOpts{
-	Volumes:            gophercloud.IntToPointer(200),
-	Snapshots:          gophercloud.IntToPointer(0),
-	Gigabytes:          gophercloud.IntToPointer(0),
-	PerVolumeGigabytes: gophercloud.IntToPointer(0),
-	Backups:            gophercloud.IntToPointer(0),
-	BackupGigabytes:    gophercloud.IntToPointer(0),
+	Volumes:            ktvpcsdk.IntToPointer(200),
+	Snapshots:          ktvpcsdk.IntToPointer(0),
+	Gigabytes:          ktvpcsdk.IntToPointer(0),
+	PerVolumeGigabytes: ktvpcsdk.IntToPointer(0),
+	Backups:            ktvpcsdk.IntToPointer(0),
+	BackupGigabytes:    ktvpcsdk.IntToPointer(0),
 	Extra:              make(map[string]interface{}),
 }
 

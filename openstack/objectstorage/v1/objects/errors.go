@@ -5,7 +5,7 @@ import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 // ErrWrongChecksum is the error when the checksum generated for an object
 // doesn't match the ETAG header.
 type ErrWrongChecksum struct {
-	gophercloud.BaseError
+	ktvpcsdk.BaseError
 }
 
 func (e ErrWrongChecksum) Error() string {

@@ -37,7 +37,7 @@ func TestAuthenticatedClient(t *testing.T) {
 	t.Logf("Client successfully acquired a token: %v", client.TokenID)
 
 	// Find the storage service in the service catalog.
-	storage, err := openstack.NewObjectStorageV1(client, gophercloud.EndpointOpts{
+	storage, err := openstack.NewObjectStorageV1(client, ktvpcsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
 	if err != nil {
@@ -103,7 +103,7 @@ func TestEC2AuthMethod(t *testing.T) {
 		Secret: "secretKey",
 	}
 
-	err = openstack.AuthenticateV3(newClient.ProviderClient, ec2AuthOptions, gophercloud.EndpointOpts{})
+	err = openstack.AuthenticateV3(newClient.ProviderClient, ec2AuthOptions, ktvpcsdk.EndpointOpts{})
 	th.AssertNoErr(t, err)
 
 	tools.PrintResource(t, newClient.TokenID)
@@ -129,7 +129,7 @@ func TestReauth(t *testing.T) {
 	}
 
 	t.Logf("Creating a compute client")
-	_, err = openstack.NewComputeV2(provider, gophercloud.EndpointOpts{
+	_, err = openstack.NewComputeV2(provider, ktvpcsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
 	if err != nil {
@@ -146,7 +146,7 @@ func TestReauth(t *testing.T) {
 	}
 
 	t.Logf("Creating a compute client")
-	_, err = openstack.NewComputeV2(provider, gophercloud.EndpointOpts{
+	_, err = openstack.NewComputeV2(provider, ktvpcsdk.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
 	if err != nil {

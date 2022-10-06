@@ -27,12 +27,12 @@ type APIVersion struct {
 
 // GetResult represents the result of a get operation.
 type GetResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // ListResult represents the result of a list operation.
 type ListResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a function that accepts a get result and extracts an API version resource.

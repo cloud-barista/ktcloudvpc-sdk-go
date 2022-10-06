@@ -13,7 +13,7 @@ import (
 
 var (
 	timestamp  = "2015-11-12T14:22:42"
-	timeVal, _ = time.Parse(gophercloud.RFC3339NoZ, timestamp)
+	timeVal, _ = time.Parse(ktvpcsdk.RFC3339NoZ, timestamp)
 )
 
 var instance = `
@@ -207,14 +207,14 @@ var expectedInstance = instances.Instance{
 	Updated: timeVal,
 	Flavor: instances.Flavor{
 		ID: "1",
-		Links: []gophercloud.Link{
+		Links: []ktvpcsdk.Link{
 			{Href: "https://openstack.example.com/v1.0/1234/flavors/1", Rel: "self"},
 			{Href: "https://openstack.example.com/v1.0/1234/flavors/1", Rel: "bookmark"},
 		},
 	},
 	Hostname: "e09ad9a3f73309469cf1f43d11e79549caf9acf2.openstack.example.com",
 	ID:       instanceID,
-	Links: []gophercloud.Link{
+	Links: []ktvpcsdk.Link{
 		{Href: "https://openstack.example.com/v1.0/1234/instances/1", Rel: "self"},
 	},
 	Name:   "json_rack_instance",
@@ -231,13 +231,13 @@ var expectedGetInstance = instances.Instance{
 	Updated: timeVal,
 	Flavor: instances.Flavor{
 		ID: "1",
-		Links: []gophercloud.Link{
+		Links: []ktvpcsdk.Link{
 			{Href: "https://openstack.example.com/v1.0/1234/flavors/1", Rel: "self"},
 			{Href: "https://openstack.example.com/v1.0/1234/flavors/1", Rel: "bookmark"},
 		},
 	},
 	ID: instanceID,
-	Links: []gophercloud.Link{
+	Links: []ktvpcsdk.Link{
 		{Href: "https://openstack.example.com/v1.0/1234/instances/1", Rel: "self"},
 	},
 	Name:   "test",
@@ -258,14 +258,14 @@ var expectedInstanceWithFault = instances.Instance{
 	Updated: timeVal,
 	Flavor: instances.Flavor{
 		ID: "1",
-		Links: []gophercloud.Link{
+		Links: []ktvpcsdk.Link{
 			{Href: "https://openstack.example.com/v1.0/1234/flavors/1", Rel: "self"},
 			{Href: "https://openstack.example.com/v1.0/1234/flavors/1", Rel: "bookmark"},
 		},
 	},
 	Hostname: "e09ad9a3f73309469cf1f43d11e79549caf9acf2.openstack.example.com",
 	ID:       instanceID,
-	Links: []gophercloud.Link{
+	Links: []ktvpcsdk.Link{
 		{Href: "https://openstack.example.com/v1.0/1234/instances/1", Rel: "self"},
 	},
 	Name:   "json_rack_instance",

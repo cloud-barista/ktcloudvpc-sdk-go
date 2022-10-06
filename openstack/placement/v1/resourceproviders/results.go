@@ -68,7 +68,7 @@ type ResourceProviderTraits struct {
 
 // resourceProviderResult is the response of a base ResourceProvider result.
 type resourceProviderResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interpets any resourceProviderResult-base result as a ResourceProvider.
@@ -88,7 +88,7 @@ type CreateResult struct {
 // DeleteResult represents the result of a delete operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // GetResult represents the result of a create operation. Call its Extract
@@ -126,7 +126,7 @@ func ExtractResourceProviders(r pagination.Page) ([]ResourceProvider, error) {
 // GetUsagesResult is the response of a Get usage operations. Call its Extract method
 // to interpret it as a ResourceProviderUsage.
 type GetUsagesResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets a GetUsagesResult as a ResourceProviderUsage.
@@ -139,7 +139,7 @@ func (r GetUsagesResult) Extract() (*ResourceProviderUsage, error) {
 // GetInventoriesResult is the response of a Get inventories operations. Call its Extract method
 // to interpret it as a ResourceProviderInventories.
 type GetInventoriesResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets a GetInventoriesResult as a ResourceProviderInventories.
@@ -152,7 +152,7 @@ func (r GetInventoriesResult) Extract() (*ResourceProviderInventories, error) {
 // GetAllocationsResult is the response of a Get allocations operations. Call its Extract method
 // to interpret it as a ResourceProviderAllocations.
 type GetAllocationsResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets a GetAllocationsResult as a ResourceProviderAllocations.
@@ -165,7 +165,7 @@ func (r GetAllocationsResult) Extract() (*ResourceProviderAllocations, error) {
 // GetTraitsResult is the response of a Get traits operations. Call its Extract method
 // to interpret it as a ResourceProviderTraits.
 type GetTraitsResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets a GetTraitsResult as a ResourceProviderTraits.

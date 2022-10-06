@@ -9,7 +9,7 @@ import (
 )
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // CreateResult is the response of a Post operations. Call its Extract method to interpret it as an Execution.
@@ -31,7 +31,7 @@ func (r commonResult) Extract() (*Execution, error) {
 
 // DeleteResult is the result from a Delete operation. Call its ExtractErr method to determine the success of the call.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // Execution represents a workflow execution on OpenStack mistral API.
@@ -87,8 +87,8 @@ func (r *Execution) UnmarshalJSON(b []byte) error {
 	type tmp Execution
 	var s struct {
 		tmp
-		CreatedAt gophercloud.JSONRFC3339ZNoTNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339ZNoTNoZ `json:"updated_at"`
+		CreatedAt ktvpcsdk.JSONRFC3339ZNoTNoZ `json:"created_at"`
+		UpdatedAt ktvpcsdk.JSONRFC3339ZNoTNoZ `json:"updated_at"`
 		Input     string                         `json:"input"`
 		Output    string                         `json:"output"`
 		Params    string                         `json:"params"`

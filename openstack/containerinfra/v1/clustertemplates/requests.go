@@ -42,27 +42,27 @@ type CreateOpts struct {
 
 // ToClusterCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToClusterCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return ktvpcsdk.BuildRequestBody(opts, "")
 }
 
 // Create requests the creation of a new cluster.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToClusterCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes the specified cluster ID.
-func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -85,14 +85,14 @@ type ListOpts struct {
 
 // ToClusterTemplateListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToClusterTemplateListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List returns a Pager which allows you to iterate over a collection of
 // cluster-templates. It accepts a ListOptsBuilder, which allows you to sort
 // the returned collection for greater efficiency.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToClusterTemplateListQuery()
@@ -107,9 +107,9 @@ func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pa
 }
 
 // Get retrieves a specific cluster-template based on its unique ID.
-func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(getURL(client, id), &r.Body, &gophercloud.RequestOpts{OkCodes: []int{200}})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+	resp, err := client.Get(getURL(client, id), &r.Body, &ktvpcsdk.RequestOpts{OkCodes: []int{200}})
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -136,7 +136,7 @@ type UpdateOptsBuilder interface {
 // ToClusterUpdateMap assembles a request body based on the contents of
 // UpdateOpts.
 func (opts UpdateOpts) ToClusterTemplateUpdateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +145,7 @@ func (opts UpdateOpts) ToClusterTemplateUpdateMap() (map[string]interface{}, err
 }
 
 // Update implements cluster updated request.
-func Update(client *gophercloud.ServiceClient, id string, opts []UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *ktvpcsdk.ServiceClient, id string, opts []UpdateOptsBuilder) (r UpdateResult) {
 	var o []map[string]interface{}
 	for _, opt := range opts {
 		b, err := opt.ToClusterTemplateUpdateMap()
@@ -155,9 +155,9 @@ func Update(client *gophercloud.ServiceClient, id string, opts []UpdateOptsBuild
 		}
 		o = append(o, b)
 	}
-	resp, err := client.Patch(updateURL(client, id), o, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Patch(updateURL(client, id), o, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200, 202},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

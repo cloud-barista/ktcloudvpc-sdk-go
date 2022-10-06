@@ -93,7 +93,7 @@ Example to Authenticate a client using OAuth1 method
 		OAuthTokenSecret:     accessToken.OAuthTokenSecret,
 		OAuthSignatureMethod: oauth1.HMACSHA1,
 	}
-	err = openstack.AuthenticateV3(client, authOptions, gophercloud.EndpointOpts{})
+	err = openstack.AuthenticateV3(client, authOptions, ktvpcsdk.EndpointOpts{})
 	if err != nil {
 		panic(err)
 	}

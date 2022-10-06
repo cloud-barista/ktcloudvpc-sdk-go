@@ -24,7 +24,7 @@ type Domain struct {
 }
 
 type domainResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // GetResult is the response from a Get operation. Call its Extract method
@@ -42,7 +42,7 @@ type CreateResult struct {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr to
 // determine if the request succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // UpdateResult is the result of an Update request. Call its Extract method to

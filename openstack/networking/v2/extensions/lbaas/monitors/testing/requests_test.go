@@ -289,7 +289,7 @@ func TestUpdate(t *testing.T) {
 		MaxRetries:    10,
 		URLPath:       "/another_check",
 		ExpectedCodes: "301",
-		AdminStateUp:  gophercloud.Enabled,
+		AdminStateUp:  ktvpcsdk.Enabled,
 	}).Extract()
 
 	th.AssertNoErr(t, err)

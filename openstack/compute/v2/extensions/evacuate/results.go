@@ -8,7 +8,7 @@ import (
 //Call its ExtractAdminPass method to retrieve the admin password of the instance.
 //The admin password will be an empty string if the cloud is not configured to inject admin passwords..
 type EvacuateResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 func (r EvacuateResult) ExtractAdminPass() (string, error) {

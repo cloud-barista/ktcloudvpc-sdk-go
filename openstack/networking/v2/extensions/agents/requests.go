@@ -34,7 +34,7 @@ type ListOpts struct {
 
 // ToAgentListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToAgentListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
@@ -45,7 +45,7 @@ func (opts ListOpts) ToAgentListQuery() (string, error) {
 // Default policy settings return only the agents owned by the project
 // of the user submitting the request, unless the user has the administrative
 // role.
-func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(c)
 	if opts != nil {
 		query, err := opts.ToAgentListQuery()
@@ -60,9 +60,9 @@ func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 }
 
 // Get retrieves a specific agent based on its ID.
-func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
 	resp, err := c.Get(getURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -80,35 +80,35 @@ type UpdateOpts struct {
 
 // ToAgentUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToAgentUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "agent")
+	return ktvpcsdk.BuildRequestBody(opts, "agent")
 }
 
 // Update updates a specific agent based on its ID.
-func Update(c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToAgentUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(updateURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := c.Put(updateURL(c, id), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes a specific agent based on its ID.
-func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
+func Delete(c *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
 	resp, err := c.Delete(getURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // ListDHCPNetworks returns a list of networks scheduled to a specific
 // dhcp agent.
-func ListDHCPNetworks(c *gophercloud.ServiceClient, id string) (r ListDHCPNetworksResult) {
+func ListDHCPNetworks(c *ktvpcsdk.ServiceClient, id string) (r ListDHCPNetworksResult) {
 	resp, err := c.Get(listDHCPNetworksURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -126,33 +126,33 @@ type ScheduleDHCPNetworkOpts struct {
 
 // ToAgentScheduleDHCPNetworkMap builds a request body from ScheduleDHCPNetworkOpts.
 func (opts ScheduleDHCPNetworkOpts) ToAgentScheduleDHCPNetworkMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return ktvpcsdk.BuildRequestBody(opts, "")
 }
 
 // ScheduleDHCPNetwork schedule a network to a DHCP agent.
-func ScheduleDHCPNetwork(c *gophercloud.ServiceClient, id string, opts ScheduleDHCPNetworkOptsBuilder) (r ScheduleDHCPNetworkResult) {
+func ScheduleDHCPNetwork(c *ktvpcsdk.ServiceClient, id string, opts ScheduleDHCPNetworkOptsBuilder) (r ScheduleDHCPNetworkResult) {
 	b, err := opts.ToAgentScheduleDHCPNetworkMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Post(scheduleDHCPNetworkURL(c, id), b, nil, &gophercloud.RequestOpts{
+	resp, err := c.Post(scheduleDHCPNetworkURL(c, id), b, nil, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // RemoveDHCPNetwork removes a network from a DHCP agent.
-func RemoveDHCPNetwork(c *gophercloud.ServiceClient, id string, networkID string) (r RemoveDHCPNetworkResult) {
+func RemoveDHCPNetwork(c *ktvpcsdk.ServiceClient, id string, networkID string) (r RemoveDHCPNetworkResult) {
 	resp, err := c.Delete(removeDHCPNetworkURL(c, id, networkID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // ListBGPSpeakers list the BGP Speakers hosted by a specific dragent
 // GET /v2.0/agents/{agent-id}/bgp-drinstances
-func ListBGPSpeakers(c *gophercloud.ServiceClient, agentID string) pagination.Pager {
+func ListBGPSpeakers(c *ktvpcsdk.ServiceClient, agentID string) pagination.Pager {
 	url := listBGPSpeakersURL(c, agentID)
 	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
 		return ListBGPSpeakersResult{pagination.SinglePageBase(r)}

@@ -98,7 +98,7 @@ func TestCreate(t *testing.T) {
 		provider.NetworkProviderExt
 	}
 
-	options := networks.CreateOpts{Name: "private", AdminStateUp: gophercloud.Enabled}
+	options := networks.CreateOpts{Name: "private", AdminStateUp: ktvpcsdk.Enabled}
 	err := networks.Create(fake.ServiceClient(), options).ExtractInto(&s)
 	th.AssertNoErr(t, err)
 
@@ -212,7 +212,7 @@ func TestUpdate(t *testing.T) {
 
 	iTrue := true
 	name := "new_network_name"
-	options := networks.UpdateOpts{Name: &name, AdminStateUp: gophercloud.Disabled, Shared: &iTrue}
+	options := networks.UpdateOpts{Name: &name, AdminStateUp: ktvpcsdk.Disabled, Shared: &iTrue}
 	err := networks.Update(fake.ServiceClient(), "4e8e5957-649f-477b-9e5b-f1f75b21c03c", options).ExtractInto(&s)
 	th.AssertNoErr(t, err)
 

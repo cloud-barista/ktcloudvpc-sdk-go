@@ -17,9 +17,9 @@ func TestGetCapsule_OldTime(t *testing.T) {
 
 	HandleCapsuleGetOldTimeSuccessfully(t)
 
-	createdAt, _ := time.Parse(gophercloud.RFC3339ZNoT, "2018-01-12 09:37:25+00:00")
-	updatedAt, _ := time.Parse(gophercloud.RFC3339ZNoT, "2018-01-12 09:37:26+00:00")
-	startedAt, _ := time.Parse(gophercloud.RFC3339ZNoT, "2018-01-12 09:37:26+00:00")
+	createdAt, _ := time.Parse(ktvpcsdk.RFC3339ZNoT, "2018-01-12 09:37:25+00:00")
+	updatedAt, _ := time.Parse(ktvpcsdk.RFC3339ZNoT, "2018-01-12 09:37:26+00:00")
+	startedAt, _ := time.Parse(ktvpcsdk.RFC3339ZNoT, "2018-01-12 09:37:26+00:00")
 
 	ExpectedCapsule.CreatedAt = createdAt
 	ExpectedCapsule.UpdatedAt = updatedAt
@@ -39,9 +39,9 @@ func TestGetCapsule_NewTime(t *testing.T) {
 
 	HandleCapsuleGetNewTimeSuccessfully(t)
 
-	createdAt, _ := time.Parse(gophercloud.RFC3339ZNoTNoZ, "2018-01-12 09:37:25")
-	updatedAt, _ := time.Parse(gophercloud.RFC3339ZNoTNoZ, "2018-01-12 09:37:26")
-	startedAt, _ := time.Parse(gophercloud.RFC3339ZNoTNoZ, "2018-01-12 09:37:26")
+	createdAt, _ := time.Parse(ktvpcsdk.RFC3339ZNoTNoZ, "2018-01-12 09:37:25")
+	updatedAt, _ := time.Parse(ktvpcsdk.RFC3339ZNoTNoZ, "2018-01-12 09:37:26")
+	startedAt, _ := time.Parse(ktvpcsdk.RFC3339ZNoTNoZ, "2018-01-12 09:37:26")
 
 	ExpectedCapsule.CreatedAt = createdAt
 	ExpectedCapsule.UpdatedAt = updatedAt
@@ -78,8 +78,8 @@ func TestListCapsule(t *testing.T) {
 
 	HandleCapsuleListSuccessfully(t)
 
-	createdAt, _ := time.Parse(gophercloud.RFC3339ZNoT, "2018-01-12 09:37:25+00:00")
-	updatedAt, _ := time.Parse(gophercloud.RFC3339ZNoT, "2018-01-12 09:37:25+01:00")
+	createdAt, _ := time.Parse(ktvpcsdk.RFC3339ZNoT, "2018-01-12 09:37:25+00:00")
+	updatedAt, _ := time.Parse(ktvpcsdk.RFC3339ZNoT, "2018-01-12 09:37:25+01:00")
 
 	ec := ExpectedCapsule
 
@@ -116,8 +116,8 @@ func TestListCapsuleV132(t *testing.T) {
 
 	HandleCapsuleV132ListSuccessfully(t)
 
-	createdAt, _ := time.Parse(gophercloud.RFC3339ZNoTNoZ, "2018-01-12 09:37:25")
-	updatedAt, _ := time.Parse(gophercloud.RFC3339ZNoTNoZ, "2018-01-12 09:37:25")
+	createdAt, _ := time.Parse(ktvpcsdk.RFC3339ZNoTNoZ, "2018-01-12 09:37:25")
+	updatedAt, _ := time.Parse(ktvpcsdk.RFC3339ZNoTNoZ, "2018-01-12 09:37:25")
 
 	ec := ExpectedCapsuleV132
 

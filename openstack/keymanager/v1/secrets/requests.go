@@ -91,7 +91,7 @@ type ListOpts struct {
 
 // ToSecretListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToSecretListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	params := q.Query()
 
 	if opts.CreatedQuery != nil {
@@ -127,7 +127,7 @@ func (opts ListOpts) ToSecretListQuery() (string, error) {
 }
 
 // List retrieves a list of Secrets.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToSecretListQuery()
@@ -142,9 +142,9 @@ func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pa
 }
 
 // Get retrieves details of a secrets.
-func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
 	resp, err := client.Get(getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -161,11 +161,11 @@ type GetPayloadOptsBuilder interface {
 
 // ToSecretPayloadGetParams formats a GetPayloadOpts into a query string.
 func (opts GetPayloadOpts) ToSecretPayloadGetParams() (map[string]string, error) {
-	return gophercloud.BuildHeaders(opts)
+	return ktvpcsdk.BuildHeaders(opts)
 }
 
 // GetPayload retrieves the payload of a secret.
-func GetPayload(client *gophercloud.ServiceClient, id string, opts GetPayloadOptsBuilder) (r PayloadResult) {
+func GetPayload(client *ktvpcsdk.ServiceClient, id string, opts GetPayloadOptsBuilder) (r PayloadResult) {
 	h := map[string]string{"Accept": "text/plain"}
 
 	if opts != nil {
@@ -180,12 +180,12 @@ func GetPayload(client *gophercloud.ServiceClient, id string, opts GetPayloadOpt
 	}
 
 	url := payloadURL(client, id)
-	resp, err := client.Get(url, nil, &gophercloud.RequestOpts{
+	resp, err := client.Get(url, nil, &ktvpcsdk.RequestOpts{
 		MoreHeaders:      h,
 		OkCodes:          []int{200},
 		KeepResponseBody: true,
 	})
-	r.Body, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	r.Body, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -227,36 +227,36 @@ type CreateOpts struct {
 
 // ToSecretCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToSecretCreateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
 
 	if opts.Expiration != nil {
-		b["expiration"] = opts.Expiration.Format(gophercloud.RFC3339NoZ)
+		b["expiration"] = opts.Expiration.Format(ktvpcsdk.RFC3339NoZ)
 	}
 
 	return b, nil
 }
 
 // Create creates a new secrets.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToSecretCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), &b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createURL(client), &b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes a secrets.
-func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -281,7 +281,7 @@ type UpdateOpts struct {
 
 // ToUpdateCreateRequest formats a UpdateOpts into an update request.
 func (opts UpdateOpts) ToSecretUpdateRequest() (string, map[string]string, error) {
-	h, err := gophercloud.BuildHeaders(opts)
+	h, err := ktvpcsdk.BuildHeaders(opts)
 	if err != nil {
 		return "", nil, err
 	}
@@ -290,7 +290,7 @@ func (opts UpdateOpts) ToSecretUpdateRequest() (string, map[string]string, error
 }
 
 // Update modifies the attributes of a secrets.
-func Update(client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	url := updateURL(client, id)
 	h := make(map[string]string)
 	var b string
@@ -309,18 +309,18 @@ func Update(client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder
 		b = payload
 	}
 
-	resp, err := client.Put(url, strings.NewReader(b), nil, &gophercloud.RequestOpts{
+	resp, err := client.Put(url, strings.NewReader(b), nil, &ktvpcsdk.RequestOpts{
 		MoreHeaders: h,
 		OkCodes:     []int{204},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // GetMetadata will list metadata for a given secret.
-func GetMetadata(client *gophercloud.ServiceClient, secretID string) (r MetadataResult) {
+func GetMetadata(client *ktvpcsdk.ServiceClient, secretID string) (r MetadataResult) {
 	resp, err := client.Get(metadataURL(client, secretID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -339,23 +339,23 @@ func (opts MetadataOpts) ToMetadataCreateMap() (map[string]interface{}, error) {
 }
 
 // CreateMetadata will set metadata for a given secret.
-func CreateMetadata(client *gophercloud.ServiceClient, secretID string, opts CreateMetadataOptsBuilder) (r MetadataCreateResult) {
+func CreateMetadata(client *ktvpcsdk.ServiceClient, secretID string, opts CreateMetadataOptsBuilder) (r MetadataCreateResult) {
 	b, err := opts.ToMetadataCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Put(metadataURL(client, secretID), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Put(metadataURL(client, secretID), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // GetMetadatum will get a single key/value metadata from a secret.
-func GetMetadatum(client *gophercloud.ServiceClient, secretID string, key string) (r MetadatumResult) {
+func GetMetadatum(client *ktvpcsdk.ServiceClient, secretID string, key string) (r MetadatumResult) {
 	resp, err := client.Get(metadatumURL(client, secretID, key), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -373,20 +373,20 @@ type CreateMetadatumOptsBuilder interface {
 
 // ToMetadatumCreateMap converts a MetadatumOpts into a request body.
 func (opts MetadatumOpts) ToMetadatumCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return ktvpcsdk.BuildRequestBody(opts, "")
 }
 
 // CreateMetadatum will add a single key/value metadata to a secret.
-func CreateMetadatum(client *gophercloud.ServiceClient, secretID string, opts CreateMetadatumOptsBuilder) (r MetadatumCreateResult) {
+func CreateMetadatum(client *ktvpcsdk.ServiceClient, secretID string, opts CreateMetadatumOptsBuilder) (r MetadatumCreateResult) {
 	b, err := opts.ToMetadatumCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(metadataURL(client, secretID), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(metadataURL(client, secretID), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -398,27 +398,27 @@ type UpdateMetadatumOptsBuilder interface {
 
 // ToMetadatumUpdateMap converts a MetadataOpts into a request body.
 func (opts MetadatumOpts) ToMetadatumUpdateMap() (map[string]interface{}, string, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "")
 	return b, opts.Key, err
 }
 
 // UpdateMetadatum will update a single key/value metadata to a secret.
-func UpdateMetadatum(client *gophercloud.ServiceClient, secretID string, opts UpdateMetadatumOptsBuilder) (r MetadatumResult) {
+func UpdateMetadatum(client *ktvpcsdk.ServiceClient, secretID string, opts UpdateMetadatumOptsBuilder) (r MetadatumResult) {
 	b, key, err := opts.ToMetadatumUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Put(metadatumURL(client, secretID, key), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Put(metadatumURL(client, secretID, key), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // DeleteMetadatum will delete an individual metadatum from a secret.
-func DeleteMetadatum(client *gophercloud.ServiceClient, secretID string, key string) (r MetadatumDeleteResult) {
+func DeleteMetadatum(client *ktvpcsdk.ServiceClient, secretID string, key string) (r MetadatumDeleteResult) {
 	resp, err := client.Delete(metadatumURL(client, secretID, key), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

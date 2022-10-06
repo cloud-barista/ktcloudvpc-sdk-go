@@ -38,7 +38,7 @@ func ExtractNetworks(r pagination.Page) ([]Network, error) {
 }
 
 type NetworkResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a method that attempts to interpret any Network resource response

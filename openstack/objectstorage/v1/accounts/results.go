@@ -10,7 +10,7 @@ import (
 
 // UpdateResult is returned from a call to the Update function.
 type UpdateResult struct {
-	gophercloud.HeaderResult
+	ktvpcsdk.HeaderResult
 }
 
 // UpdateHeader represents the headers returned in the response from an Update
@@ -26,7 +26,7 @@ func (r *UpdateHeader) UnmarshalJSON(b []byte) error {
 	type tmp UpdateHeader
 	var s struct {
 		tmp
-		Date gophercloud.JSONRFC1123 `json:"Date"`
+		Date ktvpcsdk.JSONRFC1123 `json:"Date"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -84,7 +84,7 @@ func (r *GetHeader) UnmarshalJSON(b []byte) error {
 
 // GetResult is returned from a call to the Get function.
 type GetResult struct {
-	gophercloud.HeaderResult
+	ktvpcsdk.HeaderResult
 }
 
 // Extract will return a struct of headers returned from a call to Get.

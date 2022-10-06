@@ -6,7 +6,7 @@ import (
 )
 
 type driverResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets any driverResult as a Driver, if possible.
@@ -142,13 +142,13 @@ func (r DriverPage) IsEmpty() (bool, error) {
 // next page of results.
 func (r DriverPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"drivers_links"`
+		Links []ktvpcsdk.Link `json:"drivers_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // ExtractDrivers interprets the results of a single page from ListDrivers()
@@ -178,7 +178,7 @@ func (r GetPropertiesResult) Extract() (*DriverProperties, error) {
 // GetPropertiesResult is the response from a GetDriverProperties operation.
 // Call its Extract method to interpret it as DriverProperties.
 type GetPropertiesResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // DiskProperties represents driver disk properties in the OpenStack Bare Metal API.
@@ -194,5 +194,5 @@ func (r GetDiskPropertiesResult) Extract() (*DiskProperties, error) {
 // GetDiskPropertiesResult is the response from a GetDriverDiskProperties operation.
 // Call its Extract method to interpret it as DiskProperties.
 type GetDiskPropertiesResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }

@@ -36,7 +36,7 @@ type ListOpts struct {
 
 // ToInstanceActionsListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToInstanceActionsListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	if err != nil {
 		return "", err
 	}
@@ -56,7 +56,7 @@ func (opts ListOpts) ToInstanceActionsListQuery() (string, error) {
 }
 
 // List makes a request against the API to list the servers actions.
-func List(client *gophercloud.ServiceClient, id string, opts ListOptsBuilder) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, id string, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client, id)
 	if opts != nil {
 		query, err := opts.ToInstanceActionsListQuery()
@@ -71,10 +71,10 @@ func List(client *gophercloud.ServiceClient, id string, opts ListOptsBuilder) pa
 }
 
 // Get makes a request against the API to get a server action.
-func Get(client *gophercloud.ServiceClient, serverID, requestID string) (r InstanceActionResult) {
-	resp, err := client.Get(instanceActionsURL(client, serverID, requestID), &r.Body, &gophercloud.RequestOpts{
+func Get(client *ktvpcsdk.ServiceClient, serverID, requestID string) (r InstanceActionResult) {
+	resp, err := client.Get(instanceActionsURL(client, serverID, requestID), &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

@@ -8,7 +8,7 @@ import (
 // Version represents a version API resource. Multiple versions belong to a Datastore.
 type Version struct {
 	ID    string
-	Links []gophercloud.Link
+	Links []ktvpcsdk.Link
 	Name  string
 }
 
@@ -16,7 +16,7 @@ type Version struct {
 type Datastore struct {
 	DefaultVersion string `json:"default_version"`
 	ID             string
-	Links          []gophercloud.Link
+	Links          []ktvpcsdk.Link
 	Name           string
 	Versions       []Version
 }
@@ -32,12 +32,12 @@ type DatastorePartial struct {
 
 // GetResult represents the result of a Get operation.
 type GetResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // GetVersionResult represents the result of getting a version.
 type GetVersionResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // DatastorePage represents a page of datastore resources.

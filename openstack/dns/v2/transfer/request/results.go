@@ -9,7 +9,7 @@ import (
 )
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets a GetResult, CreateResult or UpdateResult as a TransferRequest.
@@ -41,7 +41,7 @@ type UpdateResult struct {
 // DeleteResult is the result of a Delete request. Call its ExtractErr method
 // to determine if the request succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // TransferRequestPage is a single page of TransferRequest results.
@@ -107,8 +107,8 @@ func (r *TransferRequest) UnmarshalJSON(b []byte) error {
 	type tmp TransferRequest
 	var s struct {
 		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
+		CreatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"created_at"`
+		UpdatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"updated_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {

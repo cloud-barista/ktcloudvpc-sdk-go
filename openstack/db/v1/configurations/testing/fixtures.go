@@ -10,7 +10,7 @@ import (
 
 var (
 	timestamp  = "2015-11-12T14:22:42"
-	timeVal, _ = time.Parse(gophercloud.RFC3339NoZ, timestamp)
+	timeVal, _ = time.Parse(ktvpcsdk.RFC3339NoZ, timestamp)
 )
 
 var singleConfigJSON = `

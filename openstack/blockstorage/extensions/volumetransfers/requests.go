@@ -17,20 +17,20 @@ type CreateOpts struct {
 // ToCreateMap assembles a request body based on the contents of a
 // TransferOpts.
 func (opts CreateOpts) ToCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "transfer")
+	return ktvpcsdk.BuildRequestBody(opts, "transfer")
 }
 
 // Create will create a volume tranfer request based on the values in CreateOpts.
-func Create(client *gophercloud.ServiceClient, opts CreateOpts) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts CreateOpts) (r CreateResult) {
 	b, err := opts.ToCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(transferURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(transferURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -43,27 +43,27 @@ type AcceptOpts struct {
 // ToAcceptMap assembles a request body based on the contents of a
 // AcceptOpts.
 func (opts AcceptOpts) ToAcceptMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "accept")
+	return ktvpcsdk.BuildRequestBody(opts, "accept")
 }
 
 // Accept will accept a volume tranfer request based on the values in AcceptOpts.
-func Accept(client *gophercloud.ServiceClient, id string, opts AcceptOpts) (r CreateResult) {
+func Accept(client *ktvpcsdk.ServiceClient, id string, opts AcceptOpts) (r CreateResult) {
 	b, err := opts.ToAcceptMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(acceptURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(acceptURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes a volume transfer.
-func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -95,12 +95,12 @@ type ListOpts struct {
 
 // ToTransferListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToTransferListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List returns Transfers optionally limited by the conditions provided in ListOpts.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToTransferListQuery()
@@ -117,8 +117,8 @@ func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pa
 
 // Get retrieves the Transfer with the provided ID. To extract the Transfer object
 // from the response, call the Extract method on the GetResult.
-func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
 	resp, err := client.Get(getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

@@ -16,7 +16,7 @@ const (
 )
 
 type projectResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // GetResult is the result of a Get request. Call its Extract method to
@@ -34,7 +34,7 @@ type CreateResult struct {
 // DeleteResult is the result of a Delete request. Call its ExtractErr method to
 // determine if the request succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // UpdateResult is the result of an Update request. Call its Extract method to
@@ -99,7 +99,7 @@ func (r *Project) UnmarshalJSON(b []byte) error {
 			return err
 		}
 		if resultMap, ok := result.(map[string]interface{}); ok {
-			r.Extra = gophercloud.RemainingKeys(Project{}, resultMap)
+			r.Extra = ktvpcsdk.RemainingKeys(Project{}, resultMap)
 		}
 	}
 

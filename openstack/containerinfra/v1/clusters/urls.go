@@ -6,42 +6,42 @@ import (
 
 var apiName = "clusters"
 
-func commonURL(client *gophercloud.ServiceClient) string {
+func commonURL(client *ktvpcsdk.ServiceClient) string {
 	return client.ServiceURL(apiName)
 }
 
-func idURL(client *gophercloud.ServiceClient, id string) string {
+func idURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return client.ServiceURL(apiName, id)
 }
 
-func createURL(client *gophercloud.ServiceClient) string {
+func createURL(client *ktvpcsdk.ServiceClient) string {
 	return commonURL(client)
 }
 
-func deleteURL(client *gophercloud.ServiceClient, id string) string {
+func deleteURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return idURL(client, id)
 }
 
-func getURL(c *gophercloud.ServiceClient, id string) string {
+func getURL(c *ktvpcsdk.ServiceClient, id string) string {
 	return c.ServiceURL("clusters", id)
 }
 
-func listURL(client *gophercloud.ServiceClient) string {
+func listURL(client *ktvpcsdk.ServiceClient) string {
 	return client.ServiceURL("clusters")
 }
 
-func listDetailURL(client *gophercloud.ServiceClient) string {
+func listDetailURL(client *ktvpcsdk.ServiceClient) string {
 	return client.ServiceURL("clusters", "detail")
 }
 
-func updateURL(client *gophercloud.ServiceClient, id string) string {
+func updateURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return idURL(client, id)
 }
 
-func upgradeURL(client *gophercloud.ServiceClient, id string) string {
+func upgradeURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return client.ServiceURL("clusters", id, "actions/upgrade")
 }
 
-func resizeURL(client *gophercloud.ServiceClient, id string) string {
+func resizeURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return client.ServiceURL("clusters", id, "actions/resize")
 }

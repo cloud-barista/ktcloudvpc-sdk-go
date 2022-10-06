@@ -39,7 +39,7 @@ var expectedNodeGroup1 = nodegroups.NodeGroup{
 	Labels: map[string]string{
 		"kube_tag": "v1.14.7",
 	},
-	Links: []gophercloud.Link{
+	Links: []ktvpcsdk.Link{
 		{
 			Href: "http://123.456.789.0:9511/v1/clusters/bda75056-3a57-4ada-b943-658ac27beea0/nodegroups/b2e581be-2eec-45b8-921a-c85fbc23aaa3",
 			Rel:  "self",
@@ -73,7 +73,7 @@ var expectedCreatedNodeGroup = nodegroups.NodeGroup{
 	Labels: map[string]string{
 		"kube_tag": "v1.14.7",
 	},
-	Links: []gophercloud.Link{
+	Links: []ktvpcsdk.Link{
 		{
 			Href: "http://123.456.789.0:9511/v1/clusters/bda75056-3a57-4ada-b943-658ac27beea0/nodegroups/12542dd8-9588-42a7-a2ff-06f49049920c",
 			Rel:  "self",
@@ -100,7 +100,7 @@ var expectedUpdatedNodeGroup = nodegroups.NodeGroup{
 	Labels: map[string]string{
 		"kube_tag": "v1.14.7",
 	},
-	Links: []gophercloud.Link{
+	Links: []ktvpcsdk.Link{
 		{
 			Href: "http://123.456.789.0:9511/v1/clusters/bda75056-3a57-4ada-b943-658ac27beea0/nodegroups/2457febf-520f-4be3-abb9-96b892d7b5a0",
 			Rel:  "self",

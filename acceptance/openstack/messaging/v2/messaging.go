@@ -12,7 +12,7 @@ import (
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
 )
 
-func CreateQueue(t *testing.T, client *gophercloud.ServiceClient) (string, error) {
+func CreateQueue(t *testing.T, client *ktvpcsdk.ServiceClient) (string, error) {
 	queueName := tools.RandomString("ACPTTEST", 5)
 
 	t.Logf("Attempting to create Queue: %s", queueName)
@@ -37,7 +37,7 @@ func CreateQueue(t *testing.T, client *gophercloud.ServiceClient) (string, error
 	return queueName, nil
 }
 
-func DeleteQueue(t *testing.T, client *gophercloud.ServiceClient, queueName string) {
+func DeleteQueue(t *testing.T, client *ktvpcsdk.ServiceClient, queueName string) {
 	t.Logf("Attempting to delete Queue: %s", queueName)
 	err := queues.Delete(client, queueName).ExtractErr()
 	if err != nil {
@@ -47,7 +47,7 @@ func DeleteQueue(t *testing.T, client *gophercloud.ServiceClient, queueName stri
 	t.Logf("Deleted Queue: %s", queueName)
 }
 
-func GetQueue(t *testing.T, client *gophercloud.ServiceClient, queueName string) (queues.QueueDetails, error) {
+func GetQueue(t *testing.T, client *ktvpcsdk.ServiceClient, queueName string) (queues.QueueDetails, error) {
 	t.Logf("Attempting to get Queue: %s", queueName)
 	queue, err := queues.Get(client, queueName).Extract()
 	if err != nil {
@@ -56,7 +56,7 @@ func GetQueue(t *testing.T, client *gophercloud.ServiceClient, queueName string)
 	return queue, nil
 }
 
-func CreateShare(t *testing.T, client *gophercloud.ServiceClient, queueName string) (queues.QueueShare, error) {
+func CreateShare(t *testing.T, client *ktvpcsdk.ServiceClient, queueName string) (queues.QueueShare, error) {
 	t.Logf("Attempting to create share for queue: %s", queueName)
 
 	shareOpts := queues.ShareOpts{
@@ -69,7 +69,7 @@ func CreateShare(t *testing.T, client *gophercloud.ServiceClient, queueName stri
 	return share, err
 }
 
-func CreateMessage(t *testing.T, client *gophercloud.ServiceClient, queueName string) (messages.ResourceList, error) {
+func CreateMessage(t *testing.T, client *ktvpcsdk.ServiceClient, queueName string) (messages.ResourceList, error) {
 	t.Logf("Attempting to add message to Queue: %s", queueName)
 	createOpts := messages.BatchCreateOpts{
 		messages.CreateOpts{
@@ -88,7 +88,7 @@ func CreateMessage(t *testing.T, client *gophercloud.ServiceClient, queueName st
 	return resource, err
 }
 
-func ListMessages(t *testing.T, client *gophercloud.ServiceClient, queueName string) ([]messages.Message, error) {
+func ListMessages(t *testing.T, client *ktvpcsdk.ServiceClient, queueName string) ([]messages.Message, error) {
 	listOpts := messages.ListOpts{}
 	var allMessages []messages.Message
 	var listErr error
@@ -110,7 +110,7 @@ func ListMessages(t *testing.T, client *gophercloud.ServiceClient, queueName str
 	return allMessages, err
 }
 
-func CreateClaim(t *testing.T, client *gophercloud.ServiceClient, queueName string) ([]claims.Messages, error) {
+func CreateClaim(t *testing.T, client *ktvpcsdk.ServiceClient, queueName string) ([]claims.Messages, error) {
 	createOpts := claims.CreateOpts{}
 
 	t.Logf("Attempting to create claim on queue: %s", queueName)
@@ -123,7 +123,7 @@ func CreateClaim(t *testing.T, client *gophercloud.ServiceClient, queueName stri
 	return claimedMessages, err
 }
 
-func GetClaim(t *testing.T, client *gophercloud.ServiceClient, queueName string, claimID string) (*claims.Claim, error) {
+func GetClaim(t *testing.T, client *ktvpcsdk.ServiceClient, queueName string, claimID string) (*claims.Claim, error) {
 	t.Logf("Attempting to get claim: %s", claimID)
 	claim, err := claims.Get(client, queueName, claimID).Extract()
 	if err != nil {
@@ -133,7 +133,7 @@ func GetClaim(t *testing.T, client *gophercloud.ServiceClient, queueName string,
 	return claim, err
 }
 
-func DeleteClaim(t *testing.T, client *gophercloud.ServiceClient, queueName string, claimID string) error {
+func DeleteClaim(t *testing.T, client *ktvpcsdk.ServiceClient, queueName string, claimID string) error {
 	t.Logf("Attempting to delete claim: %s", claimID)
 	err := claims.Delete(client, queueName, claimID).ExtractErr()
 	if err != nil {

@@ -57,7 +57,7 @@ func TestCreateUser(t *testing.T) {
 	opts := users.CreateOpts{
 		Name:     "new_user",
 		TenantID: "12345",
-		Enabled:  gophercloud.Disabled,
+		Enabled:  ktvpcsdk.Disabled,
 		Email:    "new_user@foo.com",
 	}
 
@@ -105,7 +105,7 @@ func TestUpdateUser(t *testing.T) {
 	id := "c39e3de9be2d4c779f1dfd6abacc176d"
 	opts := users.UpdateOpts{
 		Name:    "new_name",
-		Enabled: gophercloud.Enabled,
+		Enabled: ktvpcsdk.Enabled,
 		Email:   "new_email@foo.com",
 	}
 

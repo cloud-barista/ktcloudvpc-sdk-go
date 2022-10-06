@@ -19,7 +19,7 @@ type VLANTransparentNetwork struct {
 
 // ListVLANTransparentNetworks will list networks with the "vlan-transparent"
 // extension. An error will be returned networks could not be listed.
-func ListVLANTransparentNetworks(t *testing.T, client *gophercloud.ServiceClient) ([]*VLANTransparentNetwork, error) {
+func ListVLANTransparentNetworks(t *testing.T, client *ktvpcsdk.ServiceClient) ([]*VLANTransparentNetwork, error) {
 	iTrue := true
 	networkListOpts := networks.ListOpts{}
 	listOpts := vlantransparent.ListOptsExt{
@@ -48,7 +48,7 @@ func ListVLANTransparentNetworks(t *testing.T, client *gophercloud.ServiceClient
 // CreateVLANTransparentNetwork will create a network with the
 // "vlan-transparent" extension. An error will be returned if the network could
 // not be created.
-func CreateVLANTransparentNetwork(t *testing.T, client *gophercloud.ServiceClient) (*VLANTransparentNetwork, error) {
+func CreateVLANTransparentNetwork(t *testing.T, client *ktvpcsdk.ServiceClient) (*VLANTransparentNetwork, error) {
 	networkName := tools.RandomString("TESTACC-", 8)
 	networkCreateOpts := networks.CreateOpts{
 		Name: networkName,
@@ -78,7 +78,7 @@ func CreateVLANTransparentNetwork(t *testing.T, client *gophercloud.ServiceClien
 // UpdateVLANTransparentNetwork will update a network with the
 // "vlan-transparent" extension. An error will be returned if the network could
 // not be updated.
-func UpdateVLANTransparentNetwork(t *testing.T, client *gophercloud.ServiceClient, networkID string) (*VLANTransparentNetwork, error) {
+func UpdateVLANTransparentNetwork(t *testing.T, client *ktvpcsdk.ServiceClient, networkID string) (*VLANTransparentNetwork, error) {
 	networkName := tools.RandomString("TESTACC-NEW-", 6)
 	networkUpdateOpts := networks.UpdateOpts{
 		Name: &networkName,

@@ -2,18 +2,18 @@ package ec2credentials
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-func listURL(client *gophercloud.ServiceClient, userID string) string {
+func listURL(client *ktvpcsdk.ServiceClient, userID string) string {
 	return client.ServiceURL("users", userID, "credentials", "OS-EC2")
 }
 
-func getURL(client *gophercloud.ServiceClient, userID string, id string) string {
+func getURL(client *ktvpcsdk.ServiceClient, userID string, id string) string {
 	return client.ServiceURL("users", userID, "credentials", "OS-EC2", id)
 }
 
-func createURL(client *gophercloud.ServiceClient, userID string) string {
+func createURL(client *ktvpcsdk.ServiceClient, userID string) string {
 	return client.ServiceURL("users", userID, "credentials", "OS-EC2")
 }
 
-func deleteURL(client *gophercloud.ServiceClient, userID string, id string) string {
+func deleteURL(client *ktvpcsdk.ServiceClient, userID string, id string) string {
 	return client.ServiceURL("users", userID, "credentials", "OS-EC2", id)
 }

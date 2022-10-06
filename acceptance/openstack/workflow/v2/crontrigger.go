@@ -12,7 +12,7 @@ import (
 )
 
 // CreateCronTrigger creates a cron trigger for the given workflow.
-func CreateCronTrigger(t *testing.T, client *gophercloud.ServiceClient, workflow *workflows.Workflow) (*crontriggers.CronTrigger, error) {
+func CreateCronTrigger(t *testing.T, client *ktvpcsdk.ServiceClient, workflow *workflows.Workflow) (*crontriggers.CronTrigger, error) {
 	crontriggerName := tools.RandomString("crontrigger_", 5)
 	t.Logf("Attempting to create cron trigger: %s", crontriggerName)
 
@@ -36,7 +36,7 @@ func CreateCronTrigger(t *testing.T, client *gophercloud.ServiceClient, workflow
 }
 
 // DeleteCronTrigger deletes a cron trigger.
-func DeleteCronTrigger(t *testing.T, client *gophercloud.ServiceClient, crontrigger *crontriggers.CronTrigger) {
+func DeleteCronTrigger(t *testing.T, client *ktvpcsdk.ServiceClient, crontrigger *crontriggers.CronTrigger) {
 	err := crontriggers.Delete(client, crontrigger.ID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete cron trigger %s: %v", crontrigger.Name, err)
@@ -46,7 +46,7 @@ func DeleteCronTrigger(t *testing.T, client *gophercloud.ServiceClient, crontrig
 }
 
 // GetCronTrigger gets a cron trigger.
-func GetCronTrigger(t *testing.T, client *gophercloud.ServiceClient, id string) (*crontriggers.CronTrigger, error) {
+func GetCronTrigger(t *testing.T, client *ktvpcsdk.ServiceClient, id string) (*crontriggers.CronTrigger, error) {
 	crontrigger, err := crontriggers.Get(client, id).Extract()
 	if err != nil {
 		t.Fatalf("Unable to get cron trigger %s: %v", id, err)
@@ -56,7 +56,7 @@ func GetCronTrigger(t *testing.T, client *gophercloud.ServiceClient, id string) 
 }
 
 // ListCronTriggers lists cron triggers.
-func ListCronTriggers(t *testing.T, client *gophercloud.ServiceClient, opts crontriggers.ListOptsBuilder) ([]crontriggers.CronTrigger, error) {
+func ListCronTriggers(t *testing.T, client *ktvpcsdk.ServiceClient, opts crontriggers.ListOptsBuilder) ([]crontriggers.CronTrigger, error) {
 	allPages, err := crontriggers.List(client, opts).AllPages()
 	if err != nil {
 		t.Fatalf("Unable to list cron triggers: %v", err)

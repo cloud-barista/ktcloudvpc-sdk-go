@@ -15,8 +15,8 @@ func TestUpdateAccount(t *testing.T) {
 	HandleUpdateAccountSuccessfully(t)
 
 	options := &accounts.UpdateOpts{
-		Metadata:          map[string]string{"gophercloud-test": "accounts"},
-		RemoveMetadata:    []string{"gophercloud-test-remove"},
+		Metadata:          map[string]string{"ktvpcsdk-test": "accounts"},
+		RemoveMetadata:    []string{"ktvpcsdk-test-remove"},
 		ContentType:       new(string),
 		DetectContentType: new(bool),
 	}

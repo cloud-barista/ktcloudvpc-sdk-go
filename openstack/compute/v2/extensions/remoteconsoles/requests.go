@@ -65,20 +65,20 @@ type CreateOpts struct {
 
 // ToRemoteConsoleCreateMap builds a request body from the CreateOpts.
 func (opts CreateOpts) ToRemoteConsoleCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "remote_console")
+	return ktvpcsdk.BuildRequestBody(opts, "remote_console")
 }
 
 // Create requests the creation of a new remote console on the specified server.
-func Create(client *gophercloud.ServiceClient, serverID string, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, serverID string, opts CreateOptsBuilder) (r CreateResult) {
 	reqBody, err := opts.ToRemoteConsoleCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Post(createURL(client, serverID), reqBody, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createURL(client, serverID), reqBody, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

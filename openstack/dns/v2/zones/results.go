@@ -10,7 +10,7 @@ import (
 )
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets a GetResult, CreateResult or UpdateResult as a Zone.
@@ -131,9 +131,9 @@ func (r *Zone) UnmarshalJSON(b []byte) error {
 	type tmp Zone
 	var s struct {
 		tmp
-		CreatedAt     gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt     gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-		TransferredAt gophercloud.JSONRFC3339MilliNoZ `json:"transferred_at"`
+		CreatedAt     ktvpcsdk.JSONRFC3339MilliNoZ `json:"created_at"`
+		UpdatedAt     ktvpcsdk.JSONRFC3339MilliNoZ `json:"updated_at"`
+		TransferredAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"transferred_at"`
 		Serial        interface{}                     `json:"serial"`
 	}
 	err := json.Unmarshal(b, &s)

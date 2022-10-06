@@ -118,7 +118,7 @@ var TransferRequest = volumetransfers.CreateOpts{
 	VolumeID: "2f6f1684-1ded-40db-8a49-7c87dedbc758",
 }
 
-var createdAt, _ = time.Parse(gophercloud.RFC3339MilliNoZ, "2020-02-28T12:44:28.051989")
+var createdAt, _ = time.Parse(ktvpcsdk.RFC3339MilliNoZ, "2020-02-28T12:44:28.051989")
 var TransferResponse = volumetransfers.Transfer{
 	ID:        "b8913bfd-a4d3-4ec5-bd8b-fe2dbeef9f4f",
 	AuthKey:   "cb67e0e7387d9eac",

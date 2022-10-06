@@ -1,5 +1,5 @@
 /*
-Package gophercloud provides a multi-vendor interface to OpenStack-compatible
+Package ktvpcsdk provides a multi-vendor interface to OpenStack-compatible
 clouds. The library has a three-level hierarchy: providers, services, and
 resources.
 
@@ -10,7 +10,7 @@ collection of services. You will generally want to create one Provider
 client per OpenStack cloud.
 
 	It is now recommended to use the `clientconfig` package found at
-	https://github.com/gophercloud/utils/tree/master/openstack/clientconfig
+	https://github.com/ktvpcsdk/utils/tree/master/openstack/clientconfig
 	for all authentication purposes.
 
 	The below documentation is still relevant. clientconfig simply implements
@@ -22,7 +22,7 @@ information provided by the cloud operator. Additionally, the cloud may refer to
 TenantID or TenantName as project_id and project_name. Credentials are
 specified like so:
 
-	opts := gophercloud.AuthOptions{
+	opts := ktvpcsdk.AuthOptions{
 		IdentityEndpoint: "https://openstack.example.com:5000/v2.0",
 		Username: "{username}",
 		Password: "{password}",
@@ -33,7 +33,7 @@ specified like so:
 
 You can authenticate with a token by doing:
 
-	opts := gophercloud.AuthOptions{
+	opts := ktvpcsdk.AuthOptions{
 		IdentityEndpoint: "https://openstack.example.com:5000/v2.0",
 		TokenID:  "{token_id}",
 		TenantID: "{tenant_id}",
@@ -56,7 +56,7 @@ operations for a particular OpenStack service. Examples of services include:
 Compute, Object Storage, Block Storage. In order to define one, you need to
 pass in the parent provider, like so:
 
-	opts := gophercloud.EndpointOpts{Region: "RegionOne"}
+	opts := ktvpcsdk.EndpointOpts{Region: "RegionOne"}
 
 	client, err := openstack.NewComputeV2(provider, opts)
 
@@ -146,4 +146,4 @@ An example retry backoff function, which respects the 429 HTTP response code and
 	}
 
 */
-package gophercloud
+package ktvpcsdk

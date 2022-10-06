@@ -50,7 +50,7 @@ type GetResult struct {
 
 // DeleteResult contains the response body and error from a Delete request.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // UpdateResult contains the response body and error from an Update request.
@@ -68,8 +68,8 @@ func (r *Snapshot) UnmarshalJSON(b []byte) error {
 	type tmp Snapshot
 	var s struct {
 		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
+		CreatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"created_at"`
+		UpdatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"updated_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -93,13 +93,13 @@ func (r SnapshotPage) IsEmpty() (bool, error) {
 // next page of results.
 func (r SnapshotPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"snapshots_links"`
+		Links []ktvpcsdk.Link `json:"snapshots_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // ExtractSnapshots extracts and returns Snapshots. It is used while iterating over a snapshots.List call.
@@ -126,7 +126,7 @@ func (r UpdateMetadataResult) ExtractMetadata() (map[string]interface{}, error) 
 }
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract will get the Snapshot object out of the commonResult object.

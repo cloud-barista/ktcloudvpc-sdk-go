@@ -5,7 +5,7 @@ API versions for the OpenStack Block Storage service, code-named Cinder.
 This package is deprecated and should only be used in environments where the
 older API version format is expected.
 
-Consider using the gophercloud/openstack/blockstorage/apiversions package
+Consider using the ktvpcsdk/openstack/blockstorage/apiversions package
 instead.
 */
 package apiversions

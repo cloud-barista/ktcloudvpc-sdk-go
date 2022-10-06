@@ -52,7 +52,7 @@ type Lifetime struct {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a function that accepts a result and extracts an IPSec Policy.
@@ -73,7 +73,7 @@ type CreateResult struct {
 // CreateResult represents the result of a delete operation. Call its ExtractErr method
 // to determine if the operation succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // GetResult represents the result of a get operation. Call its Extract
@@ -93,13 +93,13 @@ type PolicyPage struct {
 // In order to do this, it needs to construct the next page's URL.
 func (r PolicyPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"ipsecpolicies_links"`
+		Links []ktvpcsdk.Link `json:"ipsecpolicies_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether a PolicyPage struct is empty.

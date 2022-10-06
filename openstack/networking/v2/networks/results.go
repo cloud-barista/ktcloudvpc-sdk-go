@@ -9,7 +9,7 @@ import (
 )
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a function that accepts a result and extracts a network resource.
@@ -44,7 +44,7 @@ type UpdateResult struct {
 // DeleteResult represents the result of a delete operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // Network represents, well, a network.
@@ -101,8 +101,8 @@ func (r *Network) UnmarshalJSON(b []byte) error {
 	// Support for older neutron time format
 	var s1 struct {
 		tmp
-		CreatedAt gophercloud.JSONRFC3339NoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339NoZ `json:"updated_at"`
+		CreatedAt ktvpcsdk.JSONRFC3339NoZ `json:"created_at"`
+		UpdatedAt ktvpcsdk.JSONRFC3339NoZ `json:"updated_at"`
 	}
 
 	err := json.Unmarshal(b, &s1)
@@ -144,13 +144,13 @@ type NetworkPage struct {
 // to do this, it needs to construct the next page's URL.
 func (r NetworkPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"networks_links"`
+		Links []ktvpcsdk.Link `json:"networks_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether a NetworkPage struct is empty.

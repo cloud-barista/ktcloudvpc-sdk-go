@@ -45,7 +45,7 @@ type ListOpts struct {
 
 // ToLoadBalancerListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToLoadBalancerListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
@@ -55,7 +55,7 @@ func (opts ListOpts) ToLoadBalancerListQuery() (string, error) {
 //
 // Default policy settings return only those load balancers that are owned by
 // the project who submits the request, unless an admin user submits the request.
-func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := rootURL(c)
 	if opts != nil {
 		query, err := opts.ToLoadBalancerListQuery()
@@ -141,28 +141,28 @@ type CreateOpts struct {
 
 // ToLoadBalancerCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToLoadBalancerCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "loadbalancer")
+	return ktvpcsdk.BuildRequestBody(opts, "loadbalancer")
 }
 
 // Create is an operation which provisions a new loadbalancer based on the
 // configuration defined in the CreateOpts struct. Once the request is
 // validated and progress has started on the provisioning process, a
 // CreateResult will be returned.
-func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToLoadBalancerCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Post(rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Get retrieves a particular Loadbalancer based on its unique ID.
-func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
 	resp, err := c.Get(resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -191,21 +191,21 @@ type UpdateOpts struct {
 
 // ToLoadBalancerUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToLoadBalancerUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "loadbalancer")
+	return ktvpcsdk.BuildRequestBody(opts, "loadbalancer")
 }
 
 // Update is an operation which modifies the attributes of the specified
 // LoadBalancer.
-func Update(c *gophercloud.ServiceClient, id string, opts UpdateOpts) (r UpdateResult) {
+func Update(c *ktvpcsdk.ServiceClient, id string, opts UpdateOpts) (r UpdateResult) {
 	b, err := opts.ToLoadBalancerUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200, 202},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -224,13 +224,13 @@ type DeleteOpts struct {
 
 // ToLoadBalancerDeleteQuery formats a DeleteOpts into a query string.
 func (opts DeleteOpts) ToLoadBalancerDeleteQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // Delete will permanently delete a particular LoadBalancer based on its
 // unique ID.
-func Delete(c *gophercloud.ServiceClient, id string, opts DeleteOptsBuilder) (r DeleteResult) {
+func Delete(c *ktvpcsdk.ServiceClient, id string, opts DeleteOptsBuilder) (r DeleteResult) {
 	url := resourceURL(c, id)
 	if opts != nil {
 		query, err := opts.ToLoadBalancerDeleteQuery()
@@ -241,29 +241,29 @@ func Delete(c *gophercloud.ServiceClient, id string, opts DeleteOptsBuilder) (r 
 		url += query
 	}
 	resp, err := c.Delete(url, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // GetStatuses will return the status of a particular LoadBalancer.
-func GetStatuses(c *gophercloud.ServiceClient, id string) (r GetStatusesResult) {
+func GetStatuses(c *ktvpcsdk.ServiceClient, id string) (r GetStatusesResult) {
 	resp, err := c.Get(statusRootURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // GetStats will return the shows the current statistics of a particular LoadBalancer.
-func GetStats(c *gophercloud.ServiceClient, id string) (r StatsResult) {
+func GetStats(c *ktvpcsdk.ServiceClient, id string) (r StatsResult) {
 	resp, err := c.Get(statisticsRootURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Failover performs a failover of a load balancer.
-func Failover(c *gophercloud.ServiceClient, id string) (r FailoverResult) {
-	resp, err := c.Put(failoverRootURL(c, id), nil, nil, &gophercloud.RequestOpts{
+func Failover(c *ktvpcsdk.ServiceClient, id string) (r FailoverResult) {
+	resp, err := c.Put(failoverRootURL(c, id), nil, nil, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

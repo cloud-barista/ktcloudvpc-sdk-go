@@ -20,7 +20,7 @@ type TriggerOptsBuilder interface {
 
 // Query string builder for webhooks
 func (opts TriggerOpts) ToWebhookTriggerQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	params := q.Query()
 
 	for k, v := range opts.Params {
@@ -32,7 +32,7 @@ func (opts TriggerOpts) ToWebhookTriggerQuery() (string, error) {
 }
 
 // Trigger an action represented by a webhook.
-func Trigger(client *gophercloud.ServiceClient, id string, opts TriggerOptsBuilder) (r TriggerResult) {
+func Trigger(client *ktvpcsdk.ServiceClient, id string, opts TriggerOptsBuilder) (r TriggerResult) {
 	url := triggerURL(client, id)
 	if opts != nil {
 		query, err := opts.ToWebhookTriggerQuery()
@@ -46,9 +46,9 @@ func Trigger(client *gophercloud.ServiceClient, id string, opts TriggerOptsBuild
 		return
 	}
 
-	resp, err := client.Post(url, nil, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(url, nil, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200, 201, 202},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

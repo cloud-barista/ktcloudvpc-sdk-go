@@ -57,7 +57,7 @@ func (r *Receiver) UnmarshalJSON(b []byte) error {
 
 // commonResult is the response of a base result.
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets any commonResult-based result as a Receiver.
@@ -90,7 +90,7 @@ type UpdateResult struct {
 // DeleteResult is the result from a Delete operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // NotifyResult is the result from a Notify operation. Call its Extract

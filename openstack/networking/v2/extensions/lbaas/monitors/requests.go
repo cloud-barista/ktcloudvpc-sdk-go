@@ -36,8 +36,8 @@ type ListOpts struct {
 //
 // Default policy settings return only those monitors that are owned by the
 // tenant who submits the request, unless an admin user submits the request.
-func List(c *gophercloud.ServiceClient, opts ListOpts) pagination.Pager {
-	q, err := gophercloud.BuildQueryString(&opts)
+func List(c *ktvpcsdk.ServiceClient, opts ListOpts) pagination.Pager {
+	q, err := ktvpcsdk.BuildQueryString(&opts)
 	if err != nil {
 		return pagination.Pager{Err: err}
 	}
@@ -107,23 +107,23 @@ type CreateOpts struct {
 func (opts CreateOpts) ToLBMonitorCreateMap() (map[string]interface{}, error) {
 	if opts.Type == TypeHTTP || opts.Type == TypeHTTPS {
 		if opts.URLPath == "" {
-			err := gophercloud.ErrMissingInput{}
+			err := ktvpcsdk.ErrMissingInput{}
 			err.Argument = "monitors.CreateOpts.URLPath"
 			return nil, err
 		}
 		if opts.ExpectedCodes == "" {
-			err := gophercloud.ErrMissingInput{}
+			err := ktvpcsdk.ErrMissingInput{}
 			err.Argument = "monitors.CreateOpts.ExpectedCodes"
 			return nil, err
 		}
 	}
 	if opts.Delay < opts.Timeout {
-		err := gophercloud.ErrInvalidInput{}
+		err := ktvpcsdk.ErrInvalidInput{}
 		err.Argument = "monitors.CreateOpts.Delay/monitors.CreateOpts.Timeout"
 		err.Info = "Delay must be greater than or equal to timeout"
 		return nil, err
 	}
-	return gophercloud.BuildRequestBody(opts, "health_monitor")
+	return ktvpcsdk.BuildRequestBody(opts, "health_monitor")
 }
 
 // Create is an operation which provisions a new health monitor. There are
@@ -140,21 +140,21 @@ func (opts CreateOpts) ToLBMonitorCreateMap() (map[string]interface{}, error) {
 // CreateOpts{Type: TypeHTTP, Delay: 20, Timeout: 10, MaxRetries: 3,
 //  HttpMethod: "HEAD", ExpectedCodes: "200"}
 //
-func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToLBMonitorCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Post(rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Get retrieves a particular health monitor based on its unique ID.
-func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
 	resp, err := c.Get(resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -199,33 +199,33 @@ type UpdateOpts struct {
 // ToLBMonitorUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToLBMonitorUpdateMap() (map[string]interface{}, error) {
 	if opts.Delay > 0 && opts.Timeout > 0 && opts.Delay < opts.Timeout {
-		err := gophercloud.ErrInvalidInput{}
+		err := ktvpcsdk.ErrInvalidInput{}
 		err.Argument = "monitors.CreateOpts.Delay/monitors.CreateOpts.Timeout"
 		err.Value = fmt.Sprintf("%d/%d", opts.Delay, opts.Timeout)
 		err.Info = "Delay must be greater than or equal to timeout"
 		return nil, err
 	}
-	return gophercloud.BuildRequestBody(opts, "health_monitor")
+	return ktvpcsdk.BuildRequestBody(opts, "health_monitor")
 }
 
 // Update is an operation which modifies the attributes of the specified
 // monitor.
-func Update(c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToLBMonitorUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200, 202},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete will permanently delete a particular monitor based on its unique ID.
-func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
+func Delete(c *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
 	resp, err := c.Delete(resourceURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

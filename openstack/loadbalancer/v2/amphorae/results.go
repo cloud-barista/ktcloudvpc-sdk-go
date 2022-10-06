@@ -74,9 +74,9 @@ func (a *Amphora) UnmarshalJSON(b []byte) error {
 	type tmp Amphora
 	var s struct {
 		tmp
-		CertExpiration gophercloud.JSONRFC3339NoZ `json:"cert_expiration"`
-		CreatedAt      gophercloud.JSONRFC3339NoZ `json:"created_at"`
-		UpdatedAt      gophercloud.JSONRFC3339NoZ `json:"updated_at"`
+		CertExpiration ktvpcsdk.JSONRFC3339NoZ `json:"cert_expiration"`
+		CreatedAt      ktvpcsdk.JSONRFC3339NoZ `json:"created_at"`
+		UpdatedAt      ktvpcsdk.JSONRFC3339NoZ `json:"updated_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -102,13 +102,13 @@ type AmphoraPage struct {
 // In order to do this, it needs to construct the next page's URL.
 func (r AmphoraPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"amphorae_links"`
+		Links []ktvpcsdk.Link `json:"amphorae_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether a AmphoraPage struct is empty.
@@ -129,7 +129,7 @@ func ExtractAmphorae(r pagination.Page) ([]Amphora, error) {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a function that accepts a result and extracts an amphora.
@@ -150,5 +150,5 @@ type GetResult struct {
 // FailoverResult represents the result of a failover operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type FailoverResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }

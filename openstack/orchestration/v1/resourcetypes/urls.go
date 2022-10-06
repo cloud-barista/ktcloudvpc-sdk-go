@@ -6,14 +6,14 @@ const (
 	resTypesPath = "resource_types"
 )
 
-func listURL(c *gophercloud.ServiceClient) string {
+func listURL(c *ktvpcsdk.ServiceClient) string {
 	return c.ServiceURL(resTypesPath)
 }
 
-func getSchemaURL(c *gophercloud.ServiceClient, resourceType string) string {
+func getSchemaURL(c *ktvpcsdk.ServiceClient, resourceType string) string {
 	return c.ServiceURL(resTypesPath, resourceType)
 }
 
-func generateTemplateURL(c *gophercloud.ServiceClient, resourceType string) string {
+func generateTemplateURL(c *ktvpcsdk.ServiceClient, resourceType string) string {
 	return c.ServiceURL(resTypesPath, resourceType, "template")
 }

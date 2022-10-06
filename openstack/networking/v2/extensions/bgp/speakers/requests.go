@@ -6,7 +6,7 @@ import (
 )
 
 // List the bgp speakers
-func List(c *gophercloud.ServiceClient) pagination.Pager {
+func List(c *ktvpcsdk.ServiceClient) pagination.Pager {
 	url := listURL(c)
 	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
 		return BGPSpeakerPage{pagination.SinglePageBase(r)}
@@ -14,9 +14,9 @@ func List(c *gophercloud.ServiceClient) pagination.Pager {
 }
 
 // Get retrieve the specific bgp speaker by its uuid
-func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
 	resp, err := c.Get(getURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -37,25 +37,25 @@ type CreateOptsBuilder interface {
 
 // ToSpeakerCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToSpeakerCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, jroot)
+	return ktvpcsdk.BuildRequestBody(opts, jroot)
 }
 
 // Create accepts a CreateOpts and create a BGP Speaker.
-func Create(c *gophercloud.ServiceClient, opts CreateOpts) (r CreateResult) {
+func Create(c *ktvpcsdk.ServiceClient, opts CreateOpts) (r CreateResult) {
 	b, err := opts.ToSpeakerCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Post(createURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete accepts a unique ID and deletes the bgp speaker associated with it.
-func Delete(c *gophercloud.ServiceClient, speakerID string) (r DeleteResult) {
+func Delete(c *ktvpcsdk.ServiceClient, speakerID string) (r DeleteResult) {
 	resp, err := c.Delete(deleteURL(c, speakerID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -68,7 +68,7 @@ type UpdateOpts struct {
 
 // ToSpeakerUpdateMap build a request body from UpdateOpts
 func (opts UpdateOpts) ToSpeakerUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, jroot)
+	return ktvpcsdk.BuildRequestBody(opts, jroot)
 }
 
 // UpdateOptsBuilder allow the extensions to add additional parameters to the
@@ -78,16 +78,16 @@ type UpdateOptsBuilder interface {
 }
 
 // Update accepts a UpdateOpts and update the BGP Speaker.
-func Update(c *gophercloud.ServiceClient, speakerID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *ktvpcsdk.ServiceClient, speakerID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToSpeakerUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(updateURL(c, speakerID), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := c.Put(updateURL(c, speakerID), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -103,20 +103,20 @@ type AddBGPPeerOptsBuilder interface {
 
 // ToBGPSpeakerAddBGPPeerMap build a request body from AddBGPPeerOpts
 func (opts AddBGPPeerOpts) ToBGPSpeakerAddBGPPeerMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return ktvpcsdk.BuildRequestBody(opts, "")
 }
 
 // AddBGPPeer add the BGP peer to the speaker a.k.a. PUT /v2.0/bgp-speakers/{bgp-speaker-id}/add_bgp_peer
-func AddBGPPeer(c *gophercloud.ServiceClient, bgpSpeakerID string, opts AddBGPPeerOptsBuilder) (r AddBGPPeerResult) {
+func AddBGPPeer(c *ktvpcsdk.ServiceClient, bgpSpeakerID string, opts AddBGPPeerOptsBuilder) (r AddBGPPeerResult) {
 	b, err := opts.ToBGPSpeakerAddBGPPeerMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(addBGPPeerURL(c, bgpSpeakerID), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := c.Put(addBGPPeerURL(c, bgpSpeakerID), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -130,25 +130,25 @@ type RemoveBGPPeerOptsBuilder interface {
 
 // ToBGPSpeakerRemoveBGPPeerMap build a request body from RemoveBGPPeerOpts
 func (opts RemoveBGPPeerOpts) ToBGPSpeakerRemoveBGPPeerMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return ktvpcsdk.BuildRequestBody(opts, "")
 }
 
 // RemoveBGPPeer remove the BGP peer from the speaker, a.k.a. PUT /v2.0/bgp-speakers/{bgp-speaker-id}/add_bgp_peer
-func RemoveBGPPeer(c *gophercloud.ServiceClient, bgpSpeakerID string, opts RemoveBGPPeerOptsBuilder) (r RemoveBGPPeerResult) {
+func RemoveBGPPeer(c *ktvpcsdk.ServiceClient, bgpSpeakerID string, opts RemoveBGPPeerOptsBuilder) (r RemoveBGPPeerResult) {
 	b, err := opts.ToBGPSpeakerRemoveBGPPeerMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(removeBGPPeerURL(c, bgpSpeakerID), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := c.Put(removeBGPPeerURL(c, bgpSpeakerID), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // GetAdvertisedRoutes a.k.a. GET /v2.0/bgp-speakers/{bgp-speaker-id}/get_advertised_routes
-func GetAdvertisedRoutes(c *gophercloud.ServiceClient, bgpSpeakerID string) pagination.Pager {
+func GetAdvertisedRoutes(c *ktvpcsdk.ServiceClient, bgpSpeakerID string) pagination.Pager {
 	url := getAdvertisedRoutesURL(c, bgpSpeakerID)
 	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
 		return AdvertisedRoutePage{pagination.SinglePageBase(r)}
@@ -168,20 +168,20 @@ type AddGatewayNetworkOpts struct {
 
 // ToBGPSpeakerAddGatewayNetworkMap implements the function
 func (opts AddGatewayNetworkOpts) ToBGPSpeakerAddGatewayNetworkMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return ktvpcsdk.BuildRequestBody(opts, "")
 }
 
 // AddGatewayNetwork a.k.a. PUT /v2.0/bgp-speakers/{bgp-speaker-id}/add_gateway_network
-func AddGatewayNetwork(c *gophercloud.ServiceClient, bgpSpeakerID string, opts AddGatewayNetworkOptsBuilder) (r AddGatewayNetworkResult) {
+func AddGatewayNetwork(c *ktvpcsdk.ServiceClient, bgpSpeakerID string, opts AddGatewayNetworkOptsBuilder) (r AddGatewayNetworkResult) {
 	b, err := opts.ToBGPSpeakerAddGatewayNetworkMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(addGatewayNetworkURL(c, bgpSpeakerID), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := c.Put(addGatewayNetworkURL(c, bgpSpeakerID), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -195,19 +195,19 @@ type RemoveGatewayNetworkOpts AddGatewayNetworkOpts
 
 // ToBGPSpeakerRemoveGatewayNetworkMap implement the function
 func (opts RemoveGatewayNetworkOpts) ToBGPSpeakerRemoveGatewayNetworkMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return ktvpcsdk.BuildRequestBody(opts, "")
 }
 
 // RemoveGatewayNetwork a.k.a. PUT /v2.0/bgp-speakers/{bgp-speaker-id}/remove_gateway_network
-func RemoveGatewayNetwork(c *gophercloud.ServiceClient, bgpSpeakerID string, opts RemoveGatewayNetworkOptsBuilder) (r RemoveGatewayNetworkResult) {
+func RemoveGatewayNetwork(c *ktvpcsdk.ServiceClient, bgpSpeakerID string, opts RemoveGatewayNetworkOptsBuilder) (r RemoveGatewayNetworkResult) {
 	b, err := opts.ToBGPSpeakerRemoveGatewayNetworkMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(removeGatewayNetworkURL(c, bgpSpeakerID), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := c.Put(removeGatewayNetworkURL(c, bgpSpeakerID), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

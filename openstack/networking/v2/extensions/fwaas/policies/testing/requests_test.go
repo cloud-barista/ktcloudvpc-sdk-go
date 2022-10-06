@@ -149,8 +149,8 @@ func TestCreate(t *testing.T) {
 		TenantID:    "9145d91459d248b1b02fdaca97c6a75d",
 		Name:        "policy",
 		Description: "Firewall policy",
-		Shared:      gophercloud.Disabled,
-		Audited:     gophercloud.Enabled,
+		Shared:      ktvpcsdk.Disabled,
+		Audited:     ktvpcsdk.Enabled,
 		Rules: []string{
 			"98a58c87-76be-ae7c-a74e-b77fffb88d95",
 			"11a58c87-76be-ae7c-a74e-b77fffb88a32",

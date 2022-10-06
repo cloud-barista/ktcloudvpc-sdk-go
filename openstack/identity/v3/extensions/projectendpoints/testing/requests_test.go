@@ -81,14 +81,14 @@ func TestListEndpoints(t *testing.T) {
 		expected := []projectendpoints.Endpoint{
 			{
 				ID:           "6fedc0",
-				Availability: gophercloud.AvailabilityPublic,
+				Availability: ktvpcsdk.AvailabilityPublic,
 				Region:       "north",
 				ServiceID:    "1b501a",
 				URL:          "http://example.com/identity/",
 			},
 			{
 				ID:           "6fedc0",
-				Availability: gophercloud.AvailabilityInternal,
+				Availability: ktvpcsdk.AvailabilityInternal,
 				Region:       "south",
 				ServiceID:    "1b501a",
 				URL:          "http://example.com/identity/",

@@ -23,33 +23,33 @@ import (
 	More details here:
 	http://developer.openstack.org/api-ref-image-v2.html#createImageMember-v2
 */
-func Create(client *gophercloud.ServiceClient, id string, member string) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, id string, member string) (r CreateResult) {
 	b := map[string]interface{}{"member": member}
-	resp, err := client.Post(createMemberURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createMemberURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // List members returns list of members for specifed image id.
-func List(client *gophercloud.ServiceClient, id string) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, id string) pagination.Pager {
 	return pagination.NewPager(client, listMembersURL(client, id), func(r pagination.PageResult) pagination.Page {
 		return MemberPage{pagination.SinglePageBase(r)}
 	})
 }
 
 // Get image member details.
-func Get(client *gophercloud.ServiceClient, imageID string, memberID string) (r DetailsResult) {
-	resp, err := client.Get(getMemberURL(client, imageID, memberID), &r.Body, &gophercloud.RequestOpts{OkCodes: []int{200}})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+func Get(client *ktvpcsdk.ServiceClient, imageID string, memberID string) (r DetailsResult) {
+	resp, err := client.Get(getMemberURL(client, imageID, memberID), &r.Body, &ktvpcsdk.RequestOpts{OkCodes: []int{200}})
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete membership for given image. Callee should be image owner.
-func Delete(client *gophercloud.ServiceClient, imageID string, memberID string) (r DeleteResult) {
-	resp, err := client.Delete(deleteMemberURL(client, imageID, memberID), &gophercloud.RequestOpts{OkCodes: []int{204}})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+func Delete(client *ktvpcsdk.ServiceClient, imageID string, memberID string) (r DeleteResult) {
+	resp, err := client.Delete(deleteMemberURL(client, imageID, memberID), &ktvpcsdk.RequestOpts{OkCodes: []int{204}})
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -72,14 +72,14 @@ func (opts UpdateOpts) ToImageMemberUpdateMap() (map[string]interface{}, error) 
 }
 
 // Update function updates member.
-func Update(client *gophercloud.ServiceClient, imageID string, memberID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *ktvpcsdk.ServiceClient, imageID string, memberID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToImageMemberUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := client.Put(updateMemberURL(client, imageID, memberID), b, &r.Body,
-		&gophercloud.RequestOpts{OkCodes: []int{200}})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+		&ktvpcsdk.RequestOpts{OkCodes: []int{200}})
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
