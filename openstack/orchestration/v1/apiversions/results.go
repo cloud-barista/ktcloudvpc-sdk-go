@@ -10,7 +10,7 @@ import (
 type APIVersion struct {
 	Status string             `json:"status"`
 	ID     string             `json:"id"`
-	Links  []gophercloud.Link `json:"links"`
+	Links  []ktvpcsdk.Link `json:"links"`
 }
 
 // APIVersionPage is the page returned by a pager when traversing over a

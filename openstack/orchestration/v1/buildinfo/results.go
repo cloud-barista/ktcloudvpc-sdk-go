@@ -17,7 +17,7 @@ type BuildInfo struct {
 
 // GetResult represents the result of a Get operation.
 type GetResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract returns a pointer to a BuildInfo object and is called after a

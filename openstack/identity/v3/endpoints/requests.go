@@ -13,8 +13,8 @@ type CreateOptsBuilder interface {
 // to create an Endpoint.
 type CreateOpts struct {
 	// Availability is the interface type of the Endpoint (admin, internal,
-	// or public), referenced by the gophercloud.Availability type.
-	Availability gophercloud.Availability `json:"interface" required:"true"`
+	// or public), referenced by the ktvpcsdk.Availability type.
+	Availability ktvpcsdk.Availability `json:"interface" required:"true"`
 
 	// Name is the name of the Endpoint.
 	Name string `json:"name" required:"true"`
@@ -32,18 +32,18 @@ type CreateOpts struct {
 
 // ToEndpointCreateMap builds a request body from the Endpoint Create options.
 func (opts CreateOpts) ToEndpointCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "endpoint")
+	return ktvpcsdk.BuildRequestBody(opts, "endpoint")
 }
 
 // Create inserts a new Endpoint into the service catalog.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToEndpointCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := client.Post(listURL(client), &b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -56,8 +56,8 @@ type ListOptsBuilder interface {
 // All fields are optional.
 type ListOpts struct {
 	// Availability is the interface type of the Endpoint (admin, internal,
-	// or public), referenced by the gophercloud.Availability type.
-	Availability gophercloud.Availability `q:"interface"`
+	// or public), referenced by the ktvpcsdk.Availability type.
+	Availability ktvpcsdk.Availability `q:"interface"`
 
 	// ServiceID is the ID of the service the Endpoint refers to.
 	ServiceID string `q:"service_id"`
@@ -68,16 +68,16 @@ type ListOpts struct {
 
 // ToEndpointListParams builds a list request from the List options.
 func (opts ListOpts) ToEndpointListParams() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List enumerates endpoints in a paginated collection, optionally filtered
 // by ListOpts criteria.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	u := listURL(client)
 	if opts != nil {
-		q, err := gophercloud.BuildQueryString(opts)
+		q, err := ktvpcsdk.BuildQueryString(opts)
 		if err != nil {
 			return pagination.Pager{Err: err}
 		}
@@ -97,8 +97,8 @@ type UpdateOptsBuilder interface {
 // update an Endpoint.
 type UpdateOpts struct {
 	// Availability is the interface type of the Endpoint (admin, internal,
-	// or public), referenced by the gophercloud.Availability type.
-	Availability gophercloud.Availability `json:"interface,omitempty"`
+	// or public), referenced by the ktvpcsdk.Availability type.
+	Availability ktvpcsdk.Availability `json:"interface,omitempty"`
 
 	// Name is the name of the Endpoint.
 	Name string `json:"name,omitempty"`
@@ -116,24 +116,24 @@ type UpdateOpts struct {
 
 // ToEndpointUpdateMap builds an update request body from the Update options.
 func (opts UpdateOpts) ToEndpointUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "endpoint")
+	return ktvpcsdk.BuildRequestBody(opts, "endpoint")
 }
 
 // Update changes an existing endpoint with new data.
-func Update(client *gophercloud.ServiceClient, endpointID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *ktvpcsdk.ServiceClient, endpointID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToEndpointUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := client.Patch(endpointURL(client, endpointID), &b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete removes an endpoint from the service catalog.
-func Delete(client *gophercloud.ServiceClient, endpointID string) (r DeleteResult) {
+func Delete(client *ktvpcsdk.ServiceClient, endpointID string) (r DeleteResult) {
 	resp, err := client.Delete(endpointURL(client, endpointID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

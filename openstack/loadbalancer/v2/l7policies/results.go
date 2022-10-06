@@ -97,7 +97,7 @@ type Rule struct {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a function that accepts a result and extracts a l7policy.
@@ -126,13 +126,13 @@ type L7PolicyPage struct {
 // to do this, it needs to construct the next page's URL.
 func (r L7PolicyPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"l7policies_links"`
+		Links []ktvpcsdk.Link `json:"l7policies_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether a L7PolicyPage struct is empty.
@@ -161,7 +161,7 @@ type GetResult struct {
 // DeleteResult represents the result of a Delete operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // UpdateResult represents the result of an Update operation. Call its Extract
@@ -171,7 +171,7 @@ type UpdateResult struct {
 }
 
 type commonRuleResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a function that accepts a result and extracts a rule.
@@ -200,13 +200,13 @@ type RulePage struct {
 // to do this, it needs to construct the next page's URL.
 func (r RulePage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"rules_links"`
+		Links []ktvpcsdk.Link `json:"rules_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether a RulePage struct is empty.
@@ -235,7 +235,7 @@ type GetRuleResult struct {
 // DeleteRuleResult represents the result of a DeleteRule operation.
 // Call its ExtractErr method to determine if the request succeeded or failed.
 type DeleteRuleResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // UpdateRuleResult represents the result of an UpdateRule operation.

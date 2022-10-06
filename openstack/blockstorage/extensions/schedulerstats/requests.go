@@ -23,12 +23,12 @@ type ListOpts struct {
 
 // ToStoragePoolsListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToStoragePoolsListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List makes a request against the API to list storage pool information.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := storagePoolsListURL(client)
 	if opts != nil {
 		query, err := opts.ToStoragePoolsListQuery()

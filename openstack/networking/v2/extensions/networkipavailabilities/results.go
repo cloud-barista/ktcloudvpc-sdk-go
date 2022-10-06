@@ -9,7 +9,7 @@ import (
 )
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // GetResult represents the result of a Get operation. Call its Extract

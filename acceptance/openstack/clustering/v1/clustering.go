@@ -32,7 +32,7 @@ var TestPolicySpec = policies.Spec{
 
 // CreateCluster creates a random cluster. An error will be returned if
 // the cluster could not be created.
-func CreateCluster(t *testing.T, client *gophercloud.ServiceClient, profileID string) (*clusters.Cluster, error) {
+func CreateCluster(t *testing.T, client *ktvpcsdk.ServiceClient, profileID string) (*clusters.Cluster, error) {
 	name := tools.RandomString("TESTACC-", 8)
 	t.Logf("Attempting to create cluster: %s", name)
 
@@ -92,7 +92,7 @@ func CreateCluster(t *testing.T, client *gophercloud.ServiceClient, profileID st
 
 // CreateNode creates a random node. An error will be returned if
 // the node could not be created.
-func CreateNode(t *testing.T, client *gophercloud.ServiceClient, clusterID, profileID string) (*nodes.Node, error) {
+func CreateNode(t *testing.T, client *ktvpcsdk.ServiceClient, clusterID, profileID string) (*nodes.Node, error) {
 	name := tools.RandomString("TESTACC-", 8)
 	t.Logf("Attempting to create node: %s", name)
 
@@ -160,7 +160,7 @@ func CreateNode(t *testing.T, client *gophercloud.ServiceClient, clusterID, prof
 
 // CreatePolicy creates a random policy. An error will be returned if the
 // policy could not be created.
-func CreatePolicy(t *testing.T, client *gophercloud.ServiceClient) (*policies.Policy, error) {
+func CreatePolicy(t *testing.T, client *ktvpcsdk.ServiceClient) (*policies.Policy, error) {
 	name := tools.RandomString("TESTACC-", 8)
 	t.Logf("Attempting to create policy: %s", name)
 
@@ -196,7 +196,7 @@ func CreatePolicy(t *testing.T, client *gophercloud.ServiceClient) (*policies.Po
 
 // CreateProfile will create a random profile. An error will be returned if the
 // profile could not be created.
-func CreateProfile(t *testing.T, client *gophercloud.ServiceClient) (*profiles.Profile, error) {
+func CreateProfile(t *testing.T, client *ktvpcsdk.ServiceClient) (*profiles.Profile, error) {
 	choices, err := clients.AcceptanceTestChoicesFromEnv()
 	if err != nil {
 		return nil, err
@@ -255,7 +255,7 @@ func CreateProfile(t *testing.T, client *gophercloud.ServiceClient) (*profiles.P
 
 // CreateWebhookReceiver will create a random webhook receiver. An error will be returned if the
 // receiver could not be created.
-func CreateWebhookReceiver(t *testing.T, client *gophercloud.ServiceClient, clusterID string) (*receivers.Receiver, error) {
+func CreateWebhookReceiver(t *testing.T, client *ktvpcsdk.ServiceClient, clusterID string) (*receivers.Receiver, error) {
 	name := tools.RandomString("TESTACC-", 8)
 	t.Logf("Attempting to create receiver: %s", name)
 
@@ -289,7 +289,7 @@ func CreateWebhookReceiver(t *testing.T, client *gophercloud.ServiceClient, clus
 
 // CreateMessageReceiver will create a message receiver with a random name. An error will be returned if the
 // receiver could not be created.
-func CreateMessageReceiver(t *testing.T, client *gophercloud.ServiceClient, clusterID string) (*receivers.Receiver, error) {
+func CreateMessageReceiver(t *testing.T, client *ktvpcsdk.ServiceClient, clusterID string) (*receivers.Receiver, error) {
 	name := tools.RandomString("TESTACC-", 8)
 	t.Logf("Attempting to create receiver: %s", name)
 
@@ -322,7 +322,7 @@ func CreateMessageReceiver(t *testing.T, client *gophercloud.ServiceClient, clus
 
 // DeleteCluster will delete a given policy. A fatal error will occur if the
 // cluster could not be deleted. This works best as a deferred function.
-func DeleteCluster(t *testing.T, client *gophercloud.ServiceClient, id string) {
+func DeleteCluster(t *testing.T, client *ktvpcsdk.ServiceClient, id string) {
 	t.Logf("Attempting to delete cluster: %s", id)
 
 	res := clusters.Delete(client, id)
@@ -347,7 +347,7 @@ func DeleteCluster(t *testing.T, client *gophercloud.ServiceClient, id string) {
 
 // DeleteNode will delete a given node. A fatal error will occur if the
 // node could not be deleted. This works best as a deferred function.
-func DeleteNode(t *testing.T, client *gophercloud.ServiceClient, id string) {
+func DeleteNode(t *testing.T, client *ktvpcsdk.ServiceClient, id string) {
 	t.Logf("Attempting to delete node: %s", id)
 
 	res := nodes.Delete(client, id)
@@ -373,7 +373,7 @@ func DeleteNode(t *testing.T, client *gophercloud.ServiceClient, id string) {
 
 // DeletePolicy will delete a given policy. A fatal error will occur if the
 // policy could not be deleted. This works best as a deferred function.
-func DeletePolicy(t *testing.T, client *gophercloud.ServiceClient, id string) {
+func DeletePolicy(t *testing.T, client *ktvpcsdk.ServiceClient, id string) {
 	t.Logf("Attempting to delete policy: %s", id)
 
 	err := policies.Delete(client, id).ExtractErr()
@@ -388,7 +388,7 @@ func DeletePolicy(t *testing.T, client *gophercloud.ServiceClient, id string) {
 
 // DeleteProfile will delete a given profile. A fatal error will occur if the
 // profile could not be deleted. This works best as a deferred function.
-func DeleteProfile(t *testing.T, client *gophercloud.ServiceClient, id string) {
+func DeleteProfile(t *testing.T, client *ktvpcsdk.ServiceClient, id string) {
 	t.Logf("Attempting to delete profile: %s", id)
 
 	err := profiles.Delete(client, id).ExtractErr()
@@ -403,7 +403,7 @@ func DeleteProfile(t *testing.T, client *gophercloud.ServiceClient, id string) {
 
 // DeleteReceiver will delete a given receiver. A fatal error will occur if the
 // receiver could not be deleted. This works best as a deferred function.
-func DeleteReceiver(t *testing.T, client *gophercloud.ServiceClient, id string) {
+func DeleteReceiver(t *testing.T, client *ktvpcsdk.ServiceClient, id string) {
 	t.Logf("Attempting to delete Receiver: %s", id)
 
 	res := receivers.Delete(client, id)
@@ -429,7 +429,7 @@ func GetActionID(headers http.Header) (string, error) {
 	return actionID, nil
 }
 
-func WaitForAction(client *gophercloud.ServiceClient, actionID string) error {
+func WaitForAction(client *ktvpcsdk.ServiceClient, actionID string) error {
 	return tools.WaitFor(func() (bool, error) {
 		action, err := actions.Get(client, actionID).Extract()
 		if err != nil {
@@ -448,11 +448,11 @@ func WaitForAction(client *gophercloud.ServiceClient, actionID string) error {
 	})
 }
 
-func WaitForNodeStatus(client *gophercloud.ServiceClient, id string, status string) error {
+func WaitForNodeStatus(client *ktvpcsdk.ServiceClient, id string, status string) error {
 	return tools.WaitFor(func() (bool, error) {
 		latest, err := nodes.Get(client, id).Extract()
 		if err != nil {
-			if _, ok := err.(gophercloud.ErrDefault404); ok && status == "DELETED" {
+			if _, ok := err.(ktvpcsdk.ErrDefault404); ok && status == "DELETED" {
 				return true, nil
 			}
 

@@ -69,13 +69,13 @@ type SecGroupRulePage struct {
 // order to do this, it needs to construct the next page's URL.
 func (r SecGroupRulePage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"security_group_rules_links"`
+		Links []ktvpcsdk.Link `json:"security_group_rules_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether a SecGroupRulePage struct is empty.
@@ -96,7 +96,7 @@ func ExtractRules(r pagination.Page) ([]SecGroupRule, error) {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a function that accepts a result and extracts a security rule.
@@ -123,5 +123,5 @@ type GetResult struct {
 // DeleteResult represents the result of a delete operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }

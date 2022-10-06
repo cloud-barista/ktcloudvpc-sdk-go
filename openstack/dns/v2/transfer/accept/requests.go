@@ -22,12 +22,12 @@ type ListOpts struct {
 
 // ToTransferAcceptListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToTransferAcceptListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List implements a transfer accept List request.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := baseURL(client)
 	if opts != nil {
 		query, err := opts.ToTransferAcceptListQuery()
@@ -42,9 +42,9 @@ func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pa
 }
 
 // Get returns information about a transfer accept, given its ID.
-func Get(client *gophercloud.ServiceClient, transferAcceptID string) (r GetResult) {
+func Get(client *ktvpcsdk.ServiceClient, transferAcceptID string) (r GetResult) {
 	resp, err := client.Get(resourceURL(client, transferAcceptID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -66,7 +66,7 @@ type CreateOpts struct {
 
 // ToTransferAcceptCreateMap formats an CreateOpts structure into a request body.
 func (opts CreateOpts) ToTransferAcceptCreateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -74,15 +74,15 @@ func (opts CreateOpts) ToTransferAcceptCreateMap() (map[string]interface{}, erro
 }
 
 // Create implements a transfer accept create request.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToTransferAcceptCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(baseURL(client), &b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(baseURL(client), &b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{http.StatusCreated, http.StatusAccepted},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

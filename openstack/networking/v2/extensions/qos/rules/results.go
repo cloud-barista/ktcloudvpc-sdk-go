@@ -6,7 +6,7 @@ import (
 )
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a function that accepts a result and extracts a BandwidthLimitRule.
@@ -39,7 +39,7 @@ type UpdateBandwidthLimitRuleResult struct {
 // DeleteBandwidthLimitRuleResult represents the result of a Delete operation. Call its Extract
 // method to interpret it as a BandwidthLimitRule.
 type DeleteBandwidthLimitRuleResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // BandwidthLimitRule represents a QoS policy rule to set bandwidth limits.
@@ -117,7 +117,7 @@ type UpdateDSCPMarkingRuleResult struct {
 // DeleteDSCPMarkingRuleResult represents the result of a Delete operation. Call its Extract
 // method to interpret it as a DSCPMarkingRule.
 type DeleteDSCPMarkingRuleResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // DSCPMarkingRule represents a QoS policy rule to set DSCP marking.
@@ -189,7 +189,7 @@ type UpdateMinimumBandwidthRuleResult struct {
 // DeleteMinimumBandwidthRuleResult represents the result of a Delete operation. Call its Extract
 // method to interpret it as a MinimumBandwidthRule.
 type DeleteMinimumBandwidthRuleResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // MinimumBandwidthRule represents a QoS policy rule to set minimum bandwidth.

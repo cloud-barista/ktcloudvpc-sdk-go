@@ -1,4 +1,4 @@
-package gophercloud
+package ktvpcsdk
 
 import (
 	"fmt"

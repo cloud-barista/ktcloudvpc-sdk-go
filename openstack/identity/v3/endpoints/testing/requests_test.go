@@ -51,7 +51,7 @@ func TestCreateSuccessful(t *testing.T) {
 	})
 
 	actual, err := endpoints.Create(client.ServiceClient(), endpoints.CreateOpts{
-		Availability: gophercloud.AvailabilityPublic,
+		Availability: ktvpcsdk.AvailabilityPublic,
 		Name:         "the-endiest-of-points",
 		Region:       "underground",
 		URL:          "https://1.2.3.4:9000/",
@@ -61,7 +61,7 @@ func TestCreateSuccessful(t *testing.T) {
 
 	expected := &endpoints.Endpoint{
 		ID:           "12",
-		Availability: gophercloud.AvailabilityPublic,
+		Availability: ktvpcsdk.AvailabilityPublic,
 		Enabled:      true,
 		Name:         "the-endiest-of-points",
 		Region:       "underground",
@@ -129,7 +129,7 @@ func TestListEndpoints(t *testing.T) {
 		expected := []endpoints.Endpoint{
 			{
 				ID:           "12",
-				Availability: gophercloud.AvailabilityPublic,
+				Availability: ktvpcsdk.AvailabilityPublic,
 				Enabled:      true,
 				Name:         "the-endiest-of-points",
 				Region:       "underground",
@@ -138,7 +138,7 @@ func TestListEndpoints(t *testing.T) {
 			},
 			{
 				ID:           "13",
-				Availability: gophercloud.AvailabilityInternal,
+				Availability: ktvpcsdk.AvailabilityInternal,
 				Enabled:      false,
 				Name:         "shhhh",
 				Region:       "underground",
@@ -196,7 +196,7 @@ func TestUpdateEndpoint(t *testing.T) {
 
 	expected := &endpoints.Endpoint{
 		ID:           "12",
-		Availability: gophercloud.AvailabilityPublic,
+		Availability: ktvpcsdk.AvailabilityPublic,
 		Enabled:      true,
 		Name:         "renamed",
 		Region:       "somewhere-else",

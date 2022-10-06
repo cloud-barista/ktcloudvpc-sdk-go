@@ -18,23 +18,23 @@ func (r GetResult) Extract() (*Claim, error) {
 
 // CreateResult is the response of a Create operations.
 type CreateResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // GetResult is the response of a Get operations.
 type GetResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // UpdateResult is the response of a Update operations.
 type UpdateResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // DeleteResult is the result from a Delete operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 type Messages struct {

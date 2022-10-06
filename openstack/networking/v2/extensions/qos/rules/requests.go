@@ -35,14 +35,14 @@ type BandwidthLimitRulesListOpts struct {
 
 // ToBandwidthLimitRulesListQuery formats a ListOpts into a query string.
 func (opts BandwidthLimitRulesListOpts) ToBandwidthLimitRulesListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // ListBandwidthLimitRules returns a Pager which allows you to iterate over a collection of
 // BandwidthLimitRules. It accepts a ListOpts struct, which allows you to filter and sort
 // the returned collection for greater efficiency.
-func ListBandwidthLimitRules(c *gophercloud.ServiceClient, policyID string, opts BandwidthLimitRulesListOptsBuilder) pagination.Pager {
+func ListBandwidthLimitRules(c *ktvpcsdk.ServiceClient, policyID string, opts BandwidthLimitRulesListOptsBuilder) pagination.Pager {
 	url := listBandwidthLimitRulesURL(c, policyID)
 	if opts != nil {
 		query, err := opts.ToBandwidthLimitRulesListQuery()
@@ -58,9 +58,9 @@ func ListBandwidthLimitRules(c *gophercloud.ServiceClient, policyID string, opts
 }
 
 // GetBandwidthLimitRule retrieves a specific BandwidthLimitRule based on its ID.
-func GetBandwidthLimitRule(c *gophercloud.ServiceClient, policyID, ruleID string) (r GetBandwidthLimitRuleResult) {
+func GetBandwidthLimitRule(c *ktvpcsdk.ServiceClient, policyID, ruleID string) (r GetBandwidthLimitRuleResult) {
 	resp, err := c.Get(getBandwidthLimitRuleURL(c, policyID, ruleID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -84,20 +84,20 @@ type CreateBandwidthLimitRuleOpts struct {
 
 // ToBandwidthLimitRuleCreateMap constructs a request body from CreateBandwidthLimitRuleOpts.
 func (opts CreateBandwidthLimitRuleOpts) ToBandwidthLimitRuleCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "bandwidth_limit_rule")
+	return ktvpcsdk.BuildRequestBody(opts, "bandwidth_limit_rule")
 }
 
 // CreateBandwidthLimitRule requests the creation of a new BandwidthLimitRule on the server.
-func CreateBandwidthLimitRule(client *gophercloud.ServiceClient, policyID string, opts CreateBandwidthLimitRuleOptsBuilder) (r CreateBandwidthLimitRuleResult) {
+func CreateBandwidthLimitRule(client *ktvpcsdk.ServiceClient, policyID string, opts CreateBandwidthLimitRuleOptsBuilder) (r CreateBandwidthLimitRuleResult) {
 	b, err := opts.ToBandwidthLimitRuleCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createBandwidthLimitRuleURL(client, policyID), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createBandwidthLimitRuleURL(client, policyID), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -121,27 +121,27 @@ type UpdateBandwidthLimitRuleOpts struct {
 
 // ToBandwidthLimitRuleUpdateMap constructs a request body from UpdateBandwidthLimitRuleOpts.
 func (opts UpdateBandwidthLimitRuleOpts) ToBandwidthLimitRuleUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "bandwidth_limit_rule")
+	return ktvpcsdk.BuildRequestBody(opts, "bandwidth_limit_rule")
 }
 
 // UpdateBandwidthLimitRule requests the creation of a new BandwidthLimitRule on the server.
-func UpdateBandwidthLimitRule(client *gophercloud.ServiceClient, policyID, ruleID string, opts UpdateBandwidthLimitRuleOptsBuilder) (r UpdateBandwidthLimitRuleResult) {
+func UpdateBandwidthLimitRule(client *ktvpcsdk.ServiceClient, policyID, ruleID string, opts UpdateBandwidthLimitRuleOptsBuilder) (r UpdateBandwidthLimitRuleResult) {
 	b, err := opts.ToBandwidthLimitRuleUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Put(updateBandwidthLimitRuleURL(client, policyID, ruleID), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Put(updateBandwidthLimitRuleURL(client, policyID, ruleID), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete accepts policy and rule ID and deletes the BandwidthLimitRule associated with them.
-func DeleteBandwidthLimitRule(c *gophercloud.ServiceClient, policyID, ruleID string) (r DeleteBandwidthLimitRuleResult) {
+func DeleteBandwidthLimitRule(c *ktvpcsdk.ServiceClient, policyID, ruleID string) (r DeleteBandwidthLimitRuleResult) {
 	resp, err := c.Delete(deleteBandwidthLimitRuleURL(c, policyID, ruleID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -173,14 +173,14 @@ type DSCPMarkingRulesListOpts struct {
 
 // ToDSCPMarkingRulesListQuery formats a ListOpts into a query string.
 func (opts DSCPMarkingRulesListOpts) ToDSCPMarkingRulesListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // ListDSCPMarkingRules returns a Pager which allows you to iterate over a collection of
 // DSCPMarkingRules. It accepts a ListOpts struct, which allows you to filter and sort
 // the returned collection for greater efficiency.
-func ListDSCPMarkingRules(c *gophercloud.ServiceClient, policyID string, opts DSCPMarkingRulesListOptsBuilder) pagination.Pager {
+func ListDSCPMarkingRules(c *ktvpcsdk.ServiceClient, policyID string, opts DSCPMarkingRulesListOptsBuilder) pagination.Pager {
 	url := listDSCPMarkingRulesURL(c, policyID)
 	if opts != nil {
 		query, err := opts.ToDSCPMarkingRulesListQuery()
@@ -196,9 +196,9 @@ func ListDSCPMarkingRules(c *gophercloud.ServiceClient, policyID string, opts DS
 }
 
 // GetDSCPMarkingRule retrieves a specific DSCPMarkingRule based on its ID.
-func GetDSCPMarkingRule(c *gophercloud.ServiceClient, policyID, ruleID string) (r GetDSCPMarkingRuleResult) {
+func GetDSCPMarkingRule(c *ktvpcsdk.ServiceClient, policyID, ruleID string) (r GetDSCPMarkingRuleResult) {
 	resp, err := c.Get(getDSCPMarkingRuleURL(c, policyID, ruleID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -216,20 +216,20 @@ type CreateDSCPMarkingRuleOpts struct {
 
 // ToDSCPMarkingRuleCreateMap constructs a request body from CreateDSCPMarkingRuleOpts.
 func (opts CreateDSCPMarkingRuleOpts) ToDSCPMarkingRuleCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "dscp_marking_rule")
+	return ktvpcsdk.BuildRequestBody(opts, "dscp_marking_rule")
 }
 
 // CreateDSCPMarkingRule requests the creation of a new DSCPMarkingRule on the server.
-func CreateDSCPMarkingRule(client *gophercloud.ServiceClient, policyID string, opts CreateDSCPMarkingRuleOptsBuilder) (r CreateDSCPMarkingRuleResult) {
+func CreateDSCPMarkingRule(client *ktvpcsdk.ServiceClient, policyID string, opts CreateDSCPMarkingRuleOptsBuilder) (r CreateDSCPMarkingRuleResult) {
 	b, err := opts.ToDSCPMarkingRuleCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createDSCPMarkingRuleURL(client, policyID), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createDSCPMarkingRuleURL(client, policyID), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -247,27 +247,27 @@ type UpdateDSCPMarkingRuleOpts struct {
 
 // ToDSCPMarkingRuleUpdateMap constructs a request body from UpdateDSCPMarkingRuleOpts.
 func (opts UpdateDSCPMarkingRuleOpts) ToDSCPMarkingRuleUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "dscp_marking_rule")
+	return ktvpcsdk.BuildRequestBody(opts, "dscp_marking_rule")
 }
 
 // UpdateDSCPMarkingRule requests the creation of a new DSCPMarkingRule on the server.
-func UpdateDSCPMarkingRule(client *gophercloud.ServiceClient, policyID, ruleID string, opts UpdateDSCPMarkingRuleOptsBuilder) (r UpdateDSCPMarkingRuleResult) {
+func UpdateDSCPMarkingRule(client *ktvpcsdk.ServiceClient, policyID, ruleID string, opts UpdateDSCPMarkingRuleOptsBuilder) (r UpdateDSCPMarkingRuleResult) {
 	b, err := opts.ToDSCPMarkingRuleUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Put(updateDSCPMarkingRuleURL(client, policyID, ruleID), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Put(updateDSCPMarkingRuleURL(client, policyID, ruleID), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // DeleteDSCPMarkingRule accepts policy and rule ID and deletes the DSCPMarkingRule associated with them.
-func DeleteDSCPMarkingRule(c *gophercloud.ServiceClient, policyID, ruleID string) (r DeleteDSCPMarkingRuleResult) {
+func DeleteDSCPMarkingRule(c *ktvpcsdk.ServiceClient, policyID, ruleID string) (r DeleteDSCPMarkingRuleResult) {
 	resp, err := c.Delete(deleteDSCPMarkingRuleURL(c, policyID, ruleID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -300,14 +300,14 @@ type MinimumBandwidthRulesListOpts struct {
 
 // ToMinimumBandwidthRulesListQuery formats a ListOpts into a query string.
 func (opts MinimumBandwidthRulesListOpts) ToMinimumBandwidthRulesListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // ListMinimumBandwidthRules returns a Pager which allows you to iterate over a collection of
 // MinimumBandwidthRules. It accepts a ListOpts struct, which allows you to filter and sort
 // the returned collection for greater efficiency.
-func ListMinimumBandwidthRules(c *gophercloud.ServiceClient, policyID string, opts MinimumBandwidthRulesListOptsBuilder) pagination.Pager {
+func ListMinimumBandwidthRules(c *ktvpcsdk.ServiceClient, policyID string, opts MinimumBandwidthRulesListOptsBuilder) pagination.Pager {
 	url := listMinimumBandwidthRulesURL(c, policyID)
 	if opts != nil {
 		query, err := opts.ToMinimumBandwidthRulesListQuery()
@@ -323,9 +323,9 @@ func ListMinimumBandwidthRules(c *gophercloud.ServiceClient, policyID string, op
 }
 
 // GetMinimumBandwidthRule retrieves a specific MinimumBandwidthRule based on its ID.
-func GetMinimumBandwidthRule(c *gophercloud.ServiceClient, policyID, ruleID string) (r GetMinimumBandwidthRuleResult) {
+func GetMinimumBandwidthRule(c *ktvpcsdk.ServiceClient, policyID, ruleID string) (r GetMinimumBandwidthRuleResult) {
 	resp, err := c.Get(getMinimumBandwidthRuleURL(c, policyID, ruleID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -346,20 +346,20 @@ type CreateMinimumBandwidthRuleOpts struct {
 
 // ToMinimumBandwidthRuleCreateMap constructs a request body from CreateMinimumBandwidthRuleOpts.
 func (opts CreateMinimumBandwidthRuleOpts) ToMinimumBandwidthRuleCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "minimum_bandwidth_rule")
+	return ktvpcsdk.BuildRequestBody(opts, "minimum_bandwidth_rule")
 }
 
 // CreateMinimumBandwidthRule requests the creation of a new MinimumBandwidthRule on the server.
-func CreateMinimumBandwidthRule(client *gophercloud.ServiceClient, policyID string, opts CreateMinimumBandwidthRuleOptsBuilder) (r CreateMinimumBandwidthRuleResult) {
+func CreateMinimumBandwidthRule(client *ktvpcsdk.ServiceClient, policyID string, opts CreateMinimumBandwidthRuleOptsBuilder) (r CreateMinimumBandwidthRuleResult) {
 	b, err := opts.ToMinimumBandwidthRuleCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createMinimumBandwidthRuleURL(client, policyID), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createMinimumBandwidthRuleURL(client, policyID), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -380,26 +380,26 @@ type UpdateMinimumBandwidthRuleOpts struct {
 
 // ToMinimumBandwidthRuleUpdateMap constructs a request body from UpdateMinimumBandwidthRuleOpts.
 func (opts UpdateMinimumBandwidthRuleOpts) ToMinimumBandwidthRuleUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "minimum_bandwidth_rule")
+	return ktvpcsdk.BuildRequestBody(opts, "minimum_bandwidth_rule")
 }
 
 // UpdateMinimumBandwidthRule requests the creation of a new MinimumBandwidthRule on the server.
-func UpdateMinimumBandwidthRule(client *gophercloud.ServiceClient, policyID, ruleID string, opts UpdateMinimumBandwidthRuleOptsBuilder) (r UpdateMinimumBandwidthRuleResult) {
+func UpdateMinimumBandwidthRule(client *ktvpcsdk.ServiceClient, policyID, ruleID string, opts UpdateMinimumBandwidthRuleOptsBuilder) (r UpdateMinimumBandwidthRuleResult) {
 	b, err := opts.ToMinimumBandwidthRuleUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Put(updateMinimumBandwidthRuleURL(client, policyID, ruleID), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Put(updateMinimumBandwidthRuleURL(client, policyID, ruleID), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // DeleteMinimumBandwidthRule accepts policy and rule ID and deletes the MinimumBandwidthRule associated with them.
-func DeleteMinimumBandwidthRule(c *gophercloud.ServiceClient, policyID, ruleID string) (r DeleteMinimumBandwidthRuleResult) {
+func DeleteMinimumBandwidthRule(c *ktvpcsdk.ServiceClient, policyID, ruleID string) (r DeleteMinimumBandwidthRuleResult) {
 	resp, err := c.Delete(deleteMinimumBandwidthRuleURL(c, policyID, ruleID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

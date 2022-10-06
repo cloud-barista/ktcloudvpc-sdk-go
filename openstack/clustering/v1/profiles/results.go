@@ -104,7 +104,7 @@ func (r Spec) MarshalJSON() ([]byte, error) {
 
 // commonResult is the base result of a Profile operation.
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract provides access to Profile returned by the Get and Create functions.
@@ -137,7 +137,7 @@ type UpdateResult struct {
 // DeleteResult is the result from a Delete operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // ValidateResult is the response of a Validate operations.

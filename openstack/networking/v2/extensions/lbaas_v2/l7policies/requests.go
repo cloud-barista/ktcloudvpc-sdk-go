@@ -70,18 +70,18 @@ type CreateOpts struct {
 
 // ToL7PolicyCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToL7PolicyCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "l7policy")
+	return ktvpcsdk.BuildRequestBody(opts, "l7policy")
 }
 
 // Create accepts a CreateOpts struct and uses the values to create a new l7policy.
-func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToL7PolicyCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Post(rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -112,7 +112,7 @@ type ListOpts struct {
 
 // ToL7PolicyListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToL7PolicyListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
@@ -122,7 +122,7 @@ func (opts ListOpts) ToL7PolicyListQuery() (string, error) {
 //
 // Default policy settings return only those l7policies that are owned by the
 // project who submits the request, unless an admin user submits the request.
-func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := rootURL(c)
 	if opts != nil {
 		query, err := opts.ToL7PolicyListQuery()
@@ -137,16 +137,16 @@ func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 }
 
 // Get retrieves a particular l7policy based on its unique ID.
-func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
 	resp, err := c.Get(resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete will permanently delete a particular l7policy based on its unique ID.
-func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
+func Delete(c *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
 	resp, err := c.Delete(resourceURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -186,7 +186,7 @@ type UpdateOpts struct {
 
 // ToL7PolicyUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToL7PolicyUpdateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "l7policy")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "l7policy")
 	if err != nil {
 		return nil, err
 	}
@@ -205,16 +205,16 @@ func (opts UpdateOpts) ToL7PolicyUpdateMap() (map[string]interface{}, error) {
 }
 
 // Update allows l7policy to be updated.
-func Update(c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToL7PolicyUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -248,18 +248,18 @@ type CreateRuleOpts struct {
 
 // ToRuleCreateMap builds a request body from CreateRuleOpts.
 func (opts CreateRuleOpts) ToRuleCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "rule")
+	return ktvpcsdk.BuildRequestBody(opts, "rule")
 }
 
 // CreateRule will create and associate a Rule with a particular L7Policy.
-func CreateRule(c *gophercloud.ServiceClient, policyID string, opts CreateRuleOpts) (r CreateRuleResult) {
+func CreateRule(c *ktvpcsdk.ServiceClient, policyID string, opts CreateRuleOpts) (r CreateRuleResult) {
 	b, err := opts.ToRuleCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Post(ruleRootURL(c, policyID), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -288,7 +288,7 @@ type ListRulesOpts struct {
 
 // ToRulesListQuery formats a ListOpts into a query string.
 func (opts ListRulesOpts) ToRulesListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
@@ -298,7 +298,7 @@ func (opts ListRulesOpts) ToRulesListQuery() (string, error) {
 //
 // Default policy settings return only those rules that are owned by the
 // project who submits the request, unless an admin user submits the request.
-func ListRules(c *gophercloud.ServiceClient, policyID string, opts ListRulesOptsBuilder) pagination.Pager {
+func ListRules(c *ktvpcsdk.ServiceClient, policyID string, opts ListRulesOptsBuilder) pagination.Pager {
 	url := ruleRootURL(c, policyID)
 	if opts != nil {
 		query, err := opts.ToRulesListQuery()
@@ -313,16 +313,16 @@ func ListRules(c *gophercloud.ServiceClient, policyID string, opts ListRulesOpts
 }
 
 // GetRule retrieves a particular L7Policy Rule based on its unique ID.
-func GetRule(c *gophercloud.ServiceClient, policyID string, ruleID string) (r GetRuleResult) {
+func GetRule(c *ktvpcsdk.ServiceClient, policyID string, ruleID string) (r GetRuleResult) {
 	resp, err := c.Get(ruleResourceURL(c, policyID, ruleID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // DeleteRule will remove a Rule from a particular L7Policy.
-func DeleteRule(c *gophercloud.ServiceClient, policyID string, ruleID string) (r DeleteRuleResult) {
+func DeleteRule(c *ktvpcsdk.ServiceClient, policyID string, ruleID string) (r DeleteRuleResult) {
 	resp, err := c.Delete(ruleResourceURL(c, policyID, ruleID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -357,7 +357,7 @@ type UpdateRuleOpts struct {
 
 // ToRuleUpdateMap builds a request body from UpdateRuleOpts.
 func (opts UpdateRuleOpts) ToRuleUpdateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "rule")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "rule")
 	if err != nil {
 		return nil, err
 	}
@@ -370,15 +370,15 @@ func (opts UpdateRuleOpts) ToRuleUpdateMap() (map[string]interface{}, error) {
 }
 
 // UpdateRule allows Rule to be updated.
-func UpdateRule(c *gophercloud.ServiceClient, policyID string, ruleID string, opts UpdateRuleOptsBuilder) (r UpdateRuleResult) {
+func UpdateRule(c *ktvpcsdk.ServiceClient, policyID string, ruleID string, opts UpdateRuleOptsBuilder) (r UpdateRuleResult) {
 	b, err := opts.ToRuleUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(ruleResourceURL(c, policyID, ruleID), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := c.Put(ruleResourceURL(c, policyID, ruleID), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200, 201, 202},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

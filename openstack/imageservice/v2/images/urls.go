@@ -10,32 +10,32 @@ import (
 
 // `listURL` is a pure function. `listURL(c)` is a URL for which a GET
 // request will respond with a list of images in the service `c`.
-func listURL(c *gophercloud.ServiceClient) string {
+func listURL(c *ktvpcsdk.ServiceClient) string {
 	return c.ServiceURL("images")
 }
 
-func createURL(c *gophercloud.ServiceClient) string {
+func createURL(c *ktvpcsdk.ServiceClient) string {
 	return c.ServiceURL("images")
 }
 
 // `imageURL(c,i)` is the URL for the image identified by ID `i` in
 // the service `c`.
-func imageURL(c *gophercloud.ServiceClient, imageID string) string {
+func imageURL(c *ktvpcsdk.ServiceClient, imageID string) string {
 	return c.ServiceURL("images", imageID)
 }
 
 // `getURL(c,i)` is a URL for which a GET request will respond with
 // information about the image identified by ID `i` in the service
 // `c`.
-func getURL(c *gophercloud.ServiceClient, imageID string) string {
+func getURL(c *ktvpcsdk.ServiceClient, imageID string) string {
 	return imageURL(c, imageID)
 }
 
-func updateURL(c *gophercloud.ServiceClient, imageID string) string {
+func updateURL(c *ktvpcsdk.ServiceClient, imageID string) string {
 	return imageURL(c, imageID)
 }
 
-func deleteURL(c *gophercloud.ServiceClient, imageID string) string {
+func deleteURL(c *ktvpcsdk.ServiceClient, imageID string) string {
 	return imageURL(c, imageID)
 }
 
@@ -51,7 +51,7 @@ func nextPageURL(serviceURL, requestedNext string) (string, error) {
 		return "", err
 	}
 
-	base = gophercloud.NormalizeURL(base)
+	base = ktvpcsdk.NormalizeURL(base)
 	nextPath := base + strings.TrimPrefix(requestedNextURL.Path, "/")
 
 	nextURL, err := url.Parse(nextPath)

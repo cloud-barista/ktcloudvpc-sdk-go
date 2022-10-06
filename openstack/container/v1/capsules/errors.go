@@ -7,7 +7,7 @@ import (
 )
 
 type ErrInvalidDataFormat struct {
-	gophercloud.BaseError
+	ktvpcsdk.BaseError
 }
 
 func (e ErrInvalidDataFormat) Error() string {

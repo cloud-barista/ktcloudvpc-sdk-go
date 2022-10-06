@@ -18,8 +18,8 @@ func (r *UsageExt) UnmarshalJSON(b []byte) error {
 	type tmp UsageExt
 	var s struct {
 		tmp
-		LaunchedAt   gophercloud.JSONRFC3339MilliNoZ `json:"OS-SRV-USG:launched_at"`
-		TerminatedAt gophercloud.JSONRFC3339MilliNoZ `json:"OS-SRV-USG:terminated_at"`
+		LaunchedAt   ktvpcsdk.JSONRFC3339MilliNoZ `json:"OS-SRV-USG:launched_at"`
+		TerminatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"OS-SRV-USG:terminated_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {

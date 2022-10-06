@@ -121,7 +121,7 @@ func TestServersWithoutImageRef(t *testing.T) {
 
 	server, err := CreateServerWithoutImageRef(t, client)
 	if err != nil {
-		if err400, ok := err.(*gophercloud.ErrUnexpectedResponseCode); ok {
+		if err400, ok := err.(*ktvpcsdk.ErrUnexpectedResponseCode); ok {
 			if !strings.Contains(string(err400.Body), "Missing imageRef attribute") {
 				defer DeleteServer(t, client, server)
 			}

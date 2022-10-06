@@ -9,7 +9,7 @@ import (
 	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
-func CreateResourceProvider(t *testing.T, client *gophercloud.ServiceClient) (*resourceproviders.ResourceProvider, error) {
+func CreateResourceProvider(t *testing.T, client *ktvpcsdk.ServiceClient) (*resourceproviders.ResourceProvider, error) {
 	name := tools.RandomString("TESTACC-", 8)
 	t.Logf("Attempting to create resource provider: %s", name)
 
@@ -31,7 +31,7 @@ func CreateResourceProvider(t *testing.T, client *gophercloud.ServiceClient) (*r
 	return resourceProvider, nil
 }
 
-func CreateResourceProviderWithParent(t *testing.T, client *gophercloud.ServiceClient, parentUUID string) (*resourceproviders.ResourceProvider, error) {
+func CreateResourceProviderWithParent(t *testing.T, client *ktvpcsdk.ServiceClient, parentUUID string) (*resourceproviders.ResourceProvider, error) {
 	name := tools.RandomString("TESTACC-", 8)
 	t.Logf("Attempting to create resource provider: %s", name)
 
@@ -58,7 +58,7 @@ func CreateResourceProviderWithParent(t *testing.T, client *gophercloud.ServiceC
 // DeleteResourceProvider will delete a resource provider with a specified ID.
 // A fatal error will occur if the delete was not successful. This works best when
 // used as a deferred function.
-func DeleteResourceProvider(t *testing.T, client *gophercloud.ServiceClient, resourceProviderID string) {
+func DeleteResourceProvider(t *testing.T, client *ktvpcsdk.ServiceClient, resourceProviderID string) {
 	t.Logf("Attempting to delete resourceProvider: %s", resourceProviderID)
 
 	err := resourceproviders.Delete(client, resourceProviderID).ExtractErr()

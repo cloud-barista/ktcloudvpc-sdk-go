@@ -60,7 +60,7 @@ type RebuildOptsExt struct {
 // ToServerRebuildMap adds the diskconfig option to the base server rebuild options.
 func (opts RebuildOptsExt) ToServerRebuildMap() (map[string]interface{}, error) {
 	if opts.DiskConfig != Auto && opts.DiskConfig != Manual {
-		err := gophercloud.ErrInvalidInput{}
+		err := ktvpcsdk.ErrInvalidInput{}
 		err.Argument = "diskconfig.RebuildOptsExt.DiskConfig"
 		err.Info = "Must be either diskconfig.Auto or diskconfig.Manual"
 		return nil, err
@@ -88,7 +88,7 @@ type ResizeOptsExt struct {
 // ToServerResizeMap adds the diskconfig option to the base server creation options.
 func (opts ResizeOptsExt) ToServerResizeMap() (map[string]interface{}, error) {
 	if opts.DiskConfig != Auto && opts.DiskConfig != Manual {
-		err := gophercloud.ErrInvalidInput{}
+		err := ktvpcsdk.ErrInvalidInput{}
 		err.Argument = "diskconfig.ResizeOptsExt.DiskConfig"
 		err.Info = "Must be either diskconfig.Auto or diskconfig.Manual"
 		return nil, err

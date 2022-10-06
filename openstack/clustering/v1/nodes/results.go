@@ -72,7 +72,7 @@ func (r *Node) UnmarshalJSON(b []byte) error {
 
 // commonResult is the response of a base result.
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets any commonResult-based result as a Node.
@@ -99,7 +99,7 @@ type GetResult struct {
 // DeleteResult is the result from a Delete operation. Call ExtractErr
 // method to determine if the call succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // UpdateResult is the result of an Update operation. Call its Extract method
@@ -131,7 +131,7 @@ func ExtractNodes(r pagination.Page) ([]Node, error) {
 // ActionResult is the response of Senlin actions. Call its Extract method to
 // obtain the Action ID of the action.
 type ActionResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets any Action result as an Action.

@@ -32,7 +32,7 @@ type NetworkWithDNSExt struct {
 
 // CreatePortDNS will create a port with a DNS name on the specified subnet. An
 // error will be returned if the port could not be created.
-func CreatePortDNS(t *testing.T, client *gophercloud.ServiceClient, networkID, subnetID, dnsName string) (*PortWithDNSExt, error) {
+func CreatePortDNS(t *testing.T, client *ktvpcsdk.ServiceClient, networkID, subnetID, dnsName string) (*PortWithDNSExt, error) {
 	portName := tools.RandomString("TESTACC-", 8)
 	portDescription := tools.RandomString("TESTACC-PORT-DESC-", 8)
 	iFalse := true
@@ -70,7 +70,7 @@ func CreatePortDNS(t *testing.T, client *gophercloud.ServiceClient, networkID, s
 
 // CreateFloatingIPDNS creates a floating IP with the DNS extension on a given
 // network and port. An error will be returned if the creation failed.
-func CreateFloatingIPDNS(t *testing.T, client *gophercloud.ServiceClient, networkID, portID, dnsName, dnsDomain string) (*FloatingIPWithDNSExt, error) {
+func CreateFloatingIPDNS(t *testing.T, client *ktvpcsdk.ServiceClient, networkID, portID, dnsName, dnsDomain string) (*FloatingIPWithDNSExt, error) {
 	t.Logf("Attempting to create floating IP on port: %s", portID)
 
 	fipDescription := "Test floating IP"
@@ -105,11 +105,11 @@ func CreateFloatingIPDNS(t *testing.T, client *gophercloud.ServiceClient, networ
 
 // CreateNetworkDNS will create a network with a DNS domain set.
 // An error will be returned if the network could not be created.
-func CreateNetworkDNS(t *testing.T, client *gophercloud.ServiceClient, dnsDomain string) (*NetworkWithDNSExt, error) {
+func CreateNetworkDNS(t *testing.T, client *ktvpcsdk.ServiceClient, dnsDomain string) (*NetworkWithDNSExt, error) {
 	networkName := tools.RandomString("TESTACC-", 8)
 	networkCreateOpts := networks.CreateOpts{
 		Name:         networkName,
-		AdminStateUp: gophercloud.Enabled,
+		AdminStateUp: ktvpcsdk.Enabled,
 	}
 
 	createOpts := dns.NetworkCreateOptsExt{

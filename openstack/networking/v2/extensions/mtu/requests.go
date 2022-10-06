@@ -20,7 +20,7 @@ type ListOptsExt struct {
 // ToNetworkListQuery adds the router:external option to the base network
 // list options.
 func (opts ListOptsExt) ToNetworkListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts.ListOptsBuilder)
+	q, err := ktvpcsdk.BuildQueryString(opts.ListOptsBuilder)
 	if err != nil {
 		return "", err
 	}

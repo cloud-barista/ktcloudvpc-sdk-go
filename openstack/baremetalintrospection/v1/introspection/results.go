@@ -10,7 +10,7 @@ import (
 )
 
 type introspectionResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets any introspectionResult as an Introspection, if possible.
@@ -81,19 +81,19 @@ func (r IntrospectionPage) IsEmpty() (bool, error) {
 // next page of results.
 func (r IntrospectionPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"introspection_links"`
+		Links []ktvpcsdk.Link `json:"introspection_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // UnmarshalJSON trie to convert values for started_at and finished_at from the
 // json response into RFC3339 standard. Since Introspection API can remove the
 // Z from the format, if the conversion fails, it falls back to an RFC3339
-// with no Z format supported by gophercloud.
+// with no Z format supported by ktvpcsdk.
 func (r *Introspection) UnmarshalJSON(b []byte) error {
 	type tmp Introspection
 	var s struct {
@@ -112,7 +112,7 @@ func (r *Introspection) UnmarshalJSON(b []byte) error {
 	if s.StartedAt != "" {
 		t, err := time.Parse(time.RFC3339, s.StartedAt)
 		if err != nil {
-			t, err = time.Parse(gophercloud.RFC3339NoZ, s.StartedAt)
+			t, err = time.Parse(ktvpcsdk.RFC3339NoZ, s.StartedAt)
 			if err != nil {
 				return err
 			}
@@ -123,7 +123,7 @@ func (r *Introspection) UnmarshalJSON(b []byte) error {
 	if s.FinishedAt != "" {
 		t, err := time.Parse(time.RFC3339, s.FinishedAt)
 		if err != nil {
-			t, err = time.Parse(gophercloud.RFC3339NoZ, s.FinishedAt)
+			t, err = time.Parse(ktvpcsdk.RFC3339NoZ, s.FinishedAt)
 			if err != nil {
 				return err
 			}
@@ -143,13 +143,13 @@ type GetIntrospectionStatusResult struct {
 // StartResult is the response from a StartIntrospection operation.
 // Call its ExtractErr method to determine if the call succeeded or failed.
 type StartResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // AbortResult is the response from an AbortIntrospection operation.
 // Call its ExtractErr method to determine if the call succeeded or failed.
 type AbortResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // Data represents the full introspection data collected.
@@ -323,11 +323,11 @@ func (r DataResult) Extract() (*Data, error) {
 // DataResult represents the response from a GetIntrospectionData operation.
 // Call its Extract method to interpret it as a Data.
 type DataResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // ApplyDataResult is the response from an ApplyData operation.
 // Call its ExtractErr method to determine if the call succeeded or failed.
 type ApplyDataResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }

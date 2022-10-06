@@ -1,2 +1,2 @@
-// gophercloud
+// ktvpcsdk
 package testing

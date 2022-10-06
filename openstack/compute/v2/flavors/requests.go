@@ -75,14 +75,14 @@ type ListOpts struct {
 
 // ToFlavorListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToFlavorListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // ListDetail instructs OpenStack to provide a list of flavors.
 // You may provide criteria by which List curtails its results for easier
 // processing.
-func ListDetail(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func ListDetail(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToFlavorListQuery()
@@ -132,40 +132,40 @@ type CreateOpts struct {
 
 // ToFlavorCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToFlavorCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "flavor")
+	return ktvpcsdk.BuildRequestBody(opts, "flavor")
 }
 
 // Create requests the creation of a new flavor.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToFlavorCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200, 201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Get retrieves details of a single flavor. Use Extract to convert its
 // result into a Flavor.
-func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
 	resp, err := client.Get(getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes the specified flavor ID.
-func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // ListAccesses retrieves the tenants which have access to a flavor.
-func ListAccesses(client *gophercloud.ServiceClient, id string) pagination.Pager {
+func ListAccesses(client *ktvpcsdk.ServiceClient, id string) pagination.Pager {
 	url := accessURL(client, id)
 
 	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
@@ -187,20 +187,20 @@ type AddAccessOpts struct {
 
 // ToFlavorAddAccessMap constructs a request body from AddAccessOpts.
 func (opts AddAccessOpts) ToFlavorAddAccessMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "addTenantAccess")
+	return ktvpcsdk.BuildRequestBody(opts, "addTenantAccess")
 }
 
 // AddAccess grants a tenant/project access to a flavor.
-func AddAccess(client *gophercloud.ServiceClient, id string, opts AddAccessOptsBuilder) (r AddAccessResult) {
+func AddAccess(client *ktvpcsdk.ServiceClient, id string, opts AddAccessOptsBuilder) (r AddAccessResult) {
 	b, err := opts.ToFlavorAddAccessMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(accessActionURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(accessActionURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -218,33 +218,33 @@ type RemoveAccessOpts struct {
 
 // ToFlavorRemoveAccessMap constructs a request body from RemoveAccessOpts.
 func (opts RemoveAccessOpts) ToFlavorRemoveAccessMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "removeTenantAccess")
+	return ktvpcsdk.BuildRequestBody(opts, "removeTenantAccess")
 }
 
 // RemoveAccess removes/revokes a tenant/project access to a flavor.
-func RemoveAccess(client *gophercloud.ServiceClient, id string, opts RemoveAccessOptsBuilder) (r RemoveAccessResult) {
+func RemoveAccess(client *ktvpcsdk.ServiceClient, id string, opts RemoveAccessOptsBuilder) (r RemoveAccessResult) {
 	b, err := opts.ToFlavorRemoveAccessMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(accessActionURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(accessActionURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // ExtraSpecs requests all the extra-specs for the given flavor ID.
-func ListExtraSpecs(client *gophercloud.ServiceClient, flavorID string) (r ListExtraSpecsResult) {
+func ListExtraSpecs(client *ktvpcsdk.ServiceClient, flavorID string) (r ListExtraSpecsResult) {
 	resp, err := client.Get(extraSpecsListURL(client, flavorID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
-func GetExtraSpec(client *gophercloud.ServiceClient, flavorID string, key string) (r GetExtraSpecResult) {
+func GetExtraSpec(client *ktvpcsdk.ServiceClient, flavorID string, key string) (r GetExtraSpecResult) {
 	resp, err := client.Get(extraSpecsGetURL(client, flavorID, key), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -265,16 +265,16 @@ func (opts ExtraSpecsOpts) ToFlavorExtraSpecsCreateMap() (map[string]interface{}
 
 // CreateExtraSpecs will create or update the extra-specs key-value pairs for
 // the specified Flavor.
-func CreateExtraSpecs(client *gophercloud.ServiceClient, flavorID string, opts CreateExtraSpecsOptsBuilder) (r CreateExtraSpecsResult) {
+func CreateExtraSpecs(client *ktvpcsdk.ServiceClient, flavorID string, opts CreateExtraSpecsOptsBuilder) (r CreateExtraSpecsResult) {
 	b, err := opts.ToFlavorExtraSpecsCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(extraSpecsCreateURL(client, flavorID), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(extraSpecsCreateURL(client, flavorID), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -288,7 +288,7 @@ type UpdateExtraSpecOptsBuilder interface {
 // the contents of a ExtraSpecOpts.
 func (opts ExtraSpecsOpts) ToFlavorExtraSpecUpdateMap() (map[string]string, string, error) {
 	if len(opts) != 1 {
-		err := gophercloud.ErrInvalidInput{}
+		err := ktvpcsdk.ErrInvalidInput{}
 		err.Argument = "flavors.ExtraSpecOpts"
 		err.Info = "Must have 1 and only one key-value pair"
 		return nil, "", err
@@ -304,25 +304,25 @@ func (opts ExtraSpecsOpts) ToFlavorExtraSpecUpdateMap() (map[string]string, stri
 
 // UpdateExtraSpec will updates the value of the specified flavor's extra spec
 // for the key in opts.
-func UpdateExtraSpec(client *gophercloud.ServiceClient, flavorID string, opts UpdateExtraSpecOptsBuilder) (r UpdateExtraSpecResult) {
+func UpdateExtraSpec(client *ktvpcsdk.ServiceClient, flavorID string, opts UpdateExtraSpecOptsBuilder) (r UpdateExtraSpecResult) {
 	b, key, err := opts.ToFlavorExtraSpecUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Put(extraSpecUpdateURL(client, flavorID, key), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Put(extraSpecUpdateURL(client, flavorID, key), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // DeleteExtraSpec will delete the key-value pair with the given key for the given
 // flavor ID.
-func DeleteExtraSpec(client *gophercloud.ServiceClient, flavorID, key string) (r DeleteExtraSpecResult) {
-	resp, err := client.Delete(extraSpecDeleteURL(client, flavorID, key), &gophercloud.RequestOpts{
+func DeleteExtraSpec(client *ktvpcsdk.ServiceClient, flavorID, key string) (r DeleteExtraSpecResult) {
+	resp, err := client.Delete(extraSpecDeleteURL(client, flavorID, key), &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

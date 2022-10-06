@@ -3,7 +3,7 @@ package remoteconsoles
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // CreateResult represents the result of a create operation. Call its Extract

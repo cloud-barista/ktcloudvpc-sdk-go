@@ -39,8 +39,8 @@ func (r *Message) UnmarshalJSON(b []byte) error {
 	type tmp Message
 	var s struct {
 		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		ExpiresAt gophercloud.JSONRFC3339MilliNoZ `json:"expires_at"`
+		CreatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"created_at"`
+		ExpiresAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"expires_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -55,7 +55,7 @@ func (r *Message) UnmarshalJSON(b []byte) error {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // MessagePage is a pagination.pager that is returned from a call to the List function.
@@ -90,7 +90,7 @@ func (r commonResult) Extract() (*Message, error) {
 
 // DeleteResult contains the response body and error from a Delete request.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // GetResult contains the response body and error from a Get request.

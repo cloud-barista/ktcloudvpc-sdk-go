@@ -130,12 +130,12 @@ func (opts AuthOptions) ToTokenV3CreateMap(map[string]interface{}) (map[string]i
 	var req oauth1Request
 
 	req.Auth.Identity.Methods = []string{"oauth1"}
-	return gophercloud.BuildRequestBody(req, "")
+	return ktvpcsdk.BuildRequestBody(req, "")
 }
 
 // Create authenticates and either generates a new OpenStack token from an
 // OAuth1 token.
-func Create(client *gophercloud.ServiceClient, opts tokens.AuthOptionsBuilder) (r tokens.CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts tokens.AuthOptionsBuilder) (r tokens.CreateResult) {
 	b, err := opts.ToTokenV3CreateMap(nil)
 	if err != nil {
 		r.Err = err
@@ -153,11 +153,11 @@ func Create(client *gophercloud.ServiceClient, opts tokens.AuthOptionsBuilder) (
 		return
 	}
 
-	resp, err := client.Post(authURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(authURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
 		MoreHeaders: h,
 		OkCodes:     []int{201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -175,41 +175,41 @@ type CreateConsumerOpts struct {
 
 // ToOAuth1CreateConsumerMap formats a CreateConsumerOpts into a create request.
 func (opts CreateConsumerOpts) ToOAuth1CreateConsumerMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "consumer")
+	return ktvpcsdk.BuildRequestBody(opts, "consumer")
 }
 
 // Create creates a new Consumer.
-func CreateConsumer(client *gophercloud.ServiceClient, opts CreateConsumerOptsBuilder) (r CreateConsumerResult) {
+func CreateConsumer(client *ktvpcsdk.ServiceClient, opts CreateConsumerOptsBuilder) (r CreateConsumerResult) {
 	b, err := opts.ToOAuth1CreateConsumerMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(consumersURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(consumersURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes a Consumer.
-func DeleteConsumer(client *gophercloud.ServiceClient, id string) (r DeleteConsumerResult) {
+func DeleteConsumer(client *ktvpcsdk.ServiceClient, id string) (r DeleteConsumerResult) {
 	resp, err := client.Delete(consumerURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // List enumerates Consumers.
-func ListConsumers(client *gophercloud.ServiceClient) pagination.Pager {
+func ListConsumers(client *ktvpcsdk.ServiceClient) pagination.Pager {
 	return pagination.NewPager(client, consumersURL(client), func(r pagination.PageResult) pagination.Page {
 		return ConsumersPage{pagination.LinkedPageBase{PageResult: r}}
 	})
 }
 
 // GetConsumer retrieves details on a single Consumer by ID.
-func GetConsumer(client *gophercloud.ServiceClient, id string) (r GetConsumerResult) {
+func GetConsumer(client *ktvpcsdk.ServiceClient, id string) (r GetConsumerResult) {
 	resp, err := client.Get(consumerURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -222,20 +222,20 @@ type UpdateConsumerOpts struct {
 // ToOAuth1UpdateConsumerMap formats an UpdateConsumerOpts into a consumer update
 // request.
 func (opts UpdateConsumerOpts) ToOAuth1UpdateConsumerMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "consumer")
+	return ktvpcsdk.BuildRequestBody(opts, "consumer")
 }
 
 // UpdateConsumer updates an existing Consumer.
-func UpdateConsumer(client *gophercloud.ServiceClient, id string, opts UpdateConsumerOpts) (r UpdateConsumerResult) {
+func UpdateConsumer(client *ktvpcsdk.ServiceClient, id string, opts UpdateConsumerOpts) (r UpdateConsumerResult) {
 	b, err := opts.ToOAuth1UpdateConsumerMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Patch(consumerURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Patch(consumerURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -282,7 +282,7 @@ func (opts RequestTokenOpts) ToOAuth1RequestTokenHeaders(method, u string) (map[
 		return nil, err
 	}
 
-	h, err := gophercloud.BuildHeaders(opts)
+	h, err := ktvpcsdk.BuildHeaders(opts)
 	if err != nil {
 		return nil, err
 	}
@@ -298,19 +298,19 @@ func (opts RequestTokenOpts) ToOAuth1RequestTokenHeaders(method, u string) (map[
 }
 
 // RequestToken requests an unauthorized OAuth1 Token.
-func RequestToken(client *gophercloud.ServiceClient, opts RequestTokenOptsBuilder) (r TokenResult) {
+func RequestToken(client *ktvpcsdk.ServiceClient, opts RequestTokenOptsBuilder) (r TokenResult) {
 	h, err := opts.ToOAuth1RequestTokenHeaders("POST", requestTokenURL(client))
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Post(requestTokenURL(client), nil, nil, &gophercloud.RequestOpts{
+	resp, err := client.Post(requestTokenURL(client), nil, nil, &ktvpcsdk.RequestOpts{
 		MoreHeaders:      h,
 		OkCodes:          []int{201},
 		KeepResponseBody: true,
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	if r.Err != nil {
 		return
 	}
@@ -348,20 +348,20 @@ func (opts AuthorizeTokenOpts) ToOAuth1AuthorizeTokenMap() (map[string]interface
 			return nil, fmt.Errorf("role must not be empty")
 		}
 	}
-	return gophercloud.BuildRequestBody(opts, "")
+	return ktvpcsdk.BuildRequestBody(opts, "")
 }
 
 // AuthorizeToken authorizes an unauthorized consumer token.
-func AuthorizeToken(client *gophercloud.ServiceClient, id string, opts AuthorizeTokenOptsBuilder) (r AuthorizeTokenResult) {
+func AuthorizeToken(client *ktvpcsdk.ServiceClient, id string, opts AuthorizeTokenOptsBuilder) (r AuthorizeTokenResult) {
 	b, err := opts.ToOAuth1AuthorizeTokenMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Put(authorizeTokenURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Put(authorizeTokenURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -426,19 +426,19 @@ func (opts CreateAccessTokenOpts) ToOAuth1CreateAccessTokenHeaders(method, u str
 }
 
 // CreateAccessToken creates a new OAuth1 Access Token
-func CreateAccessToken(client *gophercloud.ServiceClient, opts CreateAccessTokenOptsBuilder) (r TokenResult) {
+func CreateAccessToken(client *ktvpcsdk.ServiceClient, opts CreateAccessTokenOptsBuilder) (r TokenResult) {
 	h, err := opts.ToOAuth1CreateAccessTokenHeaders("POST", createAccessTokenURL(client))
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Post(createAccessTokenURL(client), nil, nil, &gophercloud.RequestOpts{
+	resp, err := client.Post(createAccessTokenURL(client), nil, nil, &ktvpcsdk.RequestOpts{
 		MoreHeaders:      h,
 		OkCodes:          []int{201},
 		KeepResponseBody: true,
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	if r.Err != nil {
 		return
 	}
@@ -452,21 +452,21 @@ func CreateAccessToken(client *gophercloud.ServiceClient, opts CreateAccessToken
 }
 
 // GetAccessToken retrieves details on a single OAuth1 access token by an ID.
-func GetAccessToken(client *gophercloud.ServiceClient, userID string, id string) (r GetAccessTokenResult) {
+func GetAccessToken(client *ktvpcsdk.ServiceClient, userID string, id string) (r GetAccessTokenResult) {
 	resp, err := client.Get(userAccessTokenURL(client, userID, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // RevokeAccessToken revokes an OAuth1 access token.
-func RevokeAccessToken(client *gophercloud.ServiceClient, userID string, id string) (r RevokeAccessTokenResult) {
+func RevokeAccessToken(client *ktvpcsdk.ServiceClient, userID string, id string) (r RevokeAccessTokenResult) {
 	resp, err := client.Delete(userAccessTokenURL(client, userID, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // ListAccessTokens enumerates authorized access tokens.
-func ListAccessTokens(client *gophercloud.ServiceClient, userID string) pagination.Pager {
+func ListAccessTokens(client *ktvpcsdk.ServiceClient, userID string) pagination.Pager {
 	url := userAccessTokensURL(client, userID)
 	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
 		return AccessTokensPage{pagination.LinkedPageBase{PageResult: r}}
@@ -474,7 +474,7 @@ func ListAccessTokens(client *gophercloud.ServiceClient, userID string) paginati
 }
 
 // ListAccessTokenRoles enumerates authorized access token roles.
-func ListAccessTokenRoles(client *gophercloud.ServiceClient, userID string, id string) pagination.Pager {
+func ListAccessTokenRoles(client *ktvpcsdk.ServiceClient, userID string, id string) pagination.Pager {
 	url := userAccessTokenRolesURL(client, userID, id)
 	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
 		return AccessTokenRolesPage{pagination.LinkedPageBase{PageResult: r}}
@@ -483,9 +483,9 @@ func ListAccessTokenRoles(client *gophercloud.ServiceClient, userID string, id s
 
 // GetAccessTokenRole retrieves details on a single OAuth1 access token role by
 // an ID.
-func GetAccessTokenRole(client *gophercloud.ServiceClient, userID string, id string, roleID string) (r GetAccessTokenRoleResult) {
+func GetAccessTokenRole(client *ktvpcsdk.ServiceClient, userID string, id string, roleID string) (r GetAccessTokenRoleResult) {
 	resp, err := client.Get(userAccessTokenRoleURL(client, userID, id, roleID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -494,7 +494,7 @@ func GetAccessTokenRole(client *gophercloud.ServiceClient, userID string, id str
 // buildOAuth1QueryString builds a URLEncoded parameters string specific for
 // OAuth1-based requests.
 func buildOAuth1QueryString(opts interface{}, timestamp *time.Time, callback string) (*url.URL, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	if err != nil {
 		return nil, err
 	}

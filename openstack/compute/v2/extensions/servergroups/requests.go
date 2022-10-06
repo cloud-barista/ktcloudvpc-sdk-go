@@ -22,13 +22,13 @@ type ListOpts struct {
 
 // ToServerListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToServerListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List returns a Pager that allows you to iterate over a collection of
 // ServerGroups.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToServerListQuery()
@@ -68,33 +68,33 @@ type CreateOpts struct {
 
 // ToServerGroupCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToServerGroupCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "server_group")
+	return ktvpcsdk.BuildRequestBody(opts, "server_group")
 }
 
 // Create requests the creation of a new Server Group.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToServerGroupCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Get returns data about a previously created ServerGroup.
-func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
 	resp, err := client.Get(getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete requests the deletion of a previously allocated ServerGroup.
-func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

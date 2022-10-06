@@ -37,7 +37,7 @@ import (
 
 // AssociateFloatingIP will associate a floating IP with an instance. An error
 // will be returned if the floating IP was unable to be associated.
-func AssociateFloatingIP(t *testing.T, client *gophercloud.ServiceClient, floatingIP *floatingips.FloatingIP, server *servers.Server) error {
+func AssociateFloatingIP(t *testing.T, client *ktvpcsdk.ServiceClient, floatingIP *floatingips.FloatingIP, server *servers.Server) error {
 	associateOpts := floatingips.AssociateOpts{
 		FloatingIP: floatingIP.IP,
 	}
@@ -54,7 +54,7 @@ func AssociateFloatingIP(t *testing.T, client *gophercloud.ServiceClient, floati
 // AssociateFloatingIPWithFixedIP will associate a floating IP with an
 // instance's specific fixed IP. An error will be returend if the floating IP
 // was unable to be associated.
-func AssociateFloatingIPWithFixedIP(t *testing.T, client *gophercloud.ServiceClient, floatingIP *floatingips.FloatingIP, server *servers.Server, fixedIP string) error {
+func AssociateFloatingIPWithFixedIP(t *testing.T, client *ktvpcsdk.ServiceClient, floatingIP *floatingips.FloatingIP, server *servers.Server, fixedIP string) error {
 	associateOpts := floatingips.AssociateOpts{
 		FloatingIP: floatingIP.IP,
 		FixedIP:    fixedIP,
@@ -71,7 +71,7 @@ func AssociateFloatingIPWithFixedIP(t *testing.T, client *gophercloud.ServiceCli
 
 // AttachInterface will create and attach an interface on a given server.
 // An error will returned if the interface could not be created.
-func AttachInterface(t *testing.T, client *gophercloud.ServiceClient, serverID string) (*attachinterfaces.Interface, error) {
+func AttachInterface(t *testing.T, client *ktvpcsdk.ServiceClient, serverID string) (*attachinterfaces.Interface, error) {
 	t.Logf("Attempting to attach interface to server %s", serverID)
 
 	choices, err := clients.AcceptanceTestChoicesFromEnv()
@@ -100,7 +100,7 @@ func AttachInterface(t *testing.T, client *gophercloud.ServiceClient, serverID s
 
 // CreateAggregate will create an aggregate with random name and available zone.
 // An error will be returned if the aggregate could not be created.
-func CreateAggregate(t *testing.T, client *gophercloud.ServiceClient) (*aggregates.Aggregate, error) {
+func CreateAggregate(t *testing.T, client *ktvpcsdk.ServiceClient) (*aggregates.Aggregate, error) {
 	aggregateName := tools.RandomString("aggregate_", 5)
 	availabilityZone := tools.RandomString("zone_", 5)
 	t.Logf("Attempting to create aggregate %s", aggregateName)
@@ -131,7 +131,7 @@ func CreateAggregate(t *testing.T, client *gophercloud.ServiceClient) (*aggregat
 // CreateBootableVolumeServer works like CreateServer but is configured with
 // one or more block devices defined by passing in []bootfromvolume.BlockDevice.
 // An error will be returned if a server was unable to be created.
-func CreateBootableVolumeServer(t *testing.T, client *gophercloud.ServiceClient, blockDevices []bootfromvolume.BlockDevice) (*servers.Server, error) {
+func CreateBootableVolumeServer(t *testing.T, client *ktvpcsdk.ServiceClient, blockDevices []bootfromvolume.BlockDevice) (*servers.Server, error) {
 	var server *servers.Server
 
 	choices, err := clients.AcceptanceTestChoicesFromEnv()
@@ -186,7 +186,7 @@ func CreateBootableVolumeServer(t *testing.T, client *gophercloud.ServiceClient,
 // CreateDefaultRule will create a default security group rule with a
 // random port range between 80 and 90. An error will be returned if
 // a default rule was unable to be created.
-func CreateDefaultRule(t *testing.T, client *gophercloud.ServiceClient) (dsr.DefaultRule, error) {
+func CreateDefaultRule(t *testing.T, client *ktvpcsdk.ServiceClient) (dsr.DefaultRule, error) {
 	createOpts := dsr.CreateOpts{
 		FromPort:   tools.RandomInt(80, 89),
 		ToPort:     tools.RandomInt(90, 99),
@@ -206,7 +206,7 @@ func CreateDefaultRule(t *testing.T, client *gophercloud.ServiceClient) (dsr.Def
 
 // CreateFlavor will create a flavor with a random name.
 // An error will be returned if the flavor could not be created.
-func CreateFlavor(t *testing.T, client *gophercloud.ServiceClient) (*flavors.Flavor, error) {
+func CreateFlavor(t *testing.T, client *ktvpcsdk.ServiceClient) (*flavors.Flavor, error) {
 	flavorName := tools.RandomString("flavor_", 5)
 	t.Logf("Attempting to create flavor %s", flavorName)
 
@@ -215,7 +215,7 @@ func CreateFlavor(t *testing.T, client *gophercloud.ServiceClient) (*flavors.Fla
 		Name:     flavorName,
 		RAM:      1,
 		VCPUs:    1,
-		Disk:     gophercloud.IntToPointer(1),
+		Disk:     ktvpcsdk.IntToPointer(1),
 		IsPublic: &isPublic,
 	}
 
@@ -237,7 +237,7 @@ func CreateFlavor(t *testing.T, client *gophercloud.ServiceClient) (*flavors.Fla
 
 // CreateFloatingIP will allocate a floating IP.
 // An error will be returend if one was unable to be allocated.
-func CreateFloatingIP(t *testing.T, client *gophercloud.ServiceClient) (*floatingips.FloatingIP, error) {
+func CreateFloatingIP(t *testing.T, client *ktvpcsdk.ServiceClient) (*floatingips.FloatingIP, error) {
 	choices, err := clients.AcceptanceTestChoicesFromEnv()
 	if err != nil {
 		t.Fatal(err)
@@ -275,7 +275,7 @@ func createKey() (string, error) {
 // CreateKeyPair will create a KeyPair with a random name. An error will occur
 // if the keypair failed to be created. An error will be returned if the
 // keypair was unable to be created.
-func CreateKeyPair(t *testing.T, client *gophercloud.ServiceClient) (*keypairs.KeyPair, error) {
+func CreateKeyPair(t *testing.T, client *ktvpcsdk.ServiceClient) (*keypairs.KeyPair, error) {
 	keyPairName := tools.RandomString("keypair_", 5)
 
 	t.Logf("Attempting to create keypair: %s", keyPairName)
@@ -299,7 +299,7 @@ func CreateKeyPair(t *testing.T, client *gophercloud.ServiceClient) (*keypairs.K
 // These block devices act like block devices when booting from a volume but
 // are actually local ephemeral disks.
 // An error will be returned if a server was unable to be created.
-func CreateMultiEphemeralServer(t *testing.T, client *gophercloud.ServiceClient, blockDevices []bootfromvolume.BlockDevice) (*servers.Server, error) {
+func CreateMultiEphemeralServer(t *testing.T, client *ktvpcsdk.ServiceClient, blockDevices []bootfromvolume.BlockDevice) (*servers.Server, error) {
 	var server *servers.Server
 
 	choices, err := clients.AcceptanceTestChoicesFromEnv()
@@ -350,7 +350,7 @@ func CreateMultiEphemeralServer(t *testing.T, client *gophercloud.ServiceClient,
 
 // CreatePrivateFlavor will create a private flavor with a random name.
 // An error will be returned if the flavor could not be created.
-func CreatePrivateFlavor(t *testing.T, client *gophercloud.ServiceClient) (*flavors.Flavor, error) {
+func CreatePrivateFlavor(t *testing.T, client *ktvpcsdk.ServiceClient) (*flavors.Flavor, error) {
 	flavorName := tools.RandomString("flavor_", 5)
 	t.Logf("Attempting to create flavor %s", flavorName)
 
@@ -359,7 +359,7 @@ func CreatePrivateFlavor(t *testing.T, client *gophercloud.ServiceClient) (*flav
 		Name:     flavorName,
 		RAM:      1,
 		VCPUs:    1,
-		Disk:     gophercloud.IntToPointer(1),
+		Disk:     ktvpcsdk.IntToPointer(1),
 		IsPublic: &isPublic,
 	}
 
@@ -381,7 +381,7 @@ func CreatePrivateFlavor(t *testing.T, client *gophercloud.ServiceClient) (*flav
 
 // CreateSecurityGroup will create a security group with a random name.
 // An error will be returned if one was failed to be created.
-func CreateSecurityGroup(t *testing.T, client *gophercloud.ServiceClient) (*secgroups.SecurityGroup, error) {
+func CreateSecurityGroup(t *testing.T, client *ktvpcsdk.ServiceClient) (*secgroups.SecurityGroup, error) {
 	name := tools.RandomString("secgroup_", 5)
 
 	createOpts := secgroups.CreateOpts{
@@ -404,7 +404,7 @@ func CreateSecurityGroup(t *testing.T, client *gophercloud.ServiceClient) (*secg
 // CreateSecurityGroupRule will create a security group rule with a random name
 // and a random TCP port range between port 80 and 99. An error will be
 // returned if the rule failed to be created.
-func CreateSecurityGroupRule(t *testing.T, client *gophercloud.ServiceClient, securityGroupID string) (*secgroups.Rule, error) {
+func CreateSecurityGroupRule(t *testing.T, client *ktvpcsdk.ServiceClient, securityGroupID string) (*secgroups.Rule, error) {
 	fromPort := tools.RandomInt(80, 89)
 	toPort := tools.RandomInt(90, 99)
 	createOpts := secgroups.CreateRuleOpts{
@@ -434,7 +434,7 @@ func CreateSecurityGroupRule(t *testing.T, client *gophercloud.ServiceClient, se
 // The image will be the value of the OS_IMAGE_ID environment variable.
 // The instance will be launched on the network specified in OS_NETWORK_NAME.
 // An error will be returned if the instance was unable to be created.
-func CreateServer(t *testing.T, client *gophercloud.ServiceClient) (*servers.Server, error) {
+func CreateServer(t *testing.T, client *ktvpcsdk.ServiceClient) (*servers.Server, error) {
 	choices, err := clients.AcceptanceTestChoicesFromEnv()
 	if err != nil {
 		t.Fatal(err)
@@ -494,7 +494,7 @@ func CreateServer(t *testing.T, client *gophercloud.ServiceClient) (*servers.Ser
 // The image will be the value of the OS_IMAGE_ID environment variable.
 // The instance will be launched on the network specified in OS_NETWORK_NAME.
 // An error will be returned if the instance was unable to be created.
-func CreateMicroversionServer(t *testing.T, client *gophercloud.ServiceClient) (*servers.Server, error) {
+func CreateMicroversionServer(t *testing.T, client *ktvpcsdk.ServiceClient) (*servers.Server, error) {
 	choices, err := clients.AcceptanceTestChoicesFromEnv()
 	if err != nil {
 		t.Fatal(err)
@@ -546,7 +546,7 @@ func CreateMicroversionServer(t *testing.T, client *gophercloud.ServiceClient) (
 // The image is intentionally missing to trigger an error.
 // The instance will be launched on the network specified in OS_NETWORK_NAME.
 // An error will be returned if the instance was unable to be created.
-func CreateServerWithoutImageRef(t *testing.T, client *gophercloud.ServiceClient) (*servers.Server, error) {
+func CreateServerWithoutImageRef(t *testing.T, client *ktvpcsdk.ServiceClient) (*servers.Server, error) {
 	choices, err := clients.AcceptanceTestChoicesFromEnv()
 	if err != nil {
 		t.Fatal(err)
@@ -593,7 +593,7 @@ func CreateServerWithoutImageRef(t *testing.T, client *gophercloud.ServiceClient
 // The instance will be launched on the network specified in OS_NETWORK_NAME.
 // Two tags will be assigned to the server.
 // An error will be returned if the instance was unable to be created.
-func CreateServerWithTags(t *testing.T, client *gophercloud.ServiceClient, networkID string) (*servers.Server, error) {
+func CreateServerWithTags(t *testing.T, client *ktvpcsdk.ServiceClient, networkID string) (*servers.Server, error) {
 	choices, err := clients.AcceptanceTestChoicesFromEnv()
 	if err != nil {
 		t.Fatal(err)
@@ -646,7 +646,7 @@ func CreateServerWithTags(t *testing.T, client *gophercloud.ServiceClient, netwo
 
 // CreateServerGroup will create a server with a random name. An error will be
 // returned if the server group failed to be created.
-func CreateServerGroup(t *testing.T, client *gophercloud.ServiceClient, policy string) (*servergroups.ServerGroup, error) {
+func CreateServerGroup(t *testing.T, client *ktvpcsdk.ServiceClient, policy string) (*servergroups.ServerGroup, error) {
 	name := tools.RandomString("ACPTTEST", 16)
 
 	t.Logf("Attempting to create server group %s", name)
@@ -669,7 +669,7 @@ func CreateServerGroup(t *testing.T, client *gophercloud.ServiceClient, policy s
 
 // CreateServerGroupMicroversion will create a server with a random name using 2.64 microversion. An error will be
 // returned if the server group failed to be created.
-func CreateServerGroupMicroversion(t *testing.T, client *gophercloud.ServiceClient) (*servergroups.ServerGroup, error) {
+func CreateServerGroupMicroversion(t *testing.T, client *ktvpcsdk.ServiceClient) (*servergroups.ServerGroup, error) {
 	name := tools.RandomString("ACPTTEST", 16)
 	policy := "anti-affinity"
 	maxServerPerHost := 3
@@ -697,7 +697,7 @@ func CreateServerGroupMicroversion(t *testing.T, client *gophercloud.ServiceClie
 
 // CreateServerInServerGroup works like CreateServer but places the instance in
 // a specified Server Group.
-func CreateServerInServerGroup(t *testing.T, client *gophercloud.ServiceClient, serverGroup *servergroups.ServerGroup) (*servers.Server, error) {
+func CreateServerInServerGroup(t *testing.T, client *ktvpcsdk.ServiceClient, serverGroup *servergroups.ServerGroup) (*servers.Server, error) {
 	choices, err := clients.AcceptanceTestChoicesFromEnv()
 	if err != nil {
 		t.Fatal(err)
@@ -752,7 +752,7 @@ func CreateServerInServerGroup(t *testing.T, client *gophercloud.ServiceClient, 
 
 // CreateServerWithPublicKey works the same as CreateServer, but additionally
 // configures the server with a specified Key Pair name.
-func CreateServerWithPublicKey(t *testing.T, client *gophercloud.ServiceClient, keyPairName string) (*servers.Server, error) {
+func CreateServerWithPublicKey(t *testing.T, client *ktvpcsdk.ServiceClient, keyPairName string) (*servers.Server, error) {
 	choices, err := clients.AcceptanceTestChoicesFromEnv()
 	if err != nil {
 		t.Fatal(err)
@@ -801,7 +801,7 @@ func CreateServerWithPublicKey(t *testing.T, client *gophercloud.ServiceClient, 
 
 // CreateVolumeAttachment will attach a volume to a server. An error will be
 // returned if the volume failed to attach.
-func CreateVolumeAttachment(t *testing.T, client *gophercloud.ServiceClient, blockClient *gophercloud.ServiceClient, server *servers.Server, volume *volumes.Volume) (*volumeattach.VolumeAttachment, error) {
+func CreateVolumeAttachment(t *testing.T, client *ktvpcsdk.ServiceClient, blockClient *ktvpcsdk.ServiceClient, server *servers.Server, volume *volumes.Volume) (*volumeattach.VolumeAttachment, error) {
 	tag := tools.RandomString("ACPTTEST", 16)
 	dot := false
 
@@ -827,7 +827,7 @@ func CreateVolumeAttachment(t *testing.T, client *gophercloud.ServiceClient, blo
 // DeleteAggregate will delete a given host aggregate. A fatal error will occur if
 // the aggregate deleting is failed. This works best when using it as a
 // deferred function.
-func DeleteAggregate(t *testing.T, client *gophercloud.ServiceClient, aggregate *aggregates.Aggregate) {
+func DeleteAggregate(t *testing.T, client *ktvpcsdk.ServiceClient, aggregate *aggregates.Aggregate) {
 	err := aggregates.Delete(client, aggregate.ID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete aggregate %d", aggregate.ID)
@@ -839,7 +839,7 @@ func DeleteAggregate(t *testing.T, client *gophercloud.ServiceClient, aggregate 
 // DeleteDefaultRule deletes a default security group rule.
 // A fatal error will occur if the rule failed to delete. This works best when
 // using it as a deferred function.
-func DeleteDefaultRule(t *testing.T, client *gophercloud.ServiceClient, defaultRule dsr.DefaultRule) {
+func DeleteDefaultRule(t *testing.T, client *ktvpcsdk.ServiceClient, defaultRule dsr.DefaultRule) {
 	err := dsr.Delete(client, defaultRule.ID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete default rule %s: %v", defaultRule.ID, err)
@@ -850,7 +850,7 @@ func DeleteDefaultRule(t *testing.T, client *gophercloud.ServiceClient, defaultR
 
 // DeleteFlavor will delete a flavor. A fatal error will occur if the flavor
 // could not be deleted. This works best when using it as a deferred function.
-func DeleteFlavor(t *testing.T, client *gophercloud.ServiceClient, flavor *flavors.Flavor) {
+func DeleteFlavor(t *testing.T, client *ktvpcsdk.ServiceClient, flavor *flavors.Flavor) {
 	err := flavors.Delete(client, flavor.ID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete flavor %s", flavor.ID)
@@ -862,7 +862,7 @@ func DeleteFlavor(t *testing.T, client *gophercloud.ServiceClient, flavor *flavo
 // DeleteFloatingIP will de-allocate a floating IP. A fatal error will occur if
 // the floating IP failed to de-allocate. This works best when using it as a
 // deferred function.
-func DeleteFloatingIP(t *testing.T, client *gophercloud.ServiceClient, floatingIP *floatingips.FloatingIP) {
+func DeleteFloatingIP(t *testing.T, client *ktvpcsdk.ServiceClient, floatingIP *floatingips.FloatingIP) {
 	err := floatingips.Delete(client, floatingIP.ID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete floating IP %s: %v", floatingIP.ID, err)
@@ -874,7 +874,7 @@ func DeleteFloatingIP(t *testing.T, client *gophercloud.ServiceClient, floatingI
 // DeleteKeyPair will delete a specified keypair. A fatal error will occur if
 // the keypair failed to be deleted. This works best when used as a deferred
 // function.
-func DeleteKeyPair(t *testing.T, client *gophercloud.ServiceClient, keyPair *keypairs.KeyPair) {
+func DeleteKeyPair(t *testing.T, client *ktvpcsdk.ServiceClient, keyPair *keypairs.KeyPair) {
 	err := keypairs.Delete(client, keyPair.Name, nil).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete keypair %s: %v", keyPair.Name, err)
@@ -885,7 +885,7 @@ func DeleteKeyPair(t *testing.T, client *gophercloud.ServiceClient, keyPair *key
 
 // DeleteSecurityGroup will delete a security group. A fatal error will occur
 // if the group failed to be deleted. This works best as a deferred function.
-func DeleteSecurityGroup(t *testing.T, client *gophercloud.ServiceClient, securityGroupID string) {
+func DeleteSecurityGroup(t *testing.T, client *ktvpcsdk.ServiceClient, securityGroupID string) {
 	err := secgroups.Delete(client, securityGroupID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete security group %s: %s", securityGroupID, err)
@@ -897,7 +897,7 @@ func DeleteSecurityGroup(t *testing.T, client *gophercloud.ServiceClient, securi
 // DeleteSecurityGroupRule will delete a security group rule. A fatal error
 // will occur if the rule failed to be deleted. This works best when used
 // as a deferred function.
-func DeleteSecurityGroupRule(t *testing.T, client *gophercloud.ServiceClient, ruleID string) {
+func DeleteSecurityGroupRule(t *testing.T, client *ktvpcsdk.ServiceClient, ruleID string) {
 	err := secgroups.DeleteRule(client, ruleID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete rule: %v", err)
@@ -909,14 +909,14 @@ func DeleteSecurityGroupRule(t *testing.T, client *gophercloud.ServiceClient, ru
 // DeleteServer deletes an instance via its UUID.
 // A fatal error will occur if the instance failed to be destroyed. This works
 // best when using it as a deferred function.
-func DeleteServer(t *testing.T, client *gophercloud.ServiceClient, server *servers.Server) {
+func DeleteServer(t *testing.T, client *ktvpcsdk.ServiceClient, server *servers.Server) {
 	err := servers.Delete(client, server.ID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete server %s: %s", server.ID, err)
 	}
 
 	if err := WaitForComputeStatus(client, server, "DELETED"); err != nil {
-		if _, ok := err.(gophercloud.ErrDefault404); ok {
+		if _, ok := err.(ktvpcsdk.ErrDefault404); ok {
 			t.Logf("Deleted server: %s", server.ID)
 			return
 		}
@@ -931,7 +931,7 @@ func DeleteServer(t *testing.T, client *gophercloud.ServiceClient, server *serve
 // DeleteServerGroup will delete a server group. A fatal error will occur if
 // the server group failed to be deleted. This works best when used as a
 // deferred function.
-func DeleteServerGroup(t *testing.T, client *gophercloud.ServiceClient, serverGroup *servergroups.ServerGroup) {
+func DeleteServerGroup(t *testing.T, client *ktvpcsdk.ServiceClient, serverGroup *servergroups.ServerGroup) {
 	err := servergroups.Delete(client, serverGroup.ID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete server group %s: %v", serverGroup.ID, err)
@@ -943,7 +943,7 @@ func DeleteServerGroup(t *testing.T, client *gophercloud.ServiceClient, serverGr
 // DeleteVolumeAttachment will disconnect a volume from an instance. A fatal
 // error will occur if the volume failed to detach. This works best when used
 // as a deferred function.
-func DeleteVolumeAttachment(t *testing.T, client *gophercloud.ServiceClient, blockClient *gophercloud.ServiceClient, server *servers.Server, volumeAttachment *volumeattach.VolumeAttachment) {
+func DeleteVolumeAttachment(t *testing.T, client *ktvpcsdk.ServiceClient, blockClient *ktvpcsdk.ServiceClient, server *servers.Server, volumeAttachment *volumeattach.VolumeAttachment) {
 
 	err := volumeattach.Delete(client, server.ID, volumeAttachment.VolumeID).ExtractErr()
 	if err != nil {
@@ -959,7 +959,7 @@ func DeleteVolumeAttachment(t *testing.T, client *gophercloud.ServiceClient, blo
 // DetachInterface will detach an interface from a server. A fatal
 // error will occur if the interface could not be detached. This works best
 // when used as a deferred function.
-func DetachInterface(t *testing.T, client *gophercloud.ServiceClient, serverID, portID string) {
+func DetachInterface(t *testing.T, client *ktvpcsdk.ServiceClient, serverID, portID string) {
 	t.Logf("Attempting to detach interface %s from server %s", portID, serverID)
 
 	err := attachinterfaces.Delete(client, serverID, portID).ExtractErr()
@@ -973,7 +973,7 @@ func DetachInterface(t *testing.T, client *gophercloud.ServiceClient, serverID, 
 // DisassociateFloatingIP will disassociate a floating IP from an instance. A
 // fatal error will occur if the floating IP failed to disassociate. This works
 // best when using it as a deferred function.
-func DisassociateFloatingIP(t *testing.T, client *gophercloud.ServiceClient, floatingIP *floatingips.FloatingIP, server *servers.Server) {
+func DisassociateFloatingIP(t *testing.T, client *ktvpcsdk.ServiceClient, floatingIP *floatingips.FloatingIP, server *servers.Server) {
 	disassociateOpts := floatingips.DisassociateOpts{
 		FloatingIP: floatingIP.IP,
 	}
@@ -989,7 +989,7 @@ func DisassociateFloatingIP(t *testing.T, client *gophercloud.ServiceClient, flo
 // GetNetworkIDFromOSNetworks will return the network ID from a specified network
 // UUID using the os-networks API extension. An error will be returned if the
 // network could not be retrieved.
-func GetNetworkIDFromOSNetworks(t *testing.T, client *gophercloud.ServiceClient, networkName string) (string, error) {
+func GetNetworkIDFromOSNetworks(t *testing.T, client *ktvpcsdk.ServiceClient, networkName string) (string, error) {
 	allPages, err := networks.List(client).AllPages()
 	if err != nil {
 		t.Fatalf("Unable to list networks: %v", err)
@@ -1016,7 +1016,7 @@ func GetNetworkIDFromOSNetworks(t *testing.T, client *gophercloud.ServiceClient,
 // GetNetworkIDFromTenantNetworks will return the network UUID for a given
 // network name using the os-tenant-networks API extension. An error will be
 // returned if the network could not be retrieved.
-func GetNetworkIDFromTenantNetworks(t *testing.T, client *gophercloud.ServiceClient, networkName string) (string, error) {
+func GetNetworkIDFromTenantNetworks(t *testing.T, client *ktvpcsdk.ServiceClient, networkName string) (string, error) {
 	allPages, err := tenantnetworks.List(client).AllPages()
 	if err != nil {
 		return "", err
@@ -1039,7 +1039,7 @@ func GetNetworkIDFromTenantNetworks(t *testing.T, client *gophercloud.ServiceCli
 // GetNetworkIDFromNetworks will return the network UUID for a given network
 // name using either the os-tenant-networks API extension or Neutron API.
 // An error will be returned if the network could not be retrieved.
-func GetNetworkIDFromNetworks(t *testing.T, client *gophercloud.ServiceClient, networkName string) (string, error) {
+func GetNetworkIDFromNetworks(t *testing.T, client *ktvpcsdk.ServiceClient, networkName string) (string, error) {
 	allPages, err := tenantnetworks.List(client).AllPages()
 	if err == nil {
 		allTenantNetworks, err := tenantnetworks.ExtractNetworks(allPages)
@@ -1074,7 +1074,7 @@ func GetNetworkIDFromNetworks(t *testing.T, client *gophercloud.ServiceClient, n
 
 // ImportPublicKey will create a KeyPair with a random name and a specified
 // public key. An error will be returned if the keypair failed to be created.
-func ImportPublicKey(t *testing.T, client *gophercloud.ServiceClient, publicKey string) (*keypairs.KeyPair, error) {
+func ImportPublicKey(t *testing.T, client *ktvpcsdk.ServiceClient, publicKey string) (*keypairs.KeyPair, error) {
 	keyPairName := tools.RandomString("keypair_", 5)
 
 	t.Logf("Attempting to create keypair: %s", keyPairName)
@@ -1098,7 +1098,7 @@ func ImportPublicKey(t *testing.T, client *gophercloud.ServiceClient, publicKey 
 // ResizeServer performs a resize action on an instance. An error will be
 // returned if the instance failed to resize.
 // The new flavor that the instance will be resized to is specified in OS_FLAVOR_ID_RESIZE.
-func ResizeServer(t *testing.T, client *gophercloud.ServiceClient, server *servers.Server) error {
+func ResizeServer(t *testing.T, client *ktvpcsdk.ServiceClient, server *servers.Server) error {
 	choices, err := clients.AcceptanceTestChoicesFromEnv()
 	if err != nil {
 		t.Fatal(err)
@@ -1120,7 +1120,7 @@ func ResizeServer(t *testing.T, client *gophercloud.ServiceClient, server *serve
 
 // WaitForComputeStatus will poll an instance's status until it either matches
 // the specified status or the status becomes ERROR.
-func WaitForComputeStatus(client *gophercloud.ServiceClient, server *servers.Server, status string) error {
+func WaitForComputeStatus(client *ktvpcsdk.ServiceClient, server *servers.Server, status string) error {
 	return tools.WaitFor(func() (bool, error) {
 		latest, err := servers.Get(client, server.ID).Extract()
 		if err != nil {
@@ -1159,7 +1159,7 @@ func FillUpdateOptsFromQuotaSet(src quotasets.QuotaSet, dest *quotasets.UpdateOp
 }
 
 // RescueServer will place the specified server into rescue mode.
-func RescueServer(t *testing.T, client *gophercloud.ServiceClient, server *servers.Server) error {
+func RescueServer(t *testing.T, client *ktvpcsdk.ServiceClient, server *servers.Server) error {
 	t.Logf("Attempting to put server %s into rescue mode", server.ID)
 	_, err := rescueunrescue.Rescue(client, server.ID, rescueunrescue.RescueOpts{}).Extract()
 	if err != nil {
@@ -1174,7 +1174,7 @@ func RescueServer(t *testing.T, client *gophercloud.ServiceClient, server *serve
 }
 
 // UnrescueServer will return server from rescue mode.
-func UnrescueServer(t *testing.T, client *gophercloud.ServiceClient, server *servers.Server) error {
+func UnrescueServer(t *testing.T, client *ktvpcsdk.ServiceClient, server *servers.Server) error {
 	t.Logf("Attempting to return server %s from rescue mode", server.ID)
 	if err := rescueunrescue.Unrescue(client, server.ID).ExtractErr(); err != nil {
 		return err
@@ -1188,7 +1188,7 @@ func UnrescueServer(t *testing.T, client *gophercloud.ServiceClient, server *ser
 }
 
 // CreateRemoteConsole will create a remote noVNC console for the specified server.
-func CreateRemoteConsole(t *testing.T, client *gophercloud.ServiceClient, serverID string) (*remoteconsoles.RemoteConsole, error) {
+func CreateRemoteConsole(t *testing.T, client *ktvpcsdk.ServiceClient, serverID string) (*remoteconsoles.RemoteConsole, error) {
 	createOpts := remoteconsoles.CreateOpts{
 		Protocol: remoteconsoles.ConsoleProtocolVNC,
 		Type:     remoteconsoles.ConsoleTypeNoVNC,
@@ -1209,7 +1209,7 @@ func CreateRemoteConsole(t *testing.T, client *gophercloud.ServiceClient, server
 // The image will be the value of the OS_IMAGE_ID environment variable.
 // The instance will be launched without network interfaces attached.
 // An error will be returned if the instance was unable to be created.
-func CreateServerNoNetwork(t *testing.T, client *gophercloud.ServiceClient) (*servers.Server, error) {
+func CreateServerNoNetwork(t *testing.T, client *ktvpcsdk.ServiceClient) (*servers.Server, error) {
 	choices, err := clients.AcceptanceTestChoicesFromEnv()
 	if err != nil {
 		t.Fatal(err)

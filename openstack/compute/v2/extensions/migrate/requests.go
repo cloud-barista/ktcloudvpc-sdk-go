@@ -6,9 +6,9 @@ import (
 )
 
 // Migrate will initiate a migration of the instance to another host.
-func Migrate(client *gophercloud.ServiceClient, id string) (r MigrateResult) {
+func Migrate(client *ktvpcsdk.ServiceClient, id string) (r MigrateResult) {
 	resp, err := client.Post(extensions.ActionURL(client, id), map[string]interface{}{"migrate": nil}, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -37,17 +37,17 @@ type LiveMigrateOpts struct {
 
 // ToLiveMigrateMap constructs a request body from LiveMigrateOpts.
 func (opts LiveMigrateOpts) ToLiveMigrateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "os-migrateLive")
+	return ktvpcsdk.BuildRequestBody(opts, "os-migrateLive")
 }
 
 // LiveMigrate will initiate a live-migration (without rebooting) of the instance to another host.
-func LiveMigrate(client *gophercloud.ServiceClient, id string, opts LiveMigrateOptsBuilder) (r MigrateResult) {
+func LiveMigrate(client *ktvpcsdk.ServiceClient, id string, opts LiveMigrateOptsBuilder) (r MigrateResult) {
 	b, err := opts.ToLiveMigrateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := client.Post(extensions.ActionURL(client, id), b, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

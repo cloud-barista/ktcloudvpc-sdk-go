@@ -16,13 +16,13 @@ Example to Update project quotas
     projectID = "23d5d3f79dfa4f73b72b8b0b0063ec55"
 
     updateOpts := quotas.UpdateOpts{
-		Loadbalancer:  gophercloud.IntToPointer(20),
-		Listener:      gophercloud.IntToPointer(40),
-		Member:        gophercloud.IntToPointer(200),
-		Pool:          gophercloud.IntToPointer(20),
-		Healthmonitor: gophercloud.IntToPointer(1),
-		L7Policy:      gophercloud.IntToPointer(50),
-		L7Rule:        gophercloud.IntToPointer(100),
+		Loadbalancer:  ktvpcsdk.IntToPointer(20),
+		Listener:      ktvpcsdk.IntToPointer(40),
+		Member:        ktvpcsdk.IntToPointer(200),
+		Pool:          ktvpcsdk.IntToPointer(20),
+		Healthmonitor: ktvpcsdk.IntToPointer(1),
+		L7Policy:      ktvpcsdk.IntToPointer(50),
+		L7Rule:        ktvpcsdk.IntToPointer(100),
     }
     quotasInfo, err := quotas.Update(networkClient, projectID)
     if err != nil {

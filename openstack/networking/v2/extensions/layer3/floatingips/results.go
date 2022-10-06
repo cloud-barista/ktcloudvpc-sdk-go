@@ -64,8 +64,8 @@ func (r *FloatingIP) UnmarshalJSON(b []byte) error {
 	// Support for older neutron time format
 	var s1 struct {
 		tmp
-		CreatedAt gophercloud.JSONRFC3339NoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339NoZ `json:"updated_at"`
+		CreatedAt ktvpcsdk.JSONRFC3339NoZ `json:"created_at"`
+		UpdatedAt ktvpcsdk.JSONRFC3339NoZ `json:"updated_at"`
 	}
 
 	err := json.Unmarshal(b, &s1)
@@ -97,7 +97,7 @@ func (r *FloatingIP) UnmarshalJSON(b []byte) error {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract will extract a FloatingIP resource from a result.
@@ -132,7 +132,7 @@ type UpdateResult struct {
 // DeleteResult represents the result of an update operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // FloatingIPPage is the page returned by a pager when traversing over a
@@ -146,13 +146,13 @@ type FloatingIPPage struct {
 // In order to do this, it needs to construct the next page's URL.
 func (r FloatingIPPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"floatingips_links"`
+		Links []ktvpcsdk.Link `json:"floatingips_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether a FloatingIPPage struct is empty.

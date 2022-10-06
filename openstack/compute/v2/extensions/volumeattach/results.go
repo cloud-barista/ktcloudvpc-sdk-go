@@ -53,7 +53,7 @@ func ExtractVolumeAttachments(r pagination.Page) ([]VolumeAttachment, error) {
 
 // VolumeAttachmentResult is the result from a volume attachment operation.
 type VolumeAttachmentResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a method that attempts to interpret any VolumeAttachment resource
@@ -81,5 +81,5 @@ type GetResult struct {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }

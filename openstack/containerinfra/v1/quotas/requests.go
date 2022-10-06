@@ -18,19 +18,19 @@ type CreateOpts struct {
 
 // ToQuotaCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToQuotaCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return ktvpcsdk.BuildRequestBody(opts, "")
 }
 
 // Create requests the creation of a new quota.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToQuotaCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

@@ -11,39 +11,39 @@ const (
 	apiName    = "queues"
 )
 
-func commonURL(client *gophercloud.ServiceClient) string {
+func commonURL(client *ktvpcsdk.ServiceClient) string {
 	return client.ServiceURL(apiVersion, apiName)
 }
 
-func createURL(client *gophercloud.ServiceClient, queueName string) string {
+func createURL(client *ktvpcsdk.ServiceClient, queueName string) string {
 	return client.ServiceURL(apiVersion, apiName, queueName)
 }
 
-func listURL(client *gophercloud.ServiceClient) string {
+func listURL(client *ktvpcsdk.ServiceClient) string {
 	return commonURL(client)
 }
 
-func updateURL(client *gophercloud.ServiceClient, queueName string) string {
+func updateURL(client *ktvpcsdk.ServiceClient, queueName string) string {
 	return client.ServiceURL(apiVersion, apiName, queueName)
 }
 
-func getURL(client *gophercloud.ServiceClient, queueName string) string {
+func getURL(client *ktvpcsdk.ServiceClient, queueName string) string {
 	return client.ServiceURL(apiVersion, apiName, queueName)
 }
 
-func deleteURL(client *gophercloud.ServiceClient, queueName string) string {
+func deleteURL(client *ktvpcsdk.ServiceClient, queueName string) string {
 	return client.ServiceURL(apiVersion, apiName, queueName)
 }
 
-func statURL(client *gophercloud.ServiceClient, queueName string) string {
+func statURL(client *ktvpcsdk.ServiceClient, queueName string) string {
 	return client.ServiceURL(apiVersion, apiName, queueName, "stats")
 }
 
-func shareURL(client *gophercloud.ServiceClient, queueName string) string {
+func shareURL(client *ktvpcsdk.ServiceClient, queueName string) string {
 	return client.ServiceURL(apiVersion, apiName, queueName, "share")
 }
 
-func purgeURL(client *gophercloud.ServiceClient, queueName string) string {
+func purgeURL(client *ktvpcsdk.ServiceClient, queueName string) string {
 	return client.ServiceURL(apiVersion, apiName, queueName, "purge")
 }
 

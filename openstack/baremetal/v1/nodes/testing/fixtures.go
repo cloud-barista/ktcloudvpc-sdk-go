@@ -787,7 +787,7 @@ const NodeGetSubscriptionVendorPassthruBody = `
 
 const NodeCreateSubscriptionVendorPassthruAllParametersBody = `
 {
-  "Context": "gophercloud",
+  "Context": "ktvpcsdk",
   "Destination": "https://someurl",
   "EventTypes": ["Alert"],
   "HttpHeaders": [{"Context-Type":"application/json"}],
@@ -1149,7 +1149,7 @@ var (
 
 	NodeCreateSubscriptionAllParameters = nodes.SubscriptionVendorPassthru{
 		Id:          "eaa43e2-018a-424e-990a-cbf47c62ef80",
-		Context:     "gophercloud",
+		Context:     "ktvpcsdk",
 		Destination: "https://someurl",
 		EventTypes:  []string{"Alert"},
 		Protocol:    "Redfish",
@@ -1487,7 +1487,7 @@ func HandleCreateSubscriptionVendorPassthruAllParametersSuccessfully(t *testing.
 		th.TestFormValues(t, r, map[string]string{"method": "create_subscription"})
 		th.TestJSONRequest(t, r, `
 			{
-         "Context":      "gophercloud",
+         "Context":      "ktvpcsdk",
          "EventTypes":   ["Alert"],
          "HttpHeaders":  [{"Content-Type":"application/json"}],
          "Protocol":     "Redfish",

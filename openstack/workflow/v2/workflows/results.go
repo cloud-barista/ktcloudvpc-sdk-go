@@ -10,12 +10,12 @@ import (
 
 // CreateResult is the response of a Post operations. Call its Extract method to interpret it as a list of Workflows.
 type CreateResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // DeleteResult is the result from a Delete operation. Call its ExtractErr method to determine the success of the call.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // Extract helps to get created Workflow struct from a Create function.
@@ -29,7 +29,7 @@ func (r CreateResult) Extract() ([]Workflow, error) {
 
 // GetResult is the response of Get operations. Call its Extract method to interpret it as a Workflow.
 type GetResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract helps to get a Workflow struct from a Get function.
@@ -79,8 +79,8 @@ func (r *Workflow) UnmarshalJSON(b []byte) error {
 	type tmp Workflow
 	var s struct {
 		tmp
-		CreatedAt gophercloud.JSONRFC3339ZNoTNoZ  `json:"created_at"`
-		UpdatedAt *gophercloud.JSONRFC3339ZNoTNoZ `json:"updated_at"`
+		CreatedAt ktvpcsdk.JSONRFC3339ZNoTNoZ  `json:"created_at"`
+		UpdatedAt *ktvpcsdk.JSONRFC3339ZNoTNoZ `json:"updated_at"`
 	}
 
 	err := json.Unmarshal(b, &s)

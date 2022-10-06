@@ -13,8 +13,8 @@ import (
 )
 
 var (
-	attachedAt, _      = time.Parse(gophercloud.RFC3339MilliNoZ, "2015-09-16T09:28:52.000000")
-	detachedAt, _      = time.Parse(gophercloud.RFC3339MilliNoZ, "2015-09-16T09:28:52.000000")
+	attachedAt, _      = time.Parse(ktvpcsdk.RFC3339MilliNoZ, "2015-09-16T09:28:52.000000")
+	detachedAt, _      = time.Parse(ktvpcsdk.RFC3339MilliNoZ, "2015-09-16T09:28:52.000000")
 	expectedAttachment = &attachments.Attachment{
 		ID:             "05551600-a936-4d4a-ba42-79a037c1-c91a",
 		VolumeID:       "289da7f8-6440-407c-9fb4-7db01ec49164",

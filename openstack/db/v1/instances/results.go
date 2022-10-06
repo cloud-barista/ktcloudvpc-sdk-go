@@ -23,7 +23,7 @@ type Flavor struct {
 	// The flavor's unique identifier.
 	ID string
 	// Links to access the flavor.
-	Links []gophercloud.Link
+	Links []ktvpcsdk.Link
 }
 
 // Fault describes the fault reason in more detail when a database instance has errored
@@ -52,7 +52,7 @@ func (r *Fault) UnmarshalJSON(b []byte) error {
 	type tmp Fault
 	var s struct {
 		tmp
-		Created gophercloud.JSONRFC3339NoZ `json:"created"`
+		Created ktvpcsdk.JSONRFC3339NoZ `json:"created"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -93,7 +93,7 @@ type Instance struct {
 	ID string
 
 	// Exposes various links that reference the instance resource.
-	Links []gophercloud.Link
+	Links []ktvpcsdk.Link
 
 	// The human-readable name of the instance.
 	Name string
@@ -118,8 +118,8 @@ func (r *Instance) UnmarshalJSON(b []byte) error {
 	type tmp Instance
 	var s struct {
 		tmp
-		Created gophercloud.JSONRFC3339NoZ `json:"created"`
-		Updated gophercloud.JSONRFC3339NoZ `json:"updated"`
+		Created ktvpcsdk.JSONRFC3339NoZ `json:"created"`
+		Updated ktvpcsdk.JSONRFC3339NoZ `json:"updated"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -134,7 +134,7 @@ func (r *Instance) UnmarshalJSON(b []byte) error {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // CreateResult represents the result of a Create operation.
@@ -149,12 +149,12 @@ type GetResult struct {
 
 // DeleteResult represents the result of a Delete operation.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // ConfigurationResult represents the result of a AttachConfigurationGroup/DetachConfigurationGroup operation.
 type ConfigurationResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // Extract will extract an Instance from various result structs.
@@ -180,13 +180,13 @@ func (page InstancePage) IsEmpty() (bool, error) {
 // NextPageURL will retrieve the next page URL.
 func (page InstancePage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"instances_links"`
+		Links []ktvpcsdk.Link `json:"instances_links"`
 	}
 	err := page.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // ExtractInstances will convert a generic pagination struct into a more
@@ -201,7 +201,7 @@ func ExtractInstances(r pagination.Page) ([]Instance, error) {
 
 // EnableRootUserResult represents the result of an operation to enable the root user.
 type EnableRootUserResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract will extract root user information from a UserRootResult.
@@ -217,13 +217,13 @@ func (r EnableRootUserResult) Extract() (*users.User, error) {
 // an instance service, resizing its memory allocation, and resizing its
 // attached volume size.
 type ActionResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // IsRootEnabledResult is the result of a call to IsRootEnabled. To see if
 // root is enabled, call the type's Extract method.
 type IsRootEnabledResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is used to extract the data from a IsRootEnabledResult.

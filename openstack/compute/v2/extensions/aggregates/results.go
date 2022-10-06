@@ -46,9 +46,9 @@ func (r *Aggregate) UnmarshalJSON(b []byte) error {
 	type tmp Aggregate
 	var s struct {
 		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
-		DeletedAt gophercloud.JSONRFC3339MilliNoZ `json:"deleted_at"`
+		CreatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"created_at"`
+		UpdatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"updated_at"`
+		DeletedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"deleted_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -85,7 +85,7 @@ func ExtractAggregates(p pagination.Page) ([]Aggregate, error) {
 }
 
 type aggregatesResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 func (r aggregatesResult) Extract() (*Aggregate, error) {
@@ -105,7 +105,7 @@ type GetResult struct {
 }
 
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 type UpdateResult struct {

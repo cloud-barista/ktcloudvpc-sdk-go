@@ -79,7 +79,7 @@ func TestCreate(t *testing.T) {
 
 	options := siteconnections.CreateOpts{
 		Name:           "vpnconnection1",
-		AdminStateUp:   gophercloud.Enabled,
+		AdminStateUp:   ktvpcsdk.Enabled,
 		PSK:            "secret",
 		Initiator:      siteconnections.InitiatorBiDirectional,
 		IPSecPolicyID:  "e6e23d0c-9519-4d52-8ea4-5b1f96d857b1",

@@ -14,8 +14,8 @@ type EndpointOpts struct {
 	IronicUserPassword string
 }
 
-func initClientOpts(client *gophercloud.ProviderClient, eo EndpointOpts) (*gophercloud.ServiceClient, error) {
-	sc := new(gophercloud.ServiceClient)
+func initClientOpts(client *ktvpcsdk.ProviderClient, eo EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+	sc := new(ktvpcsdk.ServiceClient)
 	if eo.IronicEndpoint == "" {
 		return nil, fmt.Errorf("IronicEndpoint is required")
 	}
@@ -26,15 +26,15 @@ func initClientOpts(client *gophercloud.ProviderClient, eo EndpointOpts) (*gophe
 	token := []byte(eo.IronicUser + ":" + eo.IronicUserPassword)
 	encodedToken := base64.StdEncoding.EncodeToString(token)
 	sc.MoreHeaders = map[string]string{"Authorization": "Basic " + encodedToken}
-	sc.Endpoint = gophercloud.NormalizeURL(eo.IronicEndpoint)
+	sc.Endpoint = ktvpcsdk.NormalizeURL(eo.IronicEndpoint)
 	sc.ProviderClient = client
 	return sc, nil
 }
 
 // NewBareMetalHTTPBasic creates a ServiceClient that may be used to access a
 // "http_basic" bare metal service.
-func NewBareMetalHTTPBasic(eo EndpointOpts) (*gophercloud.ServiceClient, error) {
-	sc, err := initClientOpts(&gophercloud.ProviderClient{}, eo)
+func NewBareMetalHTTPBasic(eo EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+	sc, err := initClientOpts(&ktvpcsdk.ProviderClient{}, eo)
 	if err != nil {
 		return nil, err
 	}

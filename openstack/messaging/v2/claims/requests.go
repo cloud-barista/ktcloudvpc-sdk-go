@@ -25,12 +25,12 @@ type CreateOpts struct {
 // ToClaimCreateRequest assembles a body and URL for a Create request based on
 // the contents of a CreateOpts.
 func (opts CreateOpts) ToClaimCreateRequest() (map[string]interface{}, string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	if err != nil {
 		return nil, q.String(), err
 	}
 
-	b, err := gophercloud.BuildRequestBody(opts, "")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		return b, "", err
 	}
@@ -38,7 +38,7 @@ func (opts CreateOpts) ToClaimCreateRequest() (map[string]interface{}, string, e
 }
 
 // Create creates a Claim that claims messages on a specified queue.
-func Create(client *gophercloud.ServiceClient, queueName string, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, queueName string, opts CreateOptsBuilder) (r CreateResult) {
 	b, q, err := opts.ToClaimCreateRequest()
 	if err != nil {
 		r.Err = err
@@ -50,19 +50,19 @@ func Create(client *gophercloud.ServiceClient, queueName string, opts CreateOpts
 		url += q
 	}
 
-	resp, err := client.Post(url, b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(url, b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{201, 204},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Get queries the specified claim for the specified queue.
-func Get(client *gophercloud.ServiceClient, queueName string, claimID string) (r GetResult) {
-	resp, err := client.Get(getURL(client, queueName, claimID), &r.Body, &gophercloud.RequestOpts{
+func Get(client *ktvpcsdk.ServiceClient, queueName string, claimID string) (r GetResult) {
+	resp, err := client.Get(getURL(client, queueName, claimID), &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -84,7 +84,7 @@ type UpdateOpts struct {
 // ToClaimUpdateMap assembles a request body based on the contents of
 // UpdateOpts.
 func (opts UpdateOpts) ToClaimUpdateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -92,24 +92,24 @@ func (opts UpdateOpts) ToClaimUpdateMap() (map[string]interface{}, error) {
 }
 
 // Update will update the options for a specified claim.
-func Update(client *gophercloud.ServiceClient, queueName string, claimID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *ktvpcsdk.ServiceClient, queueName string, claimID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToClaimUpdateMap()
 	if err != nil {
 		r.Err = err
 		return r
 	}
-	resp, err := client.Patch(updateURL(client, queueName, claimID), &b, nil, &gophercloud.RequestOpts{
+	resp, err := client.Patch(updateURL(client, queueName, claimID), &b, nil, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{204},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete will delete a Claim for a specified Queue.
-func Delete(client *gophercloud.ServiceClient, queueName string, claimID string) (r DeleteResult) {
-	resp, err := client.Delete(deleteURL(client, queueName, claimID), &gophercloud.RequestOpts{
+func Delete(client *ktvpcsdk.ServiceClient, queueName string, claimID string) (r DeleteResult) {
+	resp, err := client.Delete(deleteURL(client, queueName, claimID), &ktvpcsdk.RequestOpts{
 		OkCodes: []int{204},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

@@ -259,7 +259,7 @@ var FirstUser = users.User{
 }
 
 // SecondUser is the second user in the List request.
-var SecondUserPasswordExpiresAt, _ = time.Parse(gophercloud.RFC3339MilliNoZ, "2016-11-06T15:32:17.000000")
+var SecondUserPasswordExpiresAt, _ = time.Parse(ktvpcsdk.RFC3339MilliNoZ, "2016-11-06T15:32:17.000000")
 var SecondUser = users.User{
 	DefaultProjectID: "263fd9",
 	DomainID:         "1789d1",

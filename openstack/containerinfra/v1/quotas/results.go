@@ -9,7 +9,7 @@ import (
 )
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // CreateResult is the response of a Create operations.

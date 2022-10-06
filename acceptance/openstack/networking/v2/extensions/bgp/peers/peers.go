@@ -9,7 +9,7 @@ import (
 	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
-func CreateBGPPeer(t *testing.T, client *gophercloud.ServiceClient) (*peers.BGPPeer, error) {
+func CreateBGPPeer(t *testing.T, client *ktvpcsdk.ServiceClient) (*peers.BGPPeer, error) {
 	var opts peers.CreateOpts
 	opts.AuthType = "md5"
 	opts.Password = tools.MakeNewPassword("")

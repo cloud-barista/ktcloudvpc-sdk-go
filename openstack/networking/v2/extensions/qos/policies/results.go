@@ -14,7 +14,7 @@ type QoSPolicyExt struct {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // GetResult represents the result of a get operation. Call its Extract
@@ -38,7 +38,7 @@ type UpdateResult struct {
 // DeleteResult represents the result of a delete operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // Extract is a function that accepts a result and extracts a QoS policy resource.
@@ -99,13 +99,13 @@ type PolicyPage struct {
 // In order to do this, it needs to construct the next page's URL.
 func (r PolicyPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"policies_links"`
+		Links []ktvpcsdk.Link `json:"policies_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether a PolicyPage is empty.

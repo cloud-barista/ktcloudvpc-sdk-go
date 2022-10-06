@@ -134,7 +134,7 @@ func (r *Image) UnmarshalJSON(b []byte) error {
 		delete(resultMap, "size")
 		delete(resultMap, "openstack-image-import-methods")
 		delete(resultMap, "openstack-image-store-ids")
-		r.Properties = gophercloud.RemainingKeys(Image{}, resultMap)
+		r.Properties = ktvpcsdk.RemainingKeys(Image{}, resultMap)
 	}
 
 	if v := strings.FieldsFunc(strings.TrimSpace(s.OpenStackImageImportMethods), splitFunc); len(v) > 0 {
@@ -148,7 +148,7 @@ func (r *Image) UnmarshalJSON(b []byte) error {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets any commonResult as an Image.
@@ -193,7 +193,7 @@ type GetResult struct {
 // DeleteResult represents the result of a Delete operation. Call its
 // ExtractErr method to interpret it as an Image.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // ImagePage represents the results of a List request.

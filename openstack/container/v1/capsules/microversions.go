@@ -83,8 +83,8 @@ func (r *CapsuleV132) UnmarshalJSON(b []byte) error {
 
 	var s struct {
 		tmp
-		CreatedAt gophercloud.JSONRFC3339ZNoTNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339ZNoTNoZ `json:"updated_at"`
+		CreatedAt ktvpcsdk.JSONRFC3339ZNoTNoZ `json:"created_at"`
+		UpdatedAt ktvpcsdk.JSONRFC3339ZNoTNoZ `json:"updated_at"`
 	}
 
 	err := json.Unmarshal(b, &s)

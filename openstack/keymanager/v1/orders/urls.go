@@ -2,18 +2,18 @@ package orders
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-func listURL(client *gophercloud.ServiceClient) string {
+func listURL(client *ktvpcsdk.ServiceClient) string {
 	return client.ServiceURL("orders")
 }
 
-func getURL(client *gophercloud.ServiceClient, id string) string {
+func getURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return client.ServiceURL("orders", id)
 }
 
-func createURL(client *gophercloud.ServiceClient) string {
+func createURL(client *ktvpcsdk.ServiceClient) string {
 	return client.ServiceURL("orders")
 }
 
-func deleteURL(client *gophercloud.ServiceClient, id string) string {
+func deleteURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return client.ServiceURL("orders", id)
 }

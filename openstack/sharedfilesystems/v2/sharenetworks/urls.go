@@ -2,30 +2,30 @@ package sharenetworks
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-func createURL(c *gophercloud.ServiceClient) string {
+func createURL(c *ktvpcsdk.ServiceClient) string {
 	return c.ServiceURL("share-networks")
 }
 
-func deleteURL(c *gophercloud.ServiceClient, id string) string {
+func deleteURL(c *ktvpcsdk.ServiceClient, id string) string {
 	return c.ServiceURL("share-networks", id)
 }
 
-func listDetailURL(c *gophercloud.ServiceClient) string {
+func listDetailURL(c *ktvpcsdk.ServiceClient) string {
 	return c.ServiceURL("share-networks", "detail")
 }
 
-func getURL(c *gophercloud.ServiceClient, id string) string {
+func getURL(c *ktvpcsdk.ServiceClient, id string) string {
 	return deleteURL(c, id)
 }
 
-func updateURL(c *gophercloud.ServiceClient, id string) string {
+func updateURL(c *ktvpcsdk.ServiceClient, id string) string {
 	return deleteURL(c, id)
 }
 
-func addSecurityServiceURL(c *gophercloud.ServiceClient, id string) string {
+func addSecurityServiceURL(c *ktvpcsdk.ServiceClient, id string) string {
 	return c.ServiceURL("share-networks", id, "action")
 }
 
-func removeSecurityServiceURL(c *gophercloud.ServiceClient, id string) string {
+func removeSecurityServiceURL(c *ktvpcsdk.ServiceClient, id string) string {
 	return c.ServiceURL("share-networks", id, "action")
 }

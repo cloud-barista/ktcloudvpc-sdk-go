@@ -7,7 +7,7 @@ import (
 )
 
 type ErrInvalidEnvironment struct {
-	gophercloud.BaseError
+	ktvpcsdk.BaseError
 	Section string
 }
 
@@ -16,7 +16,7 @@ func (e ErrInvalidEnvironment) Error() string {
 }
 
 type ErrInvalidDataFormat struct {
-	gophercloud.BaseError
+	ktvpcsdk.BaseError
 }
 
 func (e ErrInvalidDataFormat) Error() string {
@@ -24,7 +24,7 @@ func (e ErrInvalidDataFormat) Error() string {
 }
 
 type ErrInvalidTemplateFormatVersion struct {
-	gophercloud.BaseError
+	ktvpcsdk.BaseError
 	Version string
 }
 
@@ -33,7 +33,7 @@ func (e ErrInvalidTemplateFormatVersion) Error() string {
 }
 
 type ErrTemplateRequired struct {
-	gophercloud.BaseError
+	ktvpcsdk.BaseError
 }
 
 func (e ErrTemplateRequired) Error() string {

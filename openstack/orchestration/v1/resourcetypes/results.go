@@ -96,7 +96,7 @@ type ResourceSchema struct {
 
 // ListResult represents the result of a List operation.
 type ListResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract returns a slice of ResourceTypeSummary objects and is called after
@@ -127,7 +127,7 @@ func (r ListResult) Extract() (rts []ResourceTypeSummary, err error) {
 
 // GetSchemaResult represents the result of a GetSchema operation.
 type GetSchemaResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract returns a ResourceSchema object and is called after a GetSchema
@@ -139,7 +139,7 @@ func (r GetSchemaResult) Extract() (rts ResourceSchema, err error) {
 
 // TemplateResult represents the result of a Template get operation.
 type TemplateResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract returns a Template object and is called after a Template get

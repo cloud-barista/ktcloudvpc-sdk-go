@@ -7,7 +7,7 @@ import (
 
 // List returns a Pager that allows you to iterate over a collection of
 // VolumeAttachments.
-func List(client *gophercloud.ServiceClient, serverID string) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, serverID string) pagination.Pager {
 	return pagination.NewPager(client, listURL(client, serverID), func(r pagination.PageResult) pagination.Page {
 		return VolumeAttachmentPage{pagination.SinglePageBase(r)}
 	})
@@ -38,34 +38,34 @@ type CreateOpts struct {
 
 // ToVolumeAttachmentCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToVolumeAttachmentCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "volumeAttachment")
+	return ktvpcsdk.BuildRequestBody(opts, "volumeAttachment")
 }
 
 // Create requests the creation of a new volume attachment on the server.
-func Create(client *gophercloud.ServiceClient, serverID string, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, serverID string, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToVolumeAttachmentCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client, serverID), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createURL(client, serverID), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Get returns public data about a previously created VolumeAttachment.
-func Get(client *gophercloud.ServiceClient, serverID, attachmentID string) (r GetResult) {
+func Get(client *ktvpcsdk.ServiceClient, serverID, attachmentID string) (r GetResult) {
 	resp, err := client.Get(getURL(client, serverID, attachmentID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete requests the deletion of a previous stored VolumeAttachment from
 // the server.
-func Delete(client *gophercloud.ServiceClient, serverID, attachmentID string) (r DeleteResult) {
+func Delete(client *ktvpcsdk.ServiceClient, serverID, attachmentID string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, serverID, attachmentID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

@@ -1,4 +1,4 @@
-package gophercloud
+package ktvpcsdk
 
 /*
 AuthOptions stores information needed to authenticate to an OpenStack Cloud.
@@ -12,7 +12,7 @@ provider.
 
 An example of manually providing authentication information:
 
-  opts := gophercloud.AuthOptions{
+  opts := ktvpcsdk.AuthOptions{
     IdentityEndpoint: "https://openstack.example.com:5000/v2.0",
     Username: "{username}",
     Password: "{password}",

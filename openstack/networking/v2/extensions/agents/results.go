@@ -11,7 +11,7 @@ import (
 )
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a function that accepts a result and extracts an agent resource.
@@ -38,21 +38,21 @@ type UpdateResult struct {
 // DeleteResult represents the result of a delete operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // ScheduleDHCPNetworkResult represents the result of a schedule a network to
 // a DHCP agent operation. ExtractErr method to determine if the request
 // succeeded or failed.
 type ScheduleDHCPNetworkResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // RemoveDHCPNetworkResult represents the result of a remove a network from a
 // DHCP agent operation. ExtractErr method to determine if the request succeeded
 // or failed.
 type RemoveDHCPNetworkResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // Agent represents a Neutron agent.
@@ -107,9 +107,9 @@ func (r *Agent) UnmarshalJSON(b []byte) error {
 	type tmp Agent
 	var s struct {
 		tmp
-		CreatedAt          gophercloud.JSONRFC3339ZNoTNoZ `json:"created_at"`
-		StartedAt          gophercloud.JSONRFC3339ZNoTNoZ `json:"started_at"`
-		HeartbeatTimestamp gophercloud.JSONRFC3339ZNoTNoZ `json:"heartbeat_timestamp"`
+		CreatedAt          ktvpcsdk.JSONRFC3339ZNoTNoZ `json:"created_at"`
+		StartedAt          ktvpcsdk.JSONRFC3339ZNoTNoZ `json:"started_at"`
+		HeartbeatTimestamp ktvpcsdk.JSONRFC3339ZNoTNoZ `json:"heartbeat_timestamp"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -134,13 +134,13 @@ type AgentPage struct {
 // In order to do this, it needs to construct the next page's URL.
 func (r AgentPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"agents_links"`
+		Links []ktvpcsdk.Link `json:"agents_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // IsEmpty determines whether or not a AgentPage is empty.
@@ -162,7 +162,7 @@ func ExtractAgents(r pagination.Page) ([]Agent, error) {
 // ListDHCPNetworksResult is the response from a List operation.
 // Call its Extract method to interpret it as networks.
 type ListDHCPNetworksResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets any ListDHCPNetworksResult as an array of networks.

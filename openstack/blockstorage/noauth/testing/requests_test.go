@@ -9,7 +9,7 @@ import (
 )
 
 func TestNoAuth(t *testing.T) {
-	ao := gophercloud.AuthOptions{
+	ao := ktvpcsdk.AuthOptions{
 		Username:   "user",
 		TenantName: "test",
 	}
@@ -22,7 +22,7 @@ func TestNoAuth(t *testing.T) {
 	th.AssertEquals(t, naTestResult.Endpoint, noauthClient.Endpoint)
 	th.AssertEquals(t, naTestResult.TokenID, noauthClient.TokenID)
 
-	ao2 := gophercloud.AuthOptions{}
+	ao2 := ktvpcsdk.AuthOptions{}
 	provider2, err := noauth.NewClient(ao2)
 	th.AssertNoErr(t, err)
 	noauthClient2, err := noauth.NewBlockStorageNoAuthV2(provider2, noauth.EndpointOpts{

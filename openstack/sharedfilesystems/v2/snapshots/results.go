@@ -44,7 +44,7 @@ func (r *Snapshot) UnmarshalJSON(b []byte) error {
 	type tmp Snapshot
 	var s struct {
 		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
+		CreatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"created_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -58,7 +58,7 @@ func (r *Snapshot) UnmarshalJSON(b []byte) error {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract will get the Snapshot object from the commonResult
@@ -157,7 +157,7 @@ func ExtractSnapshots(r pagination.Page) ([]Snapshot, error) {
 
 // DeleteResult contains the response body and error from a Delete request.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // GetResult contains the response body and error from a Get request.

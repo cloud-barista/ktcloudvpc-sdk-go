@@ -9,7 +9,7 @@ Example of a new empty Trunk creation
 	iTrue := true
 	createOpts := trunks.CreateOpts{
 		Name:         "gophertrunk",
-		Description:  "Trunk created by gophercloud",
+		Description:  "Trunk created by ktvpcsdk",
 		AdminStateUp: &iTrue,
 		PortID:       "a6f0560c-b7a8-401f-bf6e-d0a5c851ae10",
 	}
@@ -25,7 +25,7 @@ Example of a new Trunk creation with 2 subports
 	iTrue := true
 	createOpts := trunks.CreateOpts{
 		Name:         "gophertrunk",
-		Description:  "Trunk created by gophercloud",
+		Description:  "Trunk created by ktvpcsdk",
 		AdminStateUp: &iTrue,
 		PortID:       "a6f0560c-b7a8-401f-bf6e-d0a5c851ae10",
 		Subports: []trunks.Subport{
@@ -88,7 +88,7 @@ Example of updating a Trunk
 	updateOpts := trunks.UpdateOpts{
 		AdminStateUp: &iFalse,
 		Name:         "updated_gophertrunk",
-		Description:  "trunk updated by gophercloud",
+		Description:  "trunk updated by ktvpcsdk",
 	}
 	trunk, err = trunks.Update(networkClient, trunkID, updateOpts).Extract()
 	if err != nil {

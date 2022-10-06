@@ -64,12 +64,12 @@ type ListOpts struct {
 
 // ToTaskListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToTaskListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List returns a Pager which allows you to iterate over a collection of the tasks.
-func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(c)
 	if opts != nil {
 		query, err := opts.ToTaskListQuery()
@@ -89,9 +89,9 @@ func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 }
 
 // Get retrieves a specific Imageservice task based on its ID.
-func Get(c *gophercloud.ServiceClient, taskID string) (r GetResult) {
+func Get(c *ktvpcsdk.ServiceClient, taskID string) (r GetResult) {
 	resp, err := c.Get(getURL(c, taskID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -108,7 +108,7 @@ type CreateOpts struct {
 
 // ToTaskCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToTaskCreateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -116,15 +116,15 @@ func (opts CreateOpts) ToTaskCreateMap() (map[string]interface{}, error) {
 }
 
 // Create requests the creation of a new Imageservice task on the server.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToTaskCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

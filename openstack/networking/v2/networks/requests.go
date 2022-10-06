@@ -47,14 +47,14 @@ type ListOpts struct {
 
 // ToNetworkListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToNetworkListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List returns a Pager which allows you to iterate over a collection of
 // networks. It accepts a ListOpts struct, which allows you to filter and sort
 // the returned collection for greater efficiency.
-func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(c)
 	cblogger.Infof("\n\n### Network list URL : %s", url)
 
@@ -71,9 +71,9 @@ func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 }
 
 // Get retrieves a specific network based on its unique ID.
-func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
 	resp, err := c.Get(getURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -96,7 +96,7 @@ type CreateOpts struct {
 
 // ToNetworkCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToNetworkCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "network")
+	return ktvpcsdk.BuildRequestBody(opts, "network")
 }
 
 // Create accepts a CreateOpts struct and creates a new network using the values
@@ -106,14 +106,14 @@ func (opts CreateOpts) ToNetworkCreateMap() (map[string]interface{}, error) {
 // The tenant ID that is contained in the URI is the tenant that creates the
 // network. An admin user, however, has the option of specifying another tenant
 // ID in the CreateOpts struct.
-func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToNetworkCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Post(createURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -138,18 +138,18 @@ type UpdateOpts struct {
 
 // ToNetworkUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToNetworkUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "network")
+	return ktvpcsdk.BuildRequestBody(opts, "network")
 }
 
 // Update accepts a UpdateOpts struct and updates an existing network using the
 // values provided. For more information, see the Create function.
-func Update(c *gophercloud.ServiceClient, networkID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *ktvpcsdk.ServiceClient, networkID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToNetworkUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	h, err := gophercloud.BuildHeaders(opts)
+	h, err := ktvpcsdk.BuildHeaders(opts)
 	if err != nil {
 		r.Err = err
 		return
@@ -159,17 +159,17 @@ func Update(c *gophercloud.ServiceClient, networkID string, opts UpdateOptsBuild
 			h[k] = fmt.Sprintf("revision_number=%s", h[k])
 		}
 	}
-	resp, err := c.Put(updateURL(c, networkID), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := c.Put(updateURL(c, networkID), b, &r.Body, &ktvpcsdk.RequestOpts{
 		MoreHeaders: h,
 		OkCodes:     []int{200, 201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete accepts a unique ID and deletes the network associated with it.
-func Delete(c *gophercloud.ServiceClient, networkID string) (r DeleteResult) {
+func Delete(c *ktvpcsdk.ServiceClient, networkID string) (r DeleteResult) {
 	resp, err := c.Delete(deleteURL(c, networkID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

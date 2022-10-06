@@ -8,7 +8,7 @@ import (
 )
 
 type portResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 func (r portResult) Extract() (*Port, error) {
@@ -90,13 +90,13 @@ func (r PortPage) IsEmpty() (bool, error) {
 // next page of results.
 func (r PortPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"ports_links"`
+		Links []ktvpcsdk.Link `json:"ports_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // ExtractPorts interprets the results of a single page from a List() call,
@@ -127,5 +127,5 @@ type UpdateResult struct {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }

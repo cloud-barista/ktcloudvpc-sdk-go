@@ -72,7 +72,7 @@ const GetOutput = `
 `
 
 // FirstTransferRequest is the first result in ListOutput
-var FirstTransferRequestCreatedAt, _ = time.Parse(gophercloud.RFC3339MilliNoZ, "2020-10-12T08:38:58.000000")
+var FirstTransferRequestCreatedAt, _ = time.Parse(ktvpcsdk.RFC3339MilliNoZ, "2020-10-12T08:38:58.000000")
 var FirstTransferRequest = transferRequests.TransferRequest{
 	ID:              "a86dba58-0043-4cc6-a1bb-69d5e86f3ca3",
 	ZoneID:          "a6a8515c-5d80-48c0-955b-fde631b59791",
@@ -89,8 +89,8 @@ var FirstTransferRequest = transferRequests.TransferRequest{
 }
 
 // SecondTransferRequest is the second result in ListOutput
-var SecondTransferRequestCreatedAt, _ = time.Parse(gophercloud.RFC3339MilliNoZ, "2020-10-12T09:38:58.000000")
-var SecondTransferRequestUpdatedAt, _ = time.Parse(gophercloud.RFC3339MilliNoZ, "2020-10-12T10:38:58.000000")
+var SecondTransferRequestCreatedAt, _ = time.Parse(ktvpcsdk.RFC3339MilliNoZ, "2020-10-12T09:38:58.000000")
+var SecondTransferRequestUpdatedAt, _ = time.Parse(ktvpcsdk.RFC3339MilliNoZ, "2020-10-12T10:38:58.000000")
 var SecondTransferRequest = transferRequests.TransferRequest{
 	ID:              "34c4561c-9205-4386-9df5-167436f5a222",
 	ZoneID:          "572ba08c-d929-4c70-8e42-03824bb24ca2",

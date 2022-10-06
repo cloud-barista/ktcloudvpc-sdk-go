@@ -33,7 +33,7 @@ type ListOpts struct {
 
 // ToAddressScopeListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToAddressScopeListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
@@ -44,7 +44,7 @@ func (opts ListOpts) ToAddressScopeListQuery() (string, error) {
 // Default policy settings return only the address-scopes owned by the project
 // of the user submitting the request, unless the user has the administrative
 // role.
-func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(c)
 	if opts != nil {
 		query, err := opts.ToAddressScopeListQuery()
@@ -59,9 +59,9 @@ func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 }
 
 // Get retrieves a specific address-scope based on its ID.
-func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
 	resp, err := c.Get(getURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -91,20 +91,20 @@ type CreateOpts struct {
 
 // ToAddressScopeCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToAddressScopeCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "address_scope")
+	return ktvpcsdk.BuildRequestBody(opts, "address_scope")
 }
 
 // Create requests the creation of a new address-scope on the server.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToAddressScopeCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -125,27 +125,27 @@ type UpdateOpts struct {
 
 // ToAddressScopeUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToAddressScopeUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "address_scope")
+	return ktvpcsdk.BuildRequestBody(opts, "address_scope")
 }
 
 // Update accepts a UpdateOpts struct and updates an existing address-scope
 // using the values provided.
-func Update(c *gophercloud.ServiceClient, addressScopeID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *ktvpcsdk.ServiceClient, addressScopeID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToAddressScopeUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(updateURL(c, addressScopeID), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := c.Put(updateURL(c, addressScopeID), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete accepts a unique ID and deletes the address-scope associated with it.
-func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
+func Delete(c *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
 	resp, err := c.Delete(deleteURL(c, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

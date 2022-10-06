@@ -30,7 +30,7 @@ type EndpointGroup struct {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a function that accepts a result and extracts an endpoint group.
@@ -53,13 +53,13 @@ type EndpointGroupPage struct {
 // In order to do this, it needs to construct the next page's URL.
 func (r EndpointGroupPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"endpoint_groups_links"`
+		Links []ktvpcsdk.Link `json:"endpoint_groups_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether an EndpointGroupPage struct is empty.
@@ -94,7 +94,7 @@ type GetResult struct {
 // DeleteResult represents the results of a Delete operation. Call its ExtractErr method
 // to determine whether the operation succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // UpdateResult represents the result of an update operation. Call its Extract method

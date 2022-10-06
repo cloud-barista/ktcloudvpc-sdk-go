@@ -47,7 +47,7 @@ type Service struct {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // ServicePage is the page returned by a pager when traversing over a
@@ -61,13 +61,13 @@ type ServicePage struct {
 // In order to do this, it needs to construct the next page's URL.
 func (r ServicePage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"vpnservices_links"`
+		Links []ktvpcsdk.Link `json:"vpnservices_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether a ServicePage struct is empty.
@@ -111,7 +111,7 @@ type CreateResult struct {
 // DeleteResult represents the result of a delete operation. Call its
 // ExtractErr method to determine if the operation succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // UpdateResult represents the result of an update operation. Call its Extract

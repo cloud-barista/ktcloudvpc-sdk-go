@@ -21,7 +21,7 @@ type ListOpts struct {
 	NetworkName string `q:"network_name"`
 
 	// IPVersion allows to filter on the version of the IP protocol.
-	// You can use the well-known IP versions with the gophercloud.IPVersion type.
+	// You can use the well-known IP versions with the ktvpcsdk.IPVersion type.
 	IPVersion string `q:"ip_version"`
 
 	// ProjectID allows to filter on the Identity project field.
@@ -33,14 +33,14 @@ type ListOpts struct {
 
 // ToNetworkIPAvailabilityListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToNetworkIPAvailabilityListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List returns a Pager which allows you to iterate over a collection of
 // networkipavailabilities. It accepts a ListOpts struct, which allows you to
 // filter the returned collection for greater efficiency.
-func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(c)
 	if opts != nil {
 		query, err := opts.ToNetworkIPAvailabilityListQuery()
@@ -55,8 +55,8 @@ func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 }
 
 // Get retrieves a specific NetworkIPAvailability based on its ID.
-func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
 	resp, err := c.Get(getURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

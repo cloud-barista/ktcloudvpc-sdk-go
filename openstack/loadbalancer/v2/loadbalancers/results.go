@@ -82,8 +82,8 @@ func (r *LoadBalancer) UnmarshalJSON(b []byte) error {
 	// Support for older neutron time format
 	var s1 struct {
 		tmp
-		CreatedAt gophercloud.JSONRFC3339NoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339NoZ `json:"updated_at"`
+		CreatedAt ktvpcsdk.JSONRFC3339NoZ `json:"created_at"`
+		UpdatedAt ktvpcsdk.JSONRFC3339NoZ `json:"updated_at"`
 	}
 
 	err := json.Unmarshal(b, &s1)
@@ -147,13 +147,13 @@ type LoadBalancerPage struct {
 // In order to do this, it needs to construct the next page's URL.
 func (r LoadBalancerPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"loadbalancers_links"`
+		Links []ktvpcsdk.Link `json:"loadbalancers_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether a LoadBalancerPage struct is empty.
@@ -174,7 +174,7 @@ func ExtractLoadBalancers(r pagination.Page) ([]LoadBalancer, error) {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a function that accepts a result and extracts a loadbalancer.
@@ -189,7 +189,7 @@ func (r commonResult) Extract() (*LoadBalancer, error) {
 // GetStatusesResult represents the result of a GetStatuses operation.
 // Call its Extract method to interpret it as a StatusTree.
 type GetStatusesResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a function that accepts a result and extracts the status of
@@ -205,7 +205,7 @@ func (r GetStatusesResult) Extract() (*StatusTree, error) {
 // StatsResult represents the result of a GetStats operation.
 // Call its Extract method to interpret it as a Stats.
 type StatsResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a function that accepts a result and extracts the status of
@@ -239,11 +239,11 @@ type UpdateResult struct {
 // DeleteResult represents the result of a delete operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // FailoverResult represents the result of a failover operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type FailoverResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }

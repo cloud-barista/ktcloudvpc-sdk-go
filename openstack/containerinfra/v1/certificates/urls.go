@@ -6,18 +6,18 @@ import (
 
 var apiName = "certificates"
 
-func commonURL(client *gophercloud.ServiceClient) string {
+func commonURL(client *ktvpcsdk.ServiceClient) string {
 	return client.ServiceURL(apiName)
 }
 
-func getURL(client *gophercloud.ServiceClient, id string) string {
+func getURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return client.ServiceURL(apiName, id)
 }
 
-func createURL(client *gophercloud.ServiceClient) string {
+func createURL(client *ktvpcsdk.ServiceClient) string {
 	return commonURL(client)
 }
 
-func updateURL(client *gophercloud.ServiceClient, id string) string {
+func updateURL(client *ktvpcsdk.ServiceClient, id string) string {
 	return client.ServiceURL(apiName, id)
 }

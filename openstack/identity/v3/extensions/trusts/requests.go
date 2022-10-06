@@ -83,14 +83,14 @@ type CreateOpts struct {
 // ToTrustCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToTrustCreateMap() (map[string]interface{}, error) {
 	parent := "trust"
-	b, err := gophercloud.BuildRequestBody(opts, parent)
+	b, err := ktvpcsdk.BuildRequestBody(opts, parent)
 	if err != nil {
 		return nil, err
 	}
 
 	if opts.ExpiresAt != nil {
 		if v, ok := b[parent].(map[string]interface{}); ok {
-			v["expires_at"] = opts.ExpiresAt.Format(gophercloud.RFC3339Milli)
+			v["expires_at"] = opts.ExpiresAt.Format(ktvpcsdk.RFC3339Milli)
 		}
 	}
 
@@ -112,33 +112,33 @@ type ListOpts struct {
 
 // ToTrustListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToTrustListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // Create creates a new Trust.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToTrustCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), &b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createURL(client), &b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes a Trust.
-func Delete(client *gophercloud.ServiceClient, trustID string) (r DeleteResult) {
+func Delete(client *ktvpcsdk.ServiceClient, trustID string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, trustID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // List enumerates the Trust to which the current token has access.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToTrustListQuery()
@@ -153,14 +153,14 @@ func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pa
 }
 
 // Get retrieves details on a single Trust, by ID.
-func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
 	resp, err := client.Get(resourceURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // ListRoles lists roles delegated by a Trust.
-func ListRoles(client *gophercloud.ServiceClient, id string) pagination.Pager {
+func ListRoles(client *ktvpcsdk.ServiceClient, id string) pagination.Pager {
 	url := listRolesURL(client, id)
 	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
 		return RolesPage{pagination.LinkedPageBase{PageResult: r}}
@@ -168,15 +168,15 @@ func ListRoles(client *gophercloud.ServiceClient, id string) pagination.Pager {
 }
 
 // GetRole retrieves details on a single role delegated by a Trust.
-func GetRole(client *gophercloud.ServiceClient, id string, roleID string) (r GetRoleResult) {
+func GetRole(client *ktvpcsdk.ServiceClient, id string, roleID string) (r GetRoleResult) {
 	resp, err := client.Get(getRoleURL(client, id, roleID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // CheckRole checks whether a role ID is delegated by a Trust.
-func CheckRole(client *gophercloud.ServiceClient, id string, roleID string) (r CheckRoleResult) {
+func CheckRole(client *ktvpcsdk.ServiceClient, id string, roleID string) (r CheckRoleResult) {
 	resp, err := client.Head(getRoleURL(client, id, roleID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

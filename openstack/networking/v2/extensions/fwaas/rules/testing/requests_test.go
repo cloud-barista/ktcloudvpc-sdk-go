@@ -359,7 +359,7 @@ func TestUpdate(t *testing.T) {
 		DestinationPort:      &newDestintionPort,
 		Name:                 &newName,
 		Action:               &newAction,
-		Enabled:              gophercloud.Disabled,
+		Enabled:              ktvpcsdk.Disabled,
 	}
 
 	_, err := rules.Update(fake.ServiceClient(), "f03bd950-6c56-4f5e-a307-45967078f507", options).Extract()

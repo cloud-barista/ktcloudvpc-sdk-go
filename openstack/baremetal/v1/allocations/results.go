@@ -46,7 +46,7 @@ type Allocation struct {
 }
 
 type allocationResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 func (r allocationResult) Extract() (*Allocation, error) {
@@ -79,13 +79,13 @@ func (r AllocationPage) IsEmpty() (bool, error) {
 // next page of results.
 func (r AllocationPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"allocations_links"`
+		Links []ktvpcsdk.Link `json:"allocations_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // ExtractAllocations interprets the results of a single page from a List() call,
@@ -110,5 +110,5 @@ type CreateResult struct {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }

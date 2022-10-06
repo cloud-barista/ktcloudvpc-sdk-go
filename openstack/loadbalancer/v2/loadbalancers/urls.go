@@ -10,22 +10,22 @@ const (
 	failoverPath   = "failover"
 )
 
-func rootURL(c *gophercloud.ServiceClient) string {
+func rootURL(c *ktvpcsdk.ServiceClient) string {
 	return c.ServiceURL(rootPath, resourcePath)
 }
 
-func resourceURL(c *gophercloud.ServiceClient, id string) string {
+func resourceURL(c *ktvpcsdk.ServiceClient, id string) string {
 	return c.ServiceURL(rootPath, resourcePath, id)
 }
 
-func statusRootURL(c *gophercloud.ServiceClient, id string) string {
+func statusRootURL(c *ktvpcsdk.ServiceClient, id string) string {
 	return c.ServiceURL(rootPath, resourcePath, id, statusPath)
 }
 
-func statisticsRootURL(c *gophercloud.ServiceClient, id string) string {
+func statisticsRootURL(c *ktvpcsdk.ServiceClient, id string) string {
 	return c.ServiceURL(rootPath, resourcePath, id, statisticsPath)
 }
 
-func failoverRootURL(c *gophercloud.ServiceClient, id string) string {
+func failoverRootURL(c *ktvpcsdk.ServiceClient, id string) string {
 	return c.ServiceURL(rootPath, resourcePath, id, failoverPath)
 }

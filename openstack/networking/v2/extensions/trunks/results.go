@@ -14,7 +14,7 @@ type Subport struct {
 }
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // CreateResult is the response from a Create operation. Call its Extract method
@@ -26,7 +26,7 @@ type CreateResult struct {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr to
 // determine if the request succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // GetResult is the response from a Get operation. Call its Extract method

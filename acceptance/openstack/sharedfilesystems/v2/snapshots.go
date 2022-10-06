@@ -12,7 +12,7 @@ import (
 
 // CreateSnapshot will create a snapshot from the share ID with a name. An error will
 // be returned if the snapshot could not be created
-func CreateSnapshot(t *testing.T, client *gophercloud.ServiceClient, shareID string) (*snapshots.Snapshot, error) {
+func CreateSnapshot(t *testing.T, client *ktvpcsdk.ServiceClient, shareID string) (*snapshots.Snapshot, error) {
 	if testing.Short() {
 		t.Skip("Skipping test that requres share creation in short mode.")
 	}
@@ -40,7 +40,7 @@ func CreateSnapshot(t *testing.T, client *gophercloud.ServiceClient, shareID str
 
 // ListSnapshots lists all snapshots that belong to this tenant's project.
 // An error will be returned if the snapshots could not be listed..
-func ListSnapshots(t *testing.T, client *gophercloud.ServiceClient) ([]snapshots.Snapshot, error) {
+func ListSnapshots(t *testing.T, client *ktvpcsdk.ServiceClient) ([]snapshots.Snapshot, error) {
 	r, err := snapshots.ListDetail(client, &snapshots.ListOpts{}).AllPages()
 	if err != nil {
 		return nil, err
@@ -51,7 +51,7 @@ func ListSnapshots(t *testing.T, client *gophercloud.ServiceClient) ([]snapshots
 
 // DeleteSnapshot will delete a snapshot. A fatal error will occur if the snapshot
 // failed to be deleted. This works best when used as a deferred function.
-func DeleteSnapshot(t *testing.T, client *gophercloud.ServiceClient, snapshot *snapshots.Snapshot) {
+func DeleteSnapshot(t *testing.T, client *ktvpcsdk.ServiceClient, snapshot *snapshots.Snapshot) {
 	err := snapshots.Delete(client, snapshot.ID).ExtractErr()
 	if err != nil {
 		t.Errorf("Unable to delete snapshot %s: %v", snapshot.ID, err)
@@ -65,11 +65,11 @@ func DeleteSnapshot(t *testing.T, client *gophercloud.ServiceClient, snapshot *s
 	}
 }
 
-func waitForSnapshotStatus(t *testing.T, c *gophercloud.ServiceClient, id, status string) error {
+func waitForSnapshotStatus(t *testing.T, c *ktvpcsdk.ServiceClient, id, status string) error {
 	err := tools.WaitFor(func() (bool, error) {
 		current, err := snapshots.Get(c, id).Extract()
 		if err != nil {
-			if _, ok := err.(gophercloud.ErrDefault404); ok {
+			if _, ok := err.(ktvpcsdk.ErrDefault404); ok {
 				switch status {
 				case "deleted":
 					return true, nil

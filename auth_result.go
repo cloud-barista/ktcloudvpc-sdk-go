@@ -1,4 +1,4 @@
-package gophercloud
+package ktvpcsdk
 
 /*
 AuthResult is the result from the request that was used to obtain a provider
@@ -17,7 +17,7 @@ Usage example:
 		tokens3 "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/tokens"
 	)
 
-	func GetAuthenticatedUserID(providerClient *gophercloud.ProviderClient) (string, error) {
+	func GetAuthenticatedUserID(providerClient *ktvpcsdk.ProviderClient) (string, error) {
 		r := providerClient.GetAuthResult()
 		if r == nil {
 			//ProviderClient did not use openstack.Authenticate(), e.g. because token

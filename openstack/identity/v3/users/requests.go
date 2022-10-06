@@ -58,7 +58,7 @@ type ListOpts struct {
 
 // ToUserListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToUserListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	if err != nil {
 		return "", err
 	}
@@ -78,7 +78,7 @@ func (opts ListOpts) ToUserListQuery() (string, error) {
 }
 
 // List enumerates the Users to which the current token has access.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToUserListQuery()
@@ -93,9 +93,9 @@ func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pa
 }
 
 // Get retrieves details on a single user, by ID.
-func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
 	resp, err := client.Get(getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -134,7 +134,7 @@ type CreateOpts struct {
 
 // ToUserCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToUserCreateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "user")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "user")
 	if err != nil {
 		return nil, err
 	}
@@ -151,16 +151,16 @@ func (opts CreateOpts) ToUserCreateMap() (map[string]interface{}, error) {
 }
 
 // Create creates a new User.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToUserCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), &b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createURL(client), &b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -199,7 +199,7 @@ type UpdateOpts struct {
 
 // ToUserUpdateMap formats a UpdateOpts into an update request.
 func (opts UpdateOpts) ToUserUpdateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "user")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "user")
 	if err != nil {
 		return nil, err
 	}
@@ -216,16 +216,16 @@ func (opts UpdateOpts) ToUserUpdateMap() (map[string]interface{}, error) {
 }
 
 // Update updates an existing User.
-func Update(client *gophercloud.ServiceClient, userID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *ktvpcsdk.ServiceClient, userID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToUserUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Patch(updateURL(client, userID), &b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Patch(updateURL(client, userID), &b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -246,7 +246,7 @@ type ChangePasswordOpts struct {
 
 // ToUserChangePasswordMap formats a ChangePasswordOpts into a ChangePassword request.
 func (opts ChangePasswordOpts) ToUserChangePasswordMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "user")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "user")
 	if err != nil {
 		return nil, err
 	}
@@ -255,29 +255,29 @@ func (opts ChangePasswordOpts) ToUserChangePasswordMap() (map[string]interface{}
 }
 
 // ChangePassword changes password for a user.
-func ChangePassword(client *gophercloud.ServiceClient, userID string, opts ChangePasswordOptsBuilder) (r ChangePasswordResult) {
+func ChangePassword(client *ktvpcsdk.ServiceClient, userID string, opts ChangePasswordOptsBuilder) (r ChangePasswordResult) {
 	b, err := opts.ToUserChangePasswordMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Post(changePasswordURL(client, userID), &b, nil, &gophercloud.RequestOpts{
+	resp, err := client.Post(changePasswordURL(client, userID), &b, nil, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{204},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes a user.
-func Delete(client *gophercloud.ServiceClient, userID string) (r DeleteResult) {
+func Delete(client *ktvpcsdk.ServiceClient, userID string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, userID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // ListGroups enumerates groups user belongs to.
-func ListGroups(client *gophercloud.ServiceClient, userID string) pagination.Pager {
+func ListGroups(client *ktvpcsdk.ServiceClient, userID string) pagination.Pager {
 	url := listGroupsURL(client, userID)
 	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
 		return groups.GroupPage{LinkedPageBase: pagination.LinkedPageBase{PageResult: r}}
@@ -285,22 +285,22 @@ func ListGroups(client *gophercloud.ServiceClient, userID string) pagination.Pag
 }
 
 // AddToGroup adds a user to a group.
-func AddToGroup(client *gophercloud.ServiceClient, groupID, userID string) (r AddToGroupResult) {
+func AddToGroup(client *ktvpcsdk.ServiceClient, groupID, userID string) (r AddToGroupResult) {
 	url := addToGroupURL(client, groupID, userID)
-	resp, err := client.Put(url, nil, nil, &gophercloud.RequestOpts{
+	resp, err := client.Put(url, nil, nil, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{204},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // IsMemberOfGroup checks whether a user belongs to a group.
-func IsMemberOfGroup(client *gophercloud.ServiceClient, groupID, userID string) (r IsMemberOfGroupResult) {
+func IsMemberOfGroup(client *ktvpcsdk.ServiceClient, groupID, userID string) (r IsMemberOfGroupResult) {
 	url := isMemberOfGroupURL(client, groupID, userID)
-	resp, err := client.Head(url, &gophercloud.RequestOpts{
+	resp, err := client.Head(url, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{204, 404},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	if r.Err == nil {
 		if resp.StatusCode == 204 {
 			r.isMember = true
@@ -310,17 +310,17 @@ func IsMemberOfGroup(client *gophercloud.ServiceClient, groupID, userID string) 
 }
 
 // RemoveFromGroup removes a user from a group.
-func RemoveFromGroup(client *gophercloud.ServiceClient, groupID, userID string) (r RemoveFromGroupResult) {
+func RemoveFromGroup(client *ktvpcsdk.ServiceClient, groupID, userID string) (r RemoveFromGroupResult) {
 	url := removeFromGroupURL(client, groupID, userID)
-	resp, err := client.Delete(url, &gophercloud.RequestOpts{
+	resp, err := client.Delete(url, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{204},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // ListProjects enumerates groups user belongs to.
-func ListProjects(client *gophercloud.ServiceClient, userID string) pagination.Pager {
+func ListProjects(client *ktvpcsdk.ServiceClient, userID string) pagination.Pager {
 	url := listProjectsURL(client, userID)
 	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
 		return projects.ProjectPage{LinkedPageBase: pagination.LinkedPageBase{PageResult: r}}
@@ -328,7 +328,7 @@ func ListProjects(client *gophercloud.ServiceClient, userID string) pagination.P
 }
 
 // ListInGroup enumerates users that belong to a group.
-func ListInGroup(client *gophercloud.ServiceClient, groupID string, opts ListOptsBuilder) pagination.Pager {
+func ListInGroup(client *ktvpcsdk.ServiceClient, groupID string, opts ListOptsBuilder) pagination.Pager {
 	url := listInGroupURL(client, groupID)
 	if opts != nil {
 		query, err := opts.ToUserListQuery()

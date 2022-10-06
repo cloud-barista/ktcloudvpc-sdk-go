@@ -34,12 +34,12 @@ type ListOpts struct {
 
 // ToContainerListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToContainerListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List retrieves a list of containers.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToContainerListQuery()
@@ -54,9 +54,9 @@ func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pa
 }
 
 // Get retrieves details of a container.
-func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
 	resp, err := client.Get(getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -80,27 +80,27 @@ type CreateOpts struct {
 
 // ToContainerCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToContainerCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return ktvpcsdk.BuildRequestBody(opts, "")
 }
 
 // Create creates a new container.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToContainerCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), &b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createURL(client), &b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes a container.
-func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -122,12 +122,12 @@ type ListConsumersOpts struct {
 // ToContainerListConsumersQuery formats a ListConsumersOpts into a query
 // string.
 func (opts ListOpts) ToContainerListConsumersQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // ListConsumers retrieves a list of consumers from a container.
-func ListConsumers(client *gophercloud.ServiceClient, containerID string, opts ListConsumersOptsBuilder) pagination.Pager {
+func ListConsumers(client *ktvpcsdk.ServiceClient, containerID string, opts ListConsumersOptsBuilder) pagination.Pager {
 	url := listConsumersURL(client, containerID)
 	if opts != nil {
 		query, err := opts.ToContainerListConsumersQuery()
@@ -159,20 +159,20 @@ type CreateConsumerOpts struct {
 // ToContainerConsumerCreateMap formats a CreateConsumerOpts into a create
 // request.
 func (opts CreateConsumerOpts) ToContainerConsumerCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return ktvpcsdk.BuildRequestBody(opts, "")
 }
 
 // CreateConsumer creates a new consumer.
-func CreateConsumer(client *gophercloud.ServiceClient, containerID string, opts CreateConsumerOptsBuilder) (r CreateConsumerResult) {
+func CreateConsumer(client *ktvpcsdk.ServiceClient, containerID string, opts CreateConsumerOptsBuilder) (r CreateConsumerResult) {
 	b, err := opts.ToContainerConsumerCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createConsumerURL(client, containerID), &b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createConsumerURL(client, containerID), &b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -194,11 +194,11 @@ type DeleteConsumerOpts struct {
 // ToContainerConsumerDeleteMap formats a DeleteConsumerOpts into a create
 // request.
 func (opts DeleteConsumerOpts) ToContainerConsumerDeleteMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return ktvpcsdk.BuildRequestBody(opts, "")
 }
 
 // DeleteConsumer deletes a consumer.
-func DeleteConsumer(client *gophercloud.ServiceClient, containerID string, opts DeleteConsumerOptsBuilder) (r DeleteConsumerResult) {
+func DeleteConsumer(client *ktvpcsdk.ServiceClient, containerID string, opts DeleteConsumerOptsBuilder) (r DeleteConsumerResult) {
 	url := deleteConsumerURL(client, containerID)
 
 	b, err := opts.ToContainerConsumerDeleteMap()
@@ -207,12 +207,12 @@ func DeleteConsumer(client *gophercloud.ServiceClient, containerID string, opts 
 		return
 	}
 
-	resp, err := client.Request("DELETE", url, &gophercloud.RequestOpts{
+	resp, err := client.Request("DELETE", url, &ktvpcsdk.RequestOpts{
 		JSONBody:     b,
 		JSONResponse: &r.Body,
 		OkCodes:      []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -225,25 +225,25 @@ type SecretRefBuilder interface {
 // ToContainerSecretRefMap formats a SecretRefBuilder into a create
 // request.
 func (opts SecretRef) ToContainerSecretRefMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "")
+	return ktvpcsdk.BuildRequestBody(opts, "")
 }
 
 // CreateSecret creates a new consumer.
-func CreateSecretRef(client *gophercloud.ServiceClient, containerID string, opts SecretRefBuilder) (r CreateSecretRefResult) {
+func CreateSecretRef(client *ktvpcsdk.ServiceClient, containerID string, opts SecretRefBuilder) (r CreateSecretRefResult) {
 	b, err := opts.ToContainerSecretRefMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createSecretRefURL(client, containerID), &b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createSecretRefURL(client, containerID), &b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // DeleteSecret deletes a consumer.
-func DeleteSecretRef(client *gophercloud.ServiceClient, containerID string, opts SecretRefBuilder) (r DeleteSecretRefResult) {
+func DeleteSecretRef(client *ktvpcsdk.ServiceClient, containerID string, opts SecretRefBuilder) (r DeleteSecretRefResult) {
 	url := deleteSecretRefURL(client, containerID)
 
 	b, err := opts.ToContainerSecretRefMap()
@@ -252,10 +252,10 @@ func DeleteSecretRef(client *gophercloud.ServiceClient, containerID string, opts
 		return
 	}
 
-	resp, err := client.Request("DELETE", url, &gophercloud.RequestOpts{
+	resp, err := client.Request("DELETE", url, &ktvpcsdk.RequestOpts{
 		JSONBody: b,
 		OkCodes:  []int{204},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

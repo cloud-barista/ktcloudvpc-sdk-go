@@ -40,8 +40,8 @@ func (u *TenantUsage) UnmarshalJSON(b []byte) error {
 	type tmp TenantUsage
 	var s struct {
 		tmp
-		Start gophercloud.JSONRFC3339MilliNoZ `json:"start"`
-		Stop  gophercloud.JSONRFC3339MilliNoZ `json:"stop"`
+		Start ktvpcsdk.JSONRFC3339MilliNoZ `json:"start"`
+		Stop  ktvpcsdk.JSONRFC3339MilliNoZ `json:"stop"`
 	}
 
 	if err := json.Unmarshal(b, &s); err != nil {
@@ -99,8 +99,8 @@ func (u *ServerUsage) UnmarshalJSON(b []byte) error {
 	type tmp ServerUsage
 	var s struct {
 		tmp
-		EndedAt   gophercloud.JSONRFC3339MilliNoZ `json:"ended_at"`
-		StartedAt gophercloud.JSONRFC3339MilliNoZ `json:"started_at"`
+		EndedAt   ktvpcsdk.JSONRFC3339MilliNoZ `json:"ended_at"`
+		StartedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"started_at"`
 	}
 
 	if err := json.Unmarshal(b, &s); err != nil {
@@ -130,13 +130,13 @@ func (r SingleTenantPage) IsEmpty() (bool, error) {
 // next page of results.
 func (r SingleTenantPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"tenant_usage_links"`
+		Links []ktvpcsdk.Link `json:"tenant_usage_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }
 
 // ExtractSingleTenant interprets a SingleTenantPage as a TenantUsage result.
@@ -173,11 +173,11 @@ func (r AllTenantsPage) IsEmpty() (bool, error) {
 // next page of results.
 func (r AllTenantsPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []gophercloud.Link `json:"tenant_usages_links"`
+		Links []ktvpcsdk.Link `json:"tenant_usages_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return gophercloud.ExtractNextURL(s.Links)
+	return ktvpcsdk.ExtractNextURL(s.Links)
 }

@@ -17,9 +17,9 @@ const (
 )
 
 // ResetState will reset the state of a server
-func ResetState(client *gophercloud.ServiceClient, id string, state ServerState) (r ResetResult) {
+func ResetState(client *ktvpcsdk.ServiceClient, id string, state ServerState) (r ResetResult) {
 	stateMap := map[string]interface{}{"state": state}
 	resp, err := client.Post(extensions.ActionURL(client, id), map[string]interface{}{"os-resetState": stateMap}, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

@@ -5,7 +5,7 @@ import (
 )
 
 type serverDiagnosticsResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets any diagnostic response as a map

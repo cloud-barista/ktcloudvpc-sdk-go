@@ -10,7 +10,7 @@ import (
 )
 
 func TestServiceURL(t *testing.T) {
-	c := &gophercloud.ServiceClient{Endpoint: "http://123.45.67.8/"}
+	c := &ktvpcsdk.ServiceClient{Endpoint: "http://123.45.67.8/"}
 	expected := "http://123.45.67.8/more/parts/here"
 	actual := c.ServiceURL("more", "parts", "here")
 	th.CheckEquals(t, expected, actual)
@@ -23,11 +23,11 @@ func TestMoreHeaders(t *testing.T) {
 		w.WriteHeader(http.StatusOK)
 	})
 
-	c := new(gophercloud.ServiceClient)
+	c := new(ktvpcsdk.ServiceClient)
 	c.MoreHeaders = map[string]string{
 		"custom": "header",
 	}
-	c.ProviderClient = new(gophercloud.ProviderClient)
+	c.ProviderClient = new(ktvpcsdk.ProviderClient)
 	resp, err := c.Get(fmt.Sprintf("%s/route", th.Endpoint()), nil, nil)
 	th.AssertNoErr(t, err)
 	th.AssertEquals(t, resp.Request.Header.Get("custom"), "header")

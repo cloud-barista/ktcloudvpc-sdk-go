@@ -64,13 +64,13 @@ func TestUpdate_1(t *testing.T) {
 	})
 
 	q, err := quotas.Update(fake.ServiceClient(), "0a73845280574ad389c292f6a74afa76", quotas.UpdateOpts{
-		Loadbalancer:  gophercloud.IntToPointer(20),
-		Listener:      gophercloud.IntToPointer(40),
-		Member:        gophercloud.IntToPointer(200),
-		Pool:          gophercloud.IntToPointer(20),
-		Healthmonitor: gophercloud.IntToPointer(-1),
-		L7Policy:      gophercloud.IntToPointer(50),
-		L7Rule:        gophercloud.IntToPointer(100),
+		Loadbalancer:  ktvpcsdk.IntToPointer(20),
+		Listener:      ktvpcsdk.IntToPointer(40),
+		Member:        ktvpcsdk.IntToPointer(200),
+		Pool:          ktvpcsdk.IntToPointer(20),
+		Healthmonitor: ktvpcsdk.IntToPointer(-1),
+		L7Policy:      ktvpcsdk.IntToPointer(50),
+		L7Rule:        ktvpcsdk.IntToPointer(100),
 	}).Extract()
 
 	th.AssertNoErr(t, err)
@@ -92,13 +92,13 @@ func TestUpdate_2(t *testing.T) {
 	})
 
 	q, err := quotas.Update(fake.ServiceClient(), "0a73845280574ad389c292f6a74afa76", quotas.UpdateOpts{
-		Loadbalancer:  gophercloud.IntToPointer(20),
-		Listener:      gophercloud.IntToPointer(40),
-		Member:        gophercloud.IntToPointer(200),
-		Pool:          gophercloud.IntToPointer(20),
-		Healthmonitor: gophercloud.IntToPointer(-1),
-		L7Policy:      gophercloud.IntToPointer(50),
-		L7Rule:        gophercloud.IntToPointer(100),
+		Loadbalancer:  ktvpcsdk.IntToPointer(20),
+		Listener:      ktvpcsdk.IntToPointer(40),
+		Member:        ktvpcsdk.IntToPointer(200),
+		Pool:          ktvpcsdk.IntToPointer(20),
+		Healthmonitor: ktvpcsdk.IntToPointer(-1),
+		L7Policy:      ktvpcsdk.IntToPointer(50),
+		L7Rule:        ktvpcsdk.IntToPointer(100),
 	}).Extract()
 
 	th.AssertNoErr(t, err)

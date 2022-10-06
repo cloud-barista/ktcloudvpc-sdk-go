@@ -11,7 +11,7 @@ type Provider struct {
 	// length and is limited to unicode, digits, underscores, and hyphens.
 	Provider string `json:"provider"`
 	// Specifies a list with an href where rel is provider_url.
-	Links []gophercloud.Link `json:"links"`
+	Links []ktvpcsdk.Link `json:"links"`
 }
 
 // Flavor represents a mapping configuration to a CDN provider.
@@ -22,7 +22,7 @@ type Flavor struct {
 	// Specifies the list of providers mapped to this flavor.
 	Providers []Provider `json:"providers"`
 	// Specifies the self-navigating JSON document paths.
-	Links []gophercloud.Link `json:"links"`
+	Links []ktvpcsdk.Link `json:"links"`
 }
 
 // FlavorPage is the page returned by a pager when traversing over a
@@ -49,7 +49,7 @@ func ExtractFlavors(r pagination.Page) ([]Flavor, error) {
 
 // GetResult represents the result of a get operation.
 type GetResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a function that extracts a flavor from a GetResult.

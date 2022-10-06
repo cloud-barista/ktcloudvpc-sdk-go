@@ -6,9 +6,9 @@ import (
 )
 
 // Find retrieves stack resources for the given stack name.
-func Find(c *gophercloud.ServiceClient, stackName string) (r FindResult) {
+func Find(c *ktvpcsdk.ServiceClient, stackName string) (r FindResult) {
 	resp, err := c.Get(findURL(c, stackName), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -27,12 +27,12 @@ type ListOpts struct {
 
 // ToStackResourceListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToStackResourceListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List makes a request against the API to list resources for the given stack.
-func List(client *gophercloud.ServiceClient, stackName, stackID string, opts ListOptsBuilder) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, stackName, stackID string, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client, stackName, stackID)
 	if opts != nil {
 		query, err := opts.ToStackResourceListQuery()
@@ -47,37 +47,37 @@ func List(client *gophercloud.ServiceClient, stackName, stackID string, opts Lis
 }
 
 // Get retreives data for the given stack resource.
-func Get(c *gophercloud.ServiceClient, stackName, stackID, resourceName string) (r GetResult) {
+func Get(c *ktvpcsdk.ServiceClient, stackName, stackID, resourceName string) (r GetResult) {
 	resp, err := c.Get(getURL(c, stackName, stackID, resourceName), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Metadata retreives the metadata for the given stack resource.
-func Metadata(c *gophercloud.ServiceClient, stackName, stackID, resourceName string) (r MetadataResult) {
+func Metadata(c *ktvpcsdk.ServiceClient, stackName, stackID, resourceName string) (r MetadataResult) {
 	resp, err := c.Get(metadataURL(c, stackName, stackID, resourceName), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // ListTypes makes a request against the API to list resource types.
-func ListTypes(client *gophercloud.ServiceClient) pagination.Pager {
+func ListTypes(client *ktvpcsdk.ServiceClient) pagination.Pager {
 	return pagination.NewPager(client, listTypesURL(client), func(r pagination.PageResult) pagination.Page {
 		return ResourceTypePage{pagination.SinglePageBase(r)}
 	})
 }
 
 // Schema retreives the schema for the given resource type.
-func Schema(c *gophercloud.ServiceClient, resourceType string) (r SchemaResult) {
+func Schema(c *ktvpcsdk.ServiceClient, resourceType string) (r SchemaResult) {
 	resp, err := c.Get(schemaURL(c, resourceType), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Template retreives the template representation for the given resource type.
-func Template(c *gophercloud.ServiceClient, resourceType string) (r TemplateResult) {
+func Template(c *ktvpcsdk.ServiceClient, resourceType string) (r TemplateResult) {
 	resp, err := c.Get(templateURL(c, resourceType), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -99,7 +99,7 @@ type MarkUnhealthyOptsBuilder interface {
 // ToMarkUnhealthyMap validates that a template was supplied and calls
 // the ToMarkUnhealthyMap private function.
 func (opts MarkUnhealthyOpts) ToMarkUnhealthyMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -107,13 +107,13 @@ func (opts MarkUnhealthyOpts) ToMarkUnhealthyMap() (map[string]interface{}, erro
 }
 
 // MarkUnhealthy marks the specified resource in the stack as unhealthy.
-func MarkUnhealthy(c *gophercloud.ServiceClient, stackName, stackID, resourceName string, opts MarkUnhealthyOptsBuilder) (r MarkUnhealthyResult) {
+func MarkUnhealthy(c *ktvpcsdk.ServiceClient, stackName, stackID, resourceName string, opts MarkUnhealthyOptsBuilder) (r MarkUnhealthyResult) {
 	b, err := opts.ToMarkUnhealthyMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Patch(markUnhealthyURL(c, stackName, stackID, resourceName), b, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

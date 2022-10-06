@@ -11,7 +11,7 @@ import (
 
 // CreateShareNetwork will create a share network with a random name. An
 // error will be returned if the share network was unable to be created.
-func CreateShareNetwork(t *testing.T, client *gophercloud.ServiceClient) (*sharenetworks.ShareNetwork, error) {
+func CreateShareNetwork(t *testing.T, client *ktvpcsdk.ServiceClient) (*sharenetworks.ShareNetwork, error) {
 	if testing.Short() {
 		t.Skip("Skipping test that requires share network creation in short mode.")
 	}
@@ -41,7 +41,7 @@ func CreateShareNetwork(t *testing.T, client *gophercloud.ServiceClient) (*share
 
 // DeleteShareNetwork will delete a share network. An error will occur if
 // the share network was unable to be deleted.
-func DeleteShareNetwork(t *testing.T, client *gophercloud.ServiceClient, shareNetworkID string) {
+func DeleteShareNetwork(t *testing.T, client *ktvpcsdk.ServiceClient, shareNetworkID string) {
 	err := sharenetworks.Delete(client, shareNetworkID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Failed to delete share network %s: %v", shareNetworkID, err)

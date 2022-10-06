@@ -19,7 +19,7 @@ import (
 // CreateListener will create a listener for a given load balancer on a random
 // port with a random name. An error will be returned if the listener could not
 // be created.
-func CreateListener(t *testing.T, client *gophercloud.ServiceClient, lb *loadbalancers.LoadBalancer) (*listeners.Listener, error) {
+func CreateListener(t *testing.T, client *ktvpcsdk.ServiceClient, lb *loadbalancers.LoadBalancer) (*listeners.Listener, error) {
 	listenerName := tools.RandomString("TESTACCT-", 8)
 	listenerDescription := tools.RandomString("TESTACCT-DESC-", 8)
 	listenerPort := tools.RandomInt(1, 100)
@@ -57,7 +57,7 @@ func CreateListener(t *testing.T, client *gophercloud.ServiceClient, lb *loadbal
 // CreateListenerHTTP will create an HTTP-based listener for a given load
 // balancer on a random port with a random name. An error will be returned
 // if the listener could not be created.
-func CreateListenerHTTP(t *testing.T, client *gophercloud.ServiceClient, lb *loadbalancers.LoadBalancer) (*listeners.Listener, error) {
+func CreateListenerHTTP(t *testing.T, client *ktvpcsdk.ServiceClient, lb *loadbalancers.LoadBalancer) (*listeners.Listener, error) {
 	tlsVersions := []listeners.TLSVersion{}
 	tlsVersionsExp := []string(nil)
 	listenerName := tools.RandomString("TESTACCT-", 8)
@@ -110,7 +110,7 @@ func CreateListenerHTTP(t *testing.T, client *gophercloud.ServiceClient, lb *loa
 
 // CreateLoadBalancer will create a load balancer with a random name on a given
 // subnet. An error will be returned if the loadbalancer could not be created.
-func CreateLoadBalancer(t *testing.T, client *gophercloud.ServiceClient, subnetID string, tags []string) (*loadbalancers.LoadBalancer, error) {
+func CreateLoadBalancer(t *testing.T, client *ktvpcsdk.ServiceClient, subnetID string, tags []string) (*loadbalancers.LoadBalancer, error) {
 	lbName := tools.RandomString("TESTACCT-", 8)
 	lbDescription := tools.RandomString("TESTACCT-DESC-", 8)
 
@@ -120,7 +120,7 @@ func CreateLoadBalancer(t *testing.T, client *gophercloud.ServiceClient, subnetI
 		Name:         lbName,
 		Description:  lbDescription,
 		VipSubnetID:  subnetID,
-		AdminStateUp: gophercloud.Enabled,
+		AdminStateUp: ktvpcsdk.Enabled,
 	}
 	if len(tags) > 0 {
 		createOpts.Tags = tags
@@ -155,7 +155,7 @@ func CreateLoadBalancer(t *testing.T, client *gophercloud.ServiceClient, subnetI
 // CreateLoadBalancerFullyPopulated will create a  fully populated load balancer with a random name on a given
 // subnet. It will contain a listener, l7policy, l7rule, pool, member and health monitor.
 // An error will be returned if the loadbalancer could not be created.
-func CreateLoadBalancerFullyPopulated(t *testing.T, client *gophercloud.ServiceClient, subnetID string, tags []string) (*loadbalancers.LoadBalancer, error) {
+func CreateLoadBalancerFullyPopulated(t *testing.T, client *ktvpcsdk.ServiceClient, subnetID string, tags []string) (*loadbalancers.LoadBalancer, error) {
 	lbName := tools.RandomString("TESTACCT-", 8)
 	lbDescription := tools.RandomString("TESTACCT-DESC-", 8)
 	listenerName := tools.RandomString("TESTACCT-", 8)
@@ -176,7 +176,7 @@ func CreateLoadBalancerFullyPopulated(t *testing.T, client *gophercloud.ServiceC
 		Name:         lbName,
 		Description:  lbDescription,
 		VipSubnetID:  subnetID,
-		AdminStateUp: gophercloud.Enabled,
+		AdminStateUp: ktvpcsdk.Enabled,
 		Listeners: []listeners.CreateOpts{{
 			Name:         listenerName,
 			Description:  listenerDescription,
@@ -267,7 +267,7 @@ func CreateLoadBalancerFullyPopulated(t *testing.T, client *gophercloud.ServiceC
 
 // CreateMember will create a member with a random name, port, address, and
 // weight. An error will be returned if the member could not be created.
-func CreateMember(t *testing.T, client *gophercloud.ServiceClient, lb *loadbalancers.LoadBalancer, pool *pools.Pool, subnetID, subnetCIDR string) (*pools.Member, error) {
+func CreateMember(t *testing.T, client *ktvpcsdk.ServiceClient, lb *loadbalancers.LoadBalancer, pool *pools.Pool, subnetID, subnetCIDR string) (*pools.Member, error) {
 	memberName := tools.RandomString("TESTACCT-", 8)
 	memberPort := tools.RandomInt(100, 1000)
 	memberWeight := tools.RandomInt(1, 10)
@@ -306,7 +306,7 @@ func CreateMember(t *testing.T, client *gophercloud.ServiceClient, lb *loadbalan
 
 // CreateMonitor will create a monitor with a random name for a specific pool.
 // An error will be returned if the monitor could not be created.
-func CreateMonitor(t *testing.T, client *gophercloud.ServiceClient, lb *loadbalancers.LoadBalancer, pool *pools.Pool) (*monitors.Monitor, error) {
+func CreateMonitor(t *testing.T, client *ktvpcsdk.ServiceClient, lb *loadbalancers.LoadBalancer, pool *pools.Pool) (*monitors.Monitor, error) {
 	monitorName := tools.RandomString("TESTACCT-", 8)
 
 	t.Logf("Attempting to create monitor %s", monitorName)
@@ -345,7 +345,7 @@ func CreateMonitor(t *testing.T, client *gophercloud.ServiceClient, lb *loadbala
 // CreatePool will create a pool with a random name with a specified listener
 // and loadbalancer. An error will be returned if the pool could not be
 // created.
-func CreatePool(t *testing.T, client *gophercloud.ServiceClient, lb *loadbalancers.LoadBalancer) (*pools.Pool, error) {
+func CreatePool(t *testing.T, client *ktvpcsdk.ServiceClient, lb *loadbalancers.LoadBalancer) (*pools.Pool, error) {
 	poolName := tools.RandomString("TESTACCT-", 8)
 	poolDescription := tools.RandomString("TESTACCT-DESC-", 8)
 
@@ -382,7 +382,7 @@ func CreatePool(t *testing.T, client *gophercloud.ServiceClient, lb *loadbalance
 // CreatePoolHTTP will create an HTTP-based pool with a random name with a
 // specified listener and loadbalancer. An error will be returned if the pool
 // could not be created.
-func CreatePoolHTTP(t *testing.T, client *gophercloud.ServiceClient, lb *loadbalancers.LoadBalancer) (*pools.Pool, error) {
+func CreatePoolHTTP(t *testing.T, client *ktvpcsdk.ServiceClient, lb *loadbalancers.LoadBalancer) (*pools.Pool, error) {
 	poolName := tools.RandomString("TESTACCT-", 8)
 	poolDescription := tools.RandomString("TESTACCT-DESC-", 8)
 
@@ -419,7 +419,7 @@ func CreatePoolHTTP(t *testing.T, client *gophercloud.ServiceClient, lb *loadbal
 // CreateL7Policy will create a l7 policy with a random name with a specified listener
 // and loadbalancer. An error will be returned if the l7 policy could not be
 // created.
-func CreateL7Policy(t *testing.T, client *gophercloud.ServiceClient, listener *listeners.Listener, lb *loadbalancers.LoadBalancer) (*l7policies.L7Policy, error) {
+func CreateL7Policy(t *testing.T, client *ktvpcsdk.ServiceClient, listener *listeners.Listener, lb *loadbalancers.LoadBalancer) (*l7policies.L7Policy, error) {
 	policyName := tools.RandomString("TESTACCT-", 8)
 	policyDescription := tools.RandomString("TESTACCT-DESC-", 8)
 
@@ -454,7 +454,7 @@ func CreateL7Policy(t *testing.T, client *gophercloud.ServiceClient, listener *l
 }
 
 // CreateL7Rule creates a l7 rule for specified l7 policy.
-func CreateL7Rule(t *testing.T, client *gophercloud.ServiceClient, policyID string, lb *loadbalancers.LoadBalancer) (*l7policies.Rule, error) {
+func CreateL7Rule(t *testing.T, client *ktvpcsdk.ServiceClient, policyID string, lb *loadbalancers.LoadBalancer) (*l7policies.Rule, error) {
 	t.Logf("Attempting to create l7 rule for policy %s", policyID)
 
 	createOpts := l7policies.CreateRuleOpts{
@@ -484,11 +484,11 @@ func CreateL7Rule(t *testing.T, client *gophercloud.ServiceClient, policyID stri
 // DeleteL7Policy will delete a specified l7 policy. A fatal error will occur if
 // the l7 policy could not be deleted. This works best when used as a deferred
 // function.
-func DeleteL7Policy(t *testing.T, client *gophercloud.ServiceClient, lbID, policyID string) {
+func DeleteL7Policy(t *testing.T, client *ktvpcsdk.ServiceClient, lbID, policyID string) {
 	t.Logf("Attempting to delete l7 policy %s", policyID)
 
 	if err := l7policies.Delete(client, policyID).ExtractErr(); err != nil {
-		if _, ok := err.(gophercloud.ErrDefault404); !ok {
+		if _, ok := err.(ktvpcsdk.ErrDefault404); !ok {
 			t.Fatalf("Unable to delete l7 policy: %v", err)
 		}
 	}
@@ -503,11 +503,11 @@ func DeleteL7Policy(t *testing.T, client *gophercloud.ServiceClient, lbID, polic
 // DeleteL7Rule will delete a specified l7 rule. A fatal error will occur if
 // the l7 rule could not be deleted. This works best when used as a deferred
 // function.
-func DeleteL7Rule(t *testing.T, client *gophercloud.ServiceClient, lbID, policyID, ruleID string) {
+func DeleteL7Rule(t *testing.T, client *ktvpcsdk.ServiceClient, lbID, policyID, ruleID string) {
 	t.Logf("Attempting to delete l7 rule %s", ruleID)
 
 	if err := l7policies.DeleteRule(client, policyID, ruleID).ExtractErr(); err != nil {
-		if _, ok := err.(gophercloud.ErrDefault404); !ok {
+		if _, ok := err.(ktvpcsdk.ErrDefault404); !ok {
 			t.Fatalf("Unable to delete l7 rule: %v", err)
 		}
 	}
@@ -522,11 +522,11 @@ func DeleteL7Rule(t *testing.T, client *gophercloud.ServiceClient, lbID, policyI
 // DeleteListener will delete a specified listener. A fatal error will occur if
 // the listener could not be deleted. This works best when used as a deferred
 // function.
-func DeleteListener(t *testing.T, client *gophercloud.ServiceClient, lbID, listenerID string) {
+func DeleteListener(t *testing.T, client *ktvpcsdk.ServiceClient, lbID, listenerID string) {
 	t.Logf("Attempting to delete listener %s", listenerID)
 
 	if err := listeners.Delete(client, listenerID).ExtractErr(); err != nil {
-		if _, ok := err.(gophercloud.ErrDefault404); !ok {
+		if _, ok := err.(ktvpcsdk.ErrDefault404); !ok {
 			t.Fatalf("Unable to delete listener: %v", err)
 		}
 	}
@@ -541,11 +541,11 @@ func DeleteListener(t *testing.T, client *gophercloud.ServiceClient, lbID, liste
 // DeleteMember will delete a specified member. A fatal error will occur if the
 // member could not be deleted. This works best when used as a deferred
 // function.
-func DeleteMember(t *testing.T, client *gophercloud.ServiceClient, lbID, poolID, memberID string) {
+func DeleteMember(t *testing.T, client *ktvpcsdk.ServiceClient, lbID, poolID, memberID string) {
 	t.Logf("Attempting to delete member %s", memberID)
 
 	if err := pools.DeleteMember(client, poolID, memberID).ExtractErr(); err != nil {
-		if _, ok := err.(gophercloud.ErrDefault404); !ok {
+		if _, ok := err.(ktvpcsdk.ErrDefault404); !ok {
 			t.Fatalf("Unable to delete member: %s", memberID)
 		}
 	}
@@ -560,7 +560,7 @@ func DeleteMember(t *testing.T, client *gophercloud.ServiceClient, lbID, poolID,
 // DeleteLoadBalancer will delete a specified loadbalancer. A fatal error will
 // occur if the loadbalancer could not be deleted. This works best when used
 // as a deferred function.
-func DeleteLoadBalancer(t *testing.T, client *gophercloud.ServiceClient, lbID string) {
+func DeleteLoadBalancer(t *testing.T, client *ktvpcsdk.ServiceClient, lbID string) {
 	t.Logf("Attempting to delete loadbalancer %s", lbID)
 
 	deleteOpts := loadbalancers.DeleteOpts{
@@ -568,7 +568,7 @@ func DeleteLoadBalancer(t *testing.T, client *gophercloud.ServiceClient, lbID st
 	}
 
 	if err := loadbalancers.Delete(client, lbID, deleteOpts).ExtractErr(); err != nil {
-		if _, ok := err.(gophercloud.ErrDefault404); !ok {
+		if _, ok := err.(ktvpcsdk.ErrDefault404); !ok {
 			t.Fatalf("Unable to delete loadbalancer: %v", err)
 		}
 	}
@@ -585,7 +585,7 @@ func DeleteLoadBalancer(t *testing.T, client *gophercloud.ServiceClient, lbID st
 // CascadeDeleteLoadBalancer will perform a cascading delete on a loadbalancer.
 // A fatal error will occur if the loadbalancer could not be deleted. This works
 // best when used as a deferred function.
-func CascadeDeleteLoadBalancer(t *testing.T, client *gophercloud.ServiceClient, lbID string) {
+func CascadeDeleteLoadBalancer(t *testing.T, client *ktvpcsdk.ServiceClient, lbID string) {
 	t.Logf("Attempting to cascade delete loadbalancer %s", lbID)
 
 	deleteOpts := loadbalancers.DeleteOpts{
@@ -608,11 +608,11 @@ func CascadeDeleteLoadBalancer(t *testing.T, client *gophercloud.ServiceClient, 
 // DeleteMonitor will delete a specified monitor. A fatal error will occur if
 // the monitor could not be deleted. This works best when used as a deferred
 // function.
-func DeleteMonitor(t *testing.T, client *gophercloud.ServiceClient, lbID, monitorID string) {
+func DeleteMonitor(t *testing.T, client *ktvpcsdk.ServiceClient, lbID, monitorID string) {
 	t.Logf("Attempting to delete monitor %s", monitorID)
 
 	if err := monitors.Delete(client, monitorID).ExtractErr(); err != nil {
-		if _, ok := err.(gophercloud.ErrDefault404); !ok {
+		if _, ok := err.(ktvpcsdk.ErrDefault404); !ok {
 			t.Fatalf("Unable to delete monitor: %v", err)
 		}
 	}
@@ -626,11 +626,11 @@ func DeleteMonitor(t *testing.T, client *gophercloud.ServiceClient, lbID, monito
 
 // DeletePool will delete a specified pool. A fatal error will occur if the
 // pool could not be deleted. This works best when used as a deferred function.
-func DeletePool(t *testing.T, client *gophercloud.ServiceClient, lbID, poolID string) {
+func DeletePool(t *testing.T, client *ktvpcsdk.ServiceClient, lbID, poolID string) {
 	t.Logf("Attempting to delete pool %s", poolID)
 
 	if err := pools.Delete(client, poolID).ExtractErr(); err != nil {
-		if _, ok := err.(gophercloud.ErrDefault404); !ok {
+		if _, ok := err.(ktvpcsdk.ErrDefault404); !ok {
 			t.Fatalf("Unable to delete pool: %v", err)
 		}
 	}
@@ -643,11 +643,11 @@ func DeletePool(t *testing.T, client *gophercloud.ServiceClient, lbID, poolID st
 }
 
 // WaitForLoadBalancerState will wait until a loadbalancer reaches a given state.
-func WaitForLoadBalancerState(client *gophercloud.ServiceClient, lbID, status string) error {
+func WaitForLoadBalancerState(client *ktvpcsdk.ServiceClient, lbID, status string) error {
 	return tools.WaitFor(func() (bool, error) {
 		current, err := loadbalancers.Get(client, lbID).Extract()
 		if err != nil {
-			if httpStatus, ok := err.(gophercloud.ErrDefault404); ok {
+			if httpStatus, ok := err.(ktvpcsdk.ErrDefault404); ok {
 				if httpStatus.Actual == 404 {
 					if status == "DELETED" {
 						return true, nil

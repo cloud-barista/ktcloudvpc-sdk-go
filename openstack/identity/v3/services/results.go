@@ -8,7 +8,7 @@ import (
 )
 
 type serviceResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets a GetResult, CreateResult or UpdateResult as a concrete
@@ -42,7 +42,7 @@ type UpdateResult struct {
 // DeleteResult is the response from a Delete request. Call its ExtractErr
 // method to interpret it as a Service.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // Service represents an OpenStack Service.
@@ -86,7 +86,7 @@ func (r *Service) UnmarshalJSON(b []byte) error {
 			return err
 		}
 		if resultMap, ok := result.(map[string]interface{}); ok {
-			r.Extra = gophercloud.RemainingKeys(Service{}, resultMap)
+			r.Extra = ktvpcsdk.RemainingKeys(Service{}, resultMap)
 		}
 	}
 

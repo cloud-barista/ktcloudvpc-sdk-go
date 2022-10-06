@@ -19,8 +19,8 @@ func authTokenPost(t *testing.T, options ec2tokens.AuthOptions, requestJSON stri
 	testhelper.SetupHTTP()
 	defer testhelper.TeardownHTTP()
 
-	client := gophercloud.ServiceClient{
-		ProviderClient: &gophercloud.ProviderClient{},
+	client := ktvpcsdk.ServiceClient{
+		ProviderClient: &ktvpcsdk.ProviderClient{},
 		Endpoint:       testhelper.Endpoint(),
 	}
 

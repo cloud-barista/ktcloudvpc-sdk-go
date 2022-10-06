@@ -15,7 +15,7 @@ type TokenCredentialsV2 struct {
 	ID string `json:"id,omitempty" required:"true"`
 }
 
-// AuthOptionsV2 wraps a gophercloud AuthOptions in order to adhere to the
+// AuthOptionsV2 wraps a ktvpcsdk AuthOptions in order to adhere to the
 // AuthOptionsBuilder interface.
 type AuthOptionsV2 struct {
 	PasswordCredentials *PasswordCredentialsV2 `json:"passwordCredentials,omitempty" xor:"TokenCredentials"`
@@ -41,7 +41,7 @@ type AuthOptionsBuilder interface {
 }
 
 // AuthOptions are the valid options for Openstack Identity v2 authentication.
-// For field descriptions, see gophercloud.AuthOptions.
+// For field descriptions, see ktvpcsdk.AuthOptions.
 type AuthOptions struct {
 	IdentityEndpoint string `json:"-"`
 	Username         string `json:"username,omitempty"`
@@ -70,7 +70,7 @@ func (opts AuthOptions) ToTokenV2CreateMap() (map[string]interface{}, error) {
 		}
 	}
 
-	b, err := gophercloud.BuildRequestBody(v2Opts, "auth")
+	b, err := ktvpcsdk.BuildRequestBody(v2Opts, "auth")
 	if err != nil {
 		return nil, err
 	}
@@ -81,25 +81,25 @@ func (opts AuthOptions) ToTokenV2CreateMap() (map[string]interface{}, error) {
 // Generally, rather than interact with this call directly, end users should
 // call openstack.AuthenticatedClient(), which abstracts all of the gory details
 // about navigating service catalogs and such.
-func Create(client *gophercloud.ServiceClient, auth AuthOptionsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, auth AuthOptionsBuilder) (r CreateResult) {
 	b, err := auth.ToTokenV2CreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(CreateURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(CreateURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes:     []int{200, 203},
 		OmitHeaders: []string{"X-Auth-Token"},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Get validates and retrieves information for user's token.
-func Get(client *gophercloud.ServiceClient, token string) (r GetResult) {
-	resp, err := client.Get(GetURL(client, token), &r.Body, &gophercloud.RequestOpts{
+func Get(client *ktvpcsdk.ServiceClient, token string) (r GetResult) {
+	resp, err := client.Get(GetURL(client, token), &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200, 203},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

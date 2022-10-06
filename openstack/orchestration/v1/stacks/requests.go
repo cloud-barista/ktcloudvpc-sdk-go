@@ -39,7 +39,7 @@ type CreateOpts struct {
 
 // ToStackCreateMap casts a CreateOpts struct to a map.
 func (opts CreateOpts) ToStackCreateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -86,14 +86,14 @@ func (opts CreateOpts) ToStackCreateMap() (map[string]interface{}, error) {
 
 // Create accepts a CreateOpts struct and creates a new stack using the values
 // provided.
-func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToStackCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Post(createURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -133,7 +133,7 @@ type AdoptOpts struct {
 
 // ToStackAdoptMap casts a CreateOpts struct to a map.
 func (opts AdoptOpts) ToStackAdoptMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -176,14 +176,14 @@ func (opts AdoptOpts) ToStackAdoptMap() (map[string]interface{}, error) {
 
 // Adopt accepts an AdoptOpts struct and creates a new stack using the resources
 // from another stack.
-func Adopt(c *gophercloud.ServiceClient, opts AdoptOptsBuilder) (r AdoptResult) {
+func Adopt(c *ktvpcsdk.ServiceClient, opts AdoptOptsBuilder) (r AdoptResult) {
 	b, err := opts.ToStackAdoptMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Post(adoptURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -271,7 +271,7 @@ type ListOpts struct {
 
 // ToStackListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToStackListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	if err != nil {
 		return "", err
 	}
@@ -281,7 +281,7 @@ func (opts ListOpts) ToStackListQuery() (string, error) {
 // List returns a Pager which allows you to iterate over a collection of
 // stacks. It accepts a ListOpts struct, which allows you to filter and sort
 // the returned collection for greater efficiency.
-func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(c)
 	if opts != nil {
 		query, err := opts.ToStackListQuery()
@@ -297,16 +297,16 @@ func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 }
 
 // Get retreives a stack based on the stack name and stack ID.
-func Get(c *gophercloud.ServiceClient, stackName, stackID string) (r GetResult) {
+func Get(c *ktvpcsdk.ServiceClient, stackName, stackID string) (r GetResult) {
 	resp, err := c.Get(getURL(c, stackName, stackID), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Find retrieves a stack based on the stack name or stack ID.
-func Find(c *gophercloud.ServiceClient, stackIdentity string) (r GetResult) {
+func Find(c *ktvpcsdk.ServiceClient, stackIdentity string) (r GetResult) {
 	resp, err := c.Get(findURL(c, stackIdentity), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -355,7 +355,7 @@ func (opts UpdateOpts) ToStackUpdatePatchMap() (map[string]interface{}, error) {
 
 // ToStackUpdateMap casts a CreateOpts struct to a map.
 func toStackUpdateMap(opts UpdateOpts) (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -405,34 +405,34 @@ func toStackUpdateMap(opts UpdateOpts) (map[string]interface{}, error) {
 
 // Update accepts an UpdateOpts struct and updates an existing stack using the
 //  http PUT verb with the values provided. opts.TemplateOpts is required.
-func Update(c *gophercloud.ServiceClient, stackName, stackID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *ktvpcsdk.ServiceClient, stackName, stackID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToStackUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Put(updateURL(c, stackName, stackID), b, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Update accepts an UpdateOpts struct and updates an existing stack using the
 //  http PATCH verb with the values provided. opts.TemplateOpts is not required.
-func UpdatePatch(c *gophercloud.ServiceClient, stackName, stackID string, opts UpdatePatchOptsBuilder) (r UpdateResult) {
+func UpdatePatch(c *ktvpcsdk.ServiceClient, stackName, stackID string, opts UpdatePatchOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToStackUpdatePatchMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Patch(updateURL(c, stackName, stackID), b, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes a stack based on the stack name and stack ID.
-func Delete(c *gophercloud.ServiceClient, stackName, stackID string) (r DeleteResult) {
+func Delete(c *ktvpcsdk.ServiceClient, stackName, stackID string) (r DeleteResult) {
 	resp, err := c.Delete(deleteURL(c, stackName, stackID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -464,7 +464,7 @@ type PreviewOpts struct {
 
 // ToStackPreviewMap casts a PreviewOpts struct to a map.
 func (opts PreviewOpts) ToStackPreviewMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "")
+	b, err := ktvpcsdk.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -507,26 +507,26 @@ func (opts PreviewOpts) ToStackPreviewMap() (map[string]interface{}, error) {
 
 // Preview accepts a PreviewOptsBuilder interface and creates a preview of a stack using the values
 // provided.
-func Preview(c *gophercloud.ServiceClient, opts PreviewOptsBuilder) (r PreviewResult) {
+func Preview(c *ktvpcsdk.ServiceClient, opts PreviewOptsBuilder) (r PreviewResult) {
 	b, err := opts.ToStackPreviewMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Post(previewURL(c), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := c.Post(previewURL(c), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Abandon deletes the stack with the provided stackName and stackID, but leaves its
 // resources intact, and returns data describing the stack and its resources.
-func Abandon(c *gophercloud.ServiceClient, stackName, stackID string) (r AbandonResult) {
-	resp, err := c.Delete(abandonURL(c, stackName, stackID), &gophercloud.RequestOpts{
+func Abandon(c *ktvpcsdk.ServiceClient, stackName, stackID string) (r AbandonResult) {
+	resp, err := c.Delete(abandonURL(c, stackName, stackID), &ktvpcsdk.RequestOpts{
 		JSONResponse: &r.Body,
 		OkCodes:      []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

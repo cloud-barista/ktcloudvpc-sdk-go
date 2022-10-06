@@ -42,7 +42,7 @@ type ListOpts struct {
 // ToObjectListParams formats a ListOpts into a query string and boolean
 // representing whether to list complete information for each object.
 func (opts ListOpts) ToObjectListParams() (bool, string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return opts.Full, q.String(), err
 }
 
@@ -50,7 +50,7 @@ func (opts ListOpts) ToObjectListParams() (bool, string, error) {
 // the details for the container. To extract only the object information or names,
 // pass the ListResult response to the ExtractInfo or ExtractNames function,
 // respectively.
-func List(c *gophercloud.ServiceClient, containerName string, opts ListOptsBuilder) pagination.Pager {
+func List(c *ktvpcsdk.ServiceClient, containerName string, opts ListOptsBuilder) pagination.Pager {
 	headers := map[string]string{"Accept": "text/plain", "Content-Type": "text/plain"}
 
 	url := listURL(c, containerName)
@@ -97,11 +97,11 @@ type DownloadOpts struct {
 // ToObjectDownloadParams formats a DownloadOpts into a query string and map of
 // headers.
 func (opts DownloadOpts) ToObjectDownloadParams() (map[string]string, string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	if err != nil {
 		return nil, "", err
 	}
-	h, err := gophercloud.BuildHeaders(opts)
+	h, err := ktvpcsdk.BuildHeaders(opts)
 	if err != nil {
 		return nil, q.String(), err
 	}
@@ -117,7 +117,7 @@ func (opts DownloadOpts) ToObjectDownloadParams() (map[string]string, string, er
 // Download is a function that retrieves the content and metadata for an object.
 // To extract just the content, pass the DownloadResult response to the
 // ExtractContent function.
-func Download(c *gophercloud.ServiceClient, containerName, objectName string, opts DownloadOptsBuilder) (r DownloadResult) {
+func Download(c *ktvpcsdk.ServiceClient, containerName, objectName string, opts DownloadOptsBuilder) (r DownloadResult) {
 	url := downloadURL(c, containerName, objectName)
 	h := make(map[string]string)
 	if opts != nil {
@@ -132,12 +132,12 @@ func Download(c *gophercloud.ServiceClient, containerName, objectName string, op
 		url += query
 	}
 
-	resp, err := c.Get(url, nil, &gophercloud.RequestOpts{
+	resp, err := c.Get(url, nil, &ktvpcsdk.RequestOpts{
 		MoreHeaders:      h,
 		OkCodes:          []int{200, 206, 304},
 		KeepResponseBody: true,
 	})
-	r.Body, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	r.Body, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -173,11 +173,11 @@ type CreateOpts struct {
 // ToObjectCreateParams formats a CreateOpts into a query string and map of
 // headers.
 func (opts CreateOpts) ToObjectCreateParams() (io.Reader, map[string]string, string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	if err != nil {
 		return nil, nil, "", err
 	}
-	h, err := gophercloud.BuildHeaders(opts)
+	h, err := ktvpcsdk.BuildHeaders(opts)
 	if err != nil {
 		return nil, nil, "", err
 	}
@@ -223,7 +223,7 @@ func (opts CreateOpts) ToObjectCreateParams() (io.Reader, map[string]string, str
 // object. If the returned response's ETag header fails to match the local
 // checksum, the failed request will automatically be retried up to a maximum
 // of 3 times.
-func Create(c *gophercloud.ServiceClient, containerName, objectName string, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *ktvpcsdk.ServiceClient, containerName, objectName string, opts CreateOptsBuilder) (r CreateResult) {
 	url := createURL(c, containerName, objectName)
 	h := make(map[string]string)
 	var b io.Reader
@@ -240,10 +240,10 @@ func Create(c *gophercloud.ServiceClient, containerName, objectName string, opts
 		b = tmpB
 	}
 
-	resp, err := c.Put(url, b, nil, &gophercloud.RequestOpts{
+	resp, err := c.Put(url, b, nil, &ktvpcsdk.RequestOpts{
 		MoreHeaders: h,
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -265,7 +265,7 @@ type CopyOpts struct {
 
 // ToObjectCopyMap formats a CopyOpts into a map of headers.
 func (opts CopyOpts) ToObjectCopyMap() (map[string]string, error) {
-	h, err := gophercloud.BuildHeaders(opts)
+	h, err := ktvpcsdk.BuildHeaders(opts)
 	if err != nil {
 		return nil, err
 	}
@@ -276,7 +276,7 @@ func (opts CopyOpts) ToObjectCopyMap() (map[string]string, error) {
 }
 
 // Copy is a function that copies one object to another.
-func Copy(c *gophercloud.ServiceClient, containerName, objectName string, opts CopyOptsBuilder) (r CopyResult) {
+func Copy(c *ktvpcsdk.ServiceClient, containerName, objectName string, opts CopyOptsBuilder) (r CopyResult) {
 	h := make(map[string]string)
 	headers, err := opts.ToObjectCopyMap()
 	if err != nil {
@@ -289,11 +289,11 @@ func Copy(c *gophercloud.ServiceClient, containerName, objectName string, opts C
 	}
 
 	url := copyURL(c, containerName, objectName)
-	resp, err := c.Request("COPY", url, &gophercloud.RequestOpts{
+	resp, err := c.Request("COPY", url, &ktvpcsdk.RequestOpts{
 		MoreHeaders: h,
 		OkCodes:     []int{201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -310,12 +310,12 @@ type DeleteOpts struct {
 
 // ToObjectDeleteQuery formats a DeleteOpts into a query string.
 func (opts DeleteOpts) ToObjectDeleteQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // Delete is a function that deletes an object.
-func Delete(c *gophercloud.ServiceClient, containerName, objectName string, opts DeleteOptsBuilder) (r DeleteResult) {
+func Delete(c *ktvpcsdk.ServiceClient, containerName, objectName string, opts DeleteOptsBuilder) (r DeleteResult) {
 	url := deleteURL(c, containerName, objectName)
 	if opts != nil {
 		query, err := opts.ToObjectDeleteQuery()
@@ -326,7 +326,7 @@ func Delete(c *gophercloud.ServiceClient, containerName, objectName string, opts
 		url += query
 	}
 	resp, err := c.Delete(url, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -346,11 +346,11 @@ type GetOpts struct {
 
 // ToObjectGetParams formats a GetOpts into a query string and a map of headers.
 func (opts GetOpts) ToObjectGetParams() (map[string]string, string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	if err != nil {
 		return nil, "", err
 	}
-	h, err := gophercloud.BuildHeaders(opts)
+	h, err := ktvpcsdk.BuildHeaders(opts)
 	if err != nil {
 		return nil, q.String(), err
 	}
@@ -360,7 +360,7 @@ func (opts GetOpts) ToObjectGetParams() (map[string]string, string, error) {
 // Get is a function that retrieves the metadata of an object. To extract just
 // the custom metadata, pass the GetResult response to the ExtractMetadata
 // function.
-func Get(c *gophercloud.ServiceClient, containerName, objectName string, opts GetOptsBuilder) (r GetResult) {
+func Get(c *ktvpcsdk.ServiceClient, containerName, objectName string, opts GetOptsBuilder) (r GetResult) {
 	url := getURL(c, containerName, objectName)
 	h := make(map[string]string)
 	if opts != nil {
@@ -375,11 +375,11 @@ func Get(c *gophercloud.ServiceClient, containerName, objectName string, opts Ge
 		url += query
 	}
 
-	resp, err := c.Head(url, &gophercloud.RequestOpts{
+	resp, err := c.Head(url, &ktvpcsdk.RequestOpts{
 		MoreHeaders: h,
 		OkCodes:     []int{200, 204},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -404,7 +404,7 @@ type UpdateOpts struct {
 
 // ToObjectUpdateMap formats a UpdateOpts into a map of headers.
 func (opts UpdateOpts) ToObjectUpdateMap() (map[string]string, error) {
-	h, err := gophercloud.BuildHeaders(opts)
+	h, err := ktvpcsdk.BuildHeaders(opts)
 	if err != nil {
 		return nil, err
 	}
@@ -420,7 +420,7 @@ func (opts UpdateOpts) ToObjectUpdateMap() (map[string]string, error) {
 }
 
 // Update is a function that creates, updates, or deletes an object's metadata.
-func Update(c *gophercloud.ServiceClient, containerName, objectName string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *ktvpcsdk.ServiceClient, containerName, objectName string, opts UpdateOptsBuilder) (r UpdateResult) {
 	h := make(map[string]string)
 	if opts != nil {
 		headers, err := opts.ToObjectUpdateMap()
@@ -434,10 +434,10 @@ func Update(c *gophercloud.ServiceClient, containerName, objectName string, opts
 		}
 	}
 	url := updateURL(c, containerName, objectName)
-	resp, err := c.Post(url, nil, nil, &gophercloud.RequestOpts{
+	resp, err := c.Post(url, nil, nil, &ktvpcsdk.RequestOpts{
 		MoreHeaders: h,
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -473,7 +473,7 @@ type CreateTempURLOpts struct {
 // CreateTempURL is a function for creating a temporary URL for an object. It
 // allows users to have "GET" or "POST" access to a particular tenant's object
 // for a limited amount of time.
-func CreateTempURL(c *gophercloud.ServiceClient, containerName, objectName string, opts CreateTempURLOpts) (string, error) {
+func CreateTempURL(c *ktvpcsdk.ServiceClient, containerName, objectName string, opts CreateTempURLOpts) (string, error) {
 	if opts.Split == "" {
 		opts.Split = "/v1/"
 	}
@@ -514,7 +514,7 @@ func CreateTempURL(c *gophercloud.ServiceClient, containerName, objectName strin
 }
 
 // BulkDelete is a function that bulk deletes objects.
-func BulkDelete(c *gophercloud.ServiceClient, container string, objects []string) (r BulkDeleteResult) {
+func BulkDelete(c *ktvpcsdk.ServiceClient, container string, objects []string) (r BulkDeleteResult) {
 	// urlencode object names to be on the safe side
 	// https://github.com/openstack/swift/blob/stable/train/swift/common/middleware/bulk.py#L160
 	// https://github.com/openstack/swift/blob/stable/train/swift/common/swob.py#L302
@@ -523,13 +523,13 @@ func BulkDelete(c *gophercloud.ServiceClient, container string, objects []string
 		encodedObjects[i] = strings.Join([]string{container, v}, "/")
 	}
 	b := strings.NewReader(strings.Join(encodedObjects, "\n") + "\n")
-	resp, err := c.Post(bulkDeleteURL(c), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := c.Post(bulkDeleteURL(c), b, &r.Body, &ktvpcsdk.RequestOpts{
 		MoreHeaders: map[string]string{
 			"Accept":       "application/json",
 			"Content-Type": "text/plain",
 		},
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

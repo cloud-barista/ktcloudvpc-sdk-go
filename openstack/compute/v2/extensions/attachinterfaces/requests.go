@@ -6,18 +6,18 @@ import (
 )
 
 // List makes a request against the nova API to list the server's interfaces.
-func List(client *gophercloud.ServiceClient, serverID string) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, serverID string) pagination.Pager {
 	return pagination.NewPager(client, listInterfaceURL(client, serverID), func(r pagination.PageResult) pagination.Page {
 		return InterfacePage{pagination.SinglePageBase(r)}
 	})
 }
 
 // Get requests details on a single interface attachment by the server and port IDs.
-func Get(client *gophercloud.ServiceClient, serverID, portID string) (r GetResult) {
-	resp, err := client.Get(getInterfaceURL(client, serverID, portID), &r.Body, &gophercloud.RequestOpts{
+func Get(client *ktvpcsdk.ServiceClient, serverID, portID string) (r GetResult) {
+	resp, err := client.Get(getInterfaceURL(client, serverID, portID), &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -49,27 +49,27 @@ type CreateOpts struct {
 
 // ToAttachInterfacesCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToAttachInterfacesCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "interfaceAttachment")
+	return ktvpcsdk.BuildRequestBody(opts, "interfaceAttachment")
 }
 
 // Create requests the creation of a new interface attachment on the server.
-func Create(client *gophercloud.ServiceClient, serverID string, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, serverID string, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToAttachInterfacesCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createInterfaceURL(client, serverID), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createInterfaceURL(client, serverID), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete makes a request against the nova API to detach a single interface from the server.
 // It needs server and port IDs to make a such request.
-func Delete(client *gophercloud.ServiceClient, serverID, portID string) (r DeleteResult) {
+func Delete(client *ktvpcsdk.ServiceClient, serverID, portID string) (r DeleteResult) {
 	resp, err := client.Delete(deleteInterfaceURL(client, serverID, portID), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

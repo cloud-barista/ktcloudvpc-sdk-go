@@ -9,7 +9,7 @@ import (
 )
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets a GetResult, CreateResult as a TransferAccept.
@@ -88,8 +88,8 @@ func (r *TransferAccept) UnmarshalJSON(b []byte) error {
 	type tmp TransferAccept
 	var s struct {
 		tmp
-		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
+		CreatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"created_at"`
+		UpdatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"updated_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {

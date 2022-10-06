@@ -22,7 +22,7 @@ type Credential struct {
 }
 
 type credentialResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // GetResult is the response from a Get operation. Call its Extract method
@@ -40,7 +40,7 @@ type CreateResult struct {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr to
 // determine if the request succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // an CredentialPage is a single page of an Credential results.

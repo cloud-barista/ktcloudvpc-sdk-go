@@ -62,7 +62,7 @@ func (r *QuotaSet) UnmarshalJSON(b []byte) error {
 		return err
 	}
 	if resultMap, ok := result.(map[string]interface{}); ok {
-		r.Extra = gophercloud.RemainingKeys(QuotaSet{}, resultMap)
+		r.Extra = ktvpcsdk.RemainingKeys(QuotaSet{}, resultMap)
 	}
 
 	return err
@@ -153,7 +153,7 @@ func ExtractQuotaSets(r pagination.Page) ([]QuotaSet, error) {
 }
 
 type quotaResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract is a method that attempts to interpret any QuotaSet resource response
@@ -179,7 +179,7 @@ type UpdateResult struct {
 }
 
 type quotaUsageResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // GetUsageResult is the response from a Get operation. Call its Extract
@@ -201,5 +201,5 @@ func (r quotaUsageResult) Extract() (QuotaUsageSet, error) {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr
 // method to determine if the request succeeded or failed.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }

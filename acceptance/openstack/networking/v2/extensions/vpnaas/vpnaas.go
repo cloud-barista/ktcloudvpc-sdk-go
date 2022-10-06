@@ -15,7 +15,7 @@ import (
 
 // CreateService will create a Service with a random name and a specified router ID
 // An error will be returned if the service could not be created.
-func CreateService(t *testing.T, client *gophercloud.ServiceClient, routerID string) (*services.Service, error) {
+func CreateService(t *testing.T, client *ktvpcsdk.ServiceClient, routerID string) (*services.Service, error) {
 	serviceName := tools.RandomString("TESTACC-", 8)
 
 	t.Logf("Attempting to create service %s", serviceName)
@@ -41,7 +41,7 @@ func CreateService(t *testing.T, client *gophercloud.ServiceClient, routerID str
 // DeleteService will delete a service with a specified ID. A fatal error
 // will occur if the delete was not successful. This works best when used as
 // a deferred function.
-func DeleteService(t *testing.T, client *gophercloud.ServiceClient, serviceID string) {
+func DeleteService(t *testing.T, client *ktvpcsdk.ServiceClient, serviceID string) {
 	t.Logf("Attempting to delete service: %s", serviceID)
 
 	err := services.Delete(client, serviceID).ExtractErr()
@@ -54,7 +54,7 @@ func DeleteService(t *testing.T, client *gophercloud.ServiceClient, serviceID st
 
 // CreateIPSecPolicy will create an IPSec Policy with a random name and given
 // rule. An error will be returned if the rule could not be created.
-func CreateIPSecPolicy(t *testing.T, client *gophercloud.ServiceClient) (*ipsecpolicies.Policy, error) {
+func CreateIPSecPolicy(t *testing.T, client *ktvpcsdk.ServiceClient) (*ipsecpolicies.Policy, error) {
 	policyName := tools.RandomString("TESTACC-", 8)
 
 	t.Logf("Attempting to create IPSec policy %s", policyName)
@@ -77,7 +77,7 @@ func CreateIPSecPolicy(t *testing.T, client *gophercloud.ServiceClient) (*ipsecp
 
 // CreateIKEPolicy will create an IKE Policy with a random name and given
 // rule. An error will be returned if the policy could not be created.
-func CreateIKEPolicy(t *testing.T, client *gophercloud.ServiceClient) (*ikepolicies.Policy, error) {
+func CreateIKEPolicy(t *testing.T, client *ktvpcsdk.ServiceClient) (*ikepolicies.Policy, error) {
 	policyName := tools.RandomString("TESTACC-", 8)
 
 	t.Logf("Attempting to create IKE policy %s", policyName)
@@ -103,7 +103,7 @@ func CreateIKEPolicy(t *testing.T, client *gophercloud.ServiceClient) (*ikepolic
 // DeleteIPSecPolicy will delete an IPSec policy with a specified ID. A fatal error will
 // occur if the delete was not successful. This works best when used as a
 // deferred function.
-func DeleteIPSecPolicy(t *testing.T, client *gophercloud.ServiceClient, policyID string) {
+func DeleteIPSecPolicy(t *testing.T, client *ktvpcsdk.ServiceClient, policyID string) {
 	t.Logf("Attempting to delete IPSec policy: %s", policyID)
 
 	err := ipsecpolicies.Delete(client, policyID).ExtractErr()
@@ -117,7 +117,7 @@ func DeleteIPSecPolicy(t *testing.T, client *gophercloud.ServiceClient, policyID
 // DeleteIKEPolicy will delete an IKE policy with a specified ID. A fatal error will
 // occur if the delete was not successful. This works best when used as a
 // deferred function.
-func DeleteIKEPolicy(t *testing.T, client *gophercloud.ServiceClient, policyID string) {
+func DeleteIKEPolicy(t *testing.T, client *ktvpcsdk.ServiceClient, policyID string) {
 	t.Logf("Attempting to delete policy: %s", policyID)
 
 	err := ikepolicies.Delete(client, policyID).ExtractErr()
@@ -130,7 +130,7 @@ func DeleteIKEPolicy(t *testing.T, client *gophercloud.ServiceClient, policyID s
 
 // CreateEndpointGroup will create an endpoint group with a random name.
 // An error will be returned if the group could not be created.
-func CreateEndpointGroup(t *testing.T, client *gophercloud.ServiceClient) (*endpointgroups.EndpointGroup, error) {
+func CreateEndpointGroup(t *testing.T, client *ktvpcsdk.ServiceClient) (*endpointgroups.EndpointGroup, error) {
 	groupName := tools.RandomString("TESTACC-", 8)
 
 	t.Logf("Attempting to create group %s", groupName)
@@ -157,7 +157,7 @@ func CreateEndpointGroup(t *testing.T, client *gophercloud.ServiceClient) (*endp
 
 // CreateEndpointGroupWithCIDR will create an endpoint group with a random name and a specified CIDR.
 // An error will be returned if the group could not be created.
-func CreateEndpointGroupWithCIDR(t *testing.T, client *gophercloud.ServiceClient, cidr string) (*endpointgroups.EndpointGroup, error) {
+func CreateEndpointGroupWithCIDR(t *testing.T, client *ktvpcsdk.ServiceClient, cidr string) (*endpointgroups.EndpointGroup, error) {
 	groupName := tools.RandomString("TESTACC-", 8)
 
 	t.Logf("Attempting to create group %s", groupName)
@@ -185,7 +185,7 @@ func CreateEndpointGroupWithCIDR(t *testing.T, client *gophercloud.ServiceClient
 // DeleteEndpointGroup will delete an Endpoint group with a specified ID. A fatal error will
 // occur if the delete was not successful. This works best when used as a
 // deferred function.
-func DeleteEndpointGroup(t *testing.T, client *gophercloud.ServiceClient, epGroupID string) {
+func DeleteEndpointGroup(t *testing.T, client *ktvpcsdk.ServiceClient, epGroupID string) {
 	t.Logf("Attempting to delete endpoint group: %s", epGroupID)
 
 	err := endpointgroups.Delete(client, epGroupID).ExtractErr()
@@ -199,7 +199,7 @@ func DeleteEndpointGroup(t *testing.T, client *gophercloud.ServiceClient, epGrou
 
 // CreateEndpointGroupWithSubnet will create an endpoint group with a random name.
 // An error will be returned if the group could not be created.
-func CreateEndpointGroupWithSubnet(t *testing.T, client *gophercloud.ServiceClient, subnetID string) (*endpointgroups.EndpointGroup, error) {
+func CreateEndpointGroupWithSubnet(t *testing.T, client *ktvpcsdk.ServiceClient, subnetID string) (*endpointgroups.EndpointGroup, error) {
 	groupName := tools.RandomString("TESTACC-", 8)
 
 	t.Logf("Attempting to create group %s", groupName)
@@ -226,7 +226,7 @@ func CreateEndpointGroupWithSubnet(t *testing.T, client *gophercloud.ServiceClie
 // CreateSiteConnection will create an IPSec site connection with a random name and specified
 // IKE policy, IPSec policy, service, peer EP group and local EP Group.
 // An error will be returned if the connection could not be created.
-func CreateSiteConnection(t *testing.T, client *gophercloud.ServiceClient, ikepolicyID string, ipsecpolicyID string, serviceID string, peerEPGroupID string, localEPGroupID string) (*siteconnections.Connection, error) {
+func CreateSiteConnection(t *testing.T, client *ktvpcsdk.ServiceClient, ikepolicyID string, ipsecpolicyID string, serviceID string, peerEPGroupID string, localEPGroupID string) (*siteconnections.Connection, error) {
 	connectionName := tools.RandomString("TESTACC-", 8)
 
 	t.Logf("Attempting to create IPSec site connection %s", connectionName)
@@ -235,7 +235,7 @@ func CreateSiteConnection(t *testing.T, client *gophercloud.ServiceClient, ikepo
 		Name:           connectionName,
 		PSK:            "secret",
 		Initiator:      siteconnections.InitiatorBiDirectional,
-		AdminStateUp:   gophercloud.Enabled,
+		AdminStateUp:   ktvpcsdk.Enabled,
 		IPSecPolicyID:  ipsecpolicyID,
 		PeerEPGroupID:  peerEPGroupID,
 		IKEPolicyID:    ikepolicyID,
@@ -260,7 +260,7 @@ func CreateSiteConnection(t *testing.T, client *gophercloud.ServiceClient, ikepo
 // DeleteSiteConnection will delete an IPSec site connection with a specified ID. A fatal error will
 // occur if the delete was not successful. This works best when used as a
 // deferred function.
-func DeleteSiteConnection(t *testing.T, client *gophercloud.ServiceClient, siteConnectionID string) {
+func DeleteSiteConnection(t *testing.T, client *ktvpcsdk.ServiceClient, siteConnectionID string) {
 	t.Logf("Attempting to delete site connection: %s", siteConnectionID)
 
 	err := siteconnections.Delete(client, siteConnectionID).ExtractErr()

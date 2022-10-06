@@ -5,15 +5,15 @@ import (
 )
 
 // List lists all the API versions available to end users.
-func List(client *gophercloud.ServiceClient) (r ListResult) {
+func List(client *ktvpcsdk.ServiceClient) (r ListResult) {
 	resp, err := client.Get(listURL(client), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Get will get a specific API version, specified by major ID.
-func Get(client *gophercloud.ServiceClient, v string) (r GetResult) {
+func Get(client *ktvpcsdk.ServiceClient, v string) (r GetResult) {
 	resp, err := client.Get(getURL(client, v), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }

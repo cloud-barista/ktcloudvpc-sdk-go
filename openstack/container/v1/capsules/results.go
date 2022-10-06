@@ -10,7 +10,7 @@ import (
 )
 
 type commonResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // ExtractBase is a function that accepts a result and extracts
@@ -50,7 +50,7 @@ type CreateResult struct {
 
 // DeleteResult represents the result of a delete operation.
 type DeleteResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 type CapsulePage struct {
@@ -292,8 +292,8 @@ func (r *Capsule) UnmarshalJSON(b []byte) error {
 	// Support for "older" zun time formats.
 	var s1 struct {
 		tmp
-		CreatedAt gophercloud.JSONRFC3339ZNoT `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339ZNoT `json:"updated_at"`
+		CreatedAt ktvpcsdk.JSONRFC3339ZNoT `json:"created_at"`
+		UpdatedAt ktvpcsdk.JSONRFC3339ZNoT `json:"updated_at"`
 	}
 
 	err := json.Unmarshal(b, &s1)
@@ -309,8 +309,8 @@ func (r *Capsule) UnmarshalJSON(b []byte) error {
 	// Support for "new" zun time formats.
 	var s2 struct {
 		tmp
-		CreatedAt gophercloud.JSONRFC3339ZNoTNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339ZNoTNoZ `json:"updated_at"`
+		CreatedAt ktvpcsdk.JSONRFC3339ZNoTNoZ `json:"created_at"`
+		UpdatedAt ktvpcsdk.JSONRFC3339ZNoTNoZ `json:"updated_at"`
 	}
 
 	err = json.Unmarshal(b, &s2)
@@ -332,9 +332,9 @@ func (r *Container) UnmarshalJSON(b []byte) error {
 	// Support for "older" zun time formats.
 	var s1 struct {
 		tmp
-		CreatedAt gophercloud.JSONRFC3339ZNoT `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339ZNoT `json:"updated_at"`
-		StartedAt gophercloud.JSONRFC3339ZNoT `json:"started_at"`
+		CreatedAt ktvpcsdk.JSONRFC3339ZNoT `json:"created_at"`
+		UpdatedAt ktvpcsdk.JSONRFC3339ZNoT `json:"updated_at"`
+		StartedAt ktvpcsdk.JSONRFC3339ZNoT `json:"started_at"`
 	}
 
 	err := json.Unmarshal(b, &s1)
@@ -351,9 +351,9 @@ func (r *Container) UnmarshalJSON(b []byte) error {
 	// Support for "new" zun time formats.
 	var s2 struct {
 		tmp
-		CreatedAt gophercloud.JSONRFC3339ZNoTNoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339ZNoTNoZ `json:"updated_at"`
-		StartedAt gophercloud.JSONRFC3339ZNoTNoZ `json:"started_at"`
+		CreatedAt ktvpcsdk.JSONRFC3339ZNoTNoZ `json:"created_at"`
+		UpdatedAt ktvpcsdk.JSONRFC3339ZNoTNoZ `json:"updated_at"`
+		StartedAt ktvpcsdk.JSONRFC3339ZNoTNoZ `json:"started_at"`
 	}
 
 	err = json.Unmarshal(b, &s2)

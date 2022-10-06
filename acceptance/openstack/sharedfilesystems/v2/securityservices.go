@@ -10,7 +10,7 @@ import (
 
 // CreateSecurityService will create a security service with a random name. An
 // error will be returned if the security service was unable to be created.
-func CreateSecurityService(t *testing.T, client *gophercloud.ServiceClient) (*securityservices.SecurityService, error) {
+func CreateSecurityService(t *testing.T, client *ktvpcsdk.ServiceClient) (*securityservices.SecurityService, error) {
 	if testing.Short() {
 		t.Skip("Skipping test that requires share network creation in short mode.")
 	}
@@ -35,7 +35,7 @@ func CreateSecurityService(t *testing.T, client *gophercloud.ServiceClient) (*se
 
 // DeleteSecurityService will delete a security service. An error will occur if
 // the security service was unable to be deleted.
-func DeleteSecurityService(t *testing.T, client *gophercloud.ServiceClient, securityService *securityservices.SecurityService) {
+func DeleteSecurityService(t *testing.T, client *ktvpcsdk.ServiceClient, securityService *securityservices.SecurityService) {
 	err := securityservices.Delete(client, securityService.ID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Failed to delete security service %s: %v", securityService.ID, err)

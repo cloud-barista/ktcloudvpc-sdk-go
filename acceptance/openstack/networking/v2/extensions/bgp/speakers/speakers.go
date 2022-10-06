@@ -10,7 +10,7 @@ import (
 	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
-func CreateBGPSpeaker(t *testing.T, client *gophercloud.ServiceClient) (*speakers.BGPSpeaker, error) {
+func CreateBGPSpeaker(t *testing.T, client *ktvpcsdk.ServiceClient) (*speakers.BGPSpeaker, error) {
 	opts := speakers.CreateOpts{
 		IPVersion:                     4,
 		AdvertiseFloatingIPHostRoutes: false,

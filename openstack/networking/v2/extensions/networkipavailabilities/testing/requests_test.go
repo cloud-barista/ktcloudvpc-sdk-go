@@ -81,7 +81,7 @@ func TestGet(t *testing.T) {
 			SubnetID:   "4afe6e5f-9649-40db-b18f-64c7ead942bd",
 			SubnetName: "public-subnet",
 			CIDR:       "203.0.113.0/24",
-			IPVersion:  int(gophercloud.IPv4),
+			IPVersion:  int(ktvpcsdk.IPv4),
 			TotalIPs:   "253",
 			UsedIPs:    "3",
 		},

@@ -217,7 +217,7 @@ func TestUpdate(t *testing.T) {
     `)
 	})
 
-	options := members.UpdateOpts{AdminStateUp: gophercloud.Disabled}
+	options := members.UpdateOpts{AdminStateUp: ktvpcsdk.Disabled}
 
 	_, err := members.Update(fake.ServiceClient(), "332abe93-f488-41ba-870b-2ac66be7f853", options).Extract()
 	th.AssertNoErr(t, err)

@@ -31,12 +31,12 @@ type ListOpts struct {
 
 // ToLimitListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToLimitListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List enumerates the limits.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToLimitListQuery()

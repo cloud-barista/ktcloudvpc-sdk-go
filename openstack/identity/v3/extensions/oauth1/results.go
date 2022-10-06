@@ -18,7 +18,7 @@ type Consumer struct {
 }
 
 type consumerResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // CreateConsumerResult is the response from a Create operation. Call its
@@ -36,7 +36,7 @@ type UpdateConsumerResult struct {
 // DeleteConsumerResult is the response from a Delete operation. Call its
 // ExtractErr to determine if the request succeeded or failed.
 type DeleteConsumerResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // ConsumersPage is a single page of Region results.
@@ -103,7 +103,7 @@ type Token struct {
 // TokenResult is a struct to handle
 // "Content-Type: application/x-www-form-urlencoded" response.
 type TokenResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 	Body []byte
 }
 
@@ -124,7 +124,7 @@ func (r TokenResult) Extract() (*Token, error) {
 	}
 
 	if v := values.Get("oauth_expires_at"); v != "" {
-		if t, err := time.Parse(gophercloud.RFC3339Milli, v); err != nil {
+		if t, err := time.Parse(ktvpcsdk.RFC3339Milli, v); err != nil {
 			return nil, err
 		} else {
 			token.OAuthExpiresAt = &t
@@ -141,7 +141,7 @@ type AuthorizedToken struct {
 }
 
 type AuthorizeTokenResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets AuthorizeTokenResult result as a AuthorizedToken.
@@ -166,7 +166,7 @@ func (r *AccessToken) UnmarshalJSON(b []byte) error {
 	type tmp AccessToken
 	var s struct {
 		tmp
-		ExpiresAt *gophercloud.JSONRFC3339Milli `json:"expires_at"`
+		ExpiresAt *ktvpcsdk.JSONRFC3339Milli `json:"expires_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -183,7 +183,7 @@ func (r *AccessToken) UnmarshalJSON(b []byte) error {
 }
 
 type GetAccessTokenResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets any GetAccessTokenResult result as an AccessToken.
@@ -198,7 +198,7 @@ func (r GetAccessTokenResult) Extract() (*AccessToken, error) {
 // RevokeAccessTokenResult is the response from a Delete operation. Call its
 // ExtractErr to determine if the request succeeded or failed.
 type RevokeAccessTokenResult struct {
-	gophercloud.ErrResult
+	ktvpcsdk.ErrResult
 }
 
 // AccessTokensPage is a single page of Access Tokens results.
@@ -281,7 +281,7 @@ func ExtractAccessTokenRoles(r pagination.Page) ([]AccessTokenRole, error) {
 }
 
 type GetAccessTokenRoleResult struct {
-	gophercloud.Result
+	ktvpcsdk.Result
 }
 
 // Extract interprets any GetAccessTokenRoleResult result as an AccessTokenRole.

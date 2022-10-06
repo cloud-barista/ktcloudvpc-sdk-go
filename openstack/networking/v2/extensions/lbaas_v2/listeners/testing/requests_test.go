@@ -62,7 +62,7 @@ func TestCreateListener(t *testing.T) {
 		Protocol:               "TCP",
 		Name:                   "db",
 		LoadbalancerID:         "79e05663-7f03-45d2-a092-8b94062f22ab",
-		AdminStateUp:           gophercloud.Enabled,
+		AdminStateUp:           ktvpcsdk.Enabled,
 		DefaultTlsContainerRef: "2c433435-20de-4411-84ae-9cc8917def76",
 		DefaultPoolID:          "41efe233-7591-43c5-9cf7-923964759f9e",
 		ProtocolPort:           3306,

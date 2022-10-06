@@ -14,7 +14,7 @@ import (
 
 // CreateShare will create a share with a name, and a size of 1Gb. An
 // error will be returned if the share could not be created
-func CreateShare(t *testing.T, client *gophercloud.ServiceClient) (*shares.Share, error) {
+func CreateShare(t *testing.T, client *ktvpcsdk.ServiceClient) (*shares.Share, error) {
 	if testing.Short() {
 		t.Skip("Skipping test that requires share creation in short mode.")
 	}
@@ -47,7 +47,7 @@ func CreateShare(t *testing.T, client *gophercloud.ServiceClient) (*shares.Share
 
 // ListShares lists all shares that belong to this tenant's project.
 // An error will be returned if the shares could not be listed..
-func ListShares(t *testing.T, client *gophercloud.ServiceClient) ([]shares.Share, error) {
+func ListShares(t *testing.T, client *ktvpcsdk.ServiceClient) ([]shares.Share, error) {
 	r, err := shares.ListDetail(client, &shares.ListOpts{}).AllPages()
 	if err != nil {
 		return nil, err
@@ -58,7 +58,7 @@ func ListShares(t *testing.T, client *gophercloud.ServiceClient) ([]shares.Share
 
 // GrantAccess will grant access to an existing share. A fatal error will occur if
 // this operation fails.
-func GrantAccess(t *testing.T, client *gophercloud.ServiceClient, share *shares.Share) (*shares.AccessRight, error) {
+func GrantAccess(t *testing.T, client *ktvpcsdk.ServiceClient, share *shares.Share) (*shares.AccessRight, error) {
 	return shares.GrantAccess(client, share.ID, shares.GrantAccessOpts{
 		AccessType:  "ip",
 		AccessTo:    "0.0.0.0/32",
@@ -68,7 +68,7 @@ func GrantAccess(t *testing.T, client *gophercloud.ServiceClient, share *shares.
 
 // RevokeAccess will revoke an exisiting access of a share. A fatal error will occur
 // if this operation fails.
-func RevokeAccess(t *testing.T, client *gophercloud.ServiceClient, share *shares.Share, accessRight *shares.AccessRight) error {
+func RevokeAccess(t *testing.T, client *ktvpcsdk.ServiceClient, share *shares.Share, accessRight *shares.AccessRight) error {
 	return shares.RevokeAccess(client, share.ID, shares.RevokeAccessOpts{
 		AccessID: accessRight.ID,
 	}).ExtractErr()
@@ -76,16 +76,16 @@ func RevokeAccess(t *testing.T, client *gophercloud.ServiceClient, share *shares
 
 // GetAccessRightsSlice will retrieve all access rules assigned to a share.
 // A fatal error will occur if this operation fails.
-func GetAccessRightsSlice(t *testing.T, client *gophercloud.ServiceClient, share *shares.Share) ([]shares.AccessRight, error) {
+func GetAccessRightsSlice(t *testing.T, client *ktvpcsdk.ServiceClient, share *shares.Share) ([]shares.AccessRight, error) {
 	return shares.ListAccessRights(client, share.ID).Extract()
 }
 
 // DeleteShare will delete a share. A fatal error will occur if the share
 // failed to be deleted. This works best when used as a deferred function.
-func DeleteShare(t *testing.T, client *gophercloud.ServiceClient, share *shares.Share) {
+func DeleteShare(t *testing.T, client *ktvpcsdk.ServiceClient, share *shares.Share) {
 	err := shares.Delete(client, share.ID).ExtractErr()
 	if err != nil {
-		if _, ok := err.(gophercloud.ErrDefault404); ok {
+		if _, ok := err.(ktvpcsdk.ErrDefault404); ok {
 			return
 		}
 		t.Errorf("Unable to delete share %s: %v", share.ID, err)
@@ -100,16 +100,16 @@ func DeleteShare(t *testing.T, client *gophercloud.ServiceClient, share *shares.
 }
 
 // ExtendShare extends the capacity of an existing share
-func ExtendShare(t *testing.T, client *gophercloud.ServiceClient, share *shares.Share, newSize int) error {
+func ExtendShare(t *testing.T, client *ktvpcsdk.ServiceClient, share *shares.Share, newSize int) error {
 	return shares.Extend(client, share.ID, &shares.ExtendOpts{NewSize: newSize}).ExtractErr()
 }
 
 // ShrinkShare shrinks the capacity of an existing share
-func ShrinkShare(t *testing.T, client *gophercloud.ServiceClient, share *shares.Share, newSize int) error {
+func ShrinkShare(t *testing.T, client *ktvpcsdk.ServiceClient, share *shares.Share, newSize int) error {
 	return shares.Shrink(client, share.ID, &shares.ShrinkOpts{NewSize: newSize}).ExtractErr()
 }
 
-func PrintMessages(t *testing.T, c *gophercloud.ServiceClient, id string) error {
+func PrintMessages(t *testing.T, c *ktvpcsdk.ServiceClient, id string) error {
 	c.Microversion = "2.37"
 
 	allPages, err := messages.List(c, messages.ListOpts{ResourceID: id}).AllPages()
@@ -129,11 +129,11 @@ func PrintMessages(t *testing.T, c *gophercloud.ServiceClient, id string) error 
 	return nil
 }
 
-func waitForStatus(t *testing.T, c *gophercloud.ServiceClient, id, status string) error {
+func waitForStatus(t *testing.T, c *ktvpcsdk.ServiceClient, id, status string) error {
 	err := tools.WaitFor(func() (bool, error) {
 		current, err := shares.Get(c, id).Extract()
 		if err != nil {
-			if _, ok := err.(gophercloud.ErrDefault404); ok {
+			if _, ok := err.(ktvpcsdk.ErrDefault404); ok {
 				switch status {
 				case "deleted":
 					return true, nil

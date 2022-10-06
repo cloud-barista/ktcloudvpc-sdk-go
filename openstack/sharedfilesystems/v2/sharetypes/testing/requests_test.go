@@ -42,7 +42,7 @@ func TestCreateFails(t *testing.T) {
 	}
 
 	_, err := sharetypes.Create(client.ServiceClient(), options).Extract()
-	if _, ok := err.(gophercloud.ErrMissingInput); !ok {
+	if _, ok := err.(ktvpcsdk.ErrMissingInput); !ok {
 		t.Fatal("ErrMissingInput was expected to occur")
 	}
 
@@ -55,7 +55,7 @@ func TestCreateFails(t *testing.T) {
 	}
 
 	_, err = sharetypes.Create(client.ServiceClient(), options).Extract()
-	if _, ok := err.(gophercloud.ErrMissingInput); !ok {
+	if _, ok := err.(ktvpcsdk.ErrMissingInput); !ok {
 		t.Fatal("ErrMissingInput was expected to occur")
 	}
 }

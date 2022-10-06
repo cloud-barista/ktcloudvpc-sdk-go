@@ -17,12 +17,12 @@ type ListOpts struct {
 
 // ToResourceListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToResourceListQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
+	q, err := ktvpcsdk.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List retrieves a list of RESOURCES.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToResourceListQuery()
@@ -37,9 +37,9 @@ func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pa
 }
 
 // Get retrieves details of a RESOURCE.
-func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
 	resp, err := client.Get(getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -55,27 +55,27 @@ type CreateOpts struct {
 
 // ToResourceCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToResourceCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "resource")
+	return ktvpcsdk.BuildRequestBody(opts, "resource")
 }
 
 // Create creates a new RESOURCE.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToResourceCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), &b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Post(createURL(client), &b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes a RESOURCE.
-func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
 
@@ -91,19 +91,19 @@ type UpdateOpts struct {
 
 // ToUpdateCreateMap formats a UpdateOpts into an update request.
 func (opts UpdateOpts) ToResourceUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "resource")
+	return ktvpcsdk.BuildRequestBody(opts, "resource")
 }
 
 // Update modifies the attributes of a RESOURCE.
-func Update(client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToResourceUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Patch(updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Patch(updateURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
 }
