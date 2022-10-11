@@ -249,3 +249,13 @@ func (p Pager) AllPages() (Page, error) {
 	// `Extract*` methods will work.
 	return page.Elem().Interface().(Page), err
 }
+
+func (p Pager) FistPage() (Page, error) {						// Added by B.T. Oh
+	// Grab a first page to ascertain the page body type.
+	firstPage, err := p.fetchNextPage(p.initialURL)
+	if err != nil {
+		return nil, err
+	}
+
+	return firstPage, nil
+}
