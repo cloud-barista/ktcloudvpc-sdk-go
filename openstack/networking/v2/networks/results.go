@@ -6,6 +6,7 @@ import (
 
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/subnets"
 )
 
 type commonResult struct {
@@ -19,9 +20,10 @@ func (r commonResult) Extract() (*Network, error) {
 	return &s, err
 }
 
-func (r commonResult) ExtractInto(v interface{}) error {
-	return r.Result.ExtractIntoStructPtr(v, "network")
+func (r commonResult) ExtractInto(v interface{}) error {		// Modified by B.T. Oh
+	return r.Result.ExtractIntoStructPtr(v, "vpcs")
 }
+
 
 // CreateResult represents the result of a create operation. Call its Extract
 // method to interpret it as a Network.
@@ -47,69 +49,69 @@ type DeleteResult struct {
 	ktvpcsdk.ErrResult
 }
 
+type StaticRoute struct {	// Added by B.T. Oh
+	Default bool `json:"default"`
+
+	// CIDR representing IP range for this VPC, based on IP version.	
+	CIDR string `json:"cidr"`
+
+	ID int `json:"id"`
+
+	Gateway string `json:"gateway"`
+
+	GatewayInterfaceName string `json:"gatewayinterfacename"`
+}
+
+type StaticRoutes struct {	// Added by B.T. Oh
+	// UUID for the VPC
+	VpcID string `json:"vpcid"`
+
+	StaticRoutes []StaticRoute `json:"staticroutes"`
+}
+
 // Network represents, well, a network.
-type Network struct {
+// KT Cloud D1 API guide : https://cloud.kt.com/docs/open-api-guide/d/computing/networking
+type Network struct {								// Modified by B.T. Oh
+	VpcOfferingID string `json:"vpcofferingid"`		// Added by B.T. Oh
+
+	SesionCount string `json:"sessioncount"`		// Added by B.T. Oh
+		
 	// UUID for the network
 	ID string `json:"id"`
 
 	// Human-readable name for the network. Might not be unique.
 	Name string `json:"name"`
 
-	// Description for the network
-	Description string `json:"description"`
+	ZoneID string `json:"zoneid"`					// Added by B.T. Oh
 
-	// The administrative state of network. If false (down), the network does not
-	// forward packets.
-	AdminStateUp bool `json:"admin_state_up"`
-
-	// Indicates whether network is currently operational. Possible values include
-	// `ACTIVE', `DOWN', `BUILD', or `ERROR'. Plug-ins might define additional
-	// values.
-	Status string `json:"status"`
+	Vdom string `json:"vdom"`						// Added by B.T. Oh
 
 	// Subnets associated with this network.
-	Subnets []string `json:"subnets"`
+	Subnets []subnets.Subnet `json:"networks"`		// Caution!! // Modified by B.T. Oh
 
-	// TenantID is the project owner of the network.
-	TenantID string `json:"tenant_id"`
+	StaticRoutes StaticRoutes `json:"staticroutes"`	// Added by B.T. Oh
 
-	// UpdatedAt and CreatedAt contain ISO-8601 timestamps of when the state of the
-	// network last changed, and when it was created.
-	UpdatedAt time.Time `json:"-"`
-	CreatedAt time.Time `json:"-"`
-
-	// ProjectID is the project owner of the network.
-	ProjectID string `json:"project_id"`
-
-	// Specifies whether the network resource can be accessed by any tenant.
-	Shared bool `json:"shared"`
-
-	// Availability zone hints groups network nodes that run services like DHCP, L3, FW, and others.
-	// Used to make network resources highly available.
-	AvailabilityZoneHints []string `json:"availability_zone_hints"`
-
-	// Tags optionally set via extensions/attributestags
-	Tags []string `json:"tags"`
-
-	// RevisionNumber optionally set via extensions/standard-attr-revisions
-	RevisionNumber int `json:"revision_number"`
+	Account string `json:"account"`					// Added by B.T. Oh
+	
+	// CreatedAt contain ISO-8601 timestamps of when it was created.
+	CreatedAt time.Time `json:"-"`	
 }
 
-func (r *Network) UnmarshalJSON(b []byte) error {
+func (r *Network) UnmarshalJSON(b []byte) error {	// Modified by B.T. Oh
 	type tmp Network
 
 	// Support for older neutron time format
 	var s1 struct {
 		tmp
-		CreatedAt ktvpcsdk.JSONRFC3339NoZ `json:"created_at"`
-		UpdatedAt ktvpcsdk.JSONRFC3339NoZ `json:"updated_at"`
+		CreatedAt ktvpcsdk.JSONRFC3339NoZ `json:"created"`
+		// UpdatedAt ktvpcsdk.JSONRFC3339NoZ `json:"updated_at"`
 	}
 
 	err := json.Unmarshal(b, &s1)
 	if err == nil {
 		*r = Network(s1.tmp)
 		r.CreatedAt = time.Time(s1.CreatedAt)
-		r.UpdatedAt = time.Time(s1.UpdatedAt)
+		// r.UpdatedAt = time.Time(s1.UpdatedAt)
 
 		return nil
 	}
@@ -118,7 +120,7 @@ func (r *Network) UnmarshalJSON(b []byte) error {
 	var s2 struct {
 		tmp
 		CreatedAt time.Time `json:"created_at"`
-		UpdatedAt time.Time `json:"updated_at"`
+		// UpdatedAt time.Time `json:"updated_at"`
 	}
 
 	err = json.Unmarshal(b, &s2)
@@ -128,7 +130,7 @@ func (r *Network) UnmarshalJSON(b []byte) error {
 
 	*r = Network(s2.tmp)
 	r.CreatedAt = time.Time(s2.CreatedAt)
-	r.UpdatedAt = time.Time(s2.UpdatedAt)
+	// r.UpdatedAt = time.Time(s2.UpdatedAt)
 
 	return nil
 }
@@ -154,9 +156,14 @@ func (r NetworkPage) NextPageURL() (string, error) {
 }
 
 // IsEmpty checks whether a NetworkPage struct is empty.
-func (r NetworkPage) IsEmpty() (bool, error) {
-	is, err := ExtractNetworks(r)
+func (r NetworkPage) IsEmpty() (bool, error) {						// Modified by B.T. Oh
+	is, err := ExtractVPCs(r)
 	return len(is) == 0, err
+}
+
+
+type ListVPCs struct {												// Added by B.T. Oh
+	VPCs []Network `json:"vpcs"` // Caution!!
 }
 
 // ExtractNetworks accepts a Page struct, specifically a NetworkPage struct,
@@ -168,6 +175,14 @@ func ExtractNetworks(r pagination.Page) ([]Network, error) {
 	return s, err
 }
 
-func ExtractNetworksInto(r pagination.Page, v interface{}) error {
-	return r.(NetworkPage).Result.ExtractIntoSlicePtr(v, "networks")
+func ExtractVPCs(r pagination.Page) ([]Network, error) {				// Added by B.T. Oh
+	var s struct {
+		ListVPC ListVPCs `json:"nc_listvpcsresponse"`
+	}		
+	err := (r.(NetworkPage)).ExtractInto(&s)
+	return s.ListVPC.VPCs, err
+}
+
+func ExtractNetworksInto(r pagination.Page, v interface{}) error {		// Modified by B.T. Oh
+	return r.(NetworkPage).Result.ExtractIntoSlicePtr(v, "vpcs")
 }

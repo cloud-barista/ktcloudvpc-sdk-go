@@ -10,9 +10,9 @@ type commonResult struct {
 }
 
 // Extract is a function that accepts a result and extracts a subnet resource.
-func (r commonResult) Extract() (*Subnet, error) {
+func (r commonResult) Extract() (*Subnet, error) {				// Modified by B.T. Oh
 	var s struct {
-		Subnet *Subnet `json:"subnet"`
+		Subnet *Subnet `json:"network"`  // Caution!!
 	}
 	err := r.ExtractInto(&s)
 	return s.Subnet, err
@@ -58,63 +58,49 @@ type HostRoute struct {
 
 // Subnet represents a subnet. See package documentation for a top-level
 // description of what this is.
-type Subnet struct {
-	// UUID representing the subnet.
-	ID string `json:"id"`
+// KT Cloud D1 API guide : https://cloud.kt.com/docs/open-api-guide/d/computing/tier
+type Subnet struct {									// Modified by B.T. Oh
+	EndIP string `json:"endip"`							// Added by B.T. Oh
+
+	Shared string `json:"shared"`						// Added by B.T. Oh
+
+	StartIP string `json:"startip"`						// Added by B.T. Oh
+	
+	Type string `json:"type"`							// Added by B.T. Oh
+
+	VLan string `json:"vlan"`							// Added by B.T. Oh
+
+	Netmask string `json:"netmask"`						// Added by B.T. Oh
 
 	// UUID of the parent network.
-	NetworkID string `json:"network_id"`
+	VpcID string `json:"vpcid"` 						// Modified by B.T. Oh
 
 	// Human-readable name for the subnet. Might not be unique.
 	Name string `json:"name"`
 
-	// Description for the subnet.
-	Description string `json:"description"`
+	ZoneID string `json:"zoneid"`						// Added by B.T. Oh
 
-	// IP version, either `4' or `6'.
-	IPVersion int `json:"ip_version"`
-
+	DataLakeYN string `json:"datalakeyn"`				// Added by B.T. Oh
+	
 	// CIDR representing IP range for this subnet, based on IP version.
 	CIDR string `json:"cidr"`
 
-	// Default gateway used by devices in this subnet.
-	GatewayIP string `json:"gateway_ip"`
-
-	// DNS name servers used by hosts in this subnet.
-	DNSNameservers []string `json:"dns_nameservers"`
-
-	// Sub-ranges of CIDR available for dynamic allocation to ports.
-	// See AllocationPool.
-	AllocationPools []AllocationPool `json:"allocation_pools"`
-
-	// Routes that should be used by devices with IPs from this subnet
-	// (not including local subnet route).
-	HostRoutes []HostRoute `json:"host_routes"`
-
-	// Specifies whether DHCP is enabled for this subnet or not.
-	EnableDHCP bool `json:"enable_dhcp"`
-
-	// TenantID is the project owner of the subnet.
-	TenantID string `json:"tenant_id"`
+	// UUID representing the subnet.
+	ID string `json:"id"`
 
 	// ProjectID is the project owner of the subnet.
-	ProjectID string `json:"project_id"`
+	ProjectID string `json:"projectid"`					// Modified by B.T. Oh
 
-	// The IPv6 address modes specifies mechanisms for assigning IPv6 IP addresses.
-	IPv6AddressMode string `json:"ipv6_address_mode"`
+	// Default gateway used by devices in this subnet.
+	Gateway string `json:"gateway"`						// Modified by B.T. Oh
 
-	// The IPv6 router advertisement specifies whether the networking service
-	// should transmit ICMPv6 packets.
-	IPv6RAMode string `json:"ipv6_ra_mode"`
+	Account string `json:"account"`						// Added by B.T. Oh
 
-	// SubnetPoolID is the id of the subnet pool associated with the subnet.
-	SubnetPoolID string `json:"subnetpool_id"`
+	OsName string `json:"osname"`						// Added by B.T. Oh
 
-	// Tags optionally set via extensions/attributestags
-	Tags []string `json:"tags"`
+	OsNetworkID string `json:"osnetworkid"`				// Added by B.T. Oh
 
-	// RevisionNumber optionally set via extensions/standard-attr-revisions
-	RevisionNumber int `json:"revision_number"`
+	Status string `json:"status"`						// Added by B.T. Oh
 }
 
 // SubnetPage is the page returned by a pager when traversing over a collection
@@ -143,13 +129,17 @@ func (r SubnetPage) IsEmpty() (bool, error) {
 	return len(is) == 0, err
 }
 
+type OsNetwork struct {												// Added by B.T. Oh
+	Subnets []Subnet `json:"networks"`  // Caution!!
+}
+
 // ExtractSubnets accepts a Page struct, specifically a SubnetPage struct,
 // and extracts the elements into a slice of Subnet structs. In other words,
 // a generic collection is mapped into a relevant slice.
-func ExtractSubnets(r pagination.Page) ([]Subnet, error) {
+func ExtractSubnets(r pagination.Page) ([]Subnet, error) {			// Modified by B.T. Oh
 	var s struct {
-		Subnets []Subnet `json:"subnets"`
-	}
+		OsNet OsNetwork `json:"nc_listosnetworksresponse"`
+	}		
 	err := (r.(SubnetPage)).ExtractInto(&s)
-	return s.Subnets, err
+	return s.OsNet.Subnets, err
 }
