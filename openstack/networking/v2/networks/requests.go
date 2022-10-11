@@ -2,8 +2,10 @@ package networks
 
 import (
 	"fmt"
-	"github.com/sirupsen/logrus"
+
 	cblog "github.com/cloud-barista/cb-log"
+	// "github.com/davecgh/go-spew/spew"
+	"github.com/sirupsen/logrus"
 
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
@@ -72,6 +74,8 @@ func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 
 // Get retrieves a specific network based on its unique ID.
 func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+	cblogger.Infof("\n\n### Network getURL(c, id) : %s", getURL(c, id))
+
 	resp, err := c.Get(getURL(c, id), &r.Body, nil)
 	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
 	return
