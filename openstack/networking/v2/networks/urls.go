@@ -3,14 +3,11 @@ package networks
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 func resourceURL(c *ktvpcsdk.ServiceClient, id string) string {
-	return c.ServiceURL("networks", id)
+	return c.ServiceURL("VPC", id)  // Modified by B.T. Oh
 }
 
 func rootURL(c *ktvpcsdk.ServiceClient) string {
 	return c.ServiceURL("VPC")  // Modified by B.T. Oh
-	// return c.ServiceURL("Network")  // Modified by B.T. Oh
-
-	// return c.ServiceURL("networks") // Origin
 }
 
 func getURL(c *ktvpcsdk.ServiceClient, id string) string {

@@ -3,11 +3,11 @@ package subnets
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 func resourceURL(c *ktvpcsdk.ServiceClient, id string) string {
-	return c.ServiceURL("subnets", id)
+	return c.ServiceURL("Network", id)  // Modified by B.T. Oh
 }
 
 func rootURL(c *ktvpcsdk.ServiceClient) string {
-	return c.ServiceURL("subnets")
+	return c.ServiceURL("Network")  // Modified by B.T. Oh
 }
 
 func listURL(c *ktvpcsdk.ServiceClient) string {
