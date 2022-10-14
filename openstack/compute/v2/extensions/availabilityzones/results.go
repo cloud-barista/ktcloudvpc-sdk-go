@@ -26,7 +26,7 @@ func (r *ServiceState) UnmarshalJSON(b []byte) error {
 	type tmp ServiceState
 	var s struct {
 		tmp
-		UpdatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"updated_at"`
+		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {

@@ -34,12 +34,12 @@ type ListOpts struct {
 
 // ToZoneListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToZoneListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List implements a zone List request.
-func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := baseURL(client)
 	if opts != nil {
 		query, err := opts.ToZoneListQuery()
@@ -54,9 +54,9 @@ func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager
 }
 
 // Get returns information about a zone, given its ID.
-func Get(client *ktvpcsdk.ServiceClient, zoneID string) (r GetResult) {
+func Get(client *gophercloud.ServiceClient, zoneID string) (r GetResult) {
 	resp, err := client.Get(zoneURL(client, zoneID), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -92,7 +92,7 @@ type CreateOpts struct {
 
 // ToZoneCreateMap formats an CreateOpts structure into a request body.
 func (opts CreateOpts) ToZoneCreateMap() (map[string]interface{}, error) {
-	b, err := ktvpcsdk.BuildRequestBody(opts, "")
+	b, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -105,16 +105,16 @@ func (opts CreateOpts) ToZoneCreateMap() (map[string]interface{}, error) {
 }
 
 // Create implements a zone create request.
-func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToZoneCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(baseURL(client), &b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(baseURL(client), &b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{201, 202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -141,7 +141,7 @@ type UpdateOpts struct {
 
 // ToZoneUpdateMap formats an UpdateOpts structure into a request body.
 func (opts UpdateOpts) ToZoneUpdateMap() (map[string]interface{}, error) {
-	b, err := ktvpcsdk.BuildRequestBody(opts, "")
+	b, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -154,25 +154,25 @@ func (opts UpdateOpts) ToZoneUpdateMap() (map[string]interface{}, error) {
 }
 
 // Update implements a zone update request.
-func Update(client *ktvpcsdk.ServiceClient, zoneID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *gophercloud.ServiceClient, zoneID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToZoneUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Patch(zoneURL(client, zoneID), &b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Patch(zoneURL(client, zoneID), &b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200, 202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete implements a zone delete request.
-func Delete(client *ktvpcsdk.ServiceClient, zoneID string) (r DeleteResult) {
-	resp, err := client.Delete(zoneURL(client, zoneID), &ktvpcsdk.RequestOpts{
+func Delete(client *gophercloud.ServiceClient, zoneID string) (r DeleteResult) {
+	resp, err := client.Delete(zoneURL(client, zoneID), &gophercloud.RequestOpts{
 		OkCodes:      []int{202},
 		JSONResponse: &r.Body,
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

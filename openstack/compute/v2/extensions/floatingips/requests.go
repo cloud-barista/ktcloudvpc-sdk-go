@@ -6,7 +6,7 @@ import (
 )
 
 // List returns a Pager that allows you to iterate over a collection of FloatingIPs.
-func List(client *ktvpcsdk.ServiceClient) pagination.Pager {
+func List(client *gophercloud.ServiceClient) pagination.Pager {
 	return pagination.NewPager(client, listURL(client), func(r pagination.PageResult) pagination.Page {
 		return FloatingIPPage{pagination.SinglePageBase(r)}
 	})
@@ -26,34 +26,34 @@ type CreateOpts struct {
 
 // ToFloatingIPCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToFloatingIPCreateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "")
+	return gophercloud.BuildRequestBody(opts, "")
 }
 
 // Create requests the creation of a new Floating IP.
-func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToFloatingIPCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get returns data about a previously created Floating IP.
-func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
 	resp, err := client.Get(getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete requests the deletion of a previous allocated Floating IP.
-func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -74,18 +74,18 @@ type AssociateOpts struct {
 
 // ToFloatingIPAssociateMap constructs a request body from AssociateOpts.
 func (opts AssociateOpts) ToFloatingIPAssociateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "addFloatingIp")
+	return gophercloud.BuildRequestBody(opts, "addFloatingIp")
 }
 
 // AssociateInstance pairs an allocated Floating IP with a server.
-func AssociateInstance(client *ktvpcsdk.ServiceClient, serverID string, opts AssociateOptsBuilder) (r AssociateResult) {
+func AssociateInstance(client *gophercloud.ServiceClient, serverID string, opts AssociateOptsBuilder) (r AssociateResult) {
 	b, err := opts.ToFloatingIPAssociateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := client.Post(associateURL(client, serverID), b, nil, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -103,17 +103,17 @@ type DisassociateOpts struct {
 
 // ToFloatingIPDisassociateMap constructs a request body from DisassociateOpts.
 func (opts DisassociateOpts) ToFloatingIPDisassociateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "removeFloatingIp")
+	return gophercloud.BuildRequestBody(opts, "removeFloatingIp")
 }
 
 // DisassociateInstance decouples an allocated Floating IP from an instance
-func DisassociateInstance(client *ktvpcsdk.ServiceClient, serverID string, opts DisassociateOptsBuilder) (r DisassociateResult) {
+func DisassociateInstance(client *gophercloud.ServiceClient, serverID string, opts DisassociateOptsBuilder) (r DisassociateResult) {
 	b, err := opts.ToFloatingIPDisassociateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := client.Post(disassociateURL(client, serverID), b, nil, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

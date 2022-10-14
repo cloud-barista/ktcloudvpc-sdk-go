@@ -16,7 +16,7 @@ type EndpointOpts struct {
 }
 
 // NewClient prepares an unauthenticated ProviderClient instance.
-func NewClient(options ktvpcsdk.AuthOptions) (*ktvpcsdk.ProviderClient, error) {
+func NewClient(options gophercloud.AuthOptions) (*gophercloud.ProviderClient, error) {
 	if options.Username == "" {
 		options.Username = "admin"
 	}
@@ -24,15 +24,15 @@ func NewClient(options ktvpcsdk.AuthOptions) (*ktvpcsdk.ProviderClient, error) {
 		options.TenantName = "admin"
 	}
 
-	client := &ktvpcsdk.ProviderClient{
+	client := &gophercloud.ProviderClient{
 		TokenID: fmt.Sprintf("%s:%s", options.Username, options.TenantName),
 	}
 
 	return client, nil
 }
 
-func initClientOpts(client *ktvpcsdk.ProviderClient, eo EndpointOpts, clientType string) (*ktvpcsdk.ServiceClient, error) {
-	sc := new(ktvpcsdk.ServiceClient)
+func initClientOpts(client *gophercloud.ProviderClient, eo EndpointOpts, clientType string) (*gophercloud.ServiceClient, error) {
+	sc := new(gophercloud.ServiceClient)
 	if eo.CinderEndpoint == "" {
 		return nil, fmt.Errorf("CinderEndpoint is required")
 	}
@@ -42,19 +42,19 @@ func initClientOpts(client *ktvpcsdk.ProviderClient, eo EndpointOpts, clientType
 		return nil, fmt.Errorf("Malformed noauth token")
 	}
 
-	endpoint := fmt.Sprintf("%s%s", ktvpcsdk.NormalizeURL(eo.CinderEndpoint), token[1])
-	sc.Endpoint = ktvpcsdk.NormalizeURL(endpoint)
+	endpoint := fmt.Sprintf("%s%s", gophercloud.NormalizeURL(eo.CinderEndpoint), token[1])
+	sc.Endpoint = gophercloud.NormalizeURL(endpoint)
 	sc.ProviderClient = client
 	sc.Type = clientType
 	return sc, nil
 }
 
 // NewBlockStorageNoAuthV2 creates a ServiceClient that may be used to access "noauth" v2 block storage service.
-func NewBlockStorageNoAuthV2(client *ktvpcsdk.ProviderClient, eo EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewBlockStorageNoAuthV2(client *gophercloud.ProviderClient, eo EndpointOpts) (*gophercloud.ServiceClient, error) {
 	return initClientOpts(client, eo, "volumev2")
 }
 
 // NewBlockStorageNoAuthV3 creates a ServiceClient that may be used to access "noauth" v3 block storage service.
-func NewBlockStorageNoAuthV3(client *ktvpcsdk.ProviderClient, eo EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewBlockStorageNoAuthV3(client *gophercloud.ProviderClient, eo EndpointOpts) (*gophercloud.ServiceClient, error) {
 	return initClientOpts(client, eo, "volumev3")
 }

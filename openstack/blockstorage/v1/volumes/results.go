@@ -42,7 +42,7 @@ func (r *Volume) UnmarshalJSON(b []byte) error {
 	type tmp Volume
 	var s struct {
 		tmp
-		CreatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"created_at"`
+		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -67,7 +67,7 @@ type GetResult struct {
 
 // DeleteResult contains the response body and error from a Delete request.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // VolumePage is a pagination.pager that is returned from a call to the List function.
@@ -96,7 +96,7 @@ type UpdateResult struct {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract will get the Volume object out of the commonResult object.

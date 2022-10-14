@@ -49,9 +49,9 @@ func (r *Object) UnmarshalJSON(b []byte) error {
 	*r = Object(s.tmp)
 
 	if s.LastModified != "" {
-		t, err := time.Parse(ktvpcsdk.RFC3339MilliNoZ, s.LastModified)
+		t, err := time.Parse(gophercloud.RFC3339MilliNoZ, s.LastModified)
 		if err != nil {
-			t, err = time.Parse(ktvpcsdk.RFC3339Milli, s.LastModified)
+			t, err = time.Parse(gophercloud.RFC3339Milli, s.LastModified)
 			if err != nil {
 				return err
 			}
@@ -148,9 +148,9 @@ func (r *DownloadHeader) UnmarshalJSON(b []byte) error {
 	type tmp DownloadHeader
 	var s struct {
 		tmp
-		Date              ktvpcsdk.JSONRFC1123 `json:"Date"`
-		DeleteAt          ktvpcsdk.JSONUnix    `json:"X-Delete-At"`
-		LastModified      ktvpcsdk.JSONRFC1123 `json:"Last-Modified"`
+		Date              gophercloud.JSONRFC1123 `json:"Date"`
+		DeleteAt          gophercloud.JSONUnix    `json:"X-Delete-At"`
+		LastModified      gophercloud.JSONRFC1123 `json:"Last-Modified"`
 		StaticLargeObject interface{}             `json:"X-Static-Large-Object"`
 	}
 	err := json.Unmarshal(b, &s)
@@ -179,7 +179,7 @@ func (r *DownloadHeader) UnmarshalJSON(b []byte) error {
 // DownloadResult is a *http.Response that is returned from a call to the
 // Download function.
 type DownloadResult struct {
-	ktvpcsdk.HeaderResult
+	gophercloud.HeaderResult
 	Body io.ReadCloser
 }
 
@@ -226,9 +226,9 @@ func (r *GetHeader) UnmarshalJSON(b []byte) error {
 	type tmp GetHeader
 	var s struct {
 		tmp
-		Date              ktvpcsdk.JSONRFC1123 `json:"Date"`
-		DeleteAt          ktvpcsdk.JSONUnix    `json:"X-Delete-At"`
-		LastModified      ktvpcsdk.JSONRFC1123 `json:"Last-Modified"`
+		Date              gophercloud.JSONRFC1123 `json:"Date"`
+		DeleteAt          gophercloud.JSONUnix    `json:"X-Delete-At"`
+		LastModified      gophercloud.JSONRFC1123 `json:"Last-Modified"`
 		StaticLargeObject interface{}             `json:"X-Static-Large-Object"`
 	}
 	err := json.Unmarshal(b, &s)
@@ -257,7 +257,7 @@ func (r *GetHeader) UnmarshalJSON(b []byte) error {
 // GetResult is a *http.Response that is returned from a call to the Get
 // function.
 type GetResult struct {
-	ktvpcsdk.HeaderResult
+	gophercloud.HeaderResult
 }
 
 // Extract will return a struct of headers returned from a call to Get.
@@ -298,8 +298,8 @@ func (r *CreateHeader) UnmarshalJSON(b []byte) error {
 	type tmp CreateHeader
 	var s struct {
 		tmp
-		Date         ktvpcsdk.JSONRFC1123 `json:"Date"`
-		LastModified ktvpcsdk.JSONRFC1123 `json:"Last-Modified"`
+		Date         gophercloud.JSONRFC1123 `json:"Date"`
+		LastModified gophercloud.JSONRFC1123 `json:"Last-Modified"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -317,7 +317,7 @@ func (r *CreateHeader) UnmarshalJSON(b []byte) error {
 // CreateResult represents the result of a create operation.
 type CreateResult struct {
 	checksum string
-	ktvpcsdk.HeaderResult
+	gophercloud.HeaderResult
 }
 
 // Extract will return a struct of headers returned from a call to Create.
@@ -343,7 +343,7 @@ func (r *UpdateHeader) UnmarshalJSON(b []byte) error {
 	type tmp UpdateHeader
 	var s struct {
 		tmp
-		Date ktvpcsdk.JSONRFC1123 `json:"Date"`
+		Date gophercloud.JSONRFC1123 `json:"Date"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -359,7 +359,7 @@ func (r *UpdateHeader) UnmarshalJSON(b []byte) error {
 
 // UpdateResult represents the result of an update operation.
 type UpdateResult struct {
-	ktvpcsdk.HeaderResult
+	gophercloud.HeaderResult
 }
 
 // Extract will return a struct of headers returned from a call to Update.
@@ -382,7 +382,7 @@ func (r *DeleteHeader) UnmarshalJSON(b []byte) error {
 	type tmp DeleteHeader
 	var s struct {
 		tmp
-		Date ktvpcsdk.JSONRFC1123 `json:"Date"`
+		Date gophercloud.JSONRFC1123 `json:"Date"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -398,7 +398,7 @@ func (r *DeleteHeader) UnmarshalJSON(b []byte) error {
 
 // DeleteResult represents the result of a delete operation.
 type DeleteResult struct {
-	ktvpcsdk.HeaderResult
+	gophercloud.HeaderResult
 }
 
 // Extract will return a struct of headers returned from a call to Delete.
@@ -425,9 +425,9 @@ func (r *CopyHeader) UnmarshalJSON(b []byte) error {
 	type tmp CopyHeader
 	var s struct {
 		tmp
-		CopiedFromLastModified ktvpcsdk.JSONRFC1123 `json:"X-Copied-From-Last-Modified"`
-		Date                   ktvpcsdk.JSONRFC1123 `json:"Date"`
-		LastModified           ktvpcsdk.JSONRFC1123 `json:"Last-Modified"`
+		CopiedFromLastModified gophercloud.JSONRFC1123 `json:"X-Copied-From-Last-Modified"`
+		Date                   gophercloud.JSONRFC1123 `json:"Date"`
+		LastModified           gophercloud.JSONRFC1123 `json:"Last-Modified"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -445,7 +445,7 @@ func (r *CopyHeader) UnmarshalJSON(b []byte) error {
 
 // CopyResult represents the result of a copy operation.
 type CopyResult struct {
-	ktvpcsdk.HeaderResult
+	gophercloud.HeaderResult
 }
 
 // Extract will return a struct of headers returned from a call to Copy.
@@ -466,7 +466,7 @@ type BulkDeleteResponse struct {
 // BulkDeleteResult represents the result of a bulk delete operation. To extract
 // the response object from the HTTP response, call its Extract method.
 type BulkDeleteResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract will return a BulkDeleteResponse struct returned from a BulkDelete

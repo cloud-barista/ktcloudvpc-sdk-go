@@ -19,7 +19,7 @@ var Updated_time, _ = time.Parse(time.RFC3339, "2018-06-26T07:58:17Z")
 var FindExpected = []stackresources.Resource{
 	{
 		Name: "hello_world",
-		Links: []ktvpcsdk.Link{
+		Links: []gophercloud.Link{
 			{
 				Href: "http://166.78.160.107:8004/v1/98606384f58d4ad0b3db7d0d779549ac/stacks/postman_stack/5f57cff9-93fc-424e-9f78-df0515e7f48b/resources/hello_world",
 				Rel:  "self",
@@ -90,7 +90,7 @@ func HandleFindSuccessfully(t *testing.T, output string) {
 var ListExpected = []stackresources.Resource{
 	{
 		Name: "hello_world",
-		Links: []ktvpcsdk.Link{
+		Links: []gophercloud.Link{
 			{
 				Href: "http://166.78.160.107:8004/v1/98606384f58d4ad0b3db7d0d779549ac/stacks/postman_stack/5f57cff9-93fc-424e-9f78-df0515e7f48b/resources/hello_world",
 				Rel:  "self",
@@ -167,7 +167,7 @@ func HandleListSuccessfully(t *testing.T, output string) {
 // GetExpected represents the expected object from a Get request.
 var GetExpected = &stackresources.Resource{
 	Name: "wordpress_instance",
-	Links: []ktvpcsdk.Link{
+	Links: []gophercloud.Link{
 		{
 			Href: "http://166.78.160.107:8004/v1/98606384f58d4ad0b3db7d0d779549ac/stacks/teststack/0b1771bd-9336-4f2b-ae86-a80f971faf1e/resources/wordpress_instance",
 			Rel:  "self",

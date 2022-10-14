@@ -97,7 +97,7 @@ type ServiceCatalog struct {
 // interpret it as a Token, or ExtractServiceCatalog() to interpret it as a
 // service catalog.
 type CreateResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // GetResult is the deferred response from a Get call, which is the same with a
@@ -123,7 +123,7 @@ func (r CreateResult) ExtractToken() (*Token, error) {
 		return nil, err
 	}
 
-	expiresTs, err := time.Parse(ktvpcsdk.RFC3339Milli, s.Access.Token.Expires)
+	expiresTs, err := time.Parse(gophercloud.RFC3339Milli, s.Access.Token.Expires)
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +135,7 @@ func (r CreateResult) ExtractToken() (*Token, error) {
 	}, nil
 }
 
-// ExtractTokenID implements the ktvpcsdk.AuthResult interface. The returned
+// ExtractTokenID implements the gophercloud.AuthResult interface. The returned
 // string is the same as the ID field of the Token struct returned from
 // ExtractToken().
 func (r CreateResult) ExtractTokenID() (string, error) {

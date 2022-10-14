@@ -15,7 +15,7 @@ import (
 
 // CreateExternalNetwork will create an external network. An error will be
 // returned if the creation failed.
-func CreateExternalNetwork(t *testing.T, client *ktvpcsdk.ServiceClient) (*networks.Network, error) {
+func CreateExternalNetwork(t *testing.T, client *gophercloud.ServiceClient) (*networks.Network, error) {
 	networkName := tools.RandomString("TESTACC-", 8)
 	networkDescription := tools.RandomString("TESTACC-DESC-", 8)
 
@@ -50,7 +50,7 @@ func CreateExternalNetwork(t *testing.T, client *ktvpcsdk.ServiceClient) (*netwo
 
 // CreatePortWithSecurityGroup will create a port with a security group
 // attached. An error will be returned if the port could not be created.
-func CreatePortWithSecurityGroup(t *testing.T, client *ktvpcsdk.ServiceClient, networkID, subnetID, secGroupID string) (*ports.Port, error) {
+func CreatePortWithSecurityGroup(t *testing.T, client *gophercloud.ServiceClient, networkID, subnetID, secGroupID string) (*ports.Port, error) {
 	portName := tools.RandomString("TESTACC-", 8)
 	portDescription := tools.RandomString("TESTACC-DESC-", 8)
 	iFalse := false
@@ -82,7 +82,7 @@ func CreatePortWithSecurityGroup(t *testing.T, client *ktvpcsdk.ServiceClient, n
 
 // CreateSecurityGroup will create a security group with a random name.
 // An error will be returned if one was failed to be created.
-func CreateSecurityGroup(t *testing.T, client *ktvpcsdk.ServiceClient) (*groups.SecGroup, error) {
+func CreateSecurityGroup(t *testing.T, client *gophercloud.ServiceClient) (*groups.SecGroup, error) {
 	secGroupName := tools.RandomString("TESTACC-", 8)
 	secGroupDescription := tools.RandomString("TESTACC-DESC-", 8)
 
@@ -109,7 +109,7 @@ func CreateSecurityGroup(t *testing.T, client *ktvpcsdk.ServiceClient) (*groups.
 // CreateSecurityGroupRule will create a security group rule with a random name
 // and random port between 80 and 99.
 // An error will be returned if one was failed to be created.
-func CreateSecurityGroupRule(t *testing.T, client *ktvpcsdk.ServiceClient, secGroupID string) (*rules.SecGroupRule, error) {
+func CreateSecurityGroupRule(t *testing.T, client *gophercloud.ServiceClient, secGroupID string) (*rules.SecGroupRule, error) {
 	t.Logf("Attempting to create security group rule in group: %s", secGroupID)
 
 	description := "Rule description"
@@ -142,7 +142,7 @@ func CreateSecurityGroupRule(t *testing.T, client *ktvpcsdk.ServiceClient, secGr
 // DeleteSecurityGroup will delete a security group of a specified ID.
 // A fatal error will occur if the deletion failed. This works best as a
 // deferred function
-func DeleteSecurityGroup(t *testing.T, client *ktvpcsdk.ServiceClient, secGroupID string) {
+func DeleteSecurityGroup(t *testing.T, client *gophercloud.ServiceClient, secGroupID string) {
 	t.Logf("Attempting to delete security group: %s", secGroupID)
 
 	err := groups.Delete(client, secGroupID).ExtractErr()
@@ -154,7 +154,7 @@ func DeleteSecurityGroup(t *testing.T, client *ktvpcsdk.ServiceClient, secGroupI
 // DeleteSecurityGroupRule will delete a security group rule of a specified ID.
 // A fatal error will occur if the deletion failed. This works best as a
 // deferred function
-func DeleteSecurityGroupRule(t *testing.T, client *ktvpcsdk.ServiceClient, ruleID string) {
+func DeleteSecurityGroupRule(t *testing.T, client *gophercloud.ServiceClient, ruleID string) {
 	t.Logf("Attempting to delete security group rule: %s", ruleID)
 
 	err := rules.Delete(client, ruleID).ExtractErr()

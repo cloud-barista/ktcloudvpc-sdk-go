@@ -5,8 +5,8 @@ import (
 )
 
 // Diagnostics
-func Get(client *ktvpcsdk.ServiceClient, serverId string) (r serverDiagnosticsResult) {
+func Get(client *gophercloud.ServiceClient, serverId string) (r serverDiagnosticsResult) {
 	resp, err := client.Get(serverDiagnosticsURL(client, serverId), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

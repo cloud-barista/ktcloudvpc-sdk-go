@@ -8,18 +8,18 @@ const (
 	memberPath   = "members"
 )
 
-func rootURL(c *ktvpcsdk.ServiceClient) string {
+func rootURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL(rootPath, resourcePath)
 }
 
-func resourceURL(c *ktvpcsdk.ServiceClient, id string) string {
+func resourceURL(c *gophercloud.ServiceClient, id string) string {
 	return c.ServiceURL(rootPath, resourcePath, id)
 }
 
-func memberRootURL(c *ktvpcsdk.ServiceClient, poolId string) string {
+func memberRootURL(c *gophercloud.ServiceClient, poolId string) string {
 	return c.ServiceURL(rootPath, resourcePath, poolId, memberPath)
 }
 
-func memberResourceURL(c *ktvpcsdk.ServiceClient, poolID string, memberID string) string {
+func memberResourceURL(c *gophercloud.ServiceClient, poolID string, memberID string) string {
 	return c.ServiceURL(rootPath, resourcePath, poolID, memberPath, memberID)
 }

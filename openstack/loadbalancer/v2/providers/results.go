@@ -25,13 +25,13 @@ type ProviderPage struct {
 // In order to do this, it needs to construct the next page's URL.
 func (r ProviderPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []ktvpcsdk.Link `json:"providers_links"`
+		Links []gophercloud.Link `json:"providers_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return ktvpcsdk.ExtractNextURL(s.Links)
+	return gophercloud.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether a ProviderPage struct is empty.
@@ -52,7 +52,7 @@ func ExtractProviders(r pagination.Page) ([]Provider, error) {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract is a function that accepts a result and extracts a provider.

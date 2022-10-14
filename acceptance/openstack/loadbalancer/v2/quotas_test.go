@@ -38,16 +38,16 @@ func TestQuotasUpdate(t *testing.T) {
 	th.AssertNoErr(t, err)
 
 	var quotaUpdateOpts = quotas.UpdateOpts{
-		Loadbalancer:  ktvpcsdk.IntToPointer(25),
-		Listener:      ktvpcsdk.IntToPointer(45),
-		Member:        ktvpcsdk.IntToPointer(205),
-		Pool:          ktvpcsdk.IntToPointer(25),
-		Healthmonitor: ktvpcsdk.IntToPointer(5),
+		Loadbalancer:  gophercloud.IntToPointer(25),
+		Listener:      gophercloud.IntToPointer(45),
+		Member:        gophercloud.IntToPointer(205),
+		Pool:          gophercloud.IntToPointer(25),
+		Healthmonitor: gophercloud.IntToPointer(5),
 	}
 	// L7 parameters are only supported in microversion v2.19 introduced in victoria
 	if clients.IsReleasesAbove(t, "stable/ussuri") {
-		quotaUpdateOpts.L7Policy = ktvpcsdk.IntToPointer(55)
-		quotaUpdateOpts.L7Rule = ktvpcsdk.IntToPointer(105)
+		quotaUpdateOpts.L7Policy = gophercloud.IntToPointer(55)
+		quotaUpdateOpts.L7Rule = gophercloud.IntToPointer(105)
 	}
 
 	newQuotas, err := quotas.Update(client, os.Getenv("OS_PROJECT_NAME"), quotaUpdateOpts).Extract()

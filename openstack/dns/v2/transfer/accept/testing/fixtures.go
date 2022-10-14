@@ -88,7 +88,7 @@ const GetOutput = `
 `
 
 // FirstTransferAccept is the first result in ListOutput
-var FirstTransferAcceptCreatedAt, _ = time.Parse(ktvpcsdk.RFC3339MilliNoZ, "2020-10-12T08:38:58.000000")
+var FirstTransferAcceptCreatedAt, _ = time.Parse(gophercloud.RFC3339MilliNoZ, "2020-10-12T08:38:58.000000")
 var FirstTransferAccept = transferAccepts.TransferAccept{
 	ID:                    "92236f39-0fad-4f8f-bf25-fbdf027de34d",
 	ZoneID:                "cd046f4b-f4dc-4e41-b946-1a2d32e1be40",
@@ -104,8 +104,8 @@ var FirstTransferAccept = transferAccepts.TransferAccept{
 }
 
 // SecondTransferRequest is the second result in ListOutput
-var SecondTransferAcceptCreatedAt, _ = time.Parse(ktvpcsdk.RFC3339MilliNoZ, "2020-10-12T09:38:58.000000")
-var SecondTransferAcceptUpdatedAt, _ = time.Parse(ktvpcsdk.RFC3339MilliNoZ, "2020-10-12T09:38:58.000000")
+var SecondTransferAcceptCreatedAt, _ = time.Parse(gophercloud.RFC3339MilliNoZ, "2020-10-12T09:38:58.000000")
+var SecondTransferAcceptUpdatedAt, _ = time.Parse(gophercloud.RFC3339MilliNoZ, "2020-10-12T09:38:58.000000")
 var SecondTransferAccept = transferAccepts.TransferAccept{
 	ID:                    "f785ef12-7ee0-4c30-bd67-a2b9edba0dff",
 	Status:                "ACTIVE",

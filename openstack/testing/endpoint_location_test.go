@@ -61,14 +61,14 @@ var catalog2 = tokens2.ServiceCatalog{
 }
 
 func TestV2EndpointExact(t *testing.T) {
-	expectedURLs := map[ktvpcsdk.Availability]string{
-		ktvpcsdk.AvailabilityPublic:   "https://public.correct.com/",
-		ktvpcsdk.AvailabilityAdmin:    "https://admin.correct.com/",
-		ktvpcsdk.AvailabilityInternal: "https://internal.correct.com/",
+	expectedURLs := map[gophercloud.Availability]string{
+		gophercloud.AvailabilityPublic:   "https://public.correct.com/",
+		gophercloud.AvailabilityAdmin:    "https://admin.correct.com/",
+		gophercloud.AvailabilityInternal: "https://internal.correct.com/",
 	}
 
 	for availability, expected := range expectedURLs {
-		actual, err := openstack.V2EndpointURL(&catalog2, ktvpcsdk.EndpointOpts{
+		actual, err := openstack.V2EndpointURL(&catalog2, gophercloud.EndpointOpts{
 			Type:         "same",
 			Name:         "same",
 			Region:       "same",
@@ -80,19 +80,19 @@ func TestV2EndpointExact(t *testing.T) {
 }
 
 func TestV2EndpointNone(t *testing.T) {
-	_, actual := openstack.V2EndpointURL(&catalog2, ktvpcsdk.EndpointOpts{
+	_, actual := openstack.V2EndpointURL(&catalog2, gophercloud.EndpointOpts{
 		Type:         "nope",
-		Availability: ktvpcsdk.AvailabilityPublic,
+		Availability: gophercloud.AvailabilityPublic,
 	})
-	expected := &ktvpcsdk.ErrEndpointNotFound{}
+	expected := &gophercloud.ErrEndpointNotFound{}
 	th.CheckEquals(t, expected.Error(), actual.Error())
 }
 
 func TestV2EndpointMultiple(t *testing.T) {
-	actual, err := openstack.V2EndpointURL(&catalog2, ktvpcsdk.EndpointOpts{
+	actual, err := openstack.V2EndpointURL(&catalog2, gophercloud.EndpointOpts{
 		Type:         "same",
 		Region:       "same",
-		Availability: ktvpcsdk.AvailabilityPublic,
+		Availability: gophercloud.AvailabilityPublic,
 	})
 
 	th.AssertNoErr(t, err)
@@ -100,7 +100,7 @@ func TestV2EndpointMultiple(t *testing.T) {
 }
 
 func TestV2EndpointBadAvailability(t *testing.T) {
-	_, err := openstack.V2EndpointURL(&catalog2, ktvpcsdk.EndpointOpts{
+	_, err := openstack.V2EndpointURL(&catalog2, gophercloud.EndpointOpts{
 		Type:         "same",
 		Name:         "same",
 		Region:       "same",
@@ -205,14 +205,14 @@ var catalog3 = tokens3.ServiceCatalog{
 }
 
 func TestV3EndpointExact(t *testing.T) {
-	expectedURLs := map[ktvpcsdk.Availability]string{
-		ktvpcsdk.AvailabilityPublic:   "https://public.correct.com/",
-		ktvpcsdk.AvailabilityAdmin:    "https://admin.correct.com/",
-		ktvpcsdk.AvailabilityInternal: "https://internal.correct.com/",
+	expectedURLs := map[gophercloud.Availability]string{
+		gophercloud.AvailabilityPublic:   "https://public.correct.com/",
+		gophercloud.AvailabilityAdmin:    "https://admin.correct.com/",
+		gophercloud.AvailabilityInternal: "https://internal.correct.com/",
 	}
 
 	for availability, expected := range expectedURLs {
-		actual, err := openstack.V3EndpointURL(&catalog3, ktvpcsdk.EndpointOpts{
+		actual, err := openstack.V3EndpointURL(&catalog3, gophercloud.EndpointOpts{
 			Type:         "same",
 			Name:         "same",
 			Region:       "same",
@@ -224,19 +224,19 @@ func TestV3EndpointExact(t *testing.T) {
 }
 
 func TestV3EndpointNone(t *testing.T) {
-	_, actual := openstack.V3EndpointURL(&catalog3, ktvpcsdk.EndpointOpts{
+	_, actual := openstack.V3EndpointURL(&catalog3, gophercloud.EndpointOpts{
 		Type:         "nope",
-		Availability: ktvpcsdk.AvailabilityPublic,
+		Availability: gophercloud.AvailabilityPublic,
 	})
-	expected := &ktvpcsdk.ErrEndpointNotFound{}
+	expected := &gophercloud.ErrEndpointNotFound{}
 	th.CheckEquals(t, expected.Error(), actual.Error())
 }
 
 func TestV3EndpointMultiple(t *testing.T) {
-	actual, err := openstack.V3EndpointURL(&catalog3, ktvpcsdk.EndpointOpts{
+	actual, err := openstack.V3EndpointURL(&catalog3, gophercloud.EndpointOpts{
 		Type:         "same",
 		Region:       "same",
-		Availability: ktvpcsdk.AvailabilityPublic,
+		Availability: gophercloud.AvailabilityPublic,
 	})
 
 	th.AssertNoErr(t, err)
@@ -244,7 +244,7 @@ func TestV3EndpointMultiple(t *testing.T) {
 }
 
 func TestV3EndpointBadAvailability(t *testing.T) {
-	_, err := openstack.V3EndpointURL(&catalog3, ktvpcsdk.EndpointOpts{
+	_, err := openstack.V3EndpointURL(&catalog3, gophercloud.EndpointOpts{
 		Type:         "same",
 		Name:         "same",
 		Region:       "same",
@@ -254,14 +254,14 @@ func TestV3EndpointBadAvailability(t *testing.T) {
 }
 
 func TestV3EndpointWithRegionID(t *testing.T) {
-	expectedURLs := map[ktvpcsdk.Availability]string{
-		ktvpcsdk.AvailabilityPublic:   "https://public.correct.com/",
-		ktvpcsdk.AvailabilityAdmin:    "https://admin.correct.com/",
-		ktvpcsdk.AvailabilityInternal: "https://internal.correct.com/",
+	expectedURLs := map[gophercloud.Availability]string{
+		gophercloud.AvailabilityPublic:   "https://public.correct.com/",
+		gophercloud.AvailabilityAdmin:    "https://admin.correct.com/",
+		gophercloud.AvailabilityInternal: "https://internal.correct.com/",
 	}
 
 	for availability, expected := range expectedURLs {
-		actual, err := openstack.V3EndpointURL(&catalog3, ktvpcsdk.EndpointOpts{
+		actual, err := openstack.V3EndpointURL(&catalog3, gophercloud.EndpointOpts{
 			Type:         "someother",
 			Name:         "someother",
 			Region:       "someother",

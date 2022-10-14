@@ -18,23 +18,23 @@ type ErrorDetails map[string]ManilaError
 // error types from provider_client.go
 func ExtractErrorInto(rawError error, errorDetails *ErrorDetails) (err error) {
 	switch e := rawError.(type) {
-	case ktvpcsdk.ErrDefault400:
+	case gophercloud.ErrDefault400:
 		err = json.Unmarshal(e.ErrUnexpectedResponseCode.Body, errorDetails)
-	case ktvpcsdk.ErrDefault401:
+	case gophercloud.ErrDefault401:
 		err = json.Unmarshal(e.ErrUnexpectedResponseCode.Body, errorDetails)
-	case ktvpcsdk.ErrDefault403:
+	case gophercloud.ErrDefault403:
 		err = json.Unmarshal(e.ErrUnexpectedResponseCode.Body, errorDetails)
-	case ktvpcsdk.ErrDefault404:
+	case gophercloud.ErrDefault404:
 		err = json.Unmarshal(e.ErrUnexpectedResponseCode.Body, errorDetails)
-	case ktvpcsdk.ErrDefault405:
+	case gophercloud.ErrDefault405:
 		err = json.Unmarshal(e.ErrUnexpectedResponseCode.Body, errorDetails)
-	case ktvpcsdk.ErrDefault408:
+	case gophercloud.ErrDefault408:
 		err = json.Unmarshal(e.ErrUnexpectedResponseCode.Body, errorDetails)
-	case ktvpcsdk.ErrDefault429:
+	case gophercloud.ErrDefault429:
 		err = json.Unmarshal(e.ErrUnexpectedResponseCode.Body, errorDetails)
-	case ktvpcsdk.ErrDefault500:
+	case gophercloud.ErrDefault500:
 		err = json.Unmarshal(e.ErrUnexpectedResponseCode.Body, errorDetails)
-	case ktvpcsdk.ErrDefault503:
+	case gophercloud.ErrDefault503:
 		err = json.Unmarshal(e.ErrUnexpectedResponseCode.Body, errorDetails)
 	default:
 		err = fmt.Errorf("Unable to extract detailed error message")

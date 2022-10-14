@@ -221,7 +221,7 @@ func (opts *AuthOptions) CanReauth() bool {
 
 // ToTokenV3CreateMap formats an AuthOptions into a create request.
 func (opts *AuthOptions) ToTokenV3CreateMap(map[string]interface{}) (map[string]interface{}, error) {
-	b, err := ktvpcsdk.BuildRequestBody(opts, "credentials")
+	b, err := gophercloud.BuildRequestBody(opts, "credentials")
 	if err != nil {
 		return nil, err
 	}
@@ -288,7 +288,7 @@ func (opts *AuthOptions) ToTokenV3CreateMap(map[string]interface{}) (map[string]
 }
 
 // Create authenticates and either generates a new token from EC2 credentials
-func Create(c *ktvpcsdk.ServiceClient, opts tokens.AuthOptionsBuilder) (r tokens.CreateResult) {
+func Create(c *gophercloud.ServiceClient, opts tokens.AuthOptionsBuilder) (r tokens.CreateResult) {
 	b, err := opts.ToTokenV3CreateMap(nil)
 	if err != nil {
 		r.Err = err
@@ -298,17 +298,17 @@ func Create(c *ktvpcsdk.ServiceClient, opts tokens.AuthOptionsBuilder) (r tokens
 	// delete "token" element, since it is used in s3tokens
 	deleteBodyElements(b, "token")
 
-	resp, err := c.Post(ec2tokensURL(c), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := c.Post(ec2tokensURL(c), b, &r.Body, &gophercloud.RequestOpts{
 		MoreHeaders: map[string]string{"X-Auth-Token": ""},
 		OkCodes:     []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // ValidateS3Token authenticates an S3 request using EC2 credentials. Doesn't
 // generate a new token ID, but returns a tokens.CreateResult.
-func ValidateS3Token(c *ktvpcsdk.ServiceClient, opts tokens.AuthOptionsBuilder) (r tokens.CreateResult) {
+func ValidateS3Token(c *gophercloud.ServiceClient, opts tokens.AuthOptionsBuilder) (r tokens.CreateResult) {
 	b, err := opts.ToTokenV3CreateMap(nil)
 	if err != nil {
 		r.Err = err
@@ -318,11 +318,11 @@ func ValidateS3Token(c *ktvpcsdk.ServiceClient, opts tokens.AuthOptionsBuilder) 
 	// delete unused element, since it is used in ec2tokens only
 	deleteBodyElements(b, "body_hash", "headers", "host", "params", "path", "verb")
 
-	resp, err := c.Post(s3tokensURL(c), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := c.Post(s3tokensURL(c), b, &r.Body, &gophercloud.RequestOpts{
 		MoreHeaders: map[string]string{"X-Auth-Token": ""},
 		OkCodes:     []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 

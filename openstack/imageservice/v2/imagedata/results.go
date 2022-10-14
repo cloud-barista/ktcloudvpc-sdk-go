@@ -9,19 +9,19 @@ import (
 // UploadResult is the result of an upload image operation. Call its ExtractErr
 // method to determine if the request succeeded or failed.
 type UploadResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // StageResult is the result of a stage image operation. Call its ExtractErr
 // method to determine if the request succeeded or failed.
 type StageResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // DownloadResult is the result of a download image operation. Call its Extract
 // method to gain access to the image data.
 type DownloadResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 	Body io.ReadCloser
 }
 

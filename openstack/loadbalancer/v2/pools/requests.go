@@ -33,7 +33,7 @@ type ListOpts struct {
 
 // ToPoolListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToPoolListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
@@ -43,7 +43,7 @@ func (opts ListOpts) ToPoolListQuery() (string, error) {
 //
 // Default policy settings return only those pools that are owned by the
 // project who submits the request, unless an admin user submits the request.
-func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := rootURL(c)
 	if opts != nil {
 		query, err := opts.ToPoolListQuery()
@@ -143,26 +143,26 @@ type CreateOpts struct {
 
 // ToPoolCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToPoolCreateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "pool")
+	return gophercloud.BuildRequestBody(opts, "pool")
 }
 
 // Create accepts a CreateOpts struct and uses the values to create a new
 // load balancer pool.
-func Create(c *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToPoolCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Post(rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get retrieves a particular pool based on its unique ID.
-func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
 	resp, err := c.Get(resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -196,27 +196,27 @@ type UpdateOpts struct {
 
 // ToPoolUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToPoolUpdateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "pool")
+	return gophercloud.BuildRequestBody(opts, "pool")
 }
 
 // Update allows pools to be updated.
-func Update(c *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToPoolUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete will permanently delete a particular pool based on its unique ID.
-func Delete(c *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := c.Delete(resourceURL(c, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -247,7 +247,7 @@ type ListMembersOpts struct {
 
 // ToMemberListQuery formats a ListOpts into a query string.
 func (opts ListMembersOpts) ToMembersListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
@@ -257,7 +257,7 @@ func (opts ListMembersOpts) ToMembersListQuery() (string, error) {
 //
 // Default policy settings return only those members that are owned by the
 // project who submits the request, unless an admin user submits the request.
-func ListMembers(c *ktvpcsdk.ServiceClient, poolID string, opts ListMembersOptsBuilder) pagination.Pager {
+func ListMembers(c *gophercloud.ServiceClient, poolID string, opts ListMembersOptsBuilder) pagination.Pager {
 	url := memberRootURL(c, poolID)
 	if opts != nil {
 		query, err := opts.ToMembersListQuery()
@@ -325,25 +325,25 @@ type CreateMemberOpts struct {
 
 // ToMemberCreateMap builds a request body from CreateMemberOpts.
 func (opts CreateMemberOpts) ToMemberCreateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "member")
+	return gophercloud.BuildRequestBody(opts, "member")
 }
 
 // CreateMember will create and associate a Member with a particular Pool.
-func CreateMember(c *ktvpcsdk.ServiceClient, poolID string, opts CreateMemberOptsBuilder) (r CreateMemberResult) {
+func CreateMember(c *gophercloud.ServiceClient, poolID string, opts CreateMemberOptsBuilder) (r CreateMemberResult) {
 	b, err := opts.ToMemberCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Post(memberRootURL(c, poolID), b, &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // GetMember retrieves a particular Pool Member based on its unique ID.
-func GetMember(c *ktvpcsdk.ServiceClient, poolID string, memberID string) (r GetMemberResult) {
+func GetMember(c *gophercloud.ServiceClient, poolID string, memberID string) (r GetMemberResult) {
 	resp, err := c.Get(memberResourceURL(c, poolID, memberID), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -387,20 +387,20 @@ type UpdateMemberOpts struct {
 
 // ToMemberUpdateMap builds a request body from UpdateMemberOpts.
 func (opts UpdateMemberOpts) ToMemberUpdateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "member")
+	return gophercloud.BuildRequestBody(opts, "member")
 }
 
 // Update allows Member to be updated.
-func UpdateMember(c *ktvpcsdk.ServiceClient, poolID string, memberID string, opts UpdateMemberOptsBuilder) (r UpdateMemberResult) {
+func UpdateMember(c *gophercloud.ServiceClient, poolID string, memberID string, opts UpdateMemberOptsBuilder) (r UpdateMemberResult) {
 	b, err := opts.ToMemberUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(memberResourceURL(c, poolID, memberID), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := c.Put(memberResourceURL(c, poolID, memberID), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200, 201, 202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -457,7 +457,7 @@ type BatchUpdateMemberOpts struct {
 
 // ToBatchMemberUpdateMap builds a request body from BatchUpdateMemberOpts.
 func (opts BatchUpdateMemberOpts) ToBatchMemberUpdateMap() (map[string]interface{}, error) {
-	b, err := ktvpcsdk.BuildRequestBody(opts, "")
+	b, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -470,7 +470,7 @@ func (opts BatchUpdateMemberOpts) ToBatchMemberUpdateMap() (map[string]interface
 }
 
 // BatchUpdateMembers updates the pool members in batch
-func BatchUpdateMembers(c *ktvpcsdk.ServiceClient, poolID string, opts []BatchUpdateMemberOpts) (r UpdateMembersResult) {
+func BatchUpdateMembers(c *gophercloud.ServiceClient, poolID string, opts []BatchUpdateMemberOpts) (r UpdateMembersResult) {
 	members := []map[string]interface{}{}
 	for _, opt := range opts {
 		b, err := opt.ToBatchMemberUpdateMap()
@@ -483,14 +483,14 @@ func BatchUpdateMembers(c *ktvpcsdk.ServiceClient, poolID string, opts []BatchUp
 
 	b := map[string]interface{}{"members": members}
 
-	resp, err := c.Put(memberRootURL(c, poolID), b, nil, &ktvpcsdk.RequestOpts{OkCodes: []int{202}})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	resp, err := c.Put(memberRootURL(c, poolID), b, nil, &gophercloud.RequestOpts{OkCodes: []int{202}})
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // DeleteMember will remove and disassociate a Member from a particular Pool.
-func DeleteMember(c *ktvpcsdk.ServiceClient, poolID string, memberID string) (r DeleteMemberResult) {
+func DeleteMember(c *gophercloud.ServiceClient, poolID string, memberID string) (r DeleteMemberResult) {
 	resp, err := c.Delete(memberResourceURL(c, poolID, memberID), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

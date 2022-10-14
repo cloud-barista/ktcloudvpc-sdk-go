@@ -29,7 +29,7 @@ func TestListFlavors(t *testing.T) {
 				ID:   1,
 				Name: "m1.tiny",
 				RAM:  512,
-				Links: []ktvpcsdk.Link{
+				Links: []gophercloud.Link{
 					{Href: "https://openstack.example.com/v1.0/1234/flavors/1", Rel: "self"},
 					{Href: "https://openstack.example.com/flavors/1", Rel: "bookmark"},
 				},
@@ -39,7 +39,7 @@ func TestListFlavors(t *testing.T) {
 				ID:   2,
 				Name: "m1.small",
 				RAM:  1024,
-				Links: []ktvpcsdk.Link{
+				Links: []gophercloud.Link{
 					{Href: "https://openstack.example.com/v1.0/1234/flavors/2", Rel: "self"},
 					{Href: "https://openstack.example.com/flavors/2", Rel: "bookmark"},
 				},
@@ -49,7 +49,7 @@ func TestListFlavors(t *testing.T) {
 				ID:   3,
 				Name: "m1.medium",
 				RAM:  2048,
-				Links: []ktvpcsdk.Link{
+				Links: []gophercloud.Link{
 					{Href: "https://openstack.example.com/v1.0/1234/flavors/3", Rel: "self"},
 					{Href: "https://openstack.example.com/flavors/3", Rel: "bookmark"},
 				},
@@ -59,7 +59,7 @@ func TestListFlavors(t *testing.T) {
 				ID:   4,
 				Name: "m1.large",
 				RAM:  4096,
-				Links: []ktvpcsdk.Link{
+				Links: []gophercloud.Link{
 					{Href: "https://openstack.example.com/v1.0/1234/flavors/4", Rel: "self"},
 					{Href: "https://openstack.example.com/flavors/4", Rel: "bookmark"},
 				},
@@ -69,7 +69,7 @@ func TestListFlavors(t *testing.T) {
 				ID:   0,
 				Name: "ds512M",
 				RAM:  512,
-				Links: []ktvpcsdk.Link{
+				Links: []gophercloud.Link{
 					{Href: "https://openstack.example.com/v1.0/1234/flavors/d1", Rel: "self"},
 					{Href: "https://openstack.example.com/flavors/d1", Rel: "bookmark"},
 				},
@@ -97,7 +97,7 @@ func TestGetFlavor(t *testing.T) {
 		ID:   1,
 		Name: "m1.tiny",
 		RAM:  512,
-		Links: []ktvpcsdk.Link{
+		Links: []gophercloud.Link{
 			{Href: "https://openstack.example.com/v1.0/1234/flavors/1", Rel: "self"},
 		},
 		StrID: "1",

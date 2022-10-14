@@ -110,7 +110,7 @@ func TestHypervisorListQuery(t *testing.T) {
 	}
 }
 
-func getHypervisorID(t *testing.T, client *ktvpcsdk.ServiceClient) (string, error) {
+func getHypervisorID(t *testing.T, client *gophercloud.ServiceClient) (string, error) {
 	allPages, err := hypervisors.List(client, nil).AllPages()
 	th.AssertNoErr(t, err)
 

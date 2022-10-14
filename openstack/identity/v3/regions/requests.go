@@ -19,12 +19,12 @@ type ListOpts struct {
 
 // ToRegionListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToRegionListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List enumerates the Regions to which the current token has access.
-func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToRegionListQuery()
@@ -39,9 +39,9 @@ func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager
 }
 
 // Get retrieves details on a single region, by ID.
-func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
 	resp, err := client.Get(getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -68,7 +68,7 @@ type CreateOpts struct {
 
 // ToRegionCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToRegionCreateMap() (map[string]interface{}, error) {
-	b, err := ktvpcsdk.BuildRequestBody(opts, "region")
+	b, err := gophercloud.BuildRequestBody(opts, "region")
 	if err != nil {
 		return nil, err
 	}
@@ -85,16 +85,16 @@ func (opts CreateOpts) ToRegionCreateMap() (map[string]interface{}, error) {
 }
 
 // Create creates a new Region.
-func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToRegionCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), &b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(createURL(client), &b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -124,7 +124,7 @@ type UpdateOpts struct {
 
 // ToRegionUpdateMap formats a UpdateOpts into an update request.
 func (opts UpdateOpts) ToRegionUpdateMap() (map[string]interface{}, error) {
-	b, err := ktvpcsdk.BuildRequestBody(opts, "region")
+	b, err := gophercloud.BuildRequestBody(opts, "region")
 	if err != nil {
 		return nil, err
 	}
@@ -147,22 +147,22 @@ func (opts UpdateOpts) ToRegionUpdateMap() (map[string]interface{}, error) {
 }
 
 // Update updates an existing Region.
-func Update(client *ktvpcsdk.ServiceClient, regionID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *gophercloud.ServiceClient, regionID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToRegionUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Patch(updateURL(client, regionID), &b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Patch(updateURL(client, regionID), &b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes a region.
-func Delete(client *ktvpcsdk.ServiceClient, regionID string) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClient, regionID string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, regionID), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

@@ -34,8 +34,8 @@ type ListOpts struct {
 //
 // Default policy settings return only those virtual IPs that are owned by the
 // tenant who submits the request, unless an admin user submits the request.
-func List(c *ktvpcsdk.ServiceClient, opts ListOpts) pagination.Pager {
-	q, err := ktvpcsdk.BuildQueryString(&opts)
+func List(c *gophercloud.ServiceClient, opts ListOpts) pagination.Pager {
+	q, err := gophercloud.BuildQueryString(&opts)
 	if err != nil {
 		return pagination.Pager{Err: err}
 	}
@@ -94,7 +94,7 @@ type CreateOpts struct {
 
 // ToVIPCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToVIPCreateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "vip")
+	return gophercloud.BuildRequestBody(opts, "vip")
 }
 
 // Create is an operation which provisions a new virtual IP based on the
@@ -108,21 +108,21 @@ func (opts CreateOpts) ToVIPCreateMap() (map[string]interface{}, error) {
 //
 // Users with an admin role can create VIPs on behalf of other tenants by
 // specifying a TenantID attribute different than their own.
-func Create(c *ktvpcsdk.ServiceClient, opts CreateOpts) (r CreateResult) {
+func Create(c *gophercloud.ServiceClient, opts CreateOpts) (r CreateResult) {
 	b, err := opts.ToVIPCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Post(rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get retrieves a particular virtual IP based on its unique ID.
-func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
 	resp, err := c.Get(resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -159,26 +159,26 @@ type UpdateOpts struct {
 
 // ToVIPUpdateMap builds a request body based on UpdateOpts.
 func (opts UpdateOpts) ToVIPUpdateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "vip")
+	return gophercloud.BuildRequestBody(opts, "vip")
 }
 
 // Update is an operation which modifies the attributes of the specified VIP.
-func Update(c *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToVIPUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200, 202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete will permanently delete a particular virtual IP based on its unique ID.
-func Delete(c *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := c.Delete(resourceURL(c, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

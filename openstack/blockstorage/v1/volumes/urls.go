@@ -2,22 +2,22 @@ package volumes
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-func createURL(c *ktvpcsdk.ServiceClient) string {
+func createURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL("volumes")
 }
 
-func listURL(c *ktvpcsdk.ServiceClient) string {
+func listURL(c *gophercloud.ServiceClient) string {
 	return createURL(c)
 }
 
-func deleteURL(c *ktvpcsdk.ServiceClient, id string) string {
+func deleteURL(c *gophercloud.ServiceClient, id string) string {
 	return c.ServiceURL("volumes", id)
 }
 
-func getURL(c *ktvpcsdk.ServiceClient, id string) string {
+func getURL(c *gophercloud.ServiceClient, id string) string {
 	return deleteURL(c, id)
 }
 
-func updateURL(c *ktvpcsdk.ServiceClient, id string) string {
+func updateURL(c *gophercloud.ServiceClient, id string) string {
 	return deleteURL(c, id)
 }

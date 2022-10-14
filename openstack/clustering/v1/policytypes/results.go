@@ -29,7 +29,7 @@ type PolicyTypeDetail struct {
 
 // policyTypeResult is the base result of a Policy Type operation.
 type policyTypeResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets any policyTypeResult result as a PolicyTypeDetail.

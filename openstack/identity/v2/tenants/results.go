@@ -34,13 +34,13 @@ func (r TenantPage) IsEmpty() (bool, error) {
 // NextPageURL extracts the "next" link from the tenants_links section of the result.
 func (r TenantPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []ktvpcsdk.Link `json:"tenants_links"`
+		Links []gophercloud.Link `json:"tenants_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return ktvpcsdk.ExtractNextURL(s.Links)
+	return gophercloud.ExtractNextURL(s.Links)
 }
 
 // ExtractTenants returns a slice of Tenants contained in a single page of
@@ -54,7 +54,7 @@ func ExtractTenants(r pagination.Page) ([]Tenant, error) {
 }
 
 type tenantResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets any tenantResults as a Tenant.
@@ -81,7 +81,7 @@ type CreateResult struct {
 // DeleteResult is the response from a Get request. Call its ExtractErr method
 // to determine if the call succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // UpdateResult is the response from a Update request. Call its Extract method

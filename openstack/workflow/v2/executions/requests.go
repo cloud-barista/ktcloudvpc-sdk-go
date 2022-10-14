@@ -45,11 +45,11 @@ type CreateOpts struct {
 
 // ToExecutionCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToExecutionCreateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "")
+	return gophercloud.BuildRequestBody(opts, "")
 }
 
 // Create requests the creation of a new execution.
-func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToExecutionCreateMap()
 	if err != nil {
 		r.Err = err
@@ -57,22 +57,22 @@ func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateRes
 	}
 
 	resp, err := client.Post(createURL(client), b, &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get retrieves details of a single execution.
 // Use ExtractExecution to convert its result into an Execution.
-func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
 	resp, err := client.Get(getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes the specified execution.
-func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -150,7 +150,7 @@ type ListDateFilter struct {
 }
 
 func (l ListDateFilter) String() string {
-	v := l.Value.Format(ktvpcsdk.RFC3339ZNoTNoZ)
+	v := l.Value.Format(gophercloud.RFC3339ZNoTNoZ)
 
 	if l.Filter != "" {
 		return fmt.Sprintf("%s:%s", l.Filter, v)
@@ -185,7 +185,7 @@ const (
 
 // ToExecutionListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToExecutionListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	if err != nil {
 		return "", err
 	}
@@ -225,7 +225,7 @@ func (opts ListOpts) ToExecutionListQuery() (string, error) {
 
 // List performs a call to list executions.
 // You may provide options to filter the executions.
-func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToExecutionListQuery()

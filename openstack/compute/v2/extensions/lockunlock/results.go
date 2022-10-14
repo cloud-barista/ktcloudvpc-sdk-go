@@ -8,9 +8,9 @@ import (
 // operations respectively. Call their ExtractErr methods to determine if the
 // requests suceeded or failed.
 type LockResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 type UnlockResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

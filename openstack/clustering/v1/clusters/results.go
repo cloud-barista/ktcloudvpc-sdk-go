@@ -50,21 +50,21 @@ func (r *Cluster) UnmarshalJSON(b []byte) error {
 	*r = Cluster(s.tmp)
 
 	if s.CreatedAt != "" {
-		r.CreatedAt, err = time.Parse(ktvpcsdk.RFC3339Milli, s.CreatedAt)
+		r.CreatedAt, err = time.Parse(gophercloud.RFC3339Milli, s.CreatedAt)
 		if err != nil {
 			return err
 		}
 	}
 
 	if s.InitAt != "" {
-		r.InitAt, err = time.Parse(ktvpcsdk.RFC3339Milli, s.InitAt)
+		r.InitAt, err = time.Parse(gophercloud.RFC3339Milli, s.InitAt)
 		if err != nil {
 			return err
 		}
 	}
 
 	if s.UpdatedAt != "" {
-		r.UpdatedAt, err = time.Parse(ktvpcsdk.RFC3339Milli, s.UpdatedAt)
+		r.UpdatedAt, err = time.Parse(gophercloud.RFC3339Milli, s.UpdatedAt)
 		if err != nil {
 			return err
 		}
@@ -96,7 +96,7 @@ type Action struct {
 
 // commonResult is the response of a base result.
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets any commonResult-based result as a Cluster.
@@ -130,7 +130,7 @@ type UpdateResult struct {
 // GetPolicyResult is the response of a Get operations. Call its Extract method
 // to interpret it as a ClusterPolicy.
 type GetPolicyResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets a GetPolicyResult as a ClusterPolicy.
@@ -145,7 +145,7 @@ func (r GetPolicyResult) Extract() (*ClusterPolicy, error) {
 // DeleteResult is the result from a Delete operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // ClusterPage contains a single page of all clusters from a List call.
@@ -174,7 +174,7 @@ func (page ClusterPolicyPage) IsEmpty() (bool, error) {
 // ActionResult is the response of Senlin actions. Call its Extract method to
 // obtain the Action ID of the action.
 type ActionResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets any Action result as an Action.
@@ -187,7 +187,7 @@ func (r ActionResult) Extract() (string, error) {
 }
 
 type CollectResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // ExtractClusters returns a slice of Clusters from the List operation.

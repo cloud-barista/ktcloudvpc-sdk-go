@@ -674,7 +674,7 @@ type CreateOptsWithCustomField struct {
 }
 
 func (opts CreateOptsWithCustomField) ToServerCreateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "server")
+	return gophercloud.BuildRequestBody(opts, "server")
 }
 
 // HandleServerNoNetworkCreationSuccessfully sets up the test server with no

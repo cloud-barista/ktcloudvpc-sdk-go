@@ -20,12 +20,12 @@ type Database struct {
 
 // CreateResult represents the result of a Create operation.
 type CreateResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // DeleteResult represents the result of a Delete operation.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // DBPage represents a single page of a paginated DB collection.
@@ -42,13 +42,13 @@ func (page DBPage) IsEmpty() (bool, error) {
 // NextPageURL will retrieve the next page URL.
 func (page DBPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []ktvpcsdk.Link `json:"databases_links"`
+		Links []gophercloud.Link `json:"databases_links"`
 	}
 	err := page.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return ktvpcsdk.ExtractNextURL(s.Links)
+	return gophercloud.ExtractNextURL(s.Links)
 }
 
 // ExtractDBs will convert a generic pagination struct into a more

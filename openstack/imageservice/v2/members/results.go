@@ -46,7 +46,7 @@ func (r MemberPage) IsEmpty() (bool, error) {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // CreateResult represents the result of a Create operation. Call its Extract
@@ -70,5 +70,5 @@ type UpdateResult struct {
 // DeleteResult represents the result of a Delete operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

@@ -37,7 +37,7 @@ Example:
         opts.AuthType = "md5"
         opts.Password = "notSoStrong"
         opts.RemoteAS = 20000
-        opts.Name = "ktvpcsdk-testing-bgp-peer"
+        opts.Name = "gophercloud-testing-bgp-peer"
         opts.PeerIP = "192.168.0.1"
         r, err := peers.Create(c, opts).Extract()
         if err != nil {

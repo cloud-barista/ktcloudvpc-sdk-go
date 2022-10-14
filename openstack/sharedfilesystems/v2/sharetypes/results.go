@@ -21,7 +21,7 @@ type ShareType struct {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract will get the ShareType object out of the commonResult object.
@@ -40,7 +40,7 @@ type CreateResult struct {
 
 // DeleteResult contains the response body and error from a Delete request.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // ShareTypePage is a pagination.pager that is returned from a call to the List function.
@@ -74,7 +74,7 @@ type GetDefaultResult struct {
 type ExtraSpecs map[string]interface{}
 
 type extraSpecsResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract will get the ExtraSpecs object out of the commonResult object.
@@ -98,7 +98,7 @@ type SetExtraSpecsResult struct {
 
 // UnsetExtraSpecsResult contains the response body and error from a Unset Extra Specs request.
 type UnsetExtraSpecsResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // ShareTypeAccess contains all the information associated with an OpenStack
@@ -111,7 +111,7 @@ type ShareTypeAccess struct {
 }
 
 type shareTypeAccessResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // ShowAccessResult contains the response body and error from a Show access request.
@@ -130,10 +130,10 @@ func (r ShowAccessResult) Extract() ([]ShareTypeAccess, error) {
 
 // AddAccessResult contains the response body and error from a Add Access request.
 type AddAccessResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // RemoveAccessResult contains the response body and error from a Remove Access request.
 type RemoveAccessResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

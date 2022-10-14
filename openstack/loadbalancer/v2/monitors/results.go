@@ -97,7 +97,7 @@ type MonitorPage struct {
 // to do this, it needs to construct the next page's URL.
 func (r MonitorPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []ktvpcsdk.Link `json:"healthmonitors_links"`
+		Links []gophercloud.Link `json:"healthmonitors_links"`
 	}
 
 	err := r.ExtractInto(&s)
@@ -105,7 +105,7 @@ func (r MonitorPage) NextPageURL() (string, error) {
 		return "", err
 	}
 
-	return ktvpcsdk.ExtractNextURL(s.Links)
+	return gophercloud.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether a MonitorPage struct is empty.
@@ -126,7 +126,7 @@ func ExtractMonitors(r pagination.Page) ([]Monitor, error) {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract is a function that accepts a result and extracts a monitor.
@@ -159,5 +159,5 @@ type UpdateResult struct {
 // DeleteResult represents the result of a delete operation. Call its
 // ExtractErr method to determine if the result succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

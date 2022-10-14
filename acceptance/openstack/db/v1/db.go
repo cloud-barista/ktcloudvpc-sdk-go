@@ -16,7 +16,7 @@ import (
 
 // CreateDatabase will create a database with a randomly generated name.
 // An error will be returned if the database was unable to be created.
-func CreateDatabase(t *testing.T, client *ktvpcsdk.ServiceClient, instanceID string) error {
+func CreateDatabase(t *testing.T, client *gophercloud.ServiceClient, instanceID string) error {
 	name := tools.RandomString("ACPTTEST", 8)
 	t.Logf("Attempting to create database: %s", name)
 
@@ -34,7 +34,7 @@ func CreateDatabase(t *testing.T, client *ktvpcsdk.ServiceClient, instanceID str
 // environment variable. The Datastore will be pulled from the
 // OS_DATASTORE_TYPE_ID environment variable.
 // An error will be returned if the instance was unable to be created.
-func CreateInstance(t *testing.T, client *ktvpcsdk.ServiceClient) (*instances.Instance, error) {
+func CreateInstance(t *testing.T, client *gophercloud.ServiceClient) (*instances.Instance, error) {
 	if testing.Short() {
 		t.Skip("Skipping test that requires instance creation in short mode.")
 	}
@@ -71,7 +71,7 @@ func CreateInstance(t *testing.T, client *ktvpcsdk.ServiceClient) (*instances.In
 
 // CreateUser will create a user with a randomly generated name.
 // An error will be returned if the user was unable to be created.
-func CreateUser(t *testing.T, client *ktvpcsdk.ServiceClient, instanceID string) error {
+func CreateUser(t *testing.T, client *gophercloud.ServiceClient, instanceID string) error {
 	name := tools.RandomString("ACPTTEST", 8)
 	password := tools.RandomString("", 8)
 	t.Logf("Attempting to create user: %s", name)
@@ -88,7 +88,7 @@ func CreateUser(t *testing.T, client *ktvpcsdk.ServiceClient, instanceID string)
 
 // DeleteDatabase deletes a database. A fatal error will occur if the database
 // failed to delete. This works best when used as a deferred function.
-func DeleteDatabase(t *testing.T, client *ktvpcsdk.ServiceClient, instanceID, name string) {
+func DeleteDatabase(t *testing.T, client *gophercloud.ServiceClient, instanceID, name string) {
 	t.Logf("Attempting to delete database: %s", name)
 	err := databases.Delete(client, instanceID, name).ExtractErr()
 	if err != nil {
@@ -100,7 +100,7 @@ func DeleteDatabase(t *testing.T, client *ktvpcsdk.ServiceClient, instanceID, na
 
 // DeleteInstance deletes an instance. A fatal error will occur if the instance
 // failed to delete. This works best when used as a deferred function.
-func DeleteInstance(t *testing.T, client *ktvpcsdk.ServiceClient, id string) {
+func DeleteInstance(t *testing.T, client *gophercloud.ServiceClient, id string) {
 	t.Logf("Attempting to delete instance: %s", id)
 	err := instances.Delete(client, id).ExtractErr()
 	if err != nil {
@@ -112,7 +112,7 @@ func DeleteInstance(t *testing.T, client *ktvpcsdk.ServiceClient, id string) {
 
 // DeleteUser deletes a user. A fatal error will occur if the user
 // failed to delete. This works best when used as a deferred function.
-func DeleteUser(t *testing.T, client *ktvpcsdk.ServiceClient, instanceID, name string) {
+func DeleteUser(t *testing.T, client *gophercloud.ServiceClient, instanceID, name string) {
 	t.Logf("Attempting to delete user: %s", name)
 	err := users.Delete(client, instanceID, name).ExtractErr()
 	if err != nil {
@@ -125,7 +125,7 @@ func DeleteUser(t *testing.T, client *ktvpcsdk.ServiceClient, instanceID, name s
 // WaitForInstanceState will poll an instance's status until it either matches
 // the specified status or the status becomes ERROR.
 func WaitForInstanceStatus(
-	client *ktvpcsdk.ServiceClient, instance *instances.Instance, status string) error {
+	client *gophercloud.ServiceClient, instance *instances.Instance, status string) error {
 	return tools.WaitFor(func() (bool, error) {
 		latest, err := instances.Get(client, instance.ID).Extract()
 		if err != nil {

@@ -149,8 +149,8 @@ func TestCreate(t *testing.T) {
 		TenantID:    "9145d91459d248b1b02fdaca97c6a75d",
 		Name:        "policy",
 		Description: "Firewall policy",
-		Shared:      ktvpcsdk.Disabled,
-		Audited:     ktvpcsdk.Enabled,
+		Shared:      gophercloud.Disabled,
+		Audited:     gophercloud.Enabled,
 		FirewallRules: []string{
 			"98a58c87-76be-ae7c-a74e-b77fffb88d95",
 			"11a58c87-76be-ae7c-a74e-b77fffb88a32",
@@ -227,7 +227,7 @@ func TestInsertRuleWithInvalidParameters(t *testing.T) {
 
 	_, err := policies.InsertRule(fake.ServiceClient(), "0", options).Extract()
 
-	// expect to fail with an ktvpcsdk error
+	// expect to fail with an gophercloud error
 	th.AssertErr(t, err)
 	th.AssertEquals(t, "Exactly one of InsertBefore and InsertAfter must be provided", err.Error())
 }

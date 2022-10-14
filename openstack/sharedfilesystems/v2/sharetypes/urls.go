@@ -2,42 +2,42 @@ package sharetypes
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-func createURL(c *ktvpcsdk.ServiceClient) string {
+func createURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL("types")
 }
 
-func deleteURL(c *ktvpcsdk.ServiceClient, id string) string {
+func deleteURL(c *gophercloud.ServiceClient, id string) string {
 	return c.ServiceURL("types", id)
 }
 
-func listURL(c *ktvpcsdk.ServiceClient) string {
+func listURL(c *gophercloud.ServiceClient) string {
 	return createURL(c)
 }
 
-func getDefaultURL(c *ktvpcsdk.ServiceClient) string {
+func getDefaultURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL("types", "default")
 }
 
-func getExtraSpecsURL(c *ktvpcsdk.ServiceClient, id string) string {
+func getExtraSpecsURL(c *gophercloud.ServiceClient, id string) string {
 	return c.ServiceURL("types", id, "extra_specs")
 }
 
-func setExtraSpecsURL(c *ktvpcsdk.ServiceClient, id string) string {
+func setExtraSpecsURL(c *gophercloud.ServiceClient, id string) string {
 	return getExtraSpecsURL(c, id)
 }
 
-func unsetExtraSpecsURL(c *ktvpcsdk.ServiceClient, id string, key string) string {
+func unsetExtraSpecsURL(c *gophercloud.ServiceClient, id string, key string) string {
 	return c.ServiceURL("types", id, "extra_specs", key)
 }
 
-func showAccessURL(c *ktvpcsdk.ServiceClient, id string) string {
+func showAccessURL(c *gophercloud.ServiceClient, id string) string {
 	return c.ServiceURL("types", id, "share_type_access")
 }
 
-func addAccessURL(c *ktvpcsdk.ServiceClient, id string) string {
+func addAccessURL(c *gophercloud.ServiceClient, id string) string {
 	return c.ServiceURL("types", id, "action")
 }
 
-func removeAccessURL(c *ktvpcsdk.ServiceClient, id string) string {
+func removeAccessURL(c *gophercloud.ServiceClient, id string) string {
 	return addAccessURL(c, id)
 }

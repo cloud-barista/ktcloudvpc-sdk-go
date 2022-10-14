@@ -6,16 +6,16 @@ import (
 )
 
 // Shelve is the operation responsible for shelving a Compute server.
-func Shelve(client *ktvpcsdk.ServiceClient, id string) (r ShelveResult) {
+func Shelve(client *gophercloud.ServiceClient, id string) (r ShelveResult) {
 	resp, err := client.Post(extensions.ActionURL(client, id), map[string]interface{}{"shelve": nil}, nil, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // ShelveOffload is the operation responsible for Shelve-Offload a Compute server.
-func ShelveOffload(client *ktvpcsdk.ServiceClient, id string) (r ShelveOffloadResult) {
+func ShelveOffload(client *gophercloud.ServiceClient, id string) (r ShelveOffloadResult) {
 	resp, err := client.Post(extensions.ActionURL(client, id), map[string]interface{}{"shelveOffload": nil}, nil, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -35,7 +35,7 @@ type UnshelveOpts struct {
 func (opts UnshelveOpts) ToUnshelveMap() (map[string]interface{}, error) {
 	// Key 'availabilty_zone' is required if the unshelve action is an object
 	// i.e {"unshelve": {}} will be rejected
-	b, err := ktvpcsdk.BuildRequestBody(opts, "unshelve")
+	b, err := gophercloud.BuildRequestBody(opts, "unshelve")
 	if err != nil {
 		return nil, err
 	}
@@ -48,13 +48,13 @@ func (opts UnshelveOpts) ToUnshelveMap() (map[string]interface{}, error) {
 }
 
 // Unshelve is the operation responsible for unshelve a Compute server.
-func Unshelve(client *ktvpcsdk.ServiceClient, id string, opts UnshelveOptsBuilder) (r UnshelveResult) {
+func Unshelve(client *gophercloud.ServiceClient, id string, opts UnshelveOptsBuilder) (r UnshelveResult) {
 	b, err := opts.ToUnshelveMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := client.Post(extensions.ActionURL(client, id), b, nil, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

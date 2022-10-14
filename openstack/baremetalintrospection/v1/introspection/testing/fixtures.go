@@ -317,8 +317,8 @@ const IntrospectionNUMADataJSONSample = `
 `
 
 var (
-	fooTimeStarted, _  = time.Parse(ktvpcsdk.RFC3339NoZ, "2017-08-17T11:33:43")
-	fooTimeFinished, _ = time.Parse(ktvpcsdk.RFC3339NoZ, "2017-08-17T11:36:16")
+	fooTimeStarted, _  = time.Parse(gophercloud.RFC3339NoZ, "2017-08-17T11:33:43")
+	fooTimeFinished, _ = time.Parse(gophercloud.RFC3339NoZ, "2017-08-17T11:36:16")
 	IntrospectionFoo   = introspection.Introspection{
 		Finished:   true,
 		State:      "finished",
@@ -334,8 +334,8 @@ var (
 		},
 	}
 
-	barTimeStarted, _  = time.Parse(ktvpcsdk.RFC3339NoZ, "2017-08-16T12:22:01")
-	barTimeFinished, _ = time.Parse(ktvpcsdk.RFC3339NoZ, "2017-08-16T12:24:30")
+	barTimeStarted, _  = time.Parse(gophercloud.RFC3339NoZ, "2017-08-16T12:22:01")
+	barTimeFinished, _ = time.Parse(gophercloud.RFC3339NoZ, "2017-08-16T12:24:30")
 	IntrospectionBar   = introspection.Introspection{
 		Finished:   true,
 		State:      "finished",

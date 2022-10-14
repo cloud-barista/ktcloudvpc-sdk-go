@@ -5,36 +5,36 @@ import (
 )
 
 // Get returns public data about a previously created QuotaSet.
-func Get(client *ktvpcsdk.ServiceClient, tenantID string) (r GetResult) {
+func Get(client *gophercloud.ServiceClient, tenantID string) (r GetResult) {
 	resp, err := client.Get(getURL(client, tenantID), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // GetDetail returns detailed public data about a previously created QuotaSet.
-func GetDetail(client *ktvpcsdk.ServiceClient, tenantID string) (r GetDetailResult) {
+func GetDetail(client *gophercloud.ServiceClient, tenantID string) (r GetDetailResult) {
 	resp, err := client.Get(getDetailURL(client, tenantID), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Updates the quotas for the given tenantID and returns the new QuotaSet.
-func Update(client *ktvpcsdk.ServiceClient, tenantID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *gophercloud.ServiceClient, tenantID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	reqBody, err := opts.ToComputeQuotaUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Put(updateURL(client, tenantID), reqBody, &r.Body, &ktvpcsdk.RequestOpts{OkCodes: []int{200}})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	resp, err := client.Put(updateURL(client, tenantID), reqBody, &r.Body, &gophercloud.RequestOpts{OkCodes: []int{200}})
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Resets the quotas for the given tenant to their default values.
-func Delete(client *ktvpcsdk.ServiceClient, tenantID string) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClient, tenantID string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, tenantID), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -99,5 +99,5 @@ type UpdateOptsBuilder interface {
 // ToComputeQuotaUpdateMap builds the update options into a serializable
 // format.
 func (opts UpdateOpts) ToComputeQuotaUpdateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "quota_set")
+	return gophercloud.BuildRequestBody(opts, "quota_set")
 }

@@ -37,12 +37,12 @@ type ListOpts struct {
 
 // ToPolicyListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToPolicyListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List instructs OpenStack to retrieve a list of policies.
-func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := policyListURL(client)
 	if opts != nil {
 		query, err := opts.ToPolicyListQuery()
@@ -73,7 +73,7 @@ type CreateOpts struct {
 
 // ToPolicyCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToPolicyCreateMap() (map[string]interface{}, error) {
-	b, err := ktvpcsdk.BuildRequestBody(opts, "")
+	b, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -82,25 +82,25 @@ func (opts CreateOpts) ToPolicyCreateMap() (map[string]interface{}, error) {
 }
 
 // Create makes a request against the API to create a policy
-func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToPolicyCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(policyCreateURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(policyCreateURL(client), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete makes a request against the API to delete a policy.
-func Delete(client *ktvpcsdk.ServiceClient, policyID string) (r DeleteResult) {
-	resp, err := client.Delete(policyDeleteURL(client, policyID), &ktvpcsdk.RequestOpts{
+func Delete(client *gophercloud.ServiceClient, policyID string) (r DeleteResult) {
+	resp, err := client.Delete(policyDeleteURL(client, policyID), &gophercloud.RequestOpts{
 		OkCodes: []int{204},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -117,20 +117,20 @@ type UpdateOpts struct {
 
 // ToPolicyUpdateMap constructs a request body from UpdateOpts.
 func (opts UpdateOpts) ToPolicyUpdateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "policy")
+	return gophercloud.BuildRequestBody(opts, "policy")
 }
 
 // Update updates a specified policy.
-func Update(client *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToPolicyUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Patch(updateURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Patch(updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -147,29 +147,29 @@ type ValidateOpts struct {
 
 // ToPolicyValidateMap formats a CreateOpts into a body map.
 func (opts ValidateOpts) ToPolicyValidateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "policy")
+	return gophercloud.BuildRequestBody(opts, "policy")
 }
 
 // Validate policy will validate a specified policy.
-func Validate(client *ktvpcsdk.ServiceClient, opts ValidateOptsBuilder) (r ValidateResult) {
+func Validate(client *gophercloud.ServiceClient, opts ValidateOptsBuilder) (r ValidateResult) {
 	b, err := opts.ToPolicyValidateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(validateURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(validateURL(client), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200, 201},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get makes a request against the API to get details for a policy.
-func Get(client *ktvpcsdk.ServiceClient, policyTypeName string) (r GetResult) {
+func Get(client *gophercloud.ServiceClient, policyTypeName string) (r GetResult) {
 	url := policyGetURL(client, policyTypeName)
-	resp, err := client.Get(url, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Get(url, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

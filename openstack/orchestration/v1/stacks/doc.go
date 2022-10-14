@@ -18,7 +18,7 @@ import (
 
 Example of Preparing Orchestration client:
 
-    client, err := openstack.NewOrchestrationV1(provider,  ktvpcsdk.EndpointOpts{Region: "RegionOne"})
+    client, err := openstack.NewOrchestrationV1(provider,  gophercloud.EndpointOpts{Region: "RegionOne"})
 
 Example of List Stack:
     all_stack_pages, err := stacks.List(client, nil).AllPages()

@@ -6,7 +6,7 @@ import (
 )
 
 // List lists all the Cinder API versions available to end-users.
-func List(c *ktvpcsdk.ServiceClient) pagination.Pager {
+func List(c *gophercloud.ServiceClient) pagination.Pager {
 	return pagination.NewPager(c, listURL(c), func(r pagination.PageResult) pagination.Page {
 		return APIVersionPage{pagination.SinglePageBase(r)}
 	})
@@ -14,8 +14,8 @@ func List(c *ktvpcsdk.ServiceClient) pagination.Pager {
 
 // Get will retrieve the volume type with the provided ID. To extract the volume
 // type from the result, call the Extract method on the GetResult.
-func Get(client *ktvpcsdk.ServiceClient, v string) (r GetResult) {
+func Get(client *gophercloud.ServiceClient, v string) (r GetResult) {
 	resp, err := client.Get(getURL(client, v), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

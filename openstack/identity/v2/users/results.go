@@ -77,7 +77,7 @@ func ExtractRoles(r pagination.Page) ([]Role, error) {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets any commonResult as a User, if possible.

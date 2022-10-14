@@ -8,7 +8,7 @@ import (
 )
 
 type trustResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // CreateResult is the response from a Create operation. Call its Extract method
@@ -20,7 +20,7 @@ type CreateResult struct {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr to
 // determine if the request succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // TrustPage is a single page of Region results.
@@ -138,7 +138,7 @@ func ExtractRoles(r pagination.Page) ([]Role, error) {
 }
 
 type GetRoleResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets any GetRoleResult result as an Role.
@@ -151,5 +151,5 @@ func (r GetRoleResult) Extract() (*Role, error) {
 }
 
 type CheckRoleResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

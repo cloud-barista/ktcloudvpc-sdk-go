@@ -16,7 +16,7 @@ import (
 
 // CreateFirewall will create a Firewall with a random name and a specified
 // policy ID. An error will be returned if the firewall could not be created.
-func CreateFirewall(t *testing.T, client *ktvpcsdk.ServiceClient, policyID string) (*firewalls.Firewall, error) {
+func CreateFirewall(t *testing.T, client *gophercloud.ServiceClient, policyID string) (*firewalls.Firewall, error) {
 	firewallName := tools.RandomString("TESTACC-", 8)
 	firewallDescription := tools.RandomString("TESTACC-DESC-", 8)
 
@@ -51,7 +51,7 @@ func CreateFirewall(t *testing.T, client *ktvpcsdk.ServiceClient, policyID strin
 // CreateFirewallOnRouter will create a Firewall with a random name and a
 // specified policy ID attached to a specified Router. An error will be
 // returned if the firewall could not be created.
-func CreateFirewallOnRouter(t *testing.T, client *ktvpcsdk.ServiceClient, policyID string, routerID string) (*firewalls.Firewall, error) {
+func CreateFirewallOnRouter(t *testing.T, client *gophercloud.ServiceClient, policyID string, routerID string) (*firewalls.Firewall, error) {
 	firewallName := tools.RandomString("TESTACC-", 8)
 	firewallDescription := tools.RandomString("TESTACC-DESC-", 8)
 
@@ -88,7 +88,7 @@ func CreateFirewallOnRouter(t *testing.T, client *ktvpcsdk.ServiceClient, policy
 
 // CreatePolicy will create a Firewall Policy with a random name and given
 // rule. An error will be returned if the rule could not be created.
-func CreatePolicy(t *testing.T, client *ktvpcsdk.ServiceClient, ruleID string) (*policies.Policy, error) {
+func CreatePolicy(t *testing.T, client *gophercloud.ServiceClient, ruleID string) (*policies.Policy, error) {
 	policyName := tools.RandomString("TESTACC-", 8)
 	policyDescription := tools.RandomString("TESTACC-DESC-", 8)
 
@@ -119,7 +119,7 @@ func CreatePolicy(t *testing.T, client *ktvpcsdk.ServiceClient, ruleID string) (
 // CreateRule will create a Firewall Rule with a random source address and
 //source port, destination address and port. An error will be returned if
 // the rule could not be created.
-func CreateRule(t *testing.T, client *ktvpcsdk.ServiceClient) (*rules.Rule, error) {
+func CreateRule(t *testing.T, client *gophercloud.ServiceClient) (*rules.Rule, error) {
 	ruleName := tools.RandomString("TESTACC-", 8)
 	sourceAddress := fmt.Sprintf("192.168.1.%d", tools.RandomInt(1, 100))
 	sourcePort := strconv.Itoa(tools.RandomInt(1, 100))
@@ -159,7 +159,7 @@ func CreateRule(t *testing.T, client *ktvpcsdk.ServiceClient) (*rules.Rule, erro
 // DeleteFirewall will delete a firewall with a specified ID. A fatal error
 // will occur if the delete was not successful. This works best when used as
 // a deferred function.
-func DeleteFirewall(t *testing.T, client *ktvpcsdk.ServiceClient, firewallID string) {
+func DeleteFirewall(t *testing.T, client *gophercloud.ServiceClient, firewallID string) {
 	t.Logf("Attempting to delete firewall: %s", firewallID)
 
 	err := firewalls.Delete(client, firewallID).ExtractErr()
@@ -178,7 +178,7 @@ func DeleteFirewall(t *testing.T, client *ktvpcsdk.ServiceClient, firewallID str
 // DeletePolicy will delete a policy with a specified ID. A fatal error will
 // occur if the delete was not successful. This works best when used as a
 // deferred function.
-func DeletePolicy(t *testing.T, client *ktvpcsdk.ServiceClient, policyID string) {
+func DeletePolicy(t *testing.T, client *gophercloud.ServiceClient, policyID string) {
 	t.Logf("Attempting to delete policy: %s", policyID)
 
 	err := policies.Delete(client, policyID).ExtractErr()
@@ -192,7 +192,7 @@ func DeletePolicy(t *testing.T, client *ktvpcsdk.ServiceClient, policyID string)
 // DeleteRule will delete a rule with a specified ID. A fatal error will occur
 // if the delete was not successful. This works best when used as a deferred
 // function.
-func DeleteRule(t *testing.T, client *ktvpcsdk.ServiceClient, ruleID string) {
+func DeleteRule(t *testing.T, client *gophercloud.ServiceClient, ruleID string) {
 	t.Logf("Attempting to delete rule: %s", ruleID)
 
 	err := rules.Delete(client, ruleID).ExtractErr()
@@ -204,11 +204,11 @@ func DeleteRule(t *testing.T, client *ktvpcsdk.ServiceClient, ruleID string) {
 }
 
 // WaitForFirewallState will wait until a firewall reaches a given state.
-func WaitForFirewallState(client *ktvpcsdk.ServiceClient, firewallID, status string) error {
+func WaitForFirewallState(client *gophercloud.ServiceClient, firewallID, status string) error {
 	return tools.WaitFor(func() (bool, error) {
 		current, err := firewalls.Get(client, firewallID).Extract()
 		if err != nil {
-			if httpStatus, ok := err.(ktvpcsdk.ErrDefault404); ok {
+			if httpStatus, ok := err.(gophercloud.ErrDefault404); ok {
 				if httpStatus.Actual == 404 {
 					if status == "DELETED" {
 						return true, nil

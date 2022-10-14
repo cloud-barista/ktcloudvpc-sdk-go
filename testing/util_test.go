@@ -14,7 +14,7 @@ import (
 )
 
 func TestWaitFor(t *testing.T) {
-	err := ktvpcsdk.WaitFor(2, func() (bool, error) {
+	err := gophercloud.WaitFor(2, func() (bool, error) {
 		return true, nil
 	})
 	th.CheckNoErr(t, err)
@@ -25,7 +25,7 @@ func TestWaitForTimeout(t *testing.T) {
 		t.Skip("skipping test in short mode.")
 	}
 
-	err := ktvpcsdk.WaitFor(1, func() (bool, error) {
+	err := gophercloud.WaitFor(1, func() (bool, error) {
 		return false, nil
 	})
 	th.AssertEquals(t, "A timeout occurred", err.Error())
@@ -36,7 +36,7 @@ func TestWaitForError(t *testing.T) {
 		t.Skip("skipping test in short mode.")
 	}
 
-	err := ktvpcsdk.WaitFor(2, func() (bool, error) {
+	err := gophercloud.WaitFor(2, func() (bool, error) {
 		return false, errors.New("Error has occurred")
 	})
 	th.AssertEquals(t, "Error has occurred", err.Error())
@@ -47,7 +47,7 @@ func TestWaitForPredicateExceed(t *testing.T) {
 		t.Skip("skipping test in short mode.")
 	}
 
-	err := ktvpcsdk.WaitFor(1, func() (bool, error) {
+	err := gophercloud.WaitFor(1, func() (bool, error) {
 		time.Sleep(4 * time.Second)
 		return false, errors.New("Just wasting time")
 	})
@@ -64,7 +64,7 @@ func TestNormalizeURL(t *testing.T) {
 		"SlashAtEnd/",
 	}
 	for i := 0; i < len(expected); i++ {
-		th.CheckEquals(t, expected[i], ktvpcsdk.NormalizeURL(urls[i]))
+		th.CheckEquals(t, expected[i], gophercloud.NormalizeURL(urls[i]))
 	}
 
 }
@@ -74,49 +74,49 @@ func TestNormalizePathURL(t *testing.T) {
 
 	rawPath := "template.yaml"
 	basePath, _ := filepath.Abs(".")
-	result, _ := ktvpcsdk.NormalizePathURL(basePath, rawPath)
+	result, _ := gophercloud.NormalizePathURL(basePath, rawPath)
 	expected := strings.Join([]string{"file:/", filepath.ToSlash(baseDir), "template.yaml"}, "/")
 	th.CheckEquals(t, expected, result)
 
 	rawPath = "http://www.google.com"
 	basePath, _ = filepath.Abs(".")
-	result, _ = ktvpcsdk.NormalizePathURL(basePath, rawPath)
+	result, _ = gophercloud.NormalizePathURL(basePath, rawPath)
 	expected = "http://www.google.com"
 	th.CheckEquals(t, expected, result)
 
 	rawPath = "very/nested/file.yaml"
 	basePath, _ = filepath.Abs(".")
-	result, _ = ktvpcsdk.NormalizePathURL(basePath, rawPath)
+	result, _ = gophercloud.NormalizePathURL(basePath, rawPath)
 	expected = strings.Join([]string{"file:/", filepath.ToSlash(baseDir), "very/nested/file.yaml"}, "/")
 	th.CheckEquals(t, expected, result)
 
 	rawPath = "very/nested/file.yaml"
 	basePath = "http://www.google.com"
-	result, _ = ktvpcsdk.NormalizePathURL(basePath, rawPath)
+	result, _ = gophercloud.NormalizePathURL(basePath, rawPath)
 	expected = "http://www.google.com/very/nested/file.yaml"
 	th.CheckEquals(t, expected, result)
 
 	rawPath = "very/nested/file.yaml/"
 	basePath = "http://www.google.com/"
-	result, _ = ktvpcsdk.NormalizePathURL(basePath, rawPath)
+	result, _ = gophercloud.NormalizePathURL(basePath, rawPath)
 	expected = "http://www.google.com/very/nested/file.yaml"
 	th.CheckEquals(t, expected, result)
 
 	rawPath = "very/nested/file.yaml"
 	basePath = "http://www.google.com/even/more"
-	result, _ = ktvpcsdk.NormalizePathURL(basePath, rawPath)
+	result, _ = gophercloud.NormalizePathURL(basePath, rawPath)
 	expected = "http://www.google.com/even/more/very/nested/file.yaml"
 	th.CheckEquals(t, expected, result)
 
 	rawPath = "very/nested/file.yaml"
 	basePath = strings.Join([]string{"file:/", filepath.ToSlash(baseDir), "only/file/even/more"}, "/")
-	result, _ = ktvpcsdk.NormalizePathURL(basePath, rawPath)
+	result, _ = gophercloud.NormalizePathURL(basePath, rawPath)
 	expected = strings.Join([]string{"file:/", filepath.ToSlash(baseDir), "only/file/even/more/very/nested/file.yaml"}, "/")
 	th.CheckEquals(t, expected, result)
 
 	rawPath = "very/nested/file.yaml/"
 	basePath = strings.Join([]string{"file:/", filepath.ToSlash(baseDir), "only/file/even/more"}, "/")
-	result, _ = ktvpcsdk.NormalizePathURL(basePath, rawPath)
+	result, _ = gophercloud.NormalizePathURL(basePath, rawPath)
 	expected = strings.Join([]string{"file:/", filepath.ToSlash(baseDir), "only/file/even/more/very/nested/file.yaml"}, "/")
 	th.CheckEquals(t, expected, result)
 
@@ -148,7 +148,7 @@ func TestRemainingKeys(t *testing.T) {
 		"custom_field": "foo",
 	}
 
-	actual := ktvpcsdk.RemainingKeys(User{}, userResponse)
+	actual := gophercloud.RemainingKeys(User{}, userResponse)
 
 	isEqual := reflect.DeepEqual(expected, actual)
 	if !isEqual {

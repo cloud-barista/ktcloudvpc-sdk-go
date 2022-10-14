@@ -24,7 +24,7 @@ import (
 
 // CreateAsymmetric Order will create a random asymmetric order.
 // An error will be returned if the order could not be created.
-func CreateAsymmetricOrder(t *testing.T, client *ktvpcsdk.ServiceClient) (*orders.Order, error) {
+func CreateAsymmetricOrder(t *testing.T, client *gophercloud.ServiceClient) (*orders.Order, error) {
 	name := tools.RandomString("TESTACC-", 8)
 	t.Logf("Attempting to create order %s", name)
 
@@ -69,7 +69,7 @@ func CreateAsymmetricOrder(t *testing.T, client *ktvpcsdk.ServiceClient) (*order
 
 // CreateCertificateContainer will create a random certificate container.
 // An error will be returned if the container could not be created.
-func CreateCertificateContainer(t *testing.T, client *ktvpcsdk.ServiceClient, passphrase, private, certificate *secrets.Secret) (*containers.Container, error) {
+func CreateCertificateContainer(t *testing.T, client *gophercloud.ServiceClient, passphrase, private, certificate *secrets.Secret) (*containers.Container, error) {
 	containerName := tools.RandomString("TESTACC-", 8)
 
 	t.Logf("Attempting to create container %s", containerName)
@@ -120,7 +120,7 @@ func CreateCertificateContainer(t *testing.T, client *ktvpcsdk.ServiceClient, pa
 
 // CreateKeyOrder will create a random key order.
 // An error will be returned if the order could not be created.
-func CreateKeyOrder(t *testing.T, client *ktvpcsdk.ServiceClient) (*orders.Order, error) {
+func CreateKeyOrder(t *testing.T, client *gophercloud.ServiceClient) (*orders.Order, error) {
 	name := tools.RandomString("TESTACC-", 8)
 	t.Logf("Attempting to create order %s", name)
 
@@ -162,7 +162,7 @@ func CreateKeyOrder(t *testing.T, client *ktvpcsdk.ServiceClient) (*orders.Order
 
 // CreateRSAContainer will create a random RSA container.
 // An error will be returned if the container could not be created.
-func CreateRSAContainer(t *testing.T, client *ktvpcsdk.ServiceClient, passphrase, private, public *secrets.Secret) (*containers.Container, error) {
+func CreateRSAContainer(t *testing.T, client *gophercloud.ServiceClient, passphrase, private, public *secrets.Secret) (*containers.Container, error) {
 	containerName := tools.RandomString("TESTACC-", 8)
 
 	t.Logf("Attempting to create container %s", containerName)
@@ -213,7 +213,7 @@ func CreateRSAContainer(t *testing.T, client *ktvpcsdk.ServiceClient, passphrase
 
 // CreateCertificateSecret will create a random certificate secret. An error
 // will be returned if the secret could not be created.
-func CreateCertificateSecret(t *testing.T, client *ktvpcsdk.ServiceClient, cert []byte) (*secrets.Secret, error) {
+func CreateCertificateSecret(t *testing.T, client *gophercloud.ServiceClient, cert []byte) (*secrets.Secret, error) {
 	b64Cert := base64.StdEncoding.EncodeToString(cert)
 
 	name := tools.RandomString("TESTACC-", 8)
@@ -255,7 +255,7 @@ func CreateCertificateSecret(t *testing.T, client *ktvpcsdk.ServiceClient, cert 
 
 // CreateEmptySecret will create a random secret with no payload. An error will
 // be returned if the secret could not be created.
-func CreateEmptySecret(t *testing.T, client *ktvpcsdk.ServiceClient) (*secrets.Secret, error) {
+func CreateEmptySecret(t *testing.T, client *gophercloud.ServiceClient) (*secrets.Secret, error) {
 	secretName := tools.RandomString("TESTACC-", 8)
 
 	t.Logf("Attempting to create secret %s", secretName)
@@ -296,7 +296,7 @@ func CreateEmptySecret(t *testing.T, client *ktvpcsdk.ServiceClient) (*secrets.S
 // CreateGenericContainer will create a random generic container with a
 // specified secret. An error will be returned if the container could not
 // be created.
-func CreateGenericContainer(t *testing.T, client *ktvpcsdk.ServiceClient, secret *secrets.Secret) (*containers.Container, error) {
+func CreateGenericContainer(t *testing.T, client *gophercloud.ServiceClient, secret *secrets.Secret) (*containers.Container, error) {
 	containerName := tools.RandomString("TESTACC-", 8)
 
 	t.Logf("Attempting to create container %s", containerName)
@@ -340,7 +340,7 @@ func CreateGenericContainer(t *testing.T, client *ktvpcsdk.ServiceClient, secret
 // ReplaceGenericContainerSecretRef will replace the container old secret
 // reference with a new one. An error will be returned if the reference could
 // not be replaced.
-func ReplaceGenericContainerSecretRef(t *testing.T, client *ktvpcsdk.ServiceClient, container *containers.Container, secretOld *secrets.Secret, secretNew *secrets.Secret) error {
+func ReplaceGenericContainerSecretRef(t *testing.T, client *gophercloud.ServiceClient, container *containers.Container, secretOld *secrets.Secret, secretNew *secrets.Secret) error {
 	containerID, err := ParseID(container.ContainerRef)
 	if err != nil {
 		return err
@@ -387,7 +387,7 @@ func ReplaceGenericContainerSecretRef(t *testing.T, client *ktvpcsdk.ServiceClie
 
 // CreatePassphraseSecret will create a random passphrase secret.
 // An error will be returned if the secret could not be created.
-func CreatePassphraseSecret(t *testing.T, client *ktvpcsdk.ServiceClient, passphrase string) (*secrets.Secret, error) {
+func CreatePassphraseSecret(t *testing.T, client *gophercloud.ServiceClient, passphrase string) (*secrets.Secret, error) {
 	secretName := tools.RandomString("TESTACC-", 8)
 
 	t.Logf("Attempting to create secret %s", secretName)
@@ -429,7 +429,7 @@ func CreatePassphraseSecret(t *testing.T, client *ktvpcsdk.ServiceClient, passph
 
 // CreatePublicSecret will create a random public secret. An error
 // will be returned if the secret could not be created.
-func CreatePublicSecret(t *testing.T, client *ktvpcsdk.ServiceClient, pub []byte) (*secrets.Secret, error) {
+func CreatePublicSecret(t *testing.T, client *gophercloud.ServiceClient, pub []byte) (*secrets.Secret, error) {
 	b64Cert := base64.StdEncoding.EncodeToString(pub)
 
 	name := tools.RandomString("TESTACC-", 8)
@@ -471,7 +471,7 @@ func CreatePublicSecret(t *testing.T, client *ktvpcsdk.ServiceClient, pub []byte
 
 // CreatePrivateSecret will create a random private secret. An error
 // will be returned if the secret could not be created.
-func CreatePrivateSecret(t *testing.T, client *ktvpcsdk.ServiceClient, priv []byte) (*secrets.Secret, error) {
+func CreatePrivateSecret(t *testing.T, client *gophercloud.ServiceClient, priv []byte) (*secrets.Secret, error) {
 	b64Cert := base64.StdEncoding.EncodeToString(priv)
 
 	name := tools.RandomString("TESTACC-", 8)
@@ -513,7 +513,7 @@ func CreatePrivateSecret(t *testing.T, client *ktvpcsdk.ServiceClient, priv []by
 
 // CreateSecretWithPayload will create a random secret with a given payload.
 // An error will be returned if the secret could not be created.
-func CreateSecretWithPayload(t *testing.T, client *ktvpcsdk.ServiceClient, payload string) (*secrets.Secret, error) {
+func CreateSecretWithPayload(t *testing.T, client *gophercloud.ServiceClient, payload string) (*secrets.Secret, error) {
 	secretName := tools.RandomString("TESTACC-", 8)
 
 	t.Logf("Attempting to create secret %s", secretName)
@@ -558,7 +558,7 @@ func CreateSecretWithPayload(t *testing.T, client *ktvpcsdk.ServiceClient, paylo
 
 // CreateSymmetricSecret will create a random symmetric secret. An error
 // will be returned if the secret could not be created.
-func CreateSymmetricSecret(t *testing.T, client *ktvpcsdk.ServiceClient) (*secrets.Secret, error) {
+func CreateSymmetricSecret(t *testing.T, client *gophercloud.ServiceClient) (*secrets.Secret, error) {
 	name := tools.RandomString("TESTACC-", 8)
 	key := tools.RandomString("", 256)
 	b64Key := base64.StdEncoding.EncodeToString([]byte(key))
@@ -604,7 +604,7 @@ func CreateSymmetricSecret(t *testing.T, client *ktvpcsdk.ServiceClient) (*secre
 // DeleteContainer will delete a container. A fatal error will occur if the
 // container could not be deleted. This works best when used as a deferred
 // function.
-func DeleteContainer(t *testing.T, client *ktvpcsdk.ServiceClient, id string) {
+func DeleteContainer(t *testing.T, client *gophercloud.ServiceClient, id string) {
 	t.Logf("Attempting to delete container %s", id)
 
 	err := containers.Delete(client, id).ExtractErr()
@@ -618,7 +618,7 @@ func DeleteContainer(t *testing.T, client *ktvpcsdk.ServiceClient, id string) {
 // DeleteOrder will delete an order. A fatal error will occur if the
 // order could not be deleted. This works best when used as a deferred
 // function.
-func DeleteOrder(t *testing.T, client *ktvpcsdk.ServiceClient, id string) {
+func DeleteOrder(t *testing.T, client *gophercloud.ServiceClient, id string) {
 	t.Logf("Attempting to delete order %s", id)
 
 	err := orders.Delete(client, id).ExtractErr()
@@ -631,7 +631,7 @@ func DeleteOrder(t *testing.T, client *ktvpcsdk.ServiceClient, id string) {
 
 // DeleteSecret will delete a secret. A fatal error will occur if the secret
 // could not be deleted. This works best when used as a deferred function.
-func DeleteSecret(t *testing.T, client *ktvpcsdk.ServiceClient, id string) {
+func DeleteSecret(t *testing.T, client *gophercloud.ServiceClient, id string) {
 	t.Logf("Attempting to delete secret %s", id)
 
 	err := secrets.Delete(client, id).ExtractErr()
@@ -740,7 +740,7 @@ func CreateRSAKeyPair(t *testing.T, passphrase string) ([]byte, []byte, error) {
 	return keyPem, pubPem, nil
 }
 
-func WaitForOrder(client *ktvpcsdk.ServiceClient, orderID string) error {
+func WaitForOrder(client *gophercloud.ServiceClient, orderID string) error {
 	return tools.WaitFor(func() (bool, error) {
 		order, err := orders.Get(client, orderID).Extract()
 		if err != nil {

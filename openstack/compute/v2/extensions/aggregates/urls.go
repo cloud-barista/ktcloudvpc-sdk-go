@@ -2,34 +2,34 @@ package aggregates
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-func aggregatesListURL(c *ktvpcsdk.ServiceClient) string {
+func aggregatesListURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL("os-aggregates")
 }
 
-func aggregatesCreateURL(c *ktvpcsdk.ServiceClient) string {
+func aggregatesCreateURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL("os-aggregates")
 }
 
-func aggregatesDeleteURL(c *ktvpcsdk.ServiceClient, aggregateID string) string {
+func aggregatesDeleteURL(c *gophercloud.ServiceClient, aggregateID string) string {
 	return c.ServiceURL("os-aggregates", aggregateID)
 }
 
-func aggregatesGetURL(c *ktvpcsdk.ServiceClient, aggregateID string) string {
+func aggregatesGetURL(c *gophercloud.ServiceClient, aggregateID string) string {
 	return c.ServiceURL("os-aggregates", aggregateID)
 }
 
-func aggregatesUpdateURL(c *ktvpcsdk.ServiceClient, aggregateID string) string {
+func aggregatesUpdateURL(c *gophercloud.ServiceClient, aggregateID string) string {
 	return c.ServiceURL("os-aggregates", aggregateID)
 }
 
-func aggregatesAddHostURL(c *ktvpcsdk.ServiceClient, aggregateID string) string {
+func aggregatesAddHostURL(c *gophercloud.ServiceClient, aggregateID string) string {
 	return c.ServiceURL("os-aggregates", aggregateID, "action")
 }
 
-func aggregatesRemoveHostURL(c *ktvpcsdk.ServiceClient, aggregateID string) string {
+func aggregatesRemoveHostURL(c *gophercloud.ServiceClient, aggregateID string) string {
 	return c.ServiceURL("os-aggregates", aggregateID, "action")
 }
 
-func aggregatesSetMetadataURL(c *ktvpcsdk.ServiceClient, aggregateID string) string {
+func aggregatesSetMetadataURL(c *gophercloud.ServiceClient, aggregateID string) string {
 	return c.ServiceURL("os-aggregates", aggregateID, "action")
 }

@@ -3,7 +3,7 @@ package rescueunrescue
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // RescueResult is the response from a Rescue operation. Call its Extract
@@ -15,7 +15,7 @@ type RescueResult struct {
 // UnrescueResult is the response from an UnRescue operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type UnrescueResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // Extract interprets any RescueResult as an AdminPass, if possible.

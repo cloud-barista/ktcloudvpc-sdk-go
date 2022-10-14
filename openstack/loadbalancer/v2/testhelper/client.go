@@ -7,7 +7,7 @@ import (
 
 const TokenID = client.TokenID
 
-func ServiceClient() *ktvpcsdk.ServiceClient {
+func ServiceClient() *gophercloud.ServiceClient {
 	sc := client.ServiceClient()
 	sc.ResourceBase = sc.Endpoint + "v2.0/"
 	return sc

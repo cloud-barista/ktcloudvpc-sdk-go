@@ -4,34 +4,34 @@ import (
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
-func listURL(c *ktvpcsdk.ServiceClient, container string) string {
+func listURL(c *gophercloud.ServiceClient, container string) string {
 	return c.ServiceURL(container)
 }
 
-func copyURL(c *ktvpcsdk.ServiceClient, container, object string) string {
+func copyURL(c *gophercloud.ServiceClient, container, object string) string {
 	return c.ServiceURL(container, object)
 }
 
-func createURL(c *ktvpcsdk.ServiceClient, container, object string) string {
+func createURL(c *gophercloud.ServiceClient, container, object string) string {
 	return copyURL(c, container, object)
 }
 
-func getURL(c *ktvpcsdk.ServiceClient, container, object string) string {
+func getURL(c *gophercloud.ServiceClient, container, object string) string {
 	return copyURL(c, container, object)
 }
 
-func deleteURL(c *ktvpcsdk.ServiceClient, container, object string) string {
+func deleteURL(c *gophercloud.ServiceClient, container, object string) string {
 	return copyURL(c, container, object)
 }
 
-func downloadURL(c *ktvpcsdk.ServiceClient, container, object string) string {
+func downloadURL(c *gophercloud.ServiceClient, container, object string) string {
 	return copyURL(c, container, object)
 }
 
-func updateURL(c *ktvpcsdk.ServiceClient, container, object string) string {
+func updateURL(c *gophercloud.ServiceClient, container, object string) string {
 	return copyURL(c, container, object)
 }
 
-func bulkDeleteURL(c *ktvpcsdk.ServiceClient) string {
+func bulkDeleteURL(c *gophercloud.ServiceClient) string {
 	return c.Endpoint + "?bulk-delete=true"
 }

@@ -22,7 +22,7 @@ func (r *Attachment) UnmarshalJSON(b []byte) error {
 	type tmp Attachment
 	var s struct {
 		tmp
-		AttachedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"attached_at"`
+		AttachedAt gophercloud.JSONRFC3339MilliNoZ `json:"attached_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -81,8 +81,8 @@ func (r *Volume) UnmarshalJSON(b []byte) error {
 	type tmp Volume
 	var s struct {
 		tmp
-		CreatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"updated_at"`
+		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
+		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -111,13 +111,13 @@ func (r VolumePage) IsEmpty() (bool, error) {
 // next page of results.
 func (r VolumePage) NextPageURL() (string, error) {
 	var s struct {
-		Links []ktvpcsdk.Link `json:"volumes_links"`
+		Links []gophercloud.Link `json:"volumes_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return ktvpcsdk.ExtractNextURL(s.Links)
+	return gophercloud.ExtractNextURL(s.Links)
 }
 
 // ExtractVolumes extracts and returns Volumes. It is used while iterating over a volumes.List call.
@@ -128,7 +128,7 @@ func ExtractVolumes(r pagination.Page) ([]Volume, error) {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract will get the Volume object out of the commonResult object.
@@ -163,5 +163,5 @@ type UpdateResult struct {
 
 // DeleteResult contains the response body and error from a Delete request.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

@@ -2,50 +2,50 @@ package users
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-func listURL(client *ktvpcsdk.ServiceClient) string {
+func listURL(client *gophercloud.ServiceClient) string {
 	return client.ServiceURL("users")
 }
 
-func getURL(client *ktvpcsdk.ServiceClient, userID string) string {
+func getURL(client *gophercloud.ServiceClient, userID string) string {
 	return client.ServiceURL("users", userID)
 }
 
-func createURL(client *ktvpcsdk.ServiceClient) string {
+func createURL(client *gophercloud.ServiceClient) string {
 	return client.ServiceURL("users")
 }
 
-func updateURL(client *ktvpcsdk.ServiceClient, userID string) string {
+func updateURL(client *gophercloud.ServiceClient, userID string) string {
 	return client.ServiceURL("users", userID)
 }
 
-func changePasswordURL(client *ktvpcsdk.ServiceClient, userID string) string {
+func changePasswordURL(client *gophercloud.ServiceClient, userID string) string {
 	return client.ServiceURL("users", userID, "password")
 }
 
-func deleteURL(client *ktvpcsdk.ServiceClient, userID string) string {
+func deleteURL(client *gophercloud.ServiceClient, userID string) string {
 	return client.ServiceURL("users", userID)
 }
 
-func listGroupsURL(client *ktvpcsdk.ServiceClient, userID string) string {
+func listGroupsURL(client *gophercloud.ServiceClient, userID string) string {
 	return client.ServiceURL("users", userID, "groups")
 }
 
-func addToGroupURL(client *ktvpcsdk.ServiceClient, groupID, userID string) string {
+func addToGroupURL(client *gophercloud.ServiceClient, groupID, userID string) string {
 	return client.ServiceURL("groups", groupID, "users", userID)
 }
 
-func isMemberOfGroupURL(client *ktvpcsdk.ServiceClient, groupID, userID string) string {
+func isMemberOfGroupURL(client *gophercloud.ServiceClient, groupID, userID string) string {
 	return client.ServiceURL("groups", groupID, "users", userID)
 }
 
-func removeFromGroupURL(client *ktvpcsdk.ServiceClient, groupID, userID string) string {
+func removeFromGroupURL(client *gophercloud.ServiceClient, groupID, userID string) string {
 	return client.ServiceURL("groups", groupID, "users", userID)
 }
 
-func listProjectsURL(client *ktvpcsdk.ServiceClient, userID string) string {
+func listProjectsURL(client *gophercloud.ServiceClient, userID string) string {
 	return client.ServiceURL("users", userID, "projects")
 }
 
-func listInGroupURL(client *ktvpcsdk.ServiceClient, groupID string) string {
+func listInGroupURL(client *gophercloud.ServiceClient, groupID string) string {
 	return client.ServiceURL("groups", groupID, "users")
 }

@@ -32,10 +32,10 @@ func TestCreateCluster(t *testing.T) {
 		MasterLBEnabled:   &masterLBEnabled,
 		Name:              "k8s",
 		NodeCount:         &nodeCount,
-		FloatingIPEnabled: ktvpcsdk.Enabled,
+		FloatingIPEnabled: gophercloud.Enabled,
 		FixedNetwork:      "private_network",
 		FixedSubnet:       "private_subnet",
-		MergeLabels:       ktvpcsdk.Enabled,
+		MergeLabels:       gophercloud.Enabled,
 	}
 
 	sc := fake.ServiceClient()

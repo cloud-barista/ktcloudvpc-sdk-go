@@ -32,7 +32,7 @@ Example to auth a client using EC2 access and secret keys
 		AllowReauth: true,
 	}
 
-	err = openstack.AuthenticateV3(client, authOptions, ktvpcsdk.EndpointOpts{})
+	err = openstack.AuthenticateV3(client, authOptions, gophercloud.EndpointOpts{})
 	if err != nil {
 		panic(err)
 	}

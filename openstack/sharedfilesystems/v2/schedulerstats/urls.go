@@ -2,10 +2,10 @@ package schedulerstats
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-func poolsListURL(c *ktvpcsdk.ServiceClient) string {
+func poolsListURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL("scheduler-stats", "pools")
 }
 
-func poolsListDetailURL(c *ktvpcsdk.ServiceClient) string {
+func poolsListDetailURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL("scheduler-stats", "pools", "detail")
 }

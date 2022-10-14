@@ -18,7 +18,7 @@ type QoS struct {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract will get the QoS object out of the commonResult object.
@@ -40,7 +40,7 @@ type CreateResult struct {
 
 // DeleteResult contains the response body and error from a Delete request.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 type QoSPage struct {
@@ -57,13 +57,13 @@ func (page QoSPage) IsEmpty() (bool, error) {
 // next page of results.
 func (page QoSPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []ktvpcsdk.Link `json:"qos_specs_links"`
+		Links []gophercloud.Link `json:"qos_specs_links"`
 	}
 	err := page.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return ktvpcsdk.ExtractNextURL(s.Links)
+	return gophercloud.ExtractNextURL(s.Links)
 }
 
 // ExtractQoS provides access to the list of qos in a page acquired
@@ -95,22 +95,22 @@ func (r updateResult) Extract() (map[string]string, error) {
 // key-value pairs. Call its Extract method to interpret it as a
 // map[string]interface.
 type updateResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // AssociateResult contains the response body and error from a Associate request.
 type AssociateResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // DisassociateResult contains the response body and error from a Disassociate request.
 type DisassociateResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // DisassociateAllResult contains the response body and error from a DisassociateAll request.
 type DisassociateAllResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // QoS contains all the information associated with an OpenStack QoS specification.

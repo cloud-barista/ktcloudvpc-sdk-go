@@ -17,7 +17,7 @@ import (
 	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
-func createNetworkWithTags(t *testing.T, client *ktvpcsdk.ServiceClient, tags []string) (network *networks.Network) {
+func createNetworkWithTags(t *testing.T, client *gophercloud.ServiceClient, tags []string) (network *networks.Network) {
 	// Create Network
 	network, err := networking.CreateNetwork(t, client)
 	th.AssertNoErr(t, err)
@@ -77,7 +77,7 @@ func TestTags(t *testing.T) {
 	th.AssertEquals(t, 0, len(tags))
 }
 
-func listNetworkWithTagOpts(t *testing.T, client *ktvpcsdk.ServiceClient, listOpts networks.ListOpts) (ids []string) {
+func listNetworkWithTagOpts(t *testing.T, client *gophercloud.ServiceClient, listOpts networks.ListOpts) (ids []string) {
 	allPages, err := networks.List(client, listOpts).AllPages()
 	th.AssertNoErr(t, err)
 	allNetworks, err := networks.ExtractNetworks(allPages)

@@ -53,9 +53,9 @@ func (r *Secret) UnmarshalJSON(b []byte) error {
 	type tmp Secret
 	var s struct {
 		tmp
-		Created    ktvpcsdk.JSONRFC3339NoZ `json:"created"`
-		Updated    ktvpcsdk.JSONRFC3339NoZ `json:"updated"`
-		Expiration ktvpcsdk.JSONRFC3339NoZ `json:"expiration"`
+		Created    gophercloud.JSONRFC3339NoZ `json:"created"`
+		Updated    gophercloud.JSONRFC3339NoZ `json:"updated"`
+		Expiration gophercloud.JSONRFC3339NoZ `json:"expiration"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -71,7 +71,7 @@ func (r *Secret) UnmarshalJSON(b []byte) error {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets any commonResult as a Secret.
@@ -96,19 +96,19 @@ type CreateResult struct {
 // UpdateResult is the response from an Update operation. Call its ExtractErr to
 // determine if the request succeeded or failed.
 type UpdateResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // DeleteResult is the response from a Delete operation. Call its ExtractErr to
 // determine if the request succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // PayloadResult is the response from a GetPayload operation. Call its Extract
 // method to extract the payload as a string.
 type PayloadResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 	Body io.ReadCloser
 }
 
@@ -166,7 +166,7 @@ func ExtractSecrets(r pagination.Page) ([]Secret, error) {
 // MetadataResult is the result of a metadata request. Call its Extract method
 // to interpret it as a map[string]string.
 type MetadataResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets any MetadataResult as map[string]string.
@@ -181,7 +181,7 @@ func (r MetadataResult) Extract() (map[string]string, error) {
 // MetadataCreateResult is the result of a metadata create request. Call its
 // Extract method to interpret it as a map[string]string.
 type MetadataCreateResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets any MetadataCreateResult as a map[string]string.
@@ -200,7 +200,7 @@ type Metadatum struct {
 // MetadatumResult is the result of a metadatum request. Call its
 // Extract method to interpret it as a map[string]string.
 type MetadatumResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets any MetadatumResult as a map[string]string.
@@ -216,11 +216,11 @@ func (r MetadatumResult) Extract() (*Metadatum, error) {
 // NOTE: This could be a MetadatumResponse but, at the time of testing, it looks
 // like Barbican was returning errneous JSON in the response.
 type MetadatumCreateResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // MetadatumDeleteResult is the response from a metadatum Delete operation. Call
 // its ExtractErr to determine if the request succeeded or failed.
 type MetadatumDeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

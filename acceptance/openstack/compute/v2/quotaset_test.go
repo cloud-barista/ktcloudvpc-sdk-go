@@ -34,7 +34,7 @@ func TestQuotasetGet(t *testing.T) {
 	th.AssertEquals(t, quotaSet.FixedIPs, -1)
 }
 
-func getProjectID(t *testing.T, client *ktvpcsdk.ServiceClient) (string, error) {
+func getProjectID(t *testing.T, client *gophercloud.ServiceClient) (string, error) {
 	allPages, err := projects.ListAvailable(client).AllPages()
 	th.AssertNoErr(t, err)
 
@@ -48,7 +48,7 @@ func getProjectID(t *testing.T, client *ktvpcsdk.ServiceClient) (string, error) 
 	return "", fmt.Errorf("Unable to get project ID")
 }
 
-func getProjectIDByName(t *testing.T, client *ktvpcsdk.ServiceClient, name string) (string, error) {
+func getProjectIDByName(t *testing.T, client *gophercloud.ServiceClient, name string) (string, error) {
 	allPages, err := projects.List(client, nil).AllPages()
 	th.AssertNoErr(t, err)
 
@@ -66,20 +66,20 @@ func getProjectIDByName(t *testing.T, client *ktvpcsdk.ServiceClient, name strin
 
 // What will be sent as desired Quotas to the Server
 var UpdateQuotaOpts = quotasets.UpdateOpts{
-	FixedIPs:                 ktvpcsdk.IntToPointer(10),
-	FloatingIPs:              ktvpcsdk.IntToPointer(10),
-	InjectedFileContentBytes: ktvpcsdk.IntToPointer(10240),
-	InjectedFilePathBytes:    ktvpcsdk.IntToPointer(255),
-	InjectedFiles:            ktvpcsdk.IntToPointer(5),
-	KeyPairs:                 ktvpcsdk.IntToPointer(10),
-	MetadataItems:            ktvpcsdk.IntToPointer(128),
-	RAM:                      ktvpcsdk.IntToPointer(20000),
-	SecurityGroupRules:       ktvpcsdk.IntToPointer(20),
-	SecurityGroups:           ktvpcsdk.IntToPointer(10),
-	Cores:                    ktvpcsdk.IntToPointer(10),
-	Instances:                ktvpcsdk.IntToPointer(4),
-	ServerGroups:             ktvpcsdk.IntToPointer(2),
-	ServerGroupMembers:       ktvpcsdk.IntToPointer(3),
+	FixedIPs:                 gophercloud.IntToPointer(10),
+	FloatingIPs:              gophercloud.IntToPointer(10),
+	InjectedFileContentBytes: gophercloud.IntToPointer(10240),
+	InjectedFilePathBytes:    gophercloud.IntToPointer(255),
+	InjectedFiles:            gophercloud.IntToPointer(5),
+	KeyPairs:                 gophercloud.IntToPointer(10),
+	MetadataItems:            gophercloud.IntToPointer(128),
+	RAM:                      gophercloud.IntToPointer(20000),
+	SecurityGroupRules:       gophercloud.IntToPointer(20),
+	SecurityGroups:           gophercloud.IntToPointer(10),
+	Cores:                    gophercloud.IntToPointer(10),
+	Instances:                gophercloud.IntToPointer(4),
+	ServerGroups:             gophercloud.IntToPointer(2),
+	ServerGroupMembers:       gophercloud.IntToPointer(3),
 }
 
 // What the Server hopefully returns as the new Quotas

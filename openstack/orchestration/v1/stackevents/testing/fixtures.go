@@ -20,7 +20,7 @@ var FindExpected = []stackevents.Event{
 	{
 		ResourceName: "hello_world",
 		Time:         Timestamp1,
-		Links: []ktvpcsdk.Link{
+		Links: []gophercloud.Link{
 			{
 				Href: "http://166.78.160.107:8004/v1/98606384f58d4ad0b3db7d0d779549ac/stacks/postman_stack/5f57cff9-93fc-424e-9f78-df0515e7f48b/resources/hello_world/events/06feb26f-9298-4a9b-8749-9d770e5d577a",
 				Rel:  "self",
@@ -43,7 +43,7 @@ var FindExpected = []stackevents.Event{
 	{
 		ResourceName: "hello_world",
 		Time:         Timestamp2,
-		Links: []ktvpcsdk.Link{
+		Links: []gophercloud.Link{
 			{
 				Href: "http://166.78.160.107:8004/v1/98606384f58d4ad0b3db7d0d779549ac/stacks/postman_stack/5f57cff9-93fc-424e-9f78-df0515e7f48b/resources/hello_world/events/93940999-7d40-44ae-8de4-19624e7b8d18",
 				Rel:  "self",
@@ -137,7 +137,7 @@ var ListExpected = []stackevents.Event{
 	{
 		ResourceName: "hello_world",
 		Time:         Timestamp1,
-		Links: []ktvpcsdk.Link{
+		Links: []gophercloud.Link{
 			{
 				Href: "http://166.78.160.107:8004/v1/98606384f58d4ad0b3db7d0d779549ac/stacks/postman_stack/5f57cff9-93fc-424e-9f78-df0515e7f48b/resources/hello_world/events/06feb26f-9298-4a9b-8749-9d770e5d577a",
 				Rel:  "self",
@@ -160,7 +160,7 @@ var ListExpected = []stackevents.Event{
 	{
 		ResourceName: "hello_world",
 		Time:         Timestamp2,
-		Links: []ktvpcsdk.Link{
+		Links: []gophercloud.Link{
 			{
 				Href: "http://166.78.160.107:8004/v1/98606384f58d4ad0b3db7d0d779549ac/stacks/postman_stack/5f57cff9-93fc-424e-9f78-df0515e7f48b/resources/hello_world/events/93940999-7d40-44ae-8de4-19624e7b8d18",
 				Rel:  "self",
@@ -262,7 +262,7 @@ var ListResourceEventsExpected = []stackevents.Event{
 	{
 		ResourceName: "hello_world",
 		Time:         Timestamp1,
-		Links: []ktvpcsdk.Link{
+		Links: []gophercloud.Link{
 			{
 				Href: "http://166.78.160.107:8004/v1/98606384f58d4ad0b3db7d0d779549ac/stacks/postman_stack/5f57cff9-93fc-424e-9f78-df0515e7f48b/resources/hello_world/events/06feb26f-9298-4a9b-8749-9d770e5d577a",
 				Rel:  "self",
@@ -285,7 +285,7 @@ var ListResourceEventsExpected = []stackevents.Event{
 	{
 		ResourceName: "hello_world",
 		Time:         Timestamp2,
-		Links: []ktvpcsdk.Link{
+		Links: []gophercloud.Link{
 			{
 				Href: "http://166.78.160.107:8004/v1/98606384f58d4ad0b3db7d0d779549ac/stacks/postman_stack/5f57cff9-93fc-424e-9f78-df0515e7f48b/resources/hello_world/events/93940999-7d40-44ae-8de4-19624e7b8d18",
 				Rel:  "self",
@@ -386,7 +386,7 @@ func HandleListResourceEventsSuccessfully(t *testing.T, output string) {
 var GetExpected = &stackevents.Event{
 	ResourceName: "hello_world",
 	Time:         Timestamp2,
-	Links: []ktvpcsdk.Link{
+	Links: []gophercloud.Link{
 		{
 			Href: "http://166.78.160.107:8004/v1/98606384f58d4ad0b3db7d0d779549ac/stacks/postman_stack/5f57cff9-93fc-424e-9f78-df0515e7f48b/resources/hello_world/events/93940999-7d40-44ae-8de4-19624e7b8d18",
 			Rel:  "self",

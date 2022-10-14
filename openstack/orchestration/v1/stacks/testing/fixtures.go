@@ -18,7 +18,7 @@ var Updated_time, _ = time.Parse(time.RFC3339, "2018-06-26T07:59:17Z")
 // CreateExpected represents the expected object from a Create request.
 var CreateExpected = &stacks.CreatedStack{
 	ID: "16ef0584-4458-41eb-87c8-0dc8d5f66c87",
-	Links: []ktvpcsdk.Link{
+	Links: []gophercloud.Link{
 		{
 			Href: "http://168.28.170.117:8004/v1/98606384f58drad0bhdb7d02779549ac/stacks/stackcreated/16ef0584-4458-41eb-87c8-0dc8d5f66c87",
 			Rel:  "self",
@@ -56,7 +56,7 @@ func HandleCreateSuccessfully(t *testing.T, output string) {
 var ListExpected = []stacks.ListedStack{
 	{
 		Description: "Simple template to test heat commands",
-		Links: []ktvpcsdk.Link{
+		Links: []gophercloud.Link{
 			{
 				Href: "http://166.76.160.117:8004/v1/98606384f58d4ad0b3db7d0d779549ac/stacks/postman_stack/16ef0584-4458-41eb-87c8-0dc8d5f66c87",
 				Rel:  "self",
@@ -71,14 +71,14 @@ var ListExpected = []stacks.ListedStack{
 	},
 	{
 		Description: "Simple template to test heat commands",
-		Links: []ktvpcsdk.Link{
+		Links: []gophercloud.Link{
 			{
-				Href: "http://166.76.160.117:8004/v1/98606384f58d4ad0b3db7d0d779549ac/stacks/ktvpcsdk-test-stack-2/db6977b2-27aa-4775-9ae7-6213212d4ada",
+				Href: "http://166.76.160.117:8004/v1/98606384f58d4ad0b3db7d0d779549ac/stacks/gophercloud-test-stack-2/db6977b2-27aa-4775-9ae7-6213212d4ada",
 				Rel:  "self",
 			},
 		},
 		StatusReason: "Stack successfully updated",
-		Name:         "ktvpcsdk-test-stack-2",
+		Name:         "gophercloud-test-stack-2",
 		CreationTime: Create_time,
 		UpdatedTime:  Updated_time,
 		Status:       "UPDATE_COMPLETE",
@@ -111,12 +111,12 @@ const FullListOutput = `
     "description": "Simple template to test heat commands",
     "links": [
     {
-      "href": "http://166.76.160.117:8004/v1/98606384f58d4ad0b3db7d0d779549ac/stacks/ktvpcsdk-test-stack-2/db6977b2-27aa-4775-9ae7-6213212d4ada",
+      "href": "http://166.76.160.117:8004/v1/98606384f58d4ad0b3db7d0d779549ac/stacks/gophercloud-test-stack-2/db6977b2-27aa-4775-9ae7-6213212d4ada",
       "rel": "self"
     }
     ],
     "stack_status_reason": "Stack successfully updated",
-    "stack_name": "ktvpcsdk-test-stack-2",
+    "stack_name": "gophercloud-test-stack-2",
     "creation_time": "2018-06-26T07:58:17Z",
     "updated_time": "2018-06-26T07:59:17Z",
     "stack_status": "UPDATE_COMPLETE",
@@ -162,7 +162,7 @@ var GetExpected = &stacks.RetrievedStack{
 	Name:         "postman_stack",
 	Outputs:      []map[string]interface{}{},
 	CreationTime: Create_time,
-	Links: []ktvpcsdk.Link{
+	Links: []gophercloud.Link{
 		{
 			Href: "http://166.76.160.117:8004/v1/98606384f58d4ad0b3db7d0d779549ac/stacks/postman_stack/16ef0584-4458-41eb-87c8-0dc8d5f66c87",
 			Rel:  "self",
@@ -238,7 +238,7 @@ func HandleFindSuccessfully(t *testing.T, output string) {
 // HandleUpdateSuccessfully creates an HTTP handler at `/stacks/postman_stack/16ef0584-4458-41eb-87c8-0dc8d5f66c87`
 // on the test handler mux that responds with an `Update` response.
 func HandleUpdateSuccessfully(t *testing.T) {
-	th.Mux.HandleFunc("/stacks/ktvpcsdk-test-stack-2/db6977b2-27aa-4775-9ae7-6213212d4ada", func(w http.ResponseWriter, r *http.Request) {
+	th.Mux.HandleFunc("/stacks/gophercloud-test-stack-2/db6977b2-27aa-4775-9ae7-6213212d4ada", func(w http.ResponseWriter, r *http.Request) {
 		th.TestMethod(t, r, "PUT")
 		th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
 		th.TestHeader(t, r, "Accept", "application/json")
@@ -251,7 +251,7 @@ func HandleUpdateSuccessfully(t *testing.T) {
 // HandleUpdatePatchSuccessfully creates an HTTP handler at `/stacks/postman_stack/16ef0584-4458-41eb-87c8-0dc8d5f66c87`
 // on the test handler mux that responds with an `Update` response.
 func HandleUpdatePatchSuccessfully(t *testing.T) {
-	th.Mux.HandleFunc("/stacks/ktvpcsdk-test-stack-2/db6977b2-27aa-4775-9ae7-6213212d4ada", func(w http.ResponseWriter, r *http.Request) {
+	th.Mux.HandleFunc("/stacks/gophercloud-test-stack-2/db6977b2-27aa-4775-9ae7-6213212d4ada", func(w http.ResponseWriter, r *http.Request) {
 		th.TestMethod(t, r, "PATCH")
 		th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
 		th.TestHeader(t, r, "Accept", "application/json")
@@ -264,7 +264,7 @@ func HandleUpdatePatchSuccessfully(t *testing.T) {
 // HandleDeleteSuccessfully creates an HTTP handler at `/stacks/postman_stack/16ef0584-4458-41eb-87c8-0dc8d5f66c87`
 // on the test handler mux that responds with a `Delete` response.
 func HandleDeleteSuccessfully(t *testing.T) {
-	th.Mux.HandleFunc("/stacks/ktvpcsdk-test-stack-2/db6977b2-27aa-4775-9ae7-6213212d4ada", func(w http.ResponseWriter, r *http.Request) {
+	th.Mux.HandleFunc("/stacks/gophercloud-test-stack-2/db6977b2-27aa-4775-9ae7-6213212d4ada", func(w http.ResponseWriter, r *http.Request) {
 		th.TestMethod(t, r, "DELETE")
 		th.TestHeader(t, r, "X-Auth-Token", fake.TokenID)
 		th.TestHeader(t, r, "Accept", "application/json")
@@ -285,7 +285,7 @@ var PreviewExpected = &stacks.PreviewedStack{
 	},
 	Name:         "postman_stack",
 	CreationTime: Create_time,
-	Links: []ktvpcsdk.Link{
+	Links: []gophercloud.Link{
 		{
 			Href: "http://166.76.160.117:8004/v1/98606384f58d4ad0b3db7d0d779549ac/stacks/postman_stack/16ef0584-4458-41eb-87c8-0dc8d5f66c87",
 			Rel:  "self",

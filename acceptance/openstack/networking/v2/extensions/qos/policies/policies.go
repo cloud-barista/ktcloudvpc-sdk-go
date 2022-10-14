@@ -11,7 +11,7 @@ import (
 
 // CreateQoSPolicy will create a QoS policy. An error will be returned if the
 // QoS policy could not be created.
-func CreateQoSPolicy(t *testing.T, client *ktvpcsdk.ServiceClient) (*policies.Policy, error) {
+func CreateQoSPolicy(t *testing.T, client *gophercloud.ServiceClient) (*policies.Policy, error) {
 	policyName := tools.RandomString("TESTACC-", 8)
 	policyDescription := tools.RandomString("TESTACC-DESC-", 8)
 
@@ -37,7 +37,7 @@ func CreateQoSPolicy(t *testing.T, client *ktvpcsdk.ServiceClient) (*policies.Po
 
 // DeleteQoSPolicy will delete a QoS policy with a specified ID.
 // A fatal error will occur if the delete was not successful.
-func DeleteQoSPolicy(t *testing.T, client *ktvpcsdk.ServiceClient, policyID string) {
+func DeleteQoSPolicy(t *testing.T, client *gophercloud.ServiceClient, policyID string) {
 	t.Logf("Attempting to delete the QoS policy: %s", policyID)
 
 	err := policies.Delete(client, policyID).ExtractErr()

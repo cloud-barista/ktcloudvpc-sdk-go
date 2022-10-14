@@ -51,7 +51,7 @@ type ListOpts struct {
 
 // ToProjectListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToProjectListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	if err != nil {
 		return "", err
 	}
@@ -71,7 +71,7 @@ func (opts ListOpts) ToProjectListQuery() (string, error) {
 }
 
 // List enumerates the Projects to which the current token has access.
-func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToProjectListQuery()
@@ -86,7 +86,7 @@ func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager
 }
 
 // ListAvailable enumerates the Projects which are available to a specific user.
-func ListAvailable(client *ktvpcsdk.ServiceClient) pagination.Pager {
+func ListAvailable(client *gophercloud.ServiceClient) pagination.Pager {
 	url := listAvailableURL(client)
 	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
 		return ProjectPage{pagination.LinkedPageBase{PageResult: r}}
@@ -94,9 +94,9 @@ func ListAvailable(client *ktvpcsdk.ServiceClient) pagination.Pager {
 }
 
 // Get retrieves details on a single project, by ID.
-func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
 	resp, err := client.Get(getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -138,7 +138,7 @@ type CreateOpts struct {
 
 // ToProjectCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToProjectCreateMap() (map[string]interface{}, error) {
-	b, err := ktvpcsdk.BuildRequestBody(opts, "project")
+	b, err := gophercloud.BuildRequestBody(opts, "project")
 
 	if err != nil {
 		return nil, err
@@ -156,21 +156,21 @@ func (opts CreateOpts) ToProjectCreateMap() (map[string]interface{}, error) {
 }
 
 // Create creates a new Project.
-func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToProjectCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := client.Post(createURL(client), &b, &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes a project.
-func Delete(client *ktvpcsdk.ServiceClient, projectID string) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClient, projectID string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, projectID), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -212,7 +212,7 @@ type UpdateOpts struct {
 
 // ToUpdateCreateMap formats a UpdateOpts into an update request.
 func (opts UpdateOpts) ToProjectUpdateMap() (map[string]interface{}, error) {
-	b, err := ktvpcsdk.BuildRequestBody(opts, "project")
+	b, err := gophercloud.BuildRequestBody(opts, "project")
 
 	if err != nil {
 		return nil, err
@@ -230,15 +230,15 @@ func (opts UpdateOpts) ToProjectUpdateMap() (map[string]interface{}, error) {
 }
 
 // Update modifies the attributes of a project.
-func Update(client *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToProjectUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Patch(updateURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Patch(updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

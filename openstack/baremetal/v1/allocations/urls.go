@@ -2,22 +2,22 @@ package allocations
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-func createURL(client *ktvpcsdk.ServiceClient) string {
+func createURL(client *gophercloud.ServiceClient) string {
 	return client.ServiceURL("allocations")
 }
 
-func listURL(client *ktvpcsdk.ServiceClient) string {
+func listURL(client *gophercloud.ServiceClient) string {
 	return createURL(client)
 }
 
-func resourceURL(client *ktvpcsdk.ServiceClient, id string) string {
+func resourceURL(client *gophercloud.ServiceClient, id string) string {
 	return client.ServiceURL("allocations", id)
 }
 
-func deleteURL(client *ktvpcsdk.ServiceClient, id string) string {
+func deleteURL(client *gophercloud.ServiceClient, id string) string {
 	return resourceURL(client, id)
 }
 
-func getURL(client *ktvpcsdk.ServiceClient, id string) string {
+func getURL(client *gophercloud.ServiceClient, id string) string {
 	return resourceURL(client, id)
 }

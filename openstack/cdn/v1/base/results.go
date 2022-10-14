@@ -7,7 +7,7 @@ type HomeDocument map[string]interface{}
 
 // GetResult represents the result of a Get operation.
 type GetResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract is a function that accepts a result and extracts a home document resource.
@@ -19,5 +19,5 @@ func (r GetResult) Extract() (*HomeDocument, error) {
 
 // PingResult represents the result of a Ping operation.
 type PingResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

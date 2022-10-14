@@ -5,9 +5,9 @@ import (
 )
 
 // Get returns the limits about the currently scoped tenant.
-func Get(client *ktvpcsdk.ServiceClient) (r GetResult) {
+func Get(client *gophercloud.ServiceClient) (r GetResult) {
 	url := getURL(client)
 	resp, err := client.Get(url, &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

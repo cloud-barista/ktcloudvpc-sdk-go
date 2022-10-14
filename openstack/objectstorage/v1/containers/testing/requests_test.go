@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	metadata = map[string]string{"ktvpcsdk-test": "containers"}
+	metadata = map[string]string{"gophercloud-test": "containers"}
 )
 
 func TestListContainerInfo(t *testing.T) {

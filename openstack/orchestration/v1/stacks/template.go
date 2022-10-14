@@ -77,7 +77,7 @@ func (t *Template) getFileContents(te interface{}, ignoreIf igFunc, recurse bool
 				// initialize child template
 
 				// get the base location of the child template
-				baseURL, err := ktvpcsdk.NormalizePathURL(t.baseURL, value)
+				baseURL, err := gophercloud.NormalizePathURL(t.baseURL, value)
 				if err != nil {
 					return err
 				}
@@ -121,7 +121,7 @@ func (t *Template) getFileContents(te interface{}, ignoreIf igFunc, recurse bool
 	case string, bool, float64, nil, int:
 		return nil
 	default:
-		return ktvpcsdk.ErrUnexpectedType{Actual: fmt.Sprintf("%v", reflect.TypeOf(te))}
+		return gophercloud.ErrUnexpectedType{Actual: fmt.Sprintf("%v", reflect.TypeOf(te))}
 	}
 	return nil
 }

@@ -36,13 +36,13 @@ type CreateOpts struct {
 // ToMap is a convenience function for creating sub-maps for individual users.
 func (opts CreateOpts) ToMap() (map[string]interface{}, error) {
 	if opts.Name == "root" {
-		err := ktvpcsdk.ErrInvalidInput{}
+		err := gophercloud.ErrInvalidInput{}
 		err.Argument = "users.CreateOpts.Name"
 		err.Value = "root"
 		err.Info = "root is a reserved user name and cannot be used"
 		return nil, err
 	}
-	return ktvpcsdk.BuildRequestBody(opts, "")
+	return gophercloud.BuildRequestBody(opts, "")
 }
 
 // BatchCreateOpts allows multiple users to be created at once.
@@ -65,29 +65,29 @@ func (opts BatchCreateOpts) ToUserCreateMap() (map[string]interface{}, error) {
 // instance based on the configuration defined in CreateOpts. If databases are
 // assigned for a particular user, the user will be granted all privileges
 // for those specified databases. "root" is a reserved name and cannot be used.
-func Create(client *ktvpcsdk.ServiceClient, instanceID string, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, instanceID string, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToUserCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := client.Post(baseURL(client, instanceID), &b, nil, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // List will list all the users associated with a specified database instance,
 // along with their associated databases. This operation will not return any
 // system users or administrators for a database.
-func List(client *ktvpcsdk.ServiceClient, instanceID string) pagination.Pager {
+func List(client *gophercloud.ServiceClient, instanceID string) pagination.Pager {
 	return pagination.NewPager(client, baseURL(client, instanceID), func(r pagination.PageResult) pagination.Page {
 		return UserPage{pagination.LinkedPageBase{PageResult: r}}
 	})
 }
 
 // Delete will permanently delete a user from a specified database instance.
-func Delete(client *ktvpcsdk.ServiceClient, instanceID, userName string) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClient, instanceID, userName string) (r DeleteResult) {
 	resp, err := client.Delete(userURL(client, instanceID, userName), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

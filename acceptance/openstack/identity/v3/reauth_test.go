@@ -27,7 +27,7 @@ func TestReauthAuthResultDeadlock(t *testing.T) {
 
 	provider.SetToken("this is not a valid token")
 
-	client, err := openstack.NewIdentityV3(provider, ktvpcsdk.EndpointOpts{})
+	client, err := openstack.NewIdentityV3(provider, gophercloud.EndpointOpts{})
 	pages, err := projects.List(client, nil).AllPages()
 	th.AssertNoErr(t, err)
 	_, err = projects.ExtractProjects(pages)

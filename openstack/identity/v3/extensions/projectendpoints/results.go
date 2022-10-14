@@ -8,13 +8,13 @@ import (
 // CreateResult is the response from a Create operation. Call its Extract
 // method to interpret it as an Endpoint.
 type CreateResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // DeleteResult is the response from a Delete operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // Endpoint describes the entry point for another service's API.
@@ -23,8 +23,8 @@ type Endpoint struct {
 	ID string `json:"id"`
 
 	// Availability is the interface type of the Endpoint (admin, internal,
-	// or public), referenced by the ktvpcsdk.Availability type.
-	Availability ktvpcsdk.Availability `json:"interface"`
+	// or public), referenced by the gophercloud.Availability type.
+	Availability gophercloud.Availability `json:"interface"`
 
 	// Region is the region the Endpoint is located in.
 	Region string `json:"region"`

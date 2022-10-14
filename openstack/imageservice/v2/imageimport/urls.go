@@ -8,10 +8,10 @@ const (
 	resourcePath = "import"
 )
 
-func infoURL(c *ktvpcsdk.ServiceClient) string {
+func infoURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL(infoPath, resourcePath)
 }
 
-func importURL(c *ktvpcsdk.ServiceClient, imageID string) string {
+func importURL(c *gophercloud.ServiceClient, imageID string) string {
 	return c.ServiceURL(rootPath, imageID, resourcePath)
 }

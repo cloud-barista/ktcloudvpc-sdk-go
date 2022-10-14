@@ -30,14 +30,14 @@ type ListOpts struct {
 
 // ToPortForwardingListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToPortForwardingListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List returns a Pager which allows you to iterate over a collection of
 // Port Forwarding resources. It accepts a ListOpts struct, which allows you to
 // filter and sort the returned collection for greater efficiency.
-func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder, id string) pagination.Pager {
+func List(c *gophercloud.ServiceClient, opts ListOptsBuilder, id string) pagination.Pager {
 	url := portForwardingUrl(c, id)
 	if opts != nil {
 		query, err := opts.ToPortForwardingListQuery()
@@ -52,9 +52,9 @@ func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder, id string) pagination
 }
 
 // Get retrieves a particular port forwarding resource based on its unique ID.
-func Get(c *ktvpcsdk.ServiceClient, floatingIpId string, pfId string) (r GetResult) {
+func Get(c *gophercloud.ServiceClient, floatingIpId string, pfId string) (r GetResult) {
 	resp, err := c.Get(singlePortForwardingUrl(c, floatingIpId, pfId), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -77,19 +77,19 @@ type CreateOptsBuilder interface {
 // ToPortForwardingCreateMap allows CreateOpts to satisfy the CreateOptsBuilder
 // interface
 func (opts CreateOpts) ToPortForwardingCreateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "port_forwarding")
+	return gophercloud.BuildRequestBody(opts, "port_forwarding")
 }
 
 // Create accepts a CreateOpts struct and uses the values provided to create a
 // new port forwarding for an existing floating IP.
-func Create(c *ktvpcsdk.ServiceClient, floatingIpId string, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *gophercloud.ServiceClient, floatingIpId string, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToPortForwardingCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Post(portForwardingUrl(c, floatingIpId), b, &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -105,7 +105,7 @@ type UpdateOpts struct {
 // ToPortForwardingUpdateMap allows UpdateOpts to satisfy the UpdateOptsBuilder
 // interface
 func (opts UpdateOpts) ToPortForwardingUpdateMap() (map[string]interface{}, error) {
-	b, err := ktvpcsdk.BuildRequestBody(opts, "port_forwarding")
+	b, err := gophercloud.BuildRequestBody(opts, "port_forwarding")
 	if err != nil {
 		return nil, err
 	}
@@ -120,22 +120,22 @@ type UpdateOptsBuilder interface {
 }
 
 // Update allows port forwarding resources to be updated.
-func Update(c *ktvpcsdk.ServiceClient, fipID string, pfID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *gophercloud.ServiceClient, fipID string, pfID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToPortForwardingUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(singlePortForwardingUrl(c, fipID, pfID), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := c.Put(singlePortForwardingUrl(c, fipID, pfID), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete will permanently delete a particular port forwarding for a given floating ID.
-func Delete(c *ktvpcsdk.ServiceClient, floatingIpId string, pfId string) (r DeleteResult) {
+func Delete(c *gophercloud.ServiceClient, floatingIpId string, pfId string) (r DeleteResult) {
 	resp, err := c.Delete(singlePortForwardingUrl(c, floatingIpId, pfId), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

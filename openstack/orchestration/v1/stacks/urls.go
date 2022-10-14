@@ -2,38 +2,38 @@ package stacks
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-func createURL(c *ktvpcsdk.ServiceClient) string {
+func createURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL("stacks")
 }
 
-func adoptURL(c *ktvpcsdk.ServiceClient) string {
+func adoptURL(c *gophercloud.ServiceClient) string {
 	return createURL(c)
 }
 
-func listURL(c *ktvpcsdk.ServiceClient) string {
+func listURL(c *gophercloud.ServiceClient) string {
 	return createURL(c)
 }
 
-func getURL(c *ktvpcsdk.ServiceClient, name, id string) string {
+func getURL(c *gophercloud.ServiceClient, name, id string) string {
 	return c.ServiceURL("stacks", name, id)
 }
 
-func findURL(c *ktvpcsdk.ServiceClient, identity string) string {
+func findURL(c *gophercloud.ServiceClient, identity string) string {
 	return c.ServiceURL("stacks", identity)
 }
 
-func updateURL(c *ktvpcsdk.ServiceClient, name, id string) string {
+func updateURL(c *gophercloud.ServiceClient, name, id string) string {
 	return getURL(c, name, id)
 }
 
-func deleteURL(c *ktvpcsdk.ServiceClient, name, id string) string {
+func deleteURL(c *gophercloud.ServiceClient, name, id string) string {
 	return getURL(c, name, id)
 }
 
-func previewURL(c *ktvpcsdk.ServiceClient) string {
+func previewURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL("stacks", "preview")
 }
 
-func abandonURL(c *ktvpcsdk.ServiceClient, name, id string) string {
+func abandonURL(c *gophercloud.ServiceClient, name, id string) string {
 	return c.ServiceURL("stacks", name, id, "abandon")
 }

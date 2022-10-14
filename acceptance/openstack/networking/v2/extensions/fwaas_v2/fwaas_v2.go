@@ -14,7 +14,7 @@ import (
 )
 
 // RemoveRule will remove a rule from the  policy.
-func RemoveRule(t *testing.T, client *ktvpcsdk.ServiceClient, policyID string, ruleID string) {
+func RemoveRule(t *testing.T, client *gophercloud.ServiceClient, policyID string, ruleID string) {
 	t.Logf("Attempting to remove rule %s from policy %s", ruleID, policyID)
 
 	_, err := policies.RemoveRule(client, policyID, ruleID).Extract()
@@ -24,7 +24,7 @@ func RemoveRule(t *testing.T, client *ktvpcsdk.ServiceClient, policyID string, r
 }
 
 // AddRule will add a rule to to a policy.
-func AddRule(t *testing.T, client *ktvpcsdk.ServiceClient, policyID string, ruleID string, beforeRuleID string) {
+func AddRule(t *testing.T, client *gophercloud.ServiceClient, policyID string, ruleID string, beforeRuleID string) {
 	t.Logf("Attempting to insert rule %s in to policy %s", ruleID, policyID)
 
 	addOpts := policies.InsertRuleOpts{
@@ -40,7 +40,7 @@ func AddRule(t *testing.T, client *ktvpcsdk.ServiceClient, policyID string, rule
 
 // CreatePolicy will create a Firewall Policy with a random name and given
 // rule. An error will be returned if the rule could not be created.
-func CreatePolicy(t *testing.T, client *ktvpcsdk.ServiceClient, ruleID string) (*policies.Policy, error) {
+func CreatePolicy(t *testing.T, client *gophercloud.ServiceClient, ruleID string) (*policies.Policy, error) {
 	policyName := tools.RandomString("TESTACC-", 8)
 	policyDescription := tools.RandomString("TESTACC-DESC-", 8)
 
@@ -71,7 +71,7 @@ func CreatePolicy(t *testing.T, client *ktvpcsdk.ServiceClient, ruleID string) (
 // CreateRule will create a Firewall Rule with a random source address and
 //source port, destination address and port. An error will be returned if
 // the rule could not be created.
-func CreateRule(t *testing.T, client *ktvpcsdk.ServiceClient) (*rules.Rule, error) {
+func CreateRule(t *testing.T, client *gophercloud.ServiceClient) (*rules.Rule, error) {
 	ruleName := tools.RandomString("TESTACC-", 8)
 	sourceAddress := fmt.Sprintf("192.168.1.%d", tools.RandomInt(1, 100))
 	sourcePortInt := strconv.Itoa(tools.RandomInt(1, 100))
@@ -114,7 +114,7 @@ func CreateRule(t *testing.T, client *ktvpcsdk.ServiceClient) (*rules.Rule, erro
 // DeletePolicy will delete a policy with a specified ID. A fatal error will
 // occur if the delete was not successful. This works best when used as a
 // deferred function.
-func DeletePolicy(t *testing.T, client *ktvpcsdk.ServiceClient, policyID string) {
+func DeletePolicy(t *testing.T, client *gophercloud.ServiceClient, policyID string) {
 	t.Logf("Attempting to delete policy: %s", policyID)
 
 	err := policies.Delete(client, policyID).ExtractErr()
@@ -128,7 +128,7 @@ func DeletePolicy(t *testing.T, client *ktvpcsdk.ServiceClient, policyID string)
 // DeleteRule will delete a rule with a specified ID. A fatal error will occur
 // if the delete was not successful. This works best when used as a deferred
 // function.
-func DeleteRule(t *testing.T, client *ktvpcsdk.ServiceClient, ruleID string) {
+func DeleteRule(t *testing.T, client *gophercloud.ServiceClient, ruleID string) {
 	t.Logf("Attempting to delete rule: %s", ruleID)
 
 	err := rules.Delete(client, ruleID).ExtractErr()
@@ -141,7 +141,7 @@ func DeleteRule(t *testing.T, client *ktvpcsdk.ServiceClient, ruleID string) {
 
 // CreateGroup will create a Firewall Group. An error will be returned if the
 // firewall group could not be created.
-func CreateGroup(t *testing.T, client *ktvpcsdk.ServiceClient) (*groups.Group, error) {
+func CreateGroup(t *testing.T, client *gophercloud.ServiceClient) (*groups.Group, error) {
 
 	groupName := tools.RandomString("TESTACC-", 8)
 	description := tools.RandomString("TESTACC-", 8)
@@ -172,7 +172,7 @@ func CreateGroup(t *testing.T, client *ktvpcsdk.ServiceClient) (*groups.Group, e
 // DeleteGroup will delete a group with a specified ID. A fatal error will occur
 // if the delete was not successful. This works best when used as a deferred
 // function.
-func DeleteGroup(t *testing.T, client *ktvpcsdk.ServiceClient, groupId string) {
+func DeleteGroup(t *testing.T, client *gophercloud.ServiceClient, groupId string) {
 	t.Logf("Attempting to delete firewall group %s", groupId)
 
 	err := groups.Delete(client, groupId).ExtractErr()

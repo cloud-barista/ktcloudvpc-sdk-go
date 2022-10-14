@@ -50,12 +50,12 @@ type ListOpts struct {
 
 // ToPortListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToPortListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List makes a request against the API to list ports accessible to you.
-func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToPortListQuery()
@@ -76,14 +76,14 @@ func (opts ListOpts) ToPortListDetailQuery() (string, error) {
 		return "", fmt.Errorf("fields is not a valid option when getting a detailed listing of ports")
 	}
 
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // ListDetail - Return a list ports with complete details.
 // Some filtering is possible by passing in flags in "ListOpts",
 // but you cannot limit by the fields returned.
-func ListDetail(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func ListDetail(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listDetailURL(client)
 	if opts != nil {
 		query, err := opts.ToPortListDetailQuery()
@@ -98,11 +98,11 @@ func ListDetail(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination
 }
 
 // Get - requests the details off a port, by ID.
-func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(getURL(client, id), &r.Body, &ktvpcsdk.RequestOpts{
+func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+	resp, err := client.Get(getURL(client, id), &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -146,7 +146,7 @@ type CreateOpts struct {
 
 // ToPortCreateMap assembles a request body based on the contents of a CreateOpts.
 func (opts CreateOpts) ToPortCreateMap() (map[string]interface{}, error) {
-	body, err := ktvpcsdk.BuildRequestBody(opts, "")
+	body, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -155,7 +155,7 @@ func (opts CreateOpts) ToPortCreateMap() (map[string]interface{}, error) {
 }
 
 // Create - requests the creation of a port
-func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	reqBody, err := opts.ToPortCreateMap()
 	if err != nil {
 		r.Err = err
@@ -163,7 +163,7 @@ func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateRes
 	}
 
 	resp, err := client.Post(createURL(client), reqBody, &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -198,22 +198,22 @@ func (opts UpdateOperation) ToPortUpdateMap() map[string]interface{} {
 }
 
 // Update - requests the update of a port
-func Update(client *ktvpcsdk.ServiceClient, id string, opts UpdateOpts) (r UpdateResult) {
+func Update(client *gophercloud.ServiceClient, id string, opts UpdateOpts) (r UpdateResult) {
 	body := make([]map[string]interface{}, len(opts))
 	for i, patch := range opts {
 		body[i] = patch.ToPortUpdateMap()
 	}
 
-	resp, err := client.Patch(updateURL(client, id), body, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Patch(updateURL(client, id), body, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete - requests the deletion of a port
-func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

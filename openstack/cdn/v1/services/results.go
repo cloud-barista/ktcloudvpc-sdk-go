@@ -218,7 +218,7 @@ type Service struct {
 	// Specifies the list of errors that occurred during the previous service action.
 	Errors []Error `json:"errors"`
 	// Specifies the self-navigating JSON document paths.
-	Links []ktvpcsdk.Link `json:"links"`
+	Links []gophercloud.Link `json:"links"`
 }
 
 // ServicePage is the page returned by a pager when traversing over a
@@ -256,7 +256,7 @@ func ExtractServices(r pagination.Page) ([]Service, error) {
 
 // CreateResult represents the result of a Create operation.
 type CreateResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract is a method that extracts the location of a newly created service.
@@ -272,7 +272,7 @@ func (r CreateResult) Extract() (string, error) {
 
 // GetResult represents the result of a get operation.
 type GetResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract is a function that extracts a service from a GetResult.
@@ -284,7 +284,7 @@ func (r GetResult) Extract() (*Service, error) {
 
 // UpdateResult represents the result of a Update operation.
 type UpdateResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract is a method that extracts the location of an updated service.
@@ -300,5 +300,5 @@ func (r UpdateResult) Extract() (string, error) {
 
 // DeleteResult represents the result of a Delete operation.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

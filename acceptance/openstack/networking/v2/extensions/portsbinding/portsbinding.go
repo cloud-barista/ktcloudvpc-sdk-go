@@ -18,7 +18,7 @@ type PortWithBindingExt struct {
 
 // CreatePortsbinding will create a port on the specified subnet. An error will be
 // returned if the port could not be created.
-func CreatePortsbinding(t *testing.T, client *ktvpcsdk.ServiceClient, networkID, subnetID, hostID string, profile map[string]interface{}) (PortWithBindingExt, error) {
+func CreatePortsbinding(t *testing.T, client *gophercloud.ServiceClient, networkID, subnetID, hostID string, profile map[string]interface{}) (PortWithBindingExt, error) {
 	portName := tools.RandomString("TESTACC-", 8)
 	portDescription := tools.RandomString("TESTACC-PORT-DESC-", 8)
 	iFalse := false

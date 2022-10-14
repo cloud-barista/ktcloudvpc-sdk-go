@@ -144,7 +144,7 @@ func ExtractSecurityGroups(r pagination.Page) ([]SecurityGroup, error) {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // CreateResult represents the result of a create operation. Call its Extract
@@ -177,7 +177,7 @@ func (r commonResult) Extract() (*SecurityGroup, error) {
 // CreateRuleResult represents the result when adding rules to a security group.
 // Call its Extract method to interpret the result as a Rule.
 type CreateRuleResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract will extract a Rule struct from a CreateRuleResult.
@@ -192,23 +192,23 @@ func (r CreateRuleResult) Extract() (*Rule, error) {
 // DeleteResult is the response from delete operation. Call its ExtractErr
 // method to determine if the request succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // DeleteRuleResult is the response from a DeleteRule operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type DeleteRuleResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // AddServerResult is the response from an AddServer operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type AddServerResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // RemoveServerResult is the response from a RemoveServer operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type RemoveServerResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

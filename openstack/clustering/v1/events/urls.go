@@ -5,18 +5,18 @@ import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 var apiVersion = "v1"
 var apiName = "events"
 
-func commonURL(client *ktvpcsdk.ServiceClient) string {
+func commonURL(client *gophercloud.ServiceClient) string {
 	return client.ServiceURL(apiVersion, apiName)
 }
 
-func listURL(client *ktvpcsdk.ServiceClient) string {
+func listURL(client *gophercloud.ServiceClient) string {
 	return commonURL(client)
 }
 
-func idURL(client *ktvpcsdk.ServiceClient, id string) string {
+func idURL(client *gophercloud.ServiceClient, id string) string {
 	return client.ServiceURL(apiVersion, apiName, id)
 }
 
-func getURL(client *ktvpcsdk.ServiceClient, id string) string {
+func getURL(client *gophercloud.ServiceClient, id string) string {
 	return idURL(client, id)
 }

@@ -5,9 +5,9 @@ import (
 )
 
 // Get returns load balancer Quotas for a project.
-func Get(client *ktvpcsdk.ServiceClient, projectID string) (r GetResult) {
+func Get(client *gophercloud.ServiceClient, projectID string) (r GetResult) {
 	resp, err := client.Get(getURL(client, projectID), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -43,21 +43,21 @@ type UpdateOpts struct {
 
 // ToQuotaUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToQuotaUpdateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "quota")
+	return gophercloud.BuildRequestBody(opts, "quota")
 }
 
 // Update accepts a UpdateOpts struct and updates an existing load balancer Quotas using the
 // values provided.
-func Update(c *ktvpcsdk.ServiceClient, projectID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *gophercloud.ServiceClient, projectID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToQuotaUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(updateURL(c, projectID), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := c.Put(updateURL(c, projectID), b, &r.Body, &gophercloud.RequestOpts{
 		// allow 200 (neutron/lbaasv2) and 202 (octavia)
 		OkCodes: []int{200, 202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

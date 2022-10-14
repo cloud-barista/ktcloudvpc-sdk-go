@@ -133,7 +133,7 @@ func TestAggregatesSetRemoveMetadata(t *testing.T) {
 	}
 }
 
-func getHypervisor(t *testing.T, client *ktvpcsdk.ServiceClient) (string, error) {
+func getHypervisor(t *testing.T, client *gophercloud.ServiceClient) (string, error) {
 	allPages, err := hypervisors.List(client, nil).AllPages()
 	th.AssertNoErr(t, err)
 

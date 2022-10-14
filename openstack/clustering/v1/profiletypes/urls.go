@@ -7,22 +7,22 @@ const (
 	apiName    = "profile-types"
 )
 
-func commonURL(client *ktvpcsdk.ServiceClient) string {
+func commonURL(client *gophercloud.ServiceClient) string {
 	return client.ServiceURL(apiVersion, apiName)
 }
 
-func profileTypeURL(client *ktvpcsdk.ServiceClient, id string) string {
+func profileTypeURL(client *gophercloud.ServiceClient, id string) string {
 	return client.ServiceURL(apiVersion, apiName, id)
 }
 
-func getURL(client *ktvpcsdk.ServiceClient, id string) string {
+func getURL(client *gophercloud.ServiceClient, id string) string {
 	return profileTypeURL(client, id)
 }
 
-func listURL(client *ktvpcsdk.ServiceClient) string {
+func listURL(client *gophercloud.ServiceClient) string {
 	return commonURL(client)
 }
 
-func listOpsURL(client *ktvpcsdk.ServiceClient, id string) string {
+func listOpsURL(client *gophercloud.ServiceClient, id string) string {
 	return client.ServiceURL(apiVersion, apiName, id, "ops")
 }

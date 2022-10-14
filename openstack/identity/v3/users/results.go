@@ -46,7 +46,7 @@ func (r *User) UnmarshalJSON(b []byte) error {
 	var s struct {
 		tmp
 		Extra             map[string]interface{}          `json:"extra"`
-		PasswordExpiresAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"password_expires_at"`
+		PasswordExpiresAt gophercloud.JSONRFC3339MilliNoZ `json:"password_expires_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -68,7 +68,7 @@ func (r *User) UnmarshalJSON(b []byte) error {
 		}
 		if resultMap, ok := result.(map[string]interface{}); ok {
 			delete(resultMap, "password_expires_at")
-			r.Extra = ktvpcsdk.RemainingKeys(User{}, resultMap)
+			r.Extra = gophercloud.RemainingKeys(User{}, resultMap)
 		}
 	}
 
@@ -76,7 +76,7 @@ func (r *User) UnmarshalJSON(b []byte) error {
 }
 
 type userResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // GetResult is the response from a Get operation. Call its Extract method
@@ -100,32 +100,32 @@ type UpdateResult struct {
 // ChangePasswordResult is the response from a ChangePassword operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type ChangePasswordResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // DeleteResult is the response from a Delete operation. Call its ExtractErr to
 // determine if the request succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // AddToGroupResult is the response from a AddToGroup operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type AddToGroupResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // IsMemberOfGroupResult is the response from a IsMemberOfGroup operation. Call its
 // Extract method to determine if the request succeeded or failed.
 type IsMemberOfGroupResult struct {
 	isMember bool
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // RemoveFromGroupResult is the response from a RemoveFromGroup operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type RemoveFromGroupResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // UserPage is a single page of User results.

@@ -20,7 +20,7 @@ import (
 // It takes an optional createOpts parameter since creating a project
 // has so many options. An error will be returned if the project was
 // unable to be created.
-func CreateProject(t *testing.T, client *ktvpcsdk.ServiceClient, c *projects.CreateOpts) (*projects.Project, error) {
+func CreateProject(t *testing.T, client *gophercloud.ServiceClient, c *projects.CreateOpts) (*projects.Project, error) {
 	name := tools.RandomString("ACPTTEST", 8)
 	description := tools.RandomString("ACPTTEST-DESC", 8)
 	t.Logf("Attempting to create project: %s", name)
@@ -52,7 +52,7 @@ func CreateProject(t *testing.T, client *ktvpcsdk.ServiceClient, c *projects.Cre
 // It takes an optional createOpts parameter since creating a user
 // has so many options. An error will be returned if the user was
 // unable to be created.
-func CreateUser(t *testing.T, client *ktvpcsdk.ServiceClient, c *users.CreateOpts) (*users.User, error) {
+func CreateUser(t *testing.T, client *gophercloud.ServiceClient, c *users.CreateOpts) (*users.User, error) {
 	name := tools.RandomString("ACPTTEST", 8)
 	t.Logf("Attempting to create user: %s", name)
 
@@ -81,7 +81,7 @@ func CreateUser(t *testing.T, client *ktvpcsdk.ServiceClient, c *users.CreateOpt
 // It takes an optional createOpts parameter since creating a group
 // has so many options. An error will be returned if the group was
 // unable to be created.
-func CreateGroup(t *testing.T, client *ktvpcsdk.ServiceClient, c *groups.CreateOpts) (*groups.Group, error) {
+func CreateGroup(t *testing.T, client *gophercloud.ServiceClient, c *groups.CreateOpts) (*groups.Group, error) {
 	name := tools.RandomString("ACPTTEST", 8)
 	t.Logf("Attempting to create group: %s", name)
 
@@ -110,7 +110,7 @@ func CreateGroup(t *testing.T, client *ktvpcsdk.ServiceClient, c *groups.CreateO
 // It takes an optional createOpts parameter since creating a domain
 // has many options. An error will be returned if the domain was
 // unable to be created.
-func CreateDomain(t *testing.T, client *ktvpcsdk.ServiceClient, c *domains.CreateOpts) (*domains.Domain, error) {
+func CreateDomain(t *testing.T, client *gophercloud.ServiceClient, c *domains.CreateOpts) (*domains.Domain, error) {
 	name := tools.RandomString("ACPTTEST", 8)
 	t.Logf("Attempting to create domain: %s", name)
 
@@ -139,7 +139,7 @@ func CreateDomain(t *testing.T, client *ktvpcsdk.ServiceClient, c *domains.Creat
 // It takes an optional createOpts parameter since creating a role
 // has so many options. An error will be returned if the role was
 // unable to be created.
-func CreateRole(t *testing.T, client *ktvpcsdk.ServiceClient, c *roles.CreateOpts) (*roles.Role, error) {
+func CreateRole(t *testing.T, client *gophercloud.ServiceClient, c *roles.CreateOpts) (*roles.Role, error) {
 	var name string
 	if c.Name == "" {
 		name = tools.RandomString("ACPTTEST", 8)
@@ -173,7 +173,7 @@ func CreateRole(t *testing.T, client *ktvpcsdk.ServiceClient, c *roles.CreateOpt
 // It takes an optional createOpts parameter since creating a region
 // has so many options. An error will be returned if the region was
 // unable to be created.
-func CreateRegion(t *testing.T, client *ktvpcsdk.ServiceClient, c *regions.CreateOpts) (*regions.Region, error) {
+func CreateRegion(t *testing.T, client *gophercloud.ServiceClient, c *regions.CreateOpts) (*regions.Region, error) {
 	id := tools.RandomString("ACPTTEST", 8)
 	t.Logf("Attempting to create region: %s", id)
 
@@ -202,7 +202,7 @@ func CreateRegion(t *testing.T, client *ktvpcsdk.ServiceClient, c *regions.Creat
 // It takes an optional createOpts parameter since creating a service
 // has so many options. An error will be returned if the service was
 // unable to be created.
-func CreateService(t *testing.T, client *ktvpcsdk.ServiceClient, c *services.CreateOpts) (*services.Service, error) {
+func CreateService(t *testing.T, client *gophercloud.ServiceClient, c *services.CreateOpts) (*services.Service, error) {
 	name := tools.RandomString("ACPTTEST", 8)
 	t.Logf("Attempting to create service: %s", name)
 
@@ -230,7 +230,7 @@ func CreateService(t *testing.T, client *ktvpcsdk.ServiceClient, c *services.Cre
 // DeleteProject will delete a project by ID. A fatal error will occur if
 // the project ID failed to be deleted. This works best when using it as
 // a deferred function.
-func DeleteProject(t *testing.T, client *ktvpcsdk.ServiceClient, projectID string) {
+func DeleteProject(t *testing.T, client *gophercloud.ServiceClient, projectID string) {
 	err := projects.Delete(client, projectID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete project %s: %v", projectID, err)
@@ -242,7 +242,7 @@ func DeleteProject(t *testing.T, client *ktvpcsdk.ServiceClient, projectID strin
 // DeleteUser will delete a user by ID. A fatal error will occur if
 // the user failed to be deleted. This works best when using it as
 // a deferred function.
-func DeleteUser(t *testing.T, client *ktvpcsdk.ServiceClient, userID string) {
+func DeleteUser(t *testing.T, client *gophercloud.ServiceClient, userID string) {
 	err := users.Delete(client, userID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete user with ID %s: %v", userID, err)
@@ -254,7 +254,7 @@ func DeleteUser(t *testing.T, client *ktvpcsdk.ServiceClient, userID string) {
 // DeleteGroup will delete a group by ID. A fatal error will occur if
 // the group failed to be deleted. This works best when using it as
 // a deferred function.
-func DeleteGroup(t *testing.T, client *ktvpcsdk.ServiceClient, groupID string) {
+func DeleteGroup(t *testing.T, client *gophercloud.ServiceClient, groupID string) {
 	err := groups.Delete(client, groupID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete group %s: %v", groupID, err)
@@ -266,7 +266,7 @@ func DeleteGroup(t *testing.T, client *ktvpcsdk.ServiceClient, groupID string) {
 // DeleteDomain will delete a domain by ID. A fatal error will occur if
 // the project ID failed to be deleted. This works best when using it as
 // a deferred function.
-func DeleteDomain(t *testing.T, client *ktvpcsdk.ServiceClient, domainID string) {
+func DeleteDomain(t *testing.T, client *gophercloud.ServiceClient, domainID string) {
 	err := domains.Delete(client, domainID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete domain %s: %v", domainID, err)
@@ -278,7 +278,7 @@ func DeleteDomain(t *testing.T, client *ktvpcsdk.ServiceClient, domainID string)
 // DeleteRole will delete a role by ID. A fatal error will occur if
 // the role failed to be deleted. This works best when using it as
 // a deferred function.
-func DeleteRole(t *testing.T, client *ktvpcsdk.ServiceClient, roleID string) {
+func DeleteRole(t *testing.T, client *gophercloud.ServiceClient, roleID string) {
 	err := roles.Delete(client, roleID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete role %s: %v", roleID, err)
@@ -290,7 +290,7 @@ func DeleteRole(t *testing.T, client *ktvpcsdk.ServiceClient, roleID string) {
 // DeleteRegion will delete a reg by ID. A fatal error will occur if
 // the region failed to be deleted. This works best when using it as
 // a deferred function.
-func DeleteRegion(t *testing.T, client *ktvpcsdk.ServiceClient, regionID string) {
+func DeleteRegion(t *testing.T, client *gophercloud.ServiceClient, regionID string) {
 	err := regions.Delete(client, regionID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete region %s: %v", regionID, err)
@@ -302,7 +302,7 @@ func DeleteRegion(t *testing.T, client *ktvpcsdk.ServiceClient, regionID string)
 // DeleteService will delete a reg by ID. A fatal error will occur if
 // the service failed to be deleted. This works best when using it as
 // a deferred function.
-func DeleteService(t *testing.T, client *ktvpcsdk.ServiceClient, serviceID string) {
+func DeleteService(t *testing.T, client *gophercloud.ServiceClient, serviceID string) {
 	err := services.Delete(client, serviceID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete service %s: %v", serviceID, err)
@@ -314,7 +314,7 @@ func DeleteService(t *testing.T, client *ktvpcsdk.ServiceClient, serviceID strin
 // UnassignRole will delete a role assigned to a user/group on a project/domain
 // A fatal error will occur if it fails to delete the assignment.
 // This works best when using it as a deferred function.
-func UnassignRole(t *testing.T, client *ktvpcsdk.ServiceClient, roleID string, opts *roles.UnassignOpts) {
+func UnassignRole(t *testing.T, client *gophercloud.ServiceClient, roleID string, opts *roles.UnassignOpts) {
 	err := roles.Unassign(client, roleID, *opts).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to unassign a role %v on context %+v: %v", roleID, *opts, err)
@@ -325,7 +325,7 @@ func UnassignRole(t *testing.T, client *ktvpcsdk.ServiceClient, roleID string, o
 // FindRole finds all roles that the current authenticated client has access
 // to and returns the first one found. An error will be returned if the lookup
 // was unsuccessful.
-func FindRole(t *testing.T, client *ktvpcsdk.ServiceClient) (*roles.Role, error) {
+func FindRole(t *testing.T, client *gophercloud.ServiceClient) (*roles.Role, error) {
 	t.Log("Attempting to find a role")
 	var role *roles.Role
 
@@ -351,7 +351,7 @@ func FindRole(t *testing.T, client *ktvpcsdk.ServiceClient) (*roles.Role, error)
 
 // CreateTrust will create a trust with the provided options.
 // An error will be returned if the trust was unable to be created.
-func CreateTrust(t *testing.T, client *ktvpcsdk.ServiceClient, createOpts trusts.CreateOpts) (*trusts.Trust, error) {
+func CreateTrust(t *testing.T, client *gophercloud.ServiceClient, createOpts trusts.CreateOpts) (*trusts.Trust, error) {
 	trust, err := trusts.Create(client, createOpts).Extract()
 	if err != nil {
 		return nil, err
@@ -365,7 +365,7 @@ func CreateTrust(t *testing.T, client *ktvpcsdk.ServiceClient, createOpts trusts
 // DeleteTrust will delete a trust by ID. A fatal error will occur if
 // the trust failed to be deleted. This works best when using it as
 // a deferred function.
-func DeleteTrust(t *testing.T, client *ktvpcsdk.ServiceClient, trustID string) {
+func DeleteTrust(t *testing.T, client *gophercloud.ServiceClient, trustID string) {
 	err := trusts.Delete(client, trustID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete trust %s: %v", trustID, err)
@@ -377,7 +377,7 @@ func DeleteTrust(t *testing.T, client *ktvpcsdk.ServiceClient, trustID string) {
 // FindTrust finds all trusts that the current authenticated client has access
 // to and returns the first one found. An error will be returned if the lookup
 // was unsuccessful.
-func FindTrust(t *testing.T, client *ktvpcsdk.ServiceClient) (*trusts.Trust, error) {
+func FindTrust(t *testing.T, client *gophercloud.ServiceClient) (*trusts.Trust, error) {
 	t.Log("Attempting to find a trust")
 	var trust *trusts.Trust
 

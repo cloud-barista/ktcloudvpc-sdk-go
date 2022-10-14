@@ -71,7 +71,7 @@ func ExtractFloatingIPs(r pagination.Page) ([]FloatingIP, error) {
 
 // FloatingIPResult is the raw result from a FloatingIP request.
 type FloatingIPResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract is a method that attempts to interpret any FloatingIP resource
@@ -99,17 +99,17 @@ type GetResult struct {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // AssociateResult is the response from a Delete operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type AssociateResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // DisassociateResult is the response from a Delete operation. Call its
 // ExtractErr method to determine if the call succeeded or failed.
 type DisassociateResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

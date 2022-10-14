@@ -8,18 +8,18 @@ const (
 	rulePath     = "rules"
 )
 
-func rootURL(c *ktvpcsdk.ServiceClient) string {
+func rootURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL(rootPath, resourcePath)
 }
 
-func resourceURL(c *ktvpcsdk.ServiceClient, id string) string {
+func resourceURL(c *gophercloud.ServiceClient, id string) string {
 	return c.ServiceURL(rootPath, resourcePath, id)
 }
 
-func ruleRootURL(c *ktvpcsdk.ServiceClient, policyID string) string {
+func ruleRootURL(c *gophercloud.ServiceClient, policyID string) string {
 	return c.ServiceURL(rootPath, resourcePath, policyID, rulePath)
 }
 
-func ruleResourceURL(c *ktvpcsdk.ServiceClient, policyID string, ruleID string) string {
+func ruleResourceURL(c *gophercloud.ServiceClient, policyID string, ruleID string) string {
 	return c.ServiceURL(rootPath, resourcePath, policyID, rulePath, ruleID)
 }

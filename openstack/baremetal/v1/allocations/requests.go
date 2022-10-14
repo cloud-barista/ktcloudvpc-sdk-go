@@ -34,7 +34,7 @@ type CreateOpts struct {
 
 // ToAllocationCreateMap assembles a request body based on the contents of a CreateOpts.
 func (opts CreateOpts) ToAllocationCreateMap() (map[string]interface{}, error) {
-	body, err := ktvpcsdk.BuildRequestBody(opts, "")
+	body, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -43,7 +43,7 @@ func (opts CreateOpts) ToAllocationCreateMap() (map[string]interface{}, error) {
 }
 
 // Create requests a node to be created
-func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	reqBody, err := opts.ToAllocationCreateMap()
 	if err != nil {
 		r.Err = err
@@ -51,7 +51,7 @@ func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateRes
 	}
 
 	resp, err := client.Post(createURL(client), reqBody, &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -98,12 +98,12 @@ type ListOpts struct {
 
 // ToAllocationListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToAllocationListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List makes a request against the API to list allocations accessible to you.
-func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToAllocationListQuery()
@@ -118,17 +118,17 @@ func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager
 }
 
 // Get requests the details of an allocation by ID.
-func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(getURL(client, id), &r.Body, &ktvpcsdk.RequestOpts{
+func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+	resp, err := client.Get(getURL(client, id), &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete requests the deletion of an allocation
-func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

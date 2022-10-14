@@ -2,26 +2,26 @@ package containers
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-func listURL(c *ktvpcsdk.ServiceClient) string {
+func listURL(c *gophercloud.ServiceClient) string {
 	return c.Endpoint
 }
 
-func createURL(c *ktvpcsdk.ServiceClient, container string) string {
+func createURL(c *gophercloud.ServiceClient, container string) string {
 	return c.ServiceURL(container)
 }
 
-func getURL(c *ktvpcsdk.ServiceClient, container string) string {
+func getURL(c *gophercloud.ServiceClient, container string) string {
 	return createURL(c, container)
 }
 
-func deleteURL(c *ktvpcsdk.ServiceClient, container string) string {
+func deleteURL(c *gophercloud.ServiceClient, container string) string {
 	return createURL(c, container)
 }
 
-func updateURL(c *ktvpcsdk.ServiceClient, container string) string {
+func updateURL(c *gophercloud.ServiceClient, container string) string {
 	return createURL(c, container)
 }
 
-func bulkDeleteURL(c *ktvpcsdk.ServiceClient) string {
+func bulkDeleteURL(c *gophercloud.ServiceClient) string {
 	return c.Endpoint + "?bulk-delete=true"
 }

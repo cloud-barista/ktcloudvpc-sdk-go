@@ -37,7 +37,7 @@ func (i *InstanceAction) UnmarshalJSON(b []byte) error {
 	type tmp InstanceAction
 	var s struct {
 		tmp
-		StartTime ktvpcsdk.JSONRFC3339MilliNoZ `json:"start_time"`
+		StartTime gophercloud.JSONRFC3339MilliNoZ `json:"start_time"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -103,8 +103,8 @@ func (e *Event) UnmarshalJSON(b []byte) error {
 	type tmp Event
 	var s struct {
 		tmp
-		StartTime  ktvpcsdk.JSONRFC3339MilliNoZ `json:"start_time"`
-		FinishTime ktvpcsdk.JSONRFC3339MilliNoZ `json:"finish_time"`
+		StartTime  gophercloud.JSONRFC3339MilliNoZ `json:"start_time"`
+		FinishTime gophercloud.JSONRFC3339MilliNoZ `json:"finish_time"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -155,8 +155,8 @@ func (i *InstanceActionDetail) UnmarshalJSON(b []byte) error {
 	type tmp InstanceActionDetail
 	var s struct {
 		tmp
-		UpdatedAt *ktvpcsdk.JSONRFC3339MilliNoZ `json:"updated_at"`
-		StartTime ktvpcsdk.JSONRFC3339MilliNoZ  `json:"start_time"`
+		UpdatedAt *gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
+		StartTime gophercloud.JSONRFC3339MilliNoZ  `json:"start_time"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -171,7 +171,7 @@ func (i *InstanceActionDetail) UnmarshalJSON(b []byte) error {
 
 // InstanceActionResult is the result handler of Get.
 type InstanceActionResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets a result as an InstanceActionDetail.

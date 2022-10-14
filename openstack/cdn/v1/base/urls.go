@@ -2,10 +2,10 @@ package base
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-func getURL(c *ktvpcsdk.ServiceClient) string {
+func getURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL()
 }
 
-func pingURL(c *ktvpcsdk.ServiceClient) string {
+func pingURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL("ping")
 }

@@ -115,7 +115,7 @@ func TestInitializeConnection(t *testing.T) {
 		IP:        "127.0.0.1",
 		Host:      "stack",
 		Initiator: "iqn.1994-05.com.redhat:17cf566367d2",
-		Multipath: ktvpcsdk.Disabled,
+		Multipath: gophercloud.Disabled,
 		Platform:  "x86_64",
 		OSType:    "linux2",
 	}
@@ -133,7 +133,7 @@ func TestTerminateConnection(t *testing.T) {
 		IP:        "127.0.0.1",
 		Host:      "stack",
 		Initiator: "iqn.1994-05.com.redhat:17cf566367d2",
-		Multipath: ktvpcsdk.Enabled,
+		Multipath: gophercloud.Enabled,
 		Platform:  "x86_64",
 		OSType:    "linux2",
 	}

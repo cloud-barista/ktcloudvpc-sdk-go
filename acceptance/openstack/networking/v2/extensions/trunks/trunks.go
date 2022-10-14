@@ -8,12 +8,12 @@ import (
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/trunks"
 )
 
-func CreateTrunk(t *testing.T, client *ktvpcsdk.ServiceClient, parentPortID string, subportIDs ...string) (trunk *trunks.Trunk, err error) {
+func CreateTrunk(t *testing.T, client *gophercloud.ServiceClient, parentPortID string, subportIDs ...string) (trunk *trunks.Trunk, err error) {
 	trunkName := tools.RandomString("TESTACC-", 8)
 	iTrue := true
 	opts := trunks.CreateOpts{
 		Name:         trunkName,
-		Description:  "Trunk created by ktvpcsdk",
+		Description:  "Trunk created by gophercloud",
 		AdminStateUp: &iTrue,
 		PortID:       parentPortID,
 	}
@@ -35,7 +35,7 @@ func CreateTrunk(t *testing.T, client *ktvpcsdk.ServiceClient, parentPortID stri
 	return
 }
 
-func DeleteTrunk(t *testing.T, client *ktvpcsdk.ServiceClient, trunkID string) {
+func DeleteTrunk(t *testing.T, client *gophercloud.ServiceClient, trunkID string) {
 	t.Logf("Attempting to delete trunk: %s", trunkID)
 	err := trunks.Delete(client, trunkID).ExtractErr()
 	if err != nil {

@@ -22,7 +22,7 @@ import (
 
 // CreateUploadImage will upload volume it as volume-baked image. An name of new image or err will be
 // returned
-func CreateUploadImage(t *testing.T, client *ktvpcsdk.ServiceClient, volume *volumes.Volume) (volumeactions.VolumeImage, error) {
+func CreateUploadImage(t *testing.T, client *gophercloud.ServiceClient, volume *volumes.Volume) (volumeactions.VolumeImage, error) {
 	if testing.Short() {
 		t.Skip("Skipping test that requires volume-backed image uploading in short mode.")
 	}
@@ -52,7 +52,7 @@ func CreateUploadImage(t *testing.T, client *ktvpcsdk.ServiceClient, volume *vol
 
 // DeleteUploadedImage deletes uploaded image. An error will be returned
 // if the deletion request failed.
-func DeleteUploadedImage(t *testing.T, client *ktvpcsdk.ServiceClient, imageID string) error {
+func DeleteUploadedImage(t *testing.T, client *gophercloud.ServiceClient, imageID string) error {
 	if testing.Short() {
 		t.Skip("Skipping test that requires volume-backed image removing in short mode.")
 	}
@@ -69,7 +69,7 @@ func DeleteUploadedImage(t *testing.T, client *ktvpcsdk.ServiceClient, imageID s
 
 // CreateVolumeAttach will attach a volume to an instance. An error will be
 // returned if the attachment failed.
-func CreateVolumeAttach(t *testing.T, client *ktvpcsdk.ServiceClient, volume *volumes.Volume, server *servers.Server) error {
+func CreateVolumeAttach(t *testing.T, client *gophercloud.ServiceClient, volume *volumes.Volume, server *servers.Server) error {
 	if testing.Short() {
 		t.Skip("Skipping test that requires volume attachment in short mode.")
 	}
@@ -97,7 +97,7 @@ func CreateVolumeAttach(t *testing.T, client *ktvpcsdk.ServiceClient, volume *vo
 
 // CreateVolumeReserve creates a volume reservation. An error will be returned
 // if the reservation failed.
-func CreateVolumeReserve(t *testing.T, client *ktvpcsdk.ServiceClient, volume *volumes.Volume) error {
+func CreateVolumeReserve(t *testing.T, client *gophercloud.ServiceClient, volume *volumes.Volume) error {
 	if testing.Short() {
 		t.Skip("Skipping test that requires volume reservation in short mode.")
 	}
@@ -116,7 +116,7 @@ func CreateVolumeReserve(t *testing.T, client *ktvpcsdk.ServiceClient, volume *v
 // DeleteVolumeAttach will detach a volume from an instance. A fatal error will
 // occur if the snapshot failed to be deleted. This works best when used as a
 // deferred function.
-func DeleteVolumeAttach(t *testing.T, client *ktvpcsdk.ServiceClient, volume *volumes.Volume) {
+func DeleteVolumeAttach(t *testing.T, client *gophercloud.ServiceClient, volume *volumes.Volume) {
 	t.Logf("Attepting to detach volume volume: %s", volume.ID)
 
 	detachOpts := volumeactions.DetachOpts{
@@ -137,7 +137,7 @@ func DeleteVolumeAttach(t *testing.T, client *ktvpcsdk.ServiceClient, volume *vo
 // DeleteVolumeReserve deletes a volume reservation. A fatal error will occur
 // if the deletion request failed. This works best when used as a deferred
 // function.
-func DeleteVolumeReserve(t *testing.T, client *ktvpcsdk.ServiceClient, volume *volumes.Volume) {
+func DeleteVolumeReserve(t *testing.T, client *gophercloud.ServiceClient, volume *volumes.Volume) {
 	if testing.Short() {
 		t.Skip("Skipping test that requires volume reservation in short mode.")
 	}
@@ -152,7 +152,7 @@ func DeleteVolumeReserve(t *testing.T, client *ktvpcsdk.ServiceClient, volume *v
 }
 
 // ExtendVolumeSize will extend the size of a volume.
-func ExtendVolumeSize(t *testing.T, client *ktvpcsdk.ServiceClient, volume *volumes.Volume) error {
+func ExtendVolumeSize(t *testing.T, client *gophercloud.ServiceClient, volume *volumes.Volume) error {
 	t.Logf("Attempting to extend the size of volume %s", volume.ID)
 
 	extendOpts := volumeactions.ExtendSizeOpts{
@@ -172,7 +172,7 @@ func ExtendVolumeSize(t *testing.T, client *ktvpcsdk.ServiceClient, volume *volu
 }
 
 // SetImageMetadata will apply the metadata to a volume.
-func SetImageMetadata(t *testing.T, client *ktvpcsdk.ServiceClient, volume *volumes.Volume) error {
+func SetImageMetadata(t *testing.T, client *gophercloud.ServiceClient, volume *volumes.Volume) error {
 	t.Logf("Attempting to apply image metadata to volume %s", volume.ID)
 
 	imageMetadataOpts := volumeactions.ImageMetadataOpts{
@@ -191,7 +191,7 @@ func SetImageMetadata(t *testing.T, client *ktvpcsdk.ServiceClient, volume *volu
 
 // CreateBackup will create a backup based on a volume. An error will be
 // will be returned if the backup could not be created.
-func CreateBackup(t *testing.T, client *ktvpcsdk.ServiceClient, volumeID string) (*backups.Backup, error) {
+func CreateBackup(t *testing.T, client *gophercloud.ServiceClient, volumeID string) (*backups.Backup, error) {
 	t.Logf("Attempting to create a backup of volume %s", volumeID)
 
 	backupName := tools.RandomString("ACPTTEST", 16)
@@ -225,7 +225,7 @@ func CreateBackup(t *testing.T, client *ktvpcsdk.ServiceClient, volumeID string)
 
 // DeleteBackup will delete a backup. A fatal error will occur if the backup
 // could not be deleted. This works best when used as a deferred function.
-func DeleteBackup(t *testing.T, client *ktvpcsdk.ServiceClient, backupID string) {
+func DeleteBackup(t *testing.T, client *gophercloud.ServiceClient, backupID string) {
 	if err := backups.Delete(client, backupID).ExtractErr(); err != nil {
 		t.Fatalf("Unable to delete backup %s: %s", backupID, err)
 	}
@@ -235,7 +235,7 @@ func DeleteBackup(t *testing.T, client *ktvpcsdk.ServiceClient, backupID string)
 
 // WaitForBackupStatus will continually poll a backup, checking for a particular
 // status. It will do this for the amount of seconds defined.
-func WaitForBackupStatus(client *ktvpcsdk.ServiceClient, id, status string) error {
+func WaitForBackupStatus(client *gophercloud.ServiceClient, id, status string) error {
 	return tools.WaitFor(func() (bool, error) {
 		current, err := backups.Get(client, id).Extract()
 		if err != nil {
@@ -251,7 +251,7 @@ func WaitForBackupStatus(client *ktvpcsdk.ServiceClient, id, status string) erro
 }
 
 // SetBootable will set a bootable status to a volume.
-func SetBootable(t *testing.T, client *ktvpcsdk.ServiceClient, volume *volumes.Volume) error {
+func SetBootable(t *testing.T, client *gophercloud.ServiceClient, volume *volumes.Volume) error {
 	t.Logf("Attempting to apply bootable status to volume %s", volume.ID)
 
 	bootableOpts := volumeactions.BootableOpts{
@@ -294,7 +294,7 @@ func SetBootable(t *testing.T, client *ktvpcsdk.ServiceClient, volume *volumes.V
 }
 
 // ChangeVolumeType will extend the size of a volume.
-func ChangeVolumeType(t *testing.T, client *ktvpcsdk.ServiceClient, volume *v3.Volume, vt *volumetypes.VolumeType) error {
+func ChangeVolumeType(t *testing.T, client *gophercloud.ServiceClient, volume *v3.Volume, vt *volumetypes.VolumeType) error {
 	t.Logf("Attempting to change the type of volume %s from %s to %s", volume.ID, volume.VolumeType, vt.Name)
 
 	changeOpts := volumeactions.ChangeTypeOpts{

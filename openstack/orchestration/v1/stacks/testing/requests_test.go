@@ -30,7 +30,7 @@ func TestCreateStack(t *testing.T) {
 		Name:            "stackcreated",
 		Timeout:         60,
 		TemplateOpts:    template,
-		DisableRollback: ktvpcsdk.Disabled,
+		DisableRollback: gophercloud.Disabled,
 	}
 	actual, err := stacks.Create(fake.ServiceClient(), createOpts).Extract()
 	th.AssertNoErr(t, err)
@@ -56,7 +56,7 @@ func TestCreateStackMissingRequiredInOpts(t *testing.T) {
 			}
 		}`)
 	createOpts := stacks.CreateOpts{
-		DisableRollback: ktvpcsdk.Disabled,
+		DisableRollback: gophercloud.Disabled,
 	}
 	r := stacks.Create(fake.ServiceClient(), createOpts)
 	th.AssertEquals(t, "Missing input for argument [Name]", r.Err.Error())
@@ -99,7 +99,7 @@ func TestAdoptStack(t *testing.T) {
 		Name:            "stackcreated",
 		Timeout:         60,
 		TemplateOpts:    template,
-		DisableRollback: ktvpcsdk.Disabled,
+		DisableRollback: gophercloud.Disabled,
 	}
 	actual, err := stacks.Adopt(fake.ServiceClient(), adoptOpts).Extract()
 	th.AssertNoErr(t, err)
@@ -171,7 +171,7 @@ func TestUpdateStack(t *testing.T) {
 	updateOpts := &stacks.UpdateOpts{
 		TemplateOpts: template,
 	}
-	err := stacks.Update(fake.ServiceClient(), "ktvpcsdk-test-stack-2", "db6977b2-27aa-4775-9ae7-6213212d4ada", updateOpts).ExtractErr()
+	err := stacks.Update(fake.ServiceClient(), "gophercloud-test-stack-2", "db6977b2-27aa-4775-9ae7-6213212d4ada", updateOpts).ExtractErr()
 	th.AssertNoErr(t, err)
 }
 
@@ -188,7 +188,7 @@ func TestUpdateStackNoTemplate(t *testing.T) {
 	}
 	expected := stacks.ErrTemplateRequired{}
 
-	err := stacks.Update(fake.ServiceClient(), "ktvpcsdk-test-stack-2", "db6977b2-27aa-4775-9ae7-6213212d4ada", updateOpts).ExtractErr()
+	err := stacks.Update(fake.ServiceClient(), "gophercloud-test-stack-2", "db6977b2-27aa-4775-9ae7-6213212d4ada", updateOpts).ExtractErr()
 	th.AssertEquals(t, expected, err)
 }
 
@@ -203,7 +203,7 @@ func TestUpdatePatchStack(t *testing.T) {
 	updateOpts := &stacks.UpdateOpts{
 		Parameters: parameters,
 	}
-	err := stacks.UpdatePatch(fake.ServiceClient(), "ktvpcsdk-test-stack-2", "db6977b2-27aa-4775-9ae7-6213212d4ada", updateOpts).ExtractErr()
+	err := stacks.UpdatePatch(fake.ServiceClient(), "gophercloud-test-stack-2", "db6977b2-27aa-4775-9ae7-6213212d4ada", updateOpts).ExtractErr()
 	th.AssertNoErr(t, err)
 }
 
@@ -212,7 +212,7 @@ func TestDeleteStack(t *testing.T) {
 	defer th.TeardownHTTP()
 	HandleDeleteSuccessfully(t)
 
-	err := stacks.Delete(fake.ServiceClient(), "ktvpcsdk-test-stack-2", "db6977b2-27aa-4775-9ae7-6213212d4ada").ExtractErr()
+	err := stacks.Delete(fake.ServiceClient(), "gophercloud-test-stack-2", "db6977b2-27aa-4775-9ae7-6213212d4ada").ExtractErr()
 	th.AssertNoErr(t, err)
 }
 
@@ -237,7 +237,7 @@ func TestPreviewStack(t *testing.T) {
 		Name:            "stackcreated",
 		Timeout:         60,
 		TemplateOpts:    template,
-		DisableRollback: ktvpcsdk.Disabled,
+		DisableRollback: gophercloud.Disabled,
 	}
 	actual, err := stacks.Preview(fake.ServiceClient(), previewOpts).Extract()
 	th.AssertNoErr(t, err)

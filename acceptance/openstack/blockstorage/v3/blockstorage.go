@@ -17,7 +17,7 @@ import (
 
 // CreateSnapshot will create a snapshot of the specified volume.
 // Snapshot will be assigned a random name and description.
-func CreateSnapshot(t *testing.T, client *ktvpcsdk.ServiceClient, volume *volumes.Volume) (*snapshots.Snapshot, error) {
+func CreateSnapshot(t *testing.T, client *gophercloud.ServiceClient, volume *volumes.Volume) (*snapshots.Snapshot, error) {
 	snapshotName := tools.RandomString("ACPTTEST", 16)
 	snapshotDescription := tools.RandomString("ACPTTEST", 16)
 	t.Logf("Attempting to create snapshot: %s", snapshotName)
@@ -49,7 +49,7 @@ func CreateSnapshot(t *testing.T, client *ktvpcsdk.ServiceClient, volume *volume
 
 // CreateVolume will create a volume with a random name and size of 1GB. An
 // error will be returned if the volume was unable to be created.
-func CreateVolume(t *testing.T, client *ktvpcsdk.ServiceClient) (*volumes.Volume, error) {
+func CreateVolume(t *testing.T, client *gophercloud.ServiceClient) (*volumes.Volume, error) {
 	volumeName := tools.RandomString("ACPTTEST", 16)
 	volumeDescription := tools.RandomString("ACPTTEST-DESC", 16)
 	t.Logf("Attempting to create volume: %s", volumeName)
@@ -83,7 +83,7 @@ func CreateVolume(t *testing.T, client *ktvpcsdk.ServiceClient) (*volumes.Volume
 // CreateVolumeWithType will create a volume of the given volume type
 // with a random name and size of 1GB. An error will be returned if
 // the volume was unable to be created.
-func CreateVolumeWithType(t *testing.T, client *ktvpcsdk.ServiceClient, vt *volumetypes.VolumeType) (*volumes.Volume, error) {
+func CreateVolumeWithType(t *testing.T, client *gophercloud.ServiceClient, vt *volumetypes.VolumeType) (*volumes.Volume, error) {
 	volumeName := tools.RandomString("ACPTTEST", 16)
 	volumeDescription := tools.RandomString("ACPTTEST-DESC", 16)
 	t.Logf("Attempting to create volume: %s", volumeName)
@@ -118,9 +118,9 @@ func CreateVolumeWithType(t *testing.T, client *ktvpcsdk.ServiceClient, vt *volu
 
 // CreateVolumeType will create a volume type with a random name. An
 // error will be returned if the volume was unable to be created.
-func CreateVolumeType(t *testing.T, client *ktvpcsdk.ServiceClient) (*volumetypes.VolumeType, error) {
+func CreateVolumeType(t *testing.T, client *gophercloud.ServiceClient) (*volumetypes.VolumeType, error) {
 	name := tools.RandomString("ACPTTEST", 16)
-	description := "create_from_ktvpcsdk"
+	description := "create_from_gophercloud"
 	t.Logf("Attempting to create volume type: %s", name)
 
 	createOpts := volumetypes.CreateOpts{
@@ -151,9 +151,9 @@ func CreateVolumeType(t *testing.T, client *ktvpcsdk.ServiceClient) (*volumetype
 // no extra specs. This is required to bypass cinder-scheduler filters and be able
 // to create a volume with this volumeType. An error will be returned if the volume
 // type was unable to be created.
-func CreateVolumeTypeNoExtraSpecs(t *testing.T, client *ktvpcsdk.ServiceClient) (*volumetypes.VolumeType, error) {
+func CreateVolumeTypeNoExtraSpecs(t *testing.T, client *gophercloud.ServiceClient) (*volumetypes.VolumeType, error) {
 	name := tools.RandomString("ACPTTEST", 16)
-	description := "create_from_ktvpcsdk"
+	description := "create_from_gophercloud"
 	t.Logf("Attempting to create volume type: %s", name)
 
 	createOpts := volumetypes.CreateOpts{
@@ -180,9 +180,9 @@ func CreateVolumeTypeNoExtraSpecs(t *testing.T, client *ktvpcsdk.ServiceClient) 
 // CreatePrivateVolumeType will create a private volume type with a random
 // name and no extra specs. An error will be returned if the volume type was
 // unable to be created.
-func CreatePrivateVolumeType(t *testing.T, client *ktvpcsdk.ServiceClient) (*volumetypes.VolumeType, error) {
+func CreatePrivateVolumeType(t *testing.T, client *gophercloud.ServiceClient) (*volumetypes.VolumeType, error) {
 	name := tools.RandomString("ACPTTEST", 16)
-	description := "create_from_ktvpcsdk"
+	description := "create_from_gophercloud"
 	isPublic := false
 	t.Logf("Attempting to create volume type: %s", name)
 
@@ -210,7 +210,7 @@ func CreatePrivateVolumeType(t *testing.T, client *ktvpcsdk.ServiceClient) (*vol
 
 // DeleteSnapshot will delete a snapshot. A fatal error will occur if the
 // snapshot failed to be deleted.
-func DeleteSnapshot(t *testing.T, client *ktvpcsdk.ServiceClient, snapshot *snapshots.Snapshot) {
+func DeleteSnapshot(t *testing.T, client *gophercloud.ServiceClient, snapshot *snapshots.Snapshot) {
 	err := snapshots.Delete(client, snapshot.ID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete snapshot %s: %+v", snapshot.ID, err)
@@ -235,7 +235,7 @@ func DeleteSnapshot(t *testing.T, client *ktvpcsdk.ServiceClient, snapshot *snap
 
 // DeleteVolume will delete a volume. A fatal error will occur if the volume
 // failed to be deleted. This works best when used as a deferred function.
-func DeleteVolume(t *testing.T, client *ktvpcsdk.ServiceClient, volume *volumes.Volume) {
+func DeleteVolume(t *testing.T, client *gophercloud.ServiceClient, volume *volumes.Volume) {
 	t.Logf("Attempting to delete volume: %s", volume.ID)
 
 	err := volumes.Delete(client, volume.ID, volumes.DeleteOpts{}).ExtractErr()
@@ -263,7 +263,7 @@ func DeleteVolume(t *testing.T, client *ktvpcsdk.ServiceClient, volume *volumes.
 // DeleteVolumeType will delete a volume type. A fatal error will occur if the
 // volume type failed to be deleted. This works best when used as a deferred
 // function.
-func DeleteVolumeType(t *testing.T, client *ktvpcsdk.ServiceClient, vt *volumetypes.VolumeType) {
+func DeleteVolumeType(t *testing.T, client *gophercloud.ServiceClient, vt *volumetypes.VolumeType) {
 	t.Logf("Attempting to delete volume type: %s", vt.ID)
 
 	err := volumetypes.Delete(client, vt.ID).ExtractErr()
@@ -276,7 +276,7 @@ func DeleteVolumeType(t *testing.T, client *ktvpcsdk.ServiceClient, vt *volumety
 
 // CreateQoS will create a QoS with one spec and a random name. An
 // error will be returned if the volume was unable to be created.
-func CreateQoS(t *testing.T, client *ktvpcsdk.ServiceClient) (*qos.QoS, error) {
+func CreateQoS(t *testing.T, client *gophercloud.ServiceClient) (*qos.QoS, error) {
 	name := tools.RandomString("ACPTTEST", 16)
 	t.Logf("Attempting to create QoS: %s", name)
 
@@ -305,7 +305,7 @@ func CreateQoS(t *testing.T, client *ktvpcsdk.ServiceClient) (*qos.QoS, error) {
 
 // DeleteQoS will delete a QoS. A fatal error will occur if the QoS
 // failed to be deleted. This works best when used as a deferred function.
-func DeleteQoS(t *testing.T, client *ktvpcsdk.ServiceClient, qs *qos.QoS) {
+func DeleteQoS(t *testing.T, client *gophercloud.ServiceClient, qs *qos.QoS) {
 	t.Logf("Attempting to delete QoS: %s", qs.ID)
 
 	deleteOpts := qos.DeleteOpts{

@@ -25,12 +25,12 @@ type ListIntrospectionsOpts struct {
 
 // ToIntrospectionsListQuery formats a ListIntrospectionsOpts into a query string.
 func (opts ListIntrospectionsOpts) ToIntrospectionsListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // ListIntrospections makes a request against the Inspector API to list the current introspections.
-func ListIntrospections(client *ktvpcsdk.ServiceClient, opts ListIntrospectionsOptsBuilder) pagination.Pager {
+func ListIntrospections(client *gophercloud.ServiceClient, opts ListIntrospectionsOptsBuilder) pagination.Pager {
 	url := listIntrospectionsURL(client)
 	if opts != nil {
 		query, err := opts.ToIntrospectionsListQuery()
@@ -47,11 +47,11 @@ func ListIntrospections(client *ktvpcsdk.ServiceClient, opts ListIntrospectionsO
 
 // GetIntrospectionStatus makes a request against the Inspector API to get the
 // status of a single introspection.
-func GetIntrospectionStatus(client *ktvpcsdk.ServiceClient, nodeID string) (r GetIntrospectionStatusResult) {
-	resp, err := client.Get(introspectionURL(client, nodeID), &r.Body, &ktvpcsdk.RequestOpts{
+func GetIntrospectionStatus(client *gophercloud.ServiceClient, nodeID string) (r GetIntrospectionStatusResult) {
+	resp, err := client.Get(introspectionURL(client, nodeID), &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -69,50 +69,50 @@ type StartOpts struct {
 
 // ToStartIntrospectionQuery converts a StartOpts into a request.
 func (opts StartOpts) ToStartIntrospectionQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // StartIntrospection initiate hardware introspection for node NodeID .
 // All power management configuration for this node needs to be done prior to calling the endpoint.
-func StartIntrospection(client *ktvpcsdk.ServiceClient, nodeID string, opts StartOptsBuilder) (r StartResult) {
+func StartIntrospection(client *gophercloud.ServiceClient, nodeID string, opts StartOptsBuilder) (r StartResult) {
 	_, err := opts.ToStartIntrospectionQuery()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Post(introspectionURL(client, nodeID), nil, nil, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(introspectionURL(client, nodeID), nil, nil, &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // AbortIntrospection abort running introspection.
-func AbortIntrospection(client *ktvpcsdk.ServiceClient, nodeID string) (r AbortResult) {
-	resp, err := client.Post(abortIntrospectionURL(client, nodeID), nil, nil, &ktvpcsdk.RequestOpts{
+func AbortIntrospection(client *gophercloud.ServiceClient, nodeID string) (r AbortResult) {
+	resp, err := client.Post(abortIntrospectionURL(client, nodeID), nil, nil, &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // GetIntrospectionData return stored data from successful introspection.
-func GetIntrospectionData(client *ktvpcsdk.ServiceClient, nodeID string) (r DataResult) {
-	resp, err := client.Get(introspectionDataURL(client, nodeID), &r.Body, &ktvpcsdk.RequestOpts{
+func GetIntrospectionData(client *gophercloud.ServiceClient, nodeID string) (r DataResult) {
+	resp, err := client.Get(introspectionDataURL(client, nodeID), &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // ReApplyIntrospection triggers introspection on stored unprocessed data.
 // No data is allowed to be sent along with the request.
-func ReApplyIntrospection(client *ktvpcsdk.ServiceClient, nodeID string) (r ApplyDataResult) {
-	resp, err := client.Post(introspectionUnprocessedDataURL(client, nodeID), nil, nil, &ktvpcsdk.RequestOpts{
+func ReApplyIntrospection(client *gophercloud.ServiceClient, nodeID string) (r ApplyDataResult) {
+	resp, err := client.Post(introspectionUnprocessedDataURL(client, nodeID), nil, nil, &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

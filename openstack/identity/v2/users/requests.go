@@ -6,7 +6,7 @@ import (
 )
 
 // List lists the existing users.
-func List(client *ktvpcsdk.ServiceClient) pagination.Pager {
+func List(client *gophercloud.ServiceClient) pagination.Pager {
 	return pagination.NewPager(client, rootURL(client), func(r pagination.PageResult) pagination.Page {
 		return UserPage{pagination.SinglePageBase(r)}
 	})
@@ -44,32 +44,32 @@ type CreateOptsBuilder interface {
 // CreateOpts.
 func (opts CreateOpts) ToUserCreateMap() (map[string]interface{}, error) {
 	if opts.Name == "" && opts.Username == "" {
-		err := ktvpcsdk.ErrMissingInput{}
+		err := gophercloud.ErrMissingInput{}
 		err.Argument = "users.CreateOpts.Name/users.CreateOpts.Username"
 		err.Info = "Either a Name or Username must be provided"
 		return nil, err
 	}
-	return ktvpcsdk.BuildRequestBody(opts, "user")
+	return gophercloud.BuildRequestBody(opts, "user")
 }
 
 // Create is the operation responsible for creating new users.
-func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToUserCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(rootURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(rootURL(client), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200, 201},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get requests details on a single user, either by ID or Name.
-func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
 	resp, err := client.Get(ResourceURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -85,32 +85,32 @@ type UpdateOpts CommonOpts
 
 // ToUserUpdateMap formats an UpdateOpts structure into a request body.
 func (opts UpdateOpts) ToUserUpdateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "user")
+	return gophercloud.BuildRequestBody(opts, "user")
 }
 
 // Update is the operation responsible for updating exist users by their ID.
-func Update(client *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToUserUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Put(ResourceURL(client, id), &b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Put(ResourceURL(client, id), &b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete is the operation responsible for permanently deleting a User.
-func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(ResourceURL(client, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // ListRoles lists the existing roles that can be assigned to users.
-func ListRoles(client *ktvpcsdk.ServiceClient, tenantID, userID string) pagination.Pager {
+func ListRoles(client *gophercloud.ServiceClient, tenantID, userID string) pagination.Pager {
 	return pagination.NewPager(client, listRolesURL(client, tenantID, userID), func(r pagination.PageResult) pagination.Page {
 		return RolePage{pagination.SinglePageBase(r)}
 	})

@@ -48,7 +48,7 @@ func TestAuthenticatedClientV3(t *testing.T) {
 		fmt.Fprintf(w, `{ "token": { "expires_at": "2013-02-02T18:30:59.000000Z" } }`)
 	})
 
-	options := ktvpcsdk.AuthOptions{
+	options := gophercloud.AuthOptions{
 		Username:         "me",
 		Password:         "secret",
 		DomainName:       "default",
@@ -153,7 +153,7 @@ func TestAuthenticatedClientV2(t *testing.T) {
 		`)
 	})
 
-	options := ktvpcsdk.AuthOptions{
+	options := gophercloud.AuthOptions{
 		Username:         "me",
 		Password:         "secret",
 		IdentityEndpoint: th.Endpoint(),
@@ -277,7 +277,7 @@ func TestIdentityAdminV3Client(t *testing.T) {
 	`)
 	})
 
-	options := ktvpcsdk.AuthOptions{
+	options := gophercloud.AuthOptions{
 		Username:         "me",
 		Password:         "secret",
 		DomainID:         "12345",
@@ -285,15 +285,15 @@ func TestIdentityAdminV3Client(t *testing.T) {
 	}
 	pc, err := openstack.AuthenticatedClient(options)
 	th.AssertNoErr(t, err)
-	sc, err := openstack.NewIdentityV3(pc, ktvpcsdk.EndpointOpts{
-		Availability: ktvpcsdk.AvailabilityAdmin,
+	sc, err := openstack.NewIdentityV3(pc, gophercloud.EndpointOpts{
+		Availability: gophercloud.AvailabilityAdmin,
 	})
 	th.AssertNoErr(t, err)
 	th.CheckEquals(t, "http://localhost:35357/v3/", sc.Endpoint)
 }
 
 func testAuthenticatedClientFails(t *testing.T, endpoint string) {
-	options := ktvpcsdk.AuthOptions{
+	options := gophercloud.AuthOptions{
 		Username:         "me",
 		Password:         "secret",
 		DomainName:       "default",

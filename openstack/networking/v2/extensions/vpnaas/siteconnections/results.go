@@ -89,7 +89,7 @@ type Connection struct {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // ConnectionPage is the page returned by a pager when traversing over a
@@ -103,13 +103,13 @@ type ConnectionPage struct {
 // In order to do this, it needs to construct the next page's URL.
 func (r ConnectionPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []ktvpcsdk.Link `json:"ipsec_site_connections_links"`
+		Links []gophercloud.Link `json:"ipsec_site_connections_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return ktvpcsdk.ExtractNextURL(s.Links)
+	return gophercloud.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether a ConnectionPage struct is empty.
@@ -147,7 +147,7 @@ type CreateResult struct {
 // DeleteResult represents the result of a delete operation. Call its
 // ExtractErr method to determine if the operation succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // GetResult represents the result of a get operation. Call its Extract

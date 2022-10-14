@@ -1,4 +1,4 @@
-package ktvpcsdk
+package gophercloud
 
 import (
 	"encoding/json"
@@ -25,7 +25,7 @@ encapsulate the built one. For example:
     RxTxFactor: 1.0,
   }
 
-  body, err := ktvpcsdk.BuildRequestBody(createOpts, "flavor")
+  body, err := gophercloud.BuildRequestBody(createOpts, "flavor")
 
 The above example can be run as-is, however it is recommended to look at how
 BuildRequestBody is used within Gophercloud to more fully understand how it

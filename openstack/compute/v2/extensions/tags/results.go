@@ -3,7 +3,7 @@ package tags
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract is a function that accepts a result and extracts a tags resource.
@@ -21,14 +21,14 @@ type ListResult struct {
 
 // CheckResult is the result from the Check operation.
 type CheckResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 func (r CheckResult) Extract() (bool, error) {
 	exists := r.Err == nil
 
 	if r.Err != nil {
-		if _, ok := r.Err.(ktvpcsdk.ErrDefault404); ok {
+		if _, ok := r.Err.(gophercloud.ErrDefault404); ok {
 			r.Err = nil
 		}
 	}
@@ -43,10 +43,10 @@ type ReplaceAllResult struct {
 
 // AddResult is the result from the Add operation.
 type AddResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // DeleteResult is the result from the Delete operation.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

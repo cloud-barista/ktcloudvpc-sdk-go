@@ -10,7 +10,7 @@ import (
 
 // CreateRBACPolicy will create a rbac-policy. An error will be returned if the
 // rbac-policy could not be created.
-func CreateRBACPolicy(t *testing.T, client *ktvpcsdk.ServiceClient, tenantID, networkID string) (*rbacpolicies.RBACPolicy, error) {
+func CreateRBACPolicy(t *testing.T, client *gophercloud.ServiceClient, tenantID, networkID string) (*rbacpolicies.RBACPolicy, error) {
 	createOpts := rbacpolicies.CreateOpts{
 		Action:       rbacpolicies.ActionAccessShared,
 		ObjectType:   "network",
@@ -35,7 +35,7 @@ func CreateRBACPolicy(t *testing.T, client *ktvpcsdk.ServiceClient, tenantID, ne
 // DeleteRBACPolicy will delete a rbac-policy with a specified ID. A fatal error will
 // occur if the delete was not successful. This works best when used as a
 // deferred function.
-func DeleteRBACPolicy(t *testing.T, client *ktvpcsdk.ServiceClient, rbacPolicyID string) {
+func DeleteRBACPolicy(t *testing.T, client *gophercloud.ServiceClient, rbacPolicyID string) {
 	t.Logf("Trying to delete rbac_policy: %s", rbacPolicyID)
 
 	err := rbacpolicies.Delete(client, rbacPolicyID).ExtractErr()

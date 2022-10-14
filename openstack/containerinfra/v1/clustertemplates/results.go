@@ -8,7 +8,7 @@ import (
 )
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // CreateResult is the response of a Create operations.
@@ -19,7 +19,7 @@ type CreateResult struct {
 // DeleteResult is the result from a Delete operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // GetResult is the response of a Get operations.
@@ -59,7 +59,7 @@ type ClusterTemplate struct {
 	InsecureRegistry    string             `json:"insecure_registry"`
 	KeyPairID           string             `json:"keypair_id"`
 	Labels              map[string]string  `json:"labels"`
-	Links               []ktvpcsdk.Link `json:"links"`
+	Links               []gophercloud.Link `json:"links"`
 	MasterFlavorID      string             `json:"master_flavor_id"`
 	MasterLBEnabled     bool               `json:"master_lb_enabled"`
 	Name                string             `json:"name"`

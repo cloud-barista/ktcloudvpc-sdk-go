@@ -52,7 +52,7 @@ type ListOpts struct {
 
 // ToSubnetListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToSubnetListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
@@ -63,7 +63,7 @@ func (opts ListOpts) ToSubnetListQuery() (string, error) {
 // Default policy settings return only those subnets that are owned by the tenant
 // who submits the request, unless the request is submitted by a user with
 // administrative rights.
-func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(c)
 	cblogger.Infof("\n\n### Subnets list URL : %s", url)
 
@@ -80,11 +80,11 @@ func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 }
 
 // Get retrieves a specific subnet based on its unique ID.
-func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
 	cblogger.Infof("\n\n### Subnet getURL(c, id) : %s", getURL(c, id))
 
 	resp, err := c.Get(getURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -126,7 +126,7 @@ type CreateOpts struct {
 	GatewayIP *string `json:"gateway_ip,omitempty"`
 
 	// IPVersion is the IP version for the subnet.
-	IPVersion ktvpcsdk.IPVersion `json:"ip_version,omitempty"`
+	IPVersion gophercloud.IPVersion `json:"ip_version,omitempty"`
 
 	// EnableDHCP will either enable to disable the DHCP service.
 	EnableDHCP *bool `json:"enable_dhcp,omitempty"`
@@ -154,7 +154,7 @@ type CreateOpts struct {
 
 // ToSubnetCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToSubnetCreateMap() (map[string]interface{}, error) {
-	b, err := ktvpcsdk.BuildRequestBody(opts, "subnet")
+	b, err := gophercloud.BuildRequestBody(opts, "subnet")
 	if err != nil {
 		return nil, err
 	}
@@ -169,14 +169,14 @@ func (opts CreateOpts) ToSubnetCreateMap() (map[string]interface{}, error) {
 // Create accepts a CreateOpts struct and creates a new subnet using the values
 // provided. You must remember to provide a valid NetworkID, CIDR and IP
 // version.
-func Create(c *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToSubnetCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Post(createURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -220,7 +220,7 @@ type UpdateOpts struct {
 
 // ToSubnetUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToSubnetUpdateMap() (map[string]interface{}, error) {
-	b, err := ktvpcsdk.BuildRequestBody(opts, "subnet")
+	b, err := gophercloud.BuildRequestBody(opts, "subnet")
 	if err != nil {
 		return nil, err
 	}
@@ -234,13 +234,13 @@ func (opts UpdateOpts) ToSubnetUpdateMap() (map[string]interface{}, error) {
 
 // Update accepts a UpdateOpts struct and updates an existing subnet using the
 // values provided.
-func Update(c *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToSubnetUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	h, err := ktvpcsdk.BuildHeaders(opts)
+	h, err := gophercloud.BuildHeaders(opts)
 	if err != nil {
 		r.Err = err
 		return
@@ -251,17 +251,17 @@ func Update(c *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r Upd
 		}
 	}
 
-	resp, err := c.Put(updateURL(c, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := c.Put(updateURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
 		MoreHeaders: h,
 		OkCodes:     []int{200, 201},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete accepts a unique ID and deletes the subnet associated with it.
-func Delete(c *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := c.Delete(deleteURL(c, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

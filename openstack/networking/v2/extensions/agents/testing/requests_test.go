@@ -232,7 +232,7 @@ func TestListBGPSpeakers(t *testing.T) {
 			th.AssertNoErr(t, err)
 			th.AssertEquals(t, len(actual), 1)
 			th.AssertEquals(t, actual[0].ID, "cab00464-284d-4251-9798-2b27db7b1668")
-			th.AssertEquals(t, actual[0].Name, "ktvpcsdk-testing-speaker")
+			th.AssertEquals(t, actual[0].Name, "gophercloud-testing-speaker")
 			th.AssertEquals(t, actual[0].LocalAS, 12345)
 			th.AssertEquals(t, actual[0].IPVersion, 4)
 			return true, nil

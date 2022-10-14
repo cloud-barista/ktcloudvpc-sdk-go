@@ -9,7 +9,7 @@ Example to Create a Profile
 	}
 
 	props := map[string]interface{}{
-		"name":            "test_ktvpcsdk_profile",
+		"name":            "test_gophercloud_profile",
 		"flavor":          "t2.micro",
 		"image":           "centos7.3-latest",
 		"networks":        networks,

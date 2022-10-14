@@ -8,13 +8,13 @@ import (
 // GetResult is the response from a Get operation. Call its Extract method to
 // interpret it as an Image.
 type GetResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // DeleteResult is the result from a Delete operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // Extract interprets a GetResult as an Image.
@@ -75,13 +75,13 @@ func (page ImagePage) IsEmpty() (bool, error) {
 // next page of results.
 func (page ImagePage) NextPageURL() (string, error) {
 	var s struct {
-		Links []ktvpcsdk.Link `json:"images_links"`
+		Links []gophercloud.Link `json:"images_links"`
 	}
 	err := page.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return ktvpcsdk.ExtractNextURL(s.Links)
+	return gophercloud.ExtractNextURL(s.Links)
 }
 
 // ExtractImages converts a page of List results into a slice of usable Image

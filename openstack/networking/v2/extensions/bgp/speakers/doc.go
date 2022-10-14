@@ -41,7 +41,7 @@ Example:
                 IPVersion:                     6,
                 AdvertiseFloatingIPHostRoutes: false,
                 AdvertiseTenantNetworks:       true,
-                Name:                          "ktvpcsdk-testing-bgp-speaker",
+                Name:                          "gophercloud-testing-bgp-speaker",
                 LocalAS:                       "2000",
                 Networks:                      []string{},
         }

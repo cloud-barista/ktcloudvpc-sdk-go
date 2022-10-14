@@ -9,18 +9,18 @@ const (
 	removePath   = "remove_rule"
 )
 
-func rootURL(c *ktvpcsdk.ServiceClient) string {
+func rootURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL(rootPath, resourcePath)
 }
 
-func resourceURL(c *ktvpcsdk.ServiceClient, id string) string {
+func resourceURL(c *gophercloud.ServiceClient, id string) string {
 	return c.ServiceURL(rootPath, resourcePath, id)
 }
 
-func insertURL(c *ktvpcsdk.ServiceClient, id string) string {
+func insertURL(c *gophercloud.ServiceClient, id string) string {
 	return c.ServiceURL(rootPath, resourcePath, id, insertPath)
 }
 
-func removeURL(c *ktvpcsdk.ServiceClient, id string) string {
+func removeURL(c *gophercloud.ServiceClient, id string) string {
 	return c.ServiceURL(rootPath, resourcePath, id, removePath)
 }

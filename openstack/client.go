@@ -58,18 +58,18 @@ A basic example of using this would be:
 
 	ao, err := openstack.AuthOptionsFromEnv()
 	provider, err := openstack.NewClient(ao.IdentityEndpoint)
-	client, err := openstack.NewIdentityV3(provider, ktvpcsdk.EndpointOpts{})
+	client, err := openstack.NewIdentityV3(provider, gophercloud.EndpointOpts{})
 */
-func NewClient(endpoint string) (*ktvpcsdk.ProviderClient, error) {
+func NewClient(endpoint string) (*gophercloud.ProviderClient, error) {
 	base, err := utils.BaseEndpoint(endpoint)
 	if err != nil {
 		return nil, err
 	}
 
-	endpoint = ktvpcsdk.NormalizeURL(endpoint)
-	base = ktvpcsdk.NormalizeURL(base)
+	endpoint = gophercloud.NormalizeURL(endpoint)
+	base = gophercloud.NormalizeURL(base)
 
-	p := new(ktvpcsdk.ProviderClient)
+	p := new(gophercloud.ProviderClient)
 	p.IdentityBase = base
 	p.IdentityEndpoint = endpoint
 	p.UseTokenLock()
@@ -93,11 +93,11 @@ Example:
 
 	ao, err := openstack.AuthOptionsFromEnv()
 	provider, err := openstack.AuthenticatedClient(ao)
-	client, err := openstack.NewNetworkV2(provider, ktvpcsdk.EndpointOpts{
+	client, err := openstack.NewNetworkV2(provider, gophercloud.EndpointOpts{
 		Region: os.Getenv("OS_REGION_NAME"),
 	})
 */
-func AuthenticatedClient(options ktvpcsdk.AuthOptions) (*ktvpcsdk.ProviderClient, error) {
+func AuthenticatedClient(options gophercloud.AuthOptions) (*gophercloud.ProviderClient, error) {
 	client, err := NewClient(options.IdentityEndpoint)
 	if err != nil {
 		return nil, err
@@ -117,7 +117,7 @@ func AuthenticatedClient(options ktvpcsdk.AuthOptions) (*ktvpcsdk.ProviderClient
 
 // Authenticate or re-authenticate against the most recent identity service
 // supported at the provided endpoint.
-func Authenticate(client *ktvpcsdk.ProviderClient, options ktvpcsdk.AuthOptions) error {
+func Authenticate(client *gophercloud.ProviderClient, options gophercloud.AuthOptions) error {
 	versions := []*utils.Version{
 		{ID: v2, Priority: 20, Suffix: "/v2.0/"},
 		{ID: v3, Priority: 30, Suffix: "/v3/"},
@@ -138,9 +138,9 @@ func Authenticate(client *ktvpcsdk.ProviderClient, options ktvpcsdk.AuthOptions)
 
 	switch chosen.ID {
 	case v2:
-		return v2auth(client, endpoint, options, ktvpcsdk.EndpointOpts{})
+		return v2auth(client, endpoint, options, gophercloud.EndpointOpts{})
 	case v3:
-		return v3auth(client, endpoint, &options, ktvpcsdk.EndpointOpts{})
+		return v3auth(client, endpoint, &options, gophercloud.EndpointOpts{})
 	default:
 		// The switch statement must be out of date from the versions list.
 		return fmt.Errorf("Unrecognized identity version: %s", chosen.ID)
@@ -148,11 +148,11 @@ func Authenticate(client *ktvpcsdk.ProviderClient, options ktvpcsdk.AuthOptions)
 }
 
 // AuthenticateV2 explicitly authenticates against the identity v2 endpoint.
-func AuthenticateV2(client *ktvpcsdk.ProviderClient, options ktvpcsdk.AuthOptions, eo ktvpcsdk.EndpointOpts) error {
+func AuthenticateV2(client *gophercloud.ProviderClient, options gophercloud.AuthOptions, eo gophercloud.EndpointOpts) error {
 	return v2auth(client, "", options, eo)
 }
 
-func v2auth(client *ktvpcsdk.ProviderClient, endpoint string, options ktvpcsdk.AuthOptions, eo ktvpcsdk.EndpointOpts) error {
+func v2auth(client *gophercloud.ProviderClient, endpoint string, options gophercloud.AuthOptions, eo gophercloud.EndpointOpts) error {
 	v2Client, err := NewIdentityV2(client, eo)
 	if err != nil {
 		return err
@@ -203,7 +203,7 @@ func v2auth(client *ktvpcsdk.ProviderClient, endpoint string, options ktvpcsdk.A
 			return nil
 		}
 	}
-	client.EndpointLocator = func(opts ktvpcsdk.EndpointOpts) (string, error) {
+	client.EndpointLocator = func(opts gophercloud.EndpointOpts) (string, error) {
 		return V2EndpointURL(catalog, opts)
 	}
 
@@ -211,11 +211,11 @@ func v2auth(client *ktvpcsdk.ProviderClient, endpoint string, options ktvpcsdk.A
 }
 
 // AuthenticateV3 explicitly authenticates against the identity v3 service.
-func AuthenticateV3(client *ktvpcsdk.ProviderClient, options tokens3.AuthOptionsBuilder, eo ktvpcsdk.EndpointOpts) error {
+func AuthenticateV3(client *gophercloud.ProviderClient, options tokens3.AuthOptionsBuilder, eo gophercloud.EndpointOpts) error {
 	return v3auth(client, "", options, eo)
 }
 
-func v3auth(client *ktvpcsdk.ProviderClient, endpoint string, opts tokens3.AuthOptionsBuilder, eo ktvpcsdk.EndpointOpts) error {
+func v3auth(client *gophercloud.ProviderClient, endpoint string, opts tokens3.AuthOptionsBuilder, eo gophercloud.EndpointOpts) error {
 	// Override the generated service endpoint with the one returned by the version endpoint.
 	v3Client, err := NewIdentityV3(client, eo)
 	if err != nil {
@@ -244,9 +244,9 @@ func v3auth(client *ktvpcsdk.ProviderClient, endpoint string, opts tokens3.AuthO
 	// passthroughToken allows to passthrough the token without a scope
 	var passthroughToken bool
 	switch v := opts.(type) {
-	case *ktvpcsdk.AuthOptions:
+	case *gophercloud.AuthOptions:
 		tokenID = v.TokenID
-		passthroughToken = (v.Scope == nil || *v.Scope == ktvpcsdk.AuthScope{})
+		passthroughToken = (v.Scope == nil || *v.Scope == gophercloud.AuthScope{})
 	case *tokens3.AuthOptions:
 		tokenID = v.TokenID
 		passthroughToken = (v.Scope == tokens3.Scope{})
@@ -305,7 +305,7 @@ func v3auth(client *ktvpcsdk.ProviderClient, endpoint string, opts tokens3.AuthO
 		tac.SetTokenAndAuthResult(nil)
 		var tao tokens3.AuthOptionsBuilder
 		switch ot := opts.(type) {
-		case *ktvpcsdk.AuthOptions:
+		case *gophercloud.AuthOptions:
 			o := *ot
 			o.AllowReauth = false
 			tao = &o
@@ -333,7 +333,7 @@ func v3auth(client *ktvpcsdk.ProviderClient, endpoint string, opts tokens3.AuthO
 			return nil
 		}
 	}
-	client.EndpointLocator = func(opts ktvpcsdk.EndpointOpts) (string, error) {
+	client.EndpointLocator = func(opts gophercloud.EndpointOpts) (string, error) {
 		return V3EndpointURL(catalog, opts)
 	}
 
@@ -342,11 +342,11 @@ func v3auth(client *ktvpcsdk.ProviderClient, endpoint string, opts tokens3.AuthO
 
 // NewIdentityV2 creates a ServiceClient that may be used to interact with the
 // v2 identity service.
-func NewIdentityV2(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewIdentityV2(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	endpoint := client.IdentityBase + "v2.0/"
 	clientType := "identity"
 	var err error
-	if !reflect.DeepEqual(eo, ktvpcsdk.EndpointOpts{}) {
+	if !reflect.DeepEqual(eo, gophercloud.EndpointOpts{}) {
 		eo.ApplyDefaults(clientType)
 		endpoint, err = client.EndpointLocator(eo)
 		if err != nil {
@@ -354,7 +354,7 @@ func NewIdentityV2(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*
 		}
 	}
 
-	return &ktvpcsdk.ServiceClient{
+	return &gophercloud.ServiceClient{
 		ProviderClient: client,
 		Endpoint:       endpoint,
 		Type:           clientType,
@@ -363,12 +363,12 @@ func NewIdentityV2(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*
 
 // NewIdentityV3 creates a ServiceClient that may be used to access the v3
 // identity service.
-func NewIdentityV3(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewIdentityV3(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 
 	endpoint := client.IdentityBase  // Modified by B.T. Oh.
 	clientType := "identity"
 	var err error
-	if !reflect.DeepEqual(eo, ktvpcsdk.EndpointOpts{}) {
+	if !reflect.DeepEqual(eo, gophercloud.EndpointOpts{}) {
 		eo.ApplyDefaults(clientType)
 		endpoint, err = client.EndpointLocator(eo)
 		if err != nil {
@@ -385,17 +385,17 @@ func NewIdentityV3(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*
 		return nil, err
 	}
 
-	endpoint = ktvpcsdk.NormalizeURL(base)  // Modified by B.T. Oh.
+	endpoint = gophercloud.NormalizeURL(base)  // Modified by B.T. Oh.
 
-	return &ktvpcsdk.ServiceClient{
+	return &gophercloud.ServiceClient{
 		ProviderClient: client,
 		Endpoint:       endpoint,
 		Type:           clientType,
 	}, nil
 }
 
-func initClientOpts(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts, clientType string) (*ktvpcsdk.ServiceClient, error) {
-	sc := new(ktvpcsdk.ServiceClient)
+func initClientOpts(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts, clientType string) (*gophercloud.ServiceClient, error) {
+	sc := new(gophercloud.ServiceClient)
 	eo.ApplyDefaults(clientType)
 
 	// url, err := client.EndpointLocator(eo)
@@ -431,25 +431,25 @@ func initClientOpts(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts, c
 
 // NewBareMetalV1 creates a ServiceClient that may be used with the v1
 // bare metal package.
-func NewBareMetalV1(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewBareMetalV1(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	return initClientOpts(client, eo, "baremetal")
 }
 
 // NewBareMetalIntrospectionV1 creates a ServiceClient that may be used with the v1
 // bare metal introspection package.
-func NewBareMetalIntrospectionV1(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewBareMetalIntrospectionV1(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	return initClientOpts(client, eo, "baremetal-inspector")
 }
 
 // NewObjectStorageV1 creates a ServiceClient that may be used with the v1
 // object storage package.
-func NewObjectStorageV1(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewObjectStorageV1(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	return initClientOpts(client, eo, "object-store")
 }
 
 // NewComputeV2 creates a ServiceClient that may be used with the v2 compute
 // package.
-func NewComputeV2(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewComputeV2(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	cblogger.Info("\n# eo in NewComputeV2() : ")
 	spew.Dump(eo)
 	cblogger.Info("\n\n")
@@ -458,7 +458,7 @@ func NewComputeV2(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*k
 
 // NewNetworkV2 creates a ServiceClient that may be used with the v2 network
 // package.
-func NewNetworkV2(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewNetworkV2(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "network")
 	sc.ResourceBase = sc.Endpoint + "v2.0/"
 	return sc, err
@@ -466,46 +466,46 @@ func NewNetworkV2(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*k
 
 // NewBlockStorageV1 creates a ServiceClient that may be used to access the v1
 // block storage service.
-func NewBlockStorageV1(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewBlockStorageV1(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	return initClientOpts(client, eo, "volume")
 }
 
 // NewBlockStorageV2 creates a ServiceClient that may be used to access the v2
 // block storage service.
-func NewBlockStorageV2(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewBlockStorageV2(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	return initClientOpts(client, eo, "volumev2")
 }
 
 // NewBlockStorageV3 creates a ServiceClient that may be used to access the v3 block storage service.
-func NewBlockStorageV3(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewBlockStorageV3(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	return initClientOpts(client, eo, "volumev3")
 }
 
 // NewSharedFileSystemV2 creates a ServiceClient that may be used to access the v2 shared file system service.
-func NewSharedFileSystemV2(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewSharedFileSystemV2(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	return initClientOpts(client, eo, "sharev2")
 }
 
 // NewCDNV1 creates a ServiceClient that may be used to access the OpenStack v1
 // CDN service.
-func NewCDNV1(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewCDNV1(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	return initClientOpts(client, eo, "cdn")
 }
 
 // NewOrchestrationV1 creates a ServiceClient that may be used to access the v1
 // orchestration service.
-func NewOrchestrationV1(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewOrchestrationV1(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	return initClientOpts(client, eo, "orchestration")
 }
 
 // NewDBV1 creates a ServiceClient that may be used to access the v1 DB service.
-func NewDBV1(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewDBV1(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	return initClientOpts(client, eo, "database")
 }
 
 // NewDNSV2 creates a ServiceClient that may be used to access the v2 DNS
 // service.
-func NewDNSV2(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewDNSV2(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "dns")
 	sc.ResourceBase = sc.Endpoint + "v2/"
 	return sc, err
@@ -513,7 +513,7 @@ func NewDNSV2(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpc
 
 // NewImageServiceV2 creates a ServiceClient that may be used to access the v2
 // image service.
-func NewImageServiceV2(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewImageServiceV2(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "image")
 	sc.ResourceBase = sc.Endpoint   // Modified by B.T. Oh.
 	// sc.ResourceBase = sc.Endpoint + "v2/"
@@ -522,7 +522,7 @@ func NewImageServiceV2(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts
 
 // NewLoadBalancerV2 creates a ServiceClient that may be used to access the v2
 // load balancer service.
-func NewLoadBalancerV2(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewLoadBalancerV2(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "load-balancer")
 
 	// Fixes edge case having an OpenStack lb endpoint with trailing version number.
@@ -534,26 +534,26 @@ func NewLoadBalancerV2(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts
 
 // NewClusteringV1 creates a ServiceClient that may be used with the v1 clustering
 // package.
-func NewClusteringV1(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewClusteringV1(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	return initClientOpts(client, eo, "clustering")
 }
 
 // NewMessagingV2 creates a ServiceClient that may be used with the v2 messaging
 // service.
-func NewMessagingV2(client *ktvpcsdk.ProviderClient, clientID string, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewMessagingV2(client *gophercloud.ProviderClient, clientID string, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "messaging")
 	sc.MoreHeaders = map[string]string{"Client-ID": clientID}
 	return sc, err
 }
 
 // NewContainerV1 creates a ServiceClient that may be used with v1 container package
-func NewContainerV1(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewContainerV1(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	return initClientOpts(client, eo, "container")
 }
 
 // NewKeyManagerV1 creates a ServiceClient that may be used with the v1 key
 // manager service.
-func NewKeyManagerV1(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewKeyManagerV1(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "key-manager")
 	sc.ResourceBase = sc.Endpoint + "v1/"
 	return sc, err
@@ -561,16 +561,16 @@ func NewKeyManagerV1(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) 
 
 // NewContainerInfraV1 creates a ServiceClient that may be used with the v1 container infra management
 // package.
-func NewContainerInfraV1(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewContainerInfraV1(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	return initClientOpts(client, eo, "container-infra")
 }
 
 // NewWorkflowV2 creates a ServiceClient that may be used with the v2 workflow management package.
-func NewWorkflowV2(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewWorkflowV2(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	return initClientOpts(client, eo, "workflowv2")
 }
 
 // NewPlacementV1 creates a ServiceClient that may be used with the placement package.
-func NewPlacementV1(client *ktvpcsdk.ProviderClient, eo ktvpcsdk.EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewPlacementV1(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	return initClientOpts(client, eo, "placement")
 }

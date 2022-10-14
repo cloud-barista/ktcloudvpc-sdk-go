@@ -6,7 +6,7 @@ import (
 )
 
 // List enumerates the Credentials to which the current token has access.
-func List(client *ktvpcsdk.ServiceClient, userID string) pagination.Pager {
+func List(client *gophercloud.ServiceClient, userID string) pagination.Pager {
 	url := listURL(client, userID)
 	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
 		return CredentialPage{pagination.LinkedPageBase{PageResult: r}}
@@ -14,9 +14,9 @@ func List(client *ktvpcsdk.ServiceClient, userID string) pagination.Pager {
 }
 
 // Get retrieves details on a single EC2 credential by ID.
-func Get(client *ktvpcsdk.ServiceClient, userID string, id string) (r GetResult) {
+func Get(client *gophercloud.ServiceClient, userID string, id string) (r GetResult) {
 	resp, err := client.Get(getURL(client, userID, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -28,26 +28,26 @@ type CreateOpts struct {
 
 // ToCredentialCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToCredentialCreateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "")
+	return gophercloud.BuildRequestBody(opts, "")
 }
 
 // Create creates a new EC2 Credential.
-func Create(client *ktvpcsdk.ServiceClient, userID string, opts CreateOpts) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, userID string, opts CreateOpts) (r CreateResult) {
 	b, err := opts.ToCredentialCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client, userID), &b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(createURL(client, userID), &b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes an EC2 credential.
-func Delete(client *ktvpcsdk.ServiceClient, userID string, id string) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClient, userID string, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, userID, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

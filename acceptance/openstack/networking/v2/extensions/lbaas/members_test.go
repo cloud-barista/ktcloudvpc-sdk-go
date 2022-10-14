@@ -69,7 +69,7 @@ func TestMembersCRUD(t *testing.T) {
 	tools.PrintResource(t, member)
 
 	updateOpts := members.UpdateOpts{
-		AdminStateUp: ktvpcsdk.Enabled,
+		AdminStateUp: gophercloud.Enabled,
 	}
 
 	_, err = members.Update(client, member.ID, updateOpts).Extract()

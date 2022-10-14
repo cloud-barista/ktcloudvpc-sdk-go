@@ -20,12 +20,12 @@ type User struct {
 
 // CreateResult represents the result of a create operation.
 type CreateResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // DeleteResult represents the result of a delete operation.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // UserPage represents a single page of a paginated user collection.
@@ -42,13 +42,13 @@ func (page UserPage) IsEmpty() (bool, error) {
 // NextPageURL will retrieve the next page URL.
 func (page UserPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []ktvpcsdk.Link `json:"users_links"`
+		Links []gophercloud.Link `json:"users_links"`
 	}
 	err := page.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return ktvpcsdk.ExtractNextURL(s.Links)
+	return gophercloud.ExtractNextURL(s.Links)
 }
 
 // ExtractUsers will convert a generic pagination struct into a more

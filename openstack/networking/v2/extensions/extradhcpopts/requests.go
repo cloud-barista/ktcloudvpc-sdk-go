@@ -25,7 +25,7 @@ type CreateExtraDHCPOpt struct {
 	OptValue string `json:"opt_value" required:"true"`
 
 	// IPVersion is the IP protocol version of a DHCP option.
-	IPVersion ktvpcsdk.IPVersion `json:"ip_version,omitempty"`
+	IPVersion gophercloud.IPVersion `json:"ip_version,omitempty"`
 }
 
 // ToPortCreateMap casts a CreateOptsExt struct to a map.
@@ -41,7 +41,7 @@ func (opts CreateOptsExt) ToPortCreateMap() (map[string]interface{}, error) {
 	if opts.ExtraDHCPOpts != nil {
 		extraDHCPOpts := make([]map[string]interface{}, len(opts.ExtraDHCPOpts))
 		for i, opt := range opts.ExtraDHCPOpts {
-			b, err := ktvpcsdk.BuildRequestBody(opt, "")
+			b, err := gophercloud.BuildRequestBody(opt, "")
 			if err != nil {
 				return nil, err
 			}
@@ -73,7 +73,7 @@ type UpdateExtraDHCPOpt struct {
 	OptValue *string `json:"opt_value"`
 
 	// IPVersion is the IP protocol version of a DHCP option.
-	IPVersion ktvpcsdk.IPVersion `json:"ip_version,omitempty"`
+	IPVersion gophercloud.IPVersion `json:"ip_version,omitempty"`
 }
 
 // ToPortUpdateMap casts an UpdateOpts struct to a map.
@@ -89,7 +89,7 @@ func (opts UpdateOptsExt) ToPortUpdateMap() (map[string]interface{}, error) {
 	if opts.ExtraDHCPOpts != nil {
 		extraDHCPOpts := make([]map[string]interface{}, len(opts.ExtraDHCPOpts))
 		for i, opt := range opts.ExtraDHCPOpts {
-			b, err := ktvpcsdk.BuildRequestBody(opt, "")
+			b, err := gophercloud.BuildRequestBody(opt, "")
 			if err != nil {
 				return nil, err
 			}

@@ -114,13 +114,13 @@ type PoolPage struct {
 // to do this, it needs to construct the next page's URL.
 func (r PoolPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []ktvpcsdk.Link `json:"pools_links"`
+		Links []gophercloud.Link `json:"pools_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return ktvpcsdk.ExtractNextURL(s.Links)
+	return gophercloud.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether a PoolPage struct is empty.
@@ -141,7 +141,7 @@ func ExtractPools(r pagination.Page) ([]Pool, error) {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract is a function that accepts a result and extracts a pool.
@@ -174,7 +174,7 @@ type UpdateResult struct {
 // DeleteResult represents the result of a Delete operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // Member represents the application running on a backend server.
@@ -227,13 +227,13 @@ type MemberPage struct {
 // to do this, it needs to construct the next page's URL.
 func (r MemberPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []ktvpcsdk.Link `json:"members_links"`
+		Links []gophercloud.Link `json:"members_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return ktvpcsdk.ExtractNextURL(s.Links)
+	return gophercloud.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether a MemberPage struct is empty.
@@ -254,7 +254,7 @@ func ExtractMembers(r pagination.Page) ([]Member, error) {
 }
 
 type commonMemberResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // ExtractMember is a function that accepts a result and extracts a member.
@@ -287,5 +287,5 @@ type UpdateMemberResult struct {
 // DeleteMemberResult represents the result of a DeleteMember operation.
 // Call its ExtractErr method to determine if the request succeeded or failed.
 type DeleteMemberResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

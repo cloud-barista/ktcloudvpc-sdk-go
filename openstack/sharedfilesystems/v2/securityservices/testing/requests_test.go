@@ -48,7 +48,7 @@ func TestCreateFails(t *testing.T) {
 	}
 
 	_, err := securityservices.Create(client.ServiceClient(), options).Extract()
-	if _, ok := err.(ktvpcsdk.ErrMissingInput); !ok {
+	if _, ok := err.(gophercloud.ErrMissingInput); !ok {
 		t.Fatal("ErrMissingInput was expected to occur")
 	}
 }
