@@ -68,7 +68,7 @@ type AuthOptions struct {
 
 // ToTokenV3CreateMap builds a request body from AuthOptions.
 func (opts *AuthOptions) ToTokenV3CreateMap(scope map[string]interface{}) (map[string]interface{}, error) {
-	ktvpcsdkAuthOpts := ktvpcsdk.AuthOptions{
+	gophercloudAuthOpts := gophercloud.AuthOptions{
 		Username:                    opts.Username,
 		UserID:                      opts.UserID,
 		Password:                    opts.Password,
@@ -82,20 +82,20 @@ func (opts *AuthOptions) ToTokenV3CreateMap(scope map[string]interface{}) (map[s
 		ApplicationCredentialSecret: opts.ApplicationCredentialSecret,
 	}
 
-	return ktvpcsdkAuthOpts.ToTokenV3CreateMap(scope)
+	return gophercloudAuthOpts.ToTokenV3CreateMap(scope)
 }
 
 // ToTokenV3ScopeMap builds a scope request body from AuthOptions.
 func (opts *AuthOptions) ToTokenV3ScopeMap() (map[string]interface{}, error) {
-	scope := ktvpcsdk.AuthScope(opts.Scope)
+	scope := gophercloud.AuthScope(opts.Scope)
 
-	ktvpcsdkAuthOpts := ktvpcsdk.AuthOptions{
+	gophercloudAuthOpts := gophercloud.AuthOptions{
 		Scope:      &scope,
 		DomainID:   opts.DomainID,
 		DomainName: opts.DomainName,
 	}
 
-	return ktvpcsdkAuthOpts.ToTokenV3ScopeMap()
+	return gophercloudAuthOpts.ToTokenV3ScopeMap()
 }
 
 func (opts *AuthOptions) CanReauth() bool {
@@ -121,7 +121,7 @@ func subjectTokenHeaders(subjectToken string) map[string]string {
 
 // Create authenticates and either generates a new token, or changes the Scope
 // of an existing token.
-func Create(c *ktvpcsdk.ServiceClient, opts AuthOptionsBuilder) (r CreateResult) {
+func Create(c *gophercloud.ServiceClient, opts AuthOptionsBuilder) (r CreateResult) {
 	scope, err := opts.ToTokenV3ScopeMap()
 	if err != nil {
 		r.Err = err
@@ -134,26 +134,26 @@ func Create(c *ktvpcsdk.ServiceClient, opts AuthOptionsBuilder) (r CreateResult)
 		return
 	}
 
-	resp, err := c.Post(tokenURL(c), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := c.Post(tokenURL(c), b, &r.Body, &gophercloud.RequestOpts{
 		OmitHeaders: []string{"X-Auth-Token"},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get validates and retrieves information about another token.
-func Get(c *ktvpcsdk.ServiceClient, token string) (r GetResult) {
-	resp, err := c.Get(tokenURL(c), &r.Body, &ktvpcsdk.RequestOpts{
+func Get(c *gophercloud.ServiceClient, token string) (r GetResult) {
+	resp, err := c.Get(tokenURL(c), &r.Body, &gophercloud.RequestOpts{
 		MoreHeaders: subjectTokenHeaders(token),
 		OkCodes:     []int{200, 203},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Validate determines if a specified token is valid or not.
-func Validate(c *ktvpcsdk.ServiceClient, token string) (bool, error) {
-	resp, err := c.Head(tokenURL(c), &ktvpcsdk.RequestOpts{
+func Validate(c *gophercloud.ServiceClient, token string) (bool, error) {
+	resp, err := c.Head(tokenURL(c), &gophercloud.RequestOpts{
 		MoreHeaders: subjectTokenHeaders(token),
 		OkCodes:     []int{200, 204, 404},
 	})
@@ -165,10 +165,10 @@ func Validate(c *ktvpcsdk.ServiceClient, token string) (bool, error) {
 }
 
 // Revoke immediately makes specified token invalid.
-func Revoke(c *ktvpcsdk.ServiceClient, token string) (r RevokeResult) {
-	resp, err := c.Delete(tokenURL(c), &ktvpcsdk.RequestOpts{
+func Revoke(c *gophercloud.ServiceClient, token string) (r RevokeResult) {
+	resp, err := c.Delete(tokenURL(c), &gophercloud.RequestOpts{
 		MoreHeaders: subjectTokenHeaders(token),
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

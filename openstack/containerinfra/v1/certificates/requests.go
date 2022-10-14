@@ -19,38 +19,38 @@ type CreateOpts struct {
 
 // ToCertificateCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToCertificateCreateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "")
+	return gophercloud.BuildRequestBody(opts, "")
 }
 
 // Get makes a request against the API to get details for a certificate.
-func Get(client *ktvpcsdk.ServiceClient, clusterID string) (r GetResult) {
+func Get(client *gophercloud.ServiceClient, clusterID string) (r GetResult) {
 	url := getURL(client, clusterID)
-	resp, err := client.Get(url, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Get(url, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Create requests the creation of a new certificate.
-func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToCertificateCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Update will rotate the CA certificate for a cluster
-func Update(client *ktvpcsdk.ServiceClient, clusterID string) (r UpdateResult) {
-	resp, err := client.Patch(updateURL(client, clusterID), nil, &r.Body, &ktvpcsdk.RequestOpts{
+func Update(client *gophercloud.ServiceClient, clusterID string) (r UpdateResult) {
+	resp, err := client.Patch(updateURL(client, clusterID), nil, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

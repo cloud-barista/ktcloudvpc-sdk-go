@@ -51,22 +51,22 @@ type CreateOpts struct {
 // ToShareCreateMap assembles a request body based on the contents of a
 // CreateOpts.
 func (opts CreateOpts) ToShareCreateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "share")
+	return gophercloud.BuildRequestBody(opts, "share")
 }
 
 // Create will create a new Share based on the values in CreateOpts. To extract
 // the Share object from the response, call the Extract method on the
 // CreateResult.
-func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToShareCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200, 201},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -141,12 +141,12 @@ type ListOptsBuilder interface {
 
 // ToShareListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToShareListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // ListDetail returns []Share optionally limited by the conditions provided in ListOpts.
-func ListDetail(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func ListDetail(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listDetailURL(client)
 	if opts != nil {
 		query, err := opts.ToShareListQuery()
@@ -164,32 +164,32 @@ func ListDetail(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination
 }
 
 // Delete will delete an existing Share with the given UUID.
-func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get will get a single share with given UUID
-func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
 	resp, err := client.Get(getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // ListExportLocations will list shareID's export locations.
 // Client must have Microversion set; minimum supported microversion for ListExportLocations is 2.9.
-func ListExportLocations(client *ktvpcsdk.ServiceClient, id string) (r ListExportLocationsResult) {
+func ListExportLocations(client *gophercloud.ServiceClient, id string) (r ListExportLocationsResult) {
 	resp, err := client.Get(listExportLocationsURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // GetExportLocation will get shareID's export location by an ID.
 // Client must have Microversion set; minimum supported microversion for GetExportLocation is 2.9.
-func GetExportLocation(client *ktvpcsdk.ServiceClient, shareID string, id string) (r GetExportLocationResult) {
+func GetExportLocation(client *gophercloud.ServiceClient, shareID string, id string) (r GetExportLocationResult) {
 	resp, err := client.Get(getExportLocationURL(client, shareID, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -214,22 +214,22 @@ type GrantAccessOpts struct {
 // ToGrantAccessMap assembles a request body based on the contents of a
 // GrantAccessOpts.
 func (opts GrantAccessOpts) ToGrantAccessMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "allow_access")
+	return gophercloud.BuildRequestBody(opts, "allow_access")
 }
 
 // GrantAccess will grant access to a Share based on the values in GrantAccessOpts. To extract
 // the GrantAccess object from the response, call the Extract method on the GrantAccessResult.
 // Client must have Microversion set; minimum supported microversion for GrantAccess is 2.7.
-func GrantAccess(client *ktvpcsdk.ServiceClient, id string, opts GrantAccessOptsBuilder) (r GrantAccessResult) {
+func GrantAccess(client *gophercloud.ServiceClient, id string, opts GrantAccessOptsBuilder) (r GrantAccessResult) {
 	b, err := opts.ToGrantAccessMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(grantAccessURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(grantAccessURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -249,36 +249,36 @@ type RevokeAccessOpts struct {
 // ToRevokeAccessMap assembles a request body based on the contents of a
 // RevokeAccessOpts.
 func (opts RevokeAccessOpts) ToRevokeAccessMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "deny_access")
+	return gophercloud.BuildRequestBody(opts, "deny_access")
 }
 
 // RevokeAccess will revoke an existing access to a Share based on the values in RevokeAccessOpts.
 // RevokeAccessResult contains only the error. To extract it, call the ExtractErr method on
 // the RevokeAccessResult. Client must have Microversion set; minimum supported microversion
 // for RevokeAccess is 2.7.
-func RevokeAccess(client *ktvpcsdk.ServiceClient, id string, opts RevokeAccessOptsBuilder) (r RevokeAccessResult) {
+func RevokeAccess(client *gophercloud.ServiceClient, id string, opts RevokeAccessOptsBuilder) (r RevokeAccessResult) {
 	b, err := opts.ToRevokeAccessMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Post(revokeAccessURL(client, id), b, nil, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(revokeAccessURL(client, id), b, nil, &gophercloud.RequestOpts{
 		OkCodes: []int{200, 202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // ListAccessRights lists all access rules assigned to a Share based on its id. To extract
 // the AccessRight slice from the response, call the Extract method on the ListAccessRightsResult.
 // Client must have Microversion set; minimum supported microversion for ListAccessRights is 2.7.
-func ListAccessRights(client *ktvpcsdk.ServiceClient, id string) (r ListAccessRightsResult) {
+func ListAccessRights(client *gophercloud.ServiceClient, id string) (r ListAccessRightsResult) {
 	requestBody := map[string]interface{}{"access_list": nil}
-	resp, err := client.Post(listAccessRightsURL(client, id), requestBody, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(listAccessRightsURL(client, id), requestBody, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -299,23 +299,23 @@ type ExtendOpts struct {
 // ToShareExtendMap assembles a request body based on the contents of a
 // ExtendOpts.
 func (opts ExtendOpts) ToShareExtendMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "extend")
+	return gophercloud.BuildRequestBody(opts, "extend")
 }
 
 // Extend will extend the capacity of an existing share. ExtendResult contains only the error.
 // To extract it, call the ExtractErr method on the ExtendResult.
 // Client must have Microversion set; minimum supported microversion for Extend is 2.7.
-func Extend(client *ktvpcsdk.ServiceClient, id string, opts ExtendOptsBuilder) (r ExtendResult) {
+func Extend(client *gophercloud.ServiceClient, id string, opts ExtendOptsBuilder) (r ExtendResult) {
 	b, err := opts.ToShareExtendMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Post(extendURL(client, id), b, nil, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(extendURL(client, id), b, nil, &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -336,23 +336,23 @@ type ShrinkOpts struct {
 // ToShareShrinkMap assembles a request body based on the contents of a
 // ShrinkOpts.
 func (opts ShrinkOpts) ToShareShrinkMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "shrink")
+	return gophercloud.BuildRequestBody(opts, "shrink")
 }
 
 // Shrink will shrink the capacity of an existing share. ShrinkResult contains only the error.
 // To extract it, call the ExtractErr method on the ShrinkResult.
 // Client must have Microversion set; minimum supported microversion for Shrink is 2.7.
-func Shrink(client *ktvpcsdk.ServiceClient, id string, opts ShrinkOptsBuilder) (r ShrinkResult) {
+func Shrink(client *gophercloud.ServiceClient, id string, opts ShrinkOptsBuilder) (r ShrinkResult) {
 	b, err := opts.ToShareShrinkMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Post(shrinkURL(client, id), b, nil, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(shrinkURL(client, id), b, nil, &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -377,37 +377,37 @@ type UpdateOpts struct {
 // ToShareUpdateMap assembles a request body based on the contents of an
 // UpdateOpts.
 func (opts UpdateOpts) ToShareUpdateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "share")
+	return gophercloud.BuildRequestBody(opts, "share")
 }
 
 // Update will update the Share with provided information. To extract the updated
 // Share from the response, call the Extract method on the UpdateResult.
-func Update(client *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToShareUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Put(updateURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Put(updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // GetMetadata retrieves metadata of the specified share. To extract the retrieved
 // metadata from the response, call the Extract method on the MetadataResult.
-func GetMetadata(client *ktvpcsdk.ServiceClient, id string) (r MetadataResult) {
+func GetMetadata(client *gophercloud.ServiceClient, id string) (r MetadataResult) {
 	resp, err := client.Get(getMetadataURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // GetMetadatum retrieves a single metadata item of the specified share. To extract the retrieved
 // metadata from the response, call the Extract method on the GetMetadatumResult.
-func GetMetadatum(client *ktvpcsdk.ServiceClient, id, key string) (r GetMetadatumResult) {
+func GetMetadatum(client *gophercloud.ServiceClient, id, key string) (r GetMetadatumResult) {
 	resp, err := client.Get(getMetadatumURL(client, id, key), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -421,7 +421,7 @@ type SetMetadataOpts struct {
 // ToSetMetadataMap assembles a request body based on the contents of an
 // SetMetadataOpts.
 func (opts SetMetadataOpts) ToSetMetadataMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "")
+	return gophercloud.BuildRequestBody(opts, "")
 }
 
 // SetMetadataOptsBuilder allows extensions to add additional parameters to the
@@ -434,17 +434,17 @@ type SetMetadataOptsBuilder interface {
 // Existing metadata items are either kept or overwritten by the metadata from the request.
 // To extract the updated metadata from the response, call the Extract
 // method on the MetadataResult.
-func SetMetadata(client *ktvpcsdk.ServiceClient, id string, opts SetMetadataOptsBuilder) (r MetadataResult) {
+func SetMetadata(client *gophercloud.ServiceClient, id string, opts SetMetadataOptsBuilder) (r MetadataResult) {
 	b, err := opts.ToSetMetadataMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Post(setMetadataURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(setMetadataURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -458,7 +458,7 @@ type UpdateMetadataOpts struct {
 // ToUpdateMetadataMap assembles a request body based on the contents of an
 // UpdateMetadataOpts.
 func (opts UpdateMetadataOpts) ToUpdateMetadataMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "")
+	return gophercloud.BuildRequestBody(opts, "")
 }
 
 // UpdateMetadataOptsBuilder allows extensions to add additional parameters to the
@@ -471,26 +471,26 @@ type UpdateMetadataOptsBuilder interface {
 // All existing metadata items are discarded and replaced by the metadata from the request.
 // To extract the updated metadata from the response, call the Extract
 // method on the MetadataResult.
-func UpdateMetadata(client *ktvpcsdk.ServiceClient, id string, opts UpdateMetadataOptsBuilder) (r MetadataResult) {
+func UpdateMetadata(client *gophercloud.ServiceClient, id string, opts UpdateMetadataOptsBuilder) (r MetadataResult) {
 	b, err := opts.ToUpdateMetadataMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Post(updateMetadataURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(updateMetadataURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // DeleteMetadatum deletes a single key-value pair from the metadata of the specified share.
-func DeleteMetadatum(client *ktvpcsdk.ServiceClient, id, key string) (r DeleteMetadatumResult) {
-	resp, err := client.Delete(deleteMetadatumURL(client, id, key), &ktvpcsdk.RequestOpts{
+func DeleteMetadatum(client *gophercloud.ServiceClient, id, key string) (r DeleteMetadatumResult) {
+	resp, err := client.Delete(deleteMetadatumURL(client, id, key), &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -512,23 +512,23 @@ type RevertOpts struct {
 // ToShareRevertMap assembles a request body based on the contents of a
 // RevertOpts.
 func (opts RevertOpts) ToShareRevertMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "revert")
+	return gophercloud.BuildRequestBody(opts, "revert")
 }
 
 // Revert will revert the existing share to a Snapshot. RevertResult contains only the error.
 // To extract it, call the ExtractErr method on the RevertResult.
 // Client must have Microversion set; minimum supported microversion for Revert is 2.27.
-func Revert(client *ktvpcsdk.ServiceClient, id string, opts RevertOptsBuilder) (r RevertResult) {
+func Revert(client *gophercloud.ServiceClient, id string, opts RevertOptsBuilder) (r RevertResult) {
 	b, err := opts.ToShareRevertMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Post(revertURL(client, id), b, nil, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(revertURL(client, id), b, nil, &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -549,37 +549,37 @@ type ResetStatusOpts struct {
 // ToShareResetStatusMap assembles a request body based on the contents of a
 // ResetStatusOpts.
 func (opts ResetStatusOpts) ToShareResetStatusMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "reset_status")
+	return gophercloud.BuildRequestBody(opts, "reset_status")
 }
 
 // ResetStatus will reset the existing share status. ResetStatusResult contains only the error.
 // To extract it, call the ExtractErr method on the ResetStatusResult.
 // Client must have Microversion set; minimum supported microversion for ResetStatus is 2.7.
-func ResetStatus(client *ktvpcsdk.ServiceClient, id string, opts ResetStatusOptsBuilder) (r ResetStatusResult) {
+func ResetStatus(client *gophercloud.ServiceClient, id string, opts ResetStatusOptsBuilder) (r ResetStatusResult) {
 	b, err := opts.ToShareResetStatusMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Post(resetStatusURL(client, id), b, nil, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(resetStatusURL(client, id), b, nil, &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // ForceDelete will delete the existing share in any state. ForceDeleteResult contains only the error.
 // To extract it, call the ExtractErr method on the ForceDeleteResult.
 // Client must have Microversion set; minimum supported microversion for ForceDelete is 2.7.
-func ForceDelete(client *ktvpcsdk.ServiceClient, id string) (r ForceDeleteResult) {
+func ForceDelete(client *gophercloud.ServiceClient, id string) (r ForceDeleteResult) {
 	b := map[string]interface{}{
 		"force_delete": nil,
 	}
-	resp, err := client.Post(forceDeleteURL(client, id), b, nil, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(forceDeleteURL(client, id), b, nil, &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -587,13 +587,13 @@ func ForceDelete(client *ktvpcsdk.ServiceClient, id string) (r ForceDeleteResult
 // service without deleting the share. UnmanageResult contains only the error.
 // To extract it, call the ExtractErr method on the UnmanageResult.
 // Client must have Microversion set; minimum supported microversion for Unmanage is 2.7.
-func Unmanage(client *ktvpcsdk.ServiceClient, id string) (r UnmanageResult) {
+func Unmanage(client *gophercloud.ServiceClient, id string) (r UnmanageResult) {
 	b := map[string]interface{}{
 		"unmanage": nil,
 	}
-	resp, err := client.Post(unmanageURL(client, id), b, nil, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(unmanageURL(client, id), b, nil, &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

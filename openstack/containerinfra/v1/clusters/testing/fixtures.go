@@ -28,7 +28,7 @@ var ExpectedCluster = clusters.Cluster{
 	CreateTimeout:     60,
 	CreatedAt:         time.Date(2016, 8, 29, 6, 51, 31, 0, time.UTC),
 	DiscoveryURL:      "https://discovery.etcd.io/cbeb580da58915809d59ee69348a84f3",
-	Links: []ktvpcsdk.Link{
+	Links: []gophercloud.Link{
 		{
 			Href: "http://10.164.180.104:9511/v1/clusters/746e779a-751a-456b-a3e9-c883d734946f",
 			Rel:  "self",
@@ -63,7 +63,7 @@ var ExpectedCluster2 = clusters.Cluster{
 	CreateTimeout:     60,
 	CreatedAt:         time.Time{},
 	DiscoveryURL:      "https://discovery.etcd.io/cbeb580da58915809d59ee69348a84f3",
-	Links: []ktvpcsdk.Link{
+	Links: []gophercloud.Link{
 		{
 			Href: "http://10.164.180.104:9511/v1/clusters/746e779a-751a-456b-a3e9-c883d734946f",
 			Rel:  "self",

@@ -21,12 +21,12 @@ type ListOpts struct {
 
 // ToApplicationCredentialListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToApplicationCredentialListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List enumerates the ApplicationCredentials to which the current token has access.
-func List(client *ktvpcsdk.ServiceClient, userID string, opts ListOptsBuilder) pagination.Pager {
+func List(client *gophercloud.ServiceClient, userID string, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client, userID)
 	if opts != nil {
 		query, err := opts.ToApplicationCredentialListQuery()
@@ -41,9 +41,9 @@ func List(client *ktvpcsdk.ServiceClient, userID string, opts ListOptsBuilder) p
 }
 
 // Get retrieves details on a single user, by ID.
-func Get(client *ktvpcsdk.ServiceClient, userID string, id string) (r GetResult) {
+func Get(client *gophercloud.ServiceClient, userID string, id string) (r GetResult) {
 	resp, err := client.Get(getURL(client, userID, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -78,14 +78,14 @@ type CreateOpts struct {
 // ToApplicationCredentialCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToApplicationCredentialCreateMap() (map[string]interface{}, error) {
 	parent := "application_credential"
-	b, err := ktvpcsdk.BuildRequestBody(opts, parent)
+	b, err := gophercloud.BuildRequestBody(opts, parent)
 	if err != nil {
 		return nil, err
 	}
 
 	if opts.ExpiresAt != nil {
 		if v, ok := b[parent].(map[string]interface{}); ok {
-			v["expires_at"] = opts.ExpiresAt.Format(ktvpcsdk.RFC3339MilliNoZ)
+			v["expires_at"] = opts.ExpiresAt.Format(gophercloud.RFC3339MilliNoZ)
 		}
 	}
 
@@ -93,28 +93,28 @@ func (opts CreateOpts) ToApplicationCredentialCreateMap() (map[string]interface{
 }
 
 // Create creates a new ApplicationCredential.
-func Create(client *ktvpcsdk.ServiceClient, userID string, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, userID string, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToApplicationCredentialCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client, userID), &b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(createURL(client, userID), &b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes an application credential.
-func Delete(client *ktvpcsdk.ServiceClient, userID string, id string) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClient, userID string, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, userID, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // ListAccessRules enumerates the AccessRules to which the current user has access.
-func ListAccessRules(client *ktvpcsdk.ServiceClient, userID string) pagination.Pager {
+func ListAccessRules(client *gophercloud.ServiceClient, userID string) pagination.Pager {
 	url := listAccessRulesURL(client, userID)
 	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
 		return AccessRulePage{pagination.LinkedPageBase{PageResult: r}}
@@ -122,15 +122,15 @@ func ListAccessRules(client *ktvpcsdk.ServiceClient, userID string) pagination.P
 }
 
 // GetAccessRule retrieves details on a single access rule by ID.
-func GetAccessRule(client *ktvpcsdk.ServiceClient, userID string, id string) (r GetAccessRuleResult) {
+func GetAccessRule(client *gophercloud.ServiceClient, userID string, id string) (r GetAccessRuleResult) {
 	resp, err := client.Get(getAccessRuleURL(client, userID, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // DeleteAccessRule deletes an access rule.
-func DeleteAccessRule(client *ktvpcsdk.ServiceClient, userID string, id string) (r DeleteResult) {
+func DeleteAccessRule(client *gophercloud.ServiceClient, userID string, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteAccessRuleURL(client, userID, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

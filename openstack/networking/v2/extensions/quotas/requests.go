@@ -3,16 +3,16 @@ package quotas
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 // Get returns Networking Quotas for a project.
-func Get(client *ktvpcsdk.ServiceClient, projectID string) (r GetResult) {
+func Get(client *gophercloud.ServiceClient, projectID string) (r GetResult) {
 	resp, err := client.Get(getURL(client, projectID), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // GetDetail returns detailed Networking Quotas for a project.
-func GetDetail(client *ktvpcsdk.ServiceClient, projectID string) (r GetDetailResult) {
+func GetDetail(client *gophercloud.ServiceClient, projectID string) (r GetDetailResult) {
 	resp, err := client.Get(getDetailURL(client, projectID), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -57,20 +57,20 @@ type UpdateOpts struct {
 
 // ToQuotaUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToQuotaUpdateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "quota")
+	return gophercloud.BuildRequestBody(opts, "quota")
 }
 
 // Update accepts a UpdateOpts struct and updates an existing Networking Quotas using the
 // values provided.
-func Update(c *ktvpcsdk.ServiceClient, projectID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *gophercloud.ServiceClient, projectID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToQuotaUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(updateURL(c, projectID), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := c.Put(updateURL(c, projectID), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

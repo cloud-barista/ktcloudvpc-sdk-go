@@ -18,11 +18,11 @@ type AuthOpts struct {
 
 // ToAuthOptsMap formats an AuthOpts structure into a request body.
 func (opts AuthOpts) ToAuthOptsMap() (map[string]string, error) {
-	return ktvpcsdk.BuildHeaders(opts)
+	return gophercloud.BuildHeaders(opts)
 }
 
 // Auth performs an authentication request for a Swauth-based user.
-func Auth(c *ktvpcsdk.ProviderClient, opts AuthOptsBuilder) (r GetAuthResult) {
+func Auth(c *gophercloud.ProviderClient, opts AuthOptsBuilder) (r GetAuthResult) {
 	h := make(map[string]string)
 
 	if opts != nil {
@@ -37,25 +37,25 @@ func Auth(c *ktvpcsdk.ProviderClient, opts AuthOptsBuilder) (r GetAuthResult) {
 		}
 	}
 
-	resp, err := c.Request("GET", getURL(c), &ktvpcsdk.RequestOpts{
+	resp, err := c.Request("GET", getURL(c), &gophercloud.RequestOpts{
 		MoreHeaders: h,
 		OkCodes:     []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return r
 }
 
-// NewObjectStorageV1 creates a Swauth-authenticated *ktvpcsdk.ServiceClient
+// NewObjectStorageV1 creates a Swauth-authenticated *gophercloud.ServiceClient
 // client that can issue ObjectStorage-based API calls.
-func NewObjectStorageV1(pc *ktvpcsdk.ProviderClient, authOpts AuthOpts) (*ktvpcsdk.ServiceClient, error) {
+func NewObjectStorageV1(pc *gophercloud.ProviderClient, authOpts AuthOpts) (*gophercloud.ServiceClient, error) {
 	auth, err := Auth(pc, authOpts).Extract()
 	if err != nil {
 		return nil, err
 	}
 
-	swiftClient := &ktvpcsdk.ServiceClient{
+	swiftClient := &gophercloud.ServiceClient{
 		ProviderClient: pc,
-		Endpoint:       ktvpcsdk.NormalizeURL(auth.StorageURL),
+		Endpoint:       gophercloud.NormalizeURL(auth.StorageURL),
 	}
 
 	swiftClient.TokenID = auth.Token

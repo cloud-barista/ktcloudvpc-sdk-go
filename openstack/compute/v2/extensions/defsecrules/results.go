@@ -44,7 +44,7 @@ func ExtractDefaultRules(r pagination.Page) ([]DefaultRule, error) {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // CreateResult represents the result of a create operation.
@@ -69,5 +69,5 @@ func (r commonResult) Extract() (*DefaultRule, error) {
 // DeleteResult is the response from a delete operation. Call its ExtractErr
 // method to determine if the request succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

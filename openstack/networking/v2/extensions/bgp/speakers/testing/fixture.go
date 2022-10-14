@@ -11,7 +11,7 @@ const ListBGPSpeakerResult = `
         "acd7c4a1-e243-4fe5-80f9-eba8f143ac1d"
       ],
       "advertise_floating_ip_host_routes": true,
-      "name": "ktvpcsdk-testing-speaker",
+      "name": "gophercloud-testing-speaker",
       "tenant_id": "7fa3f96b-17ee-4d1b-8fbf-fe889bb1f1d0",
       "local_as": 56789,
       "id": "ab01ade1-ae62-43c9-8a1f-3c24225b96d8",
@@ -28,7 +28,7 @@ const ListBGPSpeakerResult = `
 
 var BGPSpeaker1 = speakers.BGPSpeaker{
 	ID:                            "ab01ade1-ae62-43c9-8a1f-3c24225b96d8",
-	Name:                          "ktvpcsdk-testing-speaker",
+	Name:                          "gophercloud-testing-speaker",
 	TenantID:                      "7fa3f96b-17ee-4d1b-8fbf-fe889bb1f1d0",
 	ProjectID:                     "7fa3f96b-17ee-4d1b-8fbf-fe889bb1f1d0",
 	AdvertiseFloatingIPHostRoutes: true,
@@ -48,7 +48,7 @@ const GetBGPSpeakerResult = `
       "acd7c4a1-e243-4fe5-80f9-eba8f143ac1d"
     ],
     "project_id": "7fa3f96b-17ee-4d1b-8fbf-fe889bb1f1d0",
-    "name": "ktvpcsdk-testing-speaker",
+    "name": "gophercloud-testing-speaker",
     "tenant_id": "7fa3f96b-17ee-4d1b-8fbf-fe889bb1f1d0",
     "local_as": 56789,
     "advertise_tenant_networks": true,
@@ -68,7 +68,7 @@ const CreateRequest = `
     "advertise_tenant_networks": true,
     "ip_version": 6,
     "local_as": "2000",
-    "name": "ktvpcsdk-testing-bgp-speaker"
+    "name": "gophercloud-testing-bgp-speaker"
   }
 }
 `
@@ -78,7 +78,7 @@ const CreateResponse = `
   "bgp_speaker": {
     "peers": [],
     "project_id": "7fa3f96b-17ee-4d1b-8fbf-fe889bb1f1d0",
-    "name": "ktvpcsdk-testing-bgp-speaker",
+    "name": "gophercloud-testing-bgp-speaker",
     "tenant_id": "7fa3f96b-17ee-4d1b-8fbf-fe889bb1f1d0",
     "local_as": 2000,
     "advertise_tenant_networks": true,

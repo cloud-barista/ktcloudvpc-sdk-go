@@ -20,29 +20,29 @@ type CreateOpts struct {
 
 // ToProfileCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToProfileCreateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "profile")
+	return gophercloud.BuildRequestBody(opts, "profile")
 }
 
 // Create requests the creation of a new profile on the server.
-func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToProfileCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200, 201},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get retrieves detail of a single profile.
-func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(getURL(client, id), &r.Body, &ktvpcsdk.RequestOpts{
+func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+	resp, err := client.Get(getURL(client, id), &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -64,12 +64,12 @@ type ListOpts struct {
 
 // ToProfileListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToProfileListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List instructs OpenStack to provide a list of profiles.
-func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToProfileListQuery()
@@ -98,27 +98,27 @@ type UpdateOpts struct {
 
 // ToProfileUpdateMap constructs a request body from UpdateOpts.
 func (opts UpdateOpts) ToProfileUpdateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "profile")
+	return gophercloud.BuildRequestBody(opts, "profile")
 }
 
 // Update updates a profile.
-func Update(client *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToProfileUpdateMap()
 	if err != nil {
 		r.Err = err
 		return r
 	}
-	resp, err := client.Patch(updateURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Patch(updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes the specified profile via profile id.
-func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -135,19 +135,19 @@ type ValidateOpts struct {
 
 // ToProfileValidateMap formats a CreateOpts into a body map.
 func (opts ValidateOpts) ToProfileValidateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "profile")
+	return gophercloud.BuildRequestBody(opts, "profile")
 }
 
 // Validate profile.
-func Validate(client *ktvpcsdk.ServiceClient, opts ValidateOpts) (r ValidateResult) {
+func Validate(client *gophercloud.ServiceClient, opts ValidateOpts) (r ValidateResult) {
 	b, err := opts.ToProfileValidateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(validateURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(validateURL(client), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

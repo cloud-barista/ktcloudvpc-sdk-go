@@ -32,8 +32,8 @@ type ListOpts struct {
 // List returns a Pager which allows you to iterate over a collection of
 // security group rules. It accepts a ListOpts struct, which allows you to filter
 // and sort the returned collection for greater efficiency.
-func List(c *ktvpcsdk.ServiceClient, opts ListOpts) pagination.Pager {
-	q, err := ktvpcsdk.BuildQueryString(&opts)
+func List(c *gophercloud.ServiceClient, opts ListOpts) pagination.Pager {
+	q, err := gophercloud.BuildQueryString(&opts)
 	if err != nil {
 		return pagination.Pager{Err: err}
 	}
@@ -131,33 +131,33 @@ type CreateOpts struct {
 
 // ToSecGroupRuleCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToSecGroupRuleCreateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "security_group_rule")
+	return gophercloud.BuildRequestBody(opts, "security_group_rule")
 }
 
 // Create is an operation which adds a new security group rule and associates it
 // with an existing security group (whose ID is specified in CreateOpts).
-func Create(c *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToSecGroupRuleCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Post(rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get retrieves a particular security group rule based on its unique ID.
-func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
 	resp, err := c.Get(resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete will permanently delete a particular security group rule based on its
 // unique ID.
-func Delete(c *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := c.Delete(resourceURL(c, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

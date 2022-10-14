@@ -5,7 +5,7 @@ import (
 )
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // GetResult is the response of a Get operations.
@@ -20,7 +20,7 @@ type CreateResult struct {
 
 // UpdateResult is the response of an Update operations.
 type UpdateResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // Extract is a function that accepts a result and extracts a certificate resource.
@@ -34,7 +34,7 @@ func (r commonResult) Extract() (*Certificate, error) {
 type Certificate struct {
 	ClusterUUID string             `json:"cluster_uuid"`
 	BayUUID     string             `json:"bay_uuid"`
-	Links       []ktvpcsdk.Link `json:"links"`
+	Links       []gophercloud.Link `json:"links"`
 	PEM         string             `json:"pem"`
 	CSR         string             `json:"csr"`
 }

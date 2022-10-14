@@ -17,7 +17,7 @@ type NetworkMTU struct {
 
 // CreateNetworkWithMTU will create a network with custom MTU. An error will be
 // returned if the creation failed.
-func CreateNetworkWithMTU(t *testing.T, client *ktvpcsdk.ServiceClient, networkMTU *int) (*NetworkMTU, error) {
+func CreateNetworkWithMTU(t *testing.T, client *gophercloud.ServiceClient, networkMTU *int) (*NetworkMTU, error) {
 	networkName := tools.RandomString("TESTACC-", 8)
 	networkDescription := tools.RandomString("TESTACC-DESC-", 8)
 

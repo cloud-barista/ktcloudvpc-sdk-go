@@ -4,14 +4,14 @@ import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 const resourcePath = "quotas"
 
-func resourceURL(c *ktvpcsdk.ServiceClient, projectID string) string {
+func resourceURL(c *gophercloud.ServiceClient, projectID string) string {
 	return c.ServiceURL(resourcePath, projectID)
 }
 
-func getURL(c *ktvpcsdk.ServiceClient, projectID string) string {
+func getURL(c *gophercloud.ServiceClient, projectID string) string {
 	return resourceURL(c, projectID)
 }
 
-func updateURL(c *ktvpcsdk.ServiceClient, projectID string) string {
+func updateURL(c *gophercloud.ServiceClient, projectID string) string {
 	return resourceURL(c, projectID)
 }

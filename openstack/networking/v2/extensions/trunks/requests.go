@@ -27,10 +27,10 @@ func (opts CreateOpts) ToTrunkCreateMap() (map[string]interface{}, error) {
 	if opts.Subports == nil {
 		opts.Subports = []Subport{}
 	}
-	return ktvpcsdk.BuildRequestBody(opts, "trunk")
+	return gophercloud.BuildRequestBody(opts, "trunk")
 }
 
-func Create(c *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	body, err := opts.ToTrunkCreateMap()
 	if err != nil {
 		r.Err = err
@@ -38,14 +38,14 @@ func Create(c *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) 
 	}
 
 	resp, err := c.Post(createURL(c), body, &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete accepts a unique ID and deletes the trunk associated with it.
-func Delete(c *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := c.Delete(deleteURL(c, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -80,7 +80,7 @@ type ListOpts struct {
 
 // ToTrunkListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToTrunkListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
@@ -91,7 +91,7 @@ func (opts ListOpts) ToTrunkListQuery() (string, error) {
 // Default policy settings return only those trunks that are owned by the tenant
 // who submits the request, unless the request is submitted by a user with
 // administrative rights.
-func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(c)
 	if opts != nil {
 		query, err := opts.ToTrunkListQuery()
@@ -106,9 +106,9 @@ func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 }
 
 // Get retrieves a specific trunk based on its unique ID.
-func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
 	resp, err := c.Get(getURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -123,27 +123,27 @@ type UpdateOpts struct {
 }
 
 func (opts UpdateOpts) ToTrunkUpdateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "trunk")
+	return gophercloud.BuildRequestBody(opts, "trunk")
 }
 
-func Update(c *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	body, err := opts.ToTrunkUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(updateURL(c, id), body, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := c.Put(updateURL(c, id), body, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
-func GetSubports(c *ktvpcsdk.ServiceClient, id string) (r GetSubportsResult) {
-	resp, err := c.Get(getSubportsURL(c, id), &r.Body, &ktvpcsdk.RequestOpts{
+func GetSubports(c *gophercloud.ServiceClient, id string) (r GetSubportsResult) {
+	resp, err := c.Get(getSubportsURL(c, id), &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -156,19 +156,19 @@ type AddSubportsOptsBuilder interface {
 }
 
 func (opts AddSubportsOpts) ToTrunkAddSubportsMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "")
+	return gophercloud.BuildRequestBody(opts, "")
 }
 
-func AddSubports(c *ktvpcsdk.ServiceClient, id string, opts AddSubportsOptsBuilder) (r UpdateSubportsResult) {
+func AddSubports(c *gophercloud.ServiceClient, id string, opts AddSubportsOptsBuilder) (r UpdateSubportsResult) {
 	body, err := opts.ToTrunkAddSubportsMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(addSubportsURL(c, id), body, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := c.Put(addSubportsURL(c, id), body, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -185,18 +185,18 @@ type RemoveSubportsOptsBuilder interface {
 }
 
 func (opts RemoveSubportsOpts) ToTrunkRemoveSubportsMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "")
+	return gophercloud.BuildRequestBody(opts, "")
 }
 
-func RemoveSubports(c *ktvpcsdk.ServiceClient, id string, opts RemoveSubportsOptsBuilder) (r UpdateSubportsResult) {
+func RemoveSubports(c *gophercloud.ServiceClient, id string, opts RemoveSubportsOptsBuilder) (r UpdateSubportsResult) {
 	body, err := opts.ToTrunkRemoveSubportsMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(removeSubportsURL(c, id), body, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := c.Put(removeSubportsURL(c, id), body, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

@@ -13,7 +13,7 @@ type Resource struct {
 	Attributes     map[string]interface{} `json:"attributes"`
 	CreationTime   time.Time              `json:"-"`
 	Description    string                 `json:"description"`
-	Links          []ktvpcsdk.Link     `json:"links"`
+	Links          []gophercloud.Link     `json:"links"`
 	LogicalID      string                 `json:"logical_resource_id"`
 	Name           string                 `json:"resource_name"`
 	ParentResource string                 `json:"parent_resource"`
@@ -43,7 +43,7 @@ func (r *Resource) UnmarshalJSON(b []byte) error {
 	if s.CreationTime != "" {
 		t, err := time.Parse(time.RFC3339, s.CreationTime)
 		if err != nil {
-			t, err = time.Parse(ktvpcsdk.RFC3339NoZ, s.CreationTime)
+			t, err = time.Parse(gophercloud.RFC3339NoZ, s.CreationTime)
 			if err != nil {
 				return err
 			}
@@ -54,7 +54,7 @@ func (r *Resource) UnmarshalJSON(b []byte) error {
 	if s.UpdatedTime != "" {
 		t, err := time.Parse(time.RFC3339, s.UpdatedTime)
 		if err != nil {
-			t, err = time.Parse(ktvpcsdk.RFC3339NoZ, s.UpdatedTime)
+			t, err = time.Parse(gophercloud.RFC3339NoZ, s.UpdatedTime)
 			if err != nil {
 				return err
 			}
@@ -67,7 +67,7 @@ func (r *Resource) UnmarshalJSON(b []byte) error {
 
 // FindResult represents the result of a Find operation.
 type FindResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract returns a slice of Resource objects and is called after a
@@ -104,7 +104,7 @@ func ExtractResources(r pagination.Page) ([]Resource, error) {
 
 // GetResult represents the result of a Get operation.
 type GetResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract returns a pointer to a Resource object and is called after a
@@ -119,7 +119,7 @@ func (r GetResult) Extract() (*Resource, error) {
 
 // MetadataResult represents the result of a Metadata operation.
 type MetadataResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract returns a map object and is called after a
@@ -180,7 +180,7 @@ type TypeSchema struct {
 
 // SchemaResult represents the result of a Schema operation.
 type SchemaResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract returns a pointer to a TypeSchema object and is called after a
@@ -193,7 +193,7 @@ func (r SchemaResult) Extract() (*TypeSchema, error) {
 
 // TemplateResult represents the result of a Template operation.
 type TemplateResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract returns the template and is called after a
@@ -208,5 +208,5 @@ func (r TemplateResult) Extract() ([]byte, error) {
 
 // MarkUnhealthyResult represents the result of a mark unhealthy operation.
 type MarkUnhealthyResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

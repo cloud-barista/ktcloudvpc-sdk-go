@@ -22,20 +22,20 @@ type CreateOpts struct {
 
 // ToNodeCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToNodeCreateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "node")
+	return gophercloud.BuildRequestBody(opts, "node")
 }
 
 // Create requests the creation of a new node.
-func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToNodeCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200, 201, 202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -55,20 +55,20 @@ type UpdateOpts struct {
 
 // ToNodeUpdateMap constructs a request body from UpdateOpts.
 func (opts UpdateOpts) ToNodeUpdateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "node")
+	return gophercloud.BuildRequestBody(opts, "node")
 }
 
 // Update requests the update of a node.
-func Update(client *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToNodeUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Patch(updateURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Patch(updateURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200, 201, 202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -91,12 +91,12 @@ type ListOpts struct {
 
 // ToNodeListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToNodeListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List instructs OpenStack to provide a list of nodes.
-func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToNodeListQuery()
@@ -112,18 +112,18 @@ func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager
 }
 
 // Delete deletes the specified node.
-func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get makes a request against senlin to get a details of a node type
-func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(getURL(client, id), &r.Body, &ktvpcsdk.RequestOpts{
+func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+	resp, err := client.Get(getURL(client, id), &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -170,21 +170,21 @@ type OperationOpts struct {
 	Params    OperationParams `json:"params,omitempty"`
 }
 
-func Ops(client *ktvpcsdk.ServiceClient, id string, opts OperationOptsBuilder) (r ActionResult) {
+func Ops(client *gophercloud.ServiceClient, id string, opts OperationOptsBuilder) (r ActionResult) {
 	b, err := opts.ToNodeOperationMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(opsURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(opsURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 func (opts RecoverOpts) ToNodeRecoverMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "recover")
+	return gophercloud.BuildRequestBody(opts, "recover")
 }
 
 // RecoverAction represents valid values for recovering a node.
@@ -202,26 +202,26 @@ type RecoverOpts struct {
 	Check     *bool         `json:"check,omitempty"`
 }
 
-func Recover(client *ktvpcsdk.ServiceClient, id string, opts RecoverOpts) (r ActionResult) {
+func Recover(client *gophercloud.ServiceClient, id string, opts RecoverOpts) (r ActionResult) {
 	b, err := opts.ToNodeRecoverMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(actionURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(actionURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
-func Check(client *ktvpcsdk.ServiceClient, id string) (r ActionResult) {
+func Check(client *gophercloud.ServiceClient, id string) (r ActionResult) {
 	b := map[string]interface{}{
 		"check": map[string]interface{}{},
 	}
-	resp, err := client.Post(actionURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(actionURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

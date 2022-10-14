@@ -81,8 +81,8 @@ func (r *Share) UnmarshalJSON(b []byte) error {
 	type tmp Share
 	var s struct {
 		tmp
-		CreatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"updated_at"`
+		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
+		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -97,7 +97,7 @@ func (r *Share) UnmarshalJSON(b []byte) error {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract will get the Share object from the commonResult
@@ -196,7 +196,7 @@ func ExtractShares(r pagination.Page) ([]Share, error) {
 
 // DeleteResult contains the response body and error from a Delete request.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // GetResult contains the response body and error from a Get request.
@@ -212,13 +212,13 @@ type UpdateResult struct {
 // ListExportLocationsResult contains the result body and error from a
 // ListExportLocations request.
 type ListExportLocationsResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // GetExportLocationResult contains the result body and error from a
 // GetExportLocation request.
 type GetExportLocationResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // ExportLocation contains all information associated with a share export location
@@ -288,12 +288,12 @@ func (r GrantAccessResult) Extract() (*AccessRight, error) {
 
 // GrantAccessResult contains the result body and error from an GrantAccess request.
 type GrantAccessResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // RevokeAccessResult contains the response body and error from a Revoke access request.
 type RevokeAccessResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // Extract will get a slice of AccessRight objects from the commonResult
@@ -307,22 +307,22 @@ func (r ListAccessRightsResult) Extract() ([]AccessRight, error) {
 
 // ListAccessRightsResult contains the result body and error from a ListAccessRights request.
 type ListAccessRightsResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // ExtendResult contains the response body and error from an Extend request.
 type ExtendResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // ShrinkResult contains the response body and error from a Shrink request.
 type ShrinkResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // GetMetadatumResult contains the response body and error from a GetMetadatum request.
 type GetMetadatumResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract will get the string-string map from GetMetadatumResult
@@ -336,7 +336,7 @@ func (r GetMetadatumResult) Extract() (map[string]string, error) {
 
 // MetadataResult contains the response body and error from GetMetadata, SetMetadata or UpdateMetadata requests.
 type MetadataResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract will get the string-string map from MetadataResult
@@ -350,25 +350,25 @@ func (r MetadataResult) Extract() (map[string]string, error) {
 
 // DeleteMetadatumResult contains the response body and error from a DeleteMetadatum request.
 type DeleteMetadatumResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // RevertResult contains the response error from an Revert request.
 type RevertResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // ResetStatusResult contains the response error from an ResetStatus request.
 type ResetStatusResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // ForceDeleteResult contains the response error from an ForceDelete request.
 type ForceDeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // UnmanageResult contains the response error from an Unmanage request.
 type UnmanageResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

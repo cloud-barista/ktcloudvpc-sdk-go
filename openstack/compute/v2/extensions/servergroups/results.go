@@ -79,7 +79,7 @@ func ExtractServerGroups(r pagination.Page) ([]ServerGroup, error) {
 }
 
 type ServerGroupResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract is a method that attempts to interpret any Server Group resource
@@ -107,5 +107,5 @@ type GetResult struct {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

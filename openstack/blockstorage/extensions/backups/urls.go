@@ -2,38 +2,38 @@ package backups
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-func createURL(c *ktvpcsdk.ServiceClient) string {
+func createURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL("backups")
 }
 
-func deleteURL(c *ktvpcsdk.ServiceClient, id string) string {
+func deleteURL(c *gophercloud.ServiceClient, id string) string {
 	return c.ServiceURL("backups", id)
 }
 
-func getURL(c *ktvpcsdk.ServiceClient, id string) string {
+func getURL(c *gophercloud.ServiceClient, id string) string {
 	return c.ServiceURL("backups", id)
 }
 
-func listURL(c *ktvpcsdk.ServiceClient) string {
+func listURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL("backups")
 }
 
-func listDetailURL(c *ktvpcsdk.ServiceClient) string {
+func listDetailURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL("backups", "detail")
 }
 
-func updateURL(c *ktvpcsdk.ServiceClient, id string) string {
+func updateURL(c *gophercloud.ServiceClient, id string) string {
 	return c.ServiceURL("backups", id)
 }
 
-func restoreURL(c *ktvpcsdk.ServiceClient, id string) string {
+func restoreURL(c *gophercloud.ServiceClient, id string) string {
 	return c.ServiceURL("backups", id, "restore")
 }
 
-func exportURL(c *ktvpcsdk.ServiceClient, id string) string {
+func exportURL(c *gophercloud.ServiceClient, id string) string {
 	return c.ServiceURL("backups", id, "export_record")
 }
 
-func importURL(c *ktvpcsdk.ServiceClient) string {
+func importURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL("backups", "import_record")
 }

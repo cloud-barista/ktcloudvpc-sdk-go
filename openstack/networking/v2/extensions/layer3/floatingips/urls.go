@@ -4,10 +4,10 @@ import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 const resourcePath = "floatingips"
 
-func rootURL(c *ktvpcsdk.ServiceClient) string {
+func rootURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL(resourcePath)
 }
 
-func resourceURL(c *ktvpcsdk.ServiceClient, id string) string {
+func resourceURL(c *gophercloud.ServiceClient, id string) string {
 	return c.ServiceURL(resourcePath, id)
 }

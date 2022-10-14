@@ -14,9 +14,9 @@ const (
 )
 
 // Get retrieves Import API information data.
-func Get(c *ktvpcsdk.ServiceClient) (r GetResult) {
+func Get(c *gophercloud.ServiceClient) (r GetResult) {
 	resp, err := c.Get(infoURL(c), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -33,7 +33,7 @@ type CreateOpts struct {
 
 // ToImportCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToImportCreateMap() (map[string]interface{}, error) {
-	b, err := ktvpcsdk.BuildRequestBody(opts, "")
+	b, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -41,15 +41,15 @@ func (opts CreateOpts) ToImportCreateMap() (map[string]interface{}, error) {
 }
 
 // Create requests the creation of a new image import on the server.
-func Create(client *ktvpcsdk.ServiceClient, imageID string, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, imageID string, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToImportCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(importURL(client, imageID), b, nil, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(importURL(client, imageID), b, nil, &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

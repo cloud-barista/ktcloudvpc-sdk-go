@@ -14,8 +14,8 @@ type EndpointOpts struct {
 	IronicInspectorUserPassword string
 }
 
-func initClientOpts(client *ktvpcsdk.ProviderClient, eo EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
-	sc := new(ktvpcsdk.ServiceClient)
+func initClientOpts(client *gophercloud.ProviderClient, eo EndpointOpts) (*gophercloud.ServiceClient, error) {
+	sc := new(gophercloud.ServiceClient)
 	if eo.IronicInspectorEndpoint == "" {
 		return nil, fmt.Errorf("IronicInspectorEndpoint is required")
 	}
@@ -26,15 +26,15 @@ func initClientOpts(client *ktvpcsdk.ProviderClient, eo EndpointOpts) (*ktvpcsdk
 	token := []byte(eo.IronicInspectorUser + ":" + eo.IronicInspectorUserPassword)
 	encodedToken := base64.StdEncoding.EncodeToString(token)
 	sc.MoreHeaders = map[string]string{"Authorization": "Basic " + encodedToken}
-	sc.Endpoint = ktvpcsdk.NormalizeURL(eo.IronicInspectorEndpoint)
+	sc.Endpoint = gophercloud.NormalizeURL(eo.IronicInspectorEndpoint)
 	sc.ProviderClient = client
 	return sc, nil
 }
 
 // NewBareMetalIntrospectionHTTPBasic creates a ServiceClient that may be used to access a
 // "http_basic" bare metal introspection service.
-func NewBareMetalIntrospectionHTTPBasic(eo EndpointOpts) (*ktvpcsdk.ServiceClient, error) {
-	sc, err := initClientOpts(&ktvpcsdk.ProviderClient{}, eo)
+func NewBareMetalIntrospectionHTTPBasic(eo EndpointOpts) (*gophercloud.ServiceClient, error) {
+	sc, err := initClientOpts(&gophercloud.ProviderClient{}, eo)
 	if err != nil {
 		return nil, err
 	}

@@ -9,7 +9,7 @@ import (
 )
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // CreateResult is the response of a Get operations. Call its Extract method to
@@ -27,7 +27,7 @@ type GetResult struct {
 // DeleteResult is the result from a Delete operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // Extract provides access to the individual Flavor returned by the Get and
@@ -118,13 +118,13 @@ func (page FlavorPage) IsEmpty() (bool, error) {
 // next page of results.
 func (page FlavorPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []ktvpcsdk.Link `json:"flavors_links"`
+		Links []gophercloud.Link `json:"flavors_links"`
 	}
 	err := page.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return ktvpcsdk.ExtractNextURL(s.Links)
+	return gophercloud.ExtractNextURL(s.Links)
 }
 
 // ExtractFlavors provides access to the list of flavors in a page acquired
@@ -158,7 +158,7 @@ func ExtractAccesses(r pagination.Page) ([]FlavorAccess, error) {
 }
 
 type accessResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // AddAccessResult is the response of an AddAccess operation. Call its
@@ -205,7 +205,7 @@ func (r extraSpecsResult) Extract() (map[string]string, error) {
 // key-value pairs. Call its Extract method to interpret it as a
 // map[string]interface.
 type extraSpecsResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // ListExtraSpecsResult contains the result of a Get operation. Call its Extract
@@ -223,7 +223,7 @@ type CreateExtraSpecsResult struct {
 // extraSpecResult contains the result of a call for individual a single
 // key-value pair.
 type extraSpecResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // GetExtraSpecResult contains the result of a Get operation. Call its Extract
@@ -241,7 +241,7 @@ type UpdateExtraSpecResult struct {
 // DeleteExtraSpecResult contains the result of a Delete operation. Call its
 // ExtractErr method to determine if the call succeeded or failed.
 type DeleteExtraSpecResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // Extract interprets any extraSpecResult as an ExtraSpec, if possible.

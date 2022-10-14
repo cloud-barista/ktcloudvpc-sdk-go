@@ -32,34 +32,34 @@ type CreateOpts struct {
 
 // ToClusterCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToClusterCreateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "")
+	return gophercloud.BuildRequestBody(opts, "")
 }
 
 // Create requests the creation of a new cluster.
-func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToClusterCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get retrieves a specific clusters based on its unique ID.
-func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(getURL(client, id), &r.Body, &ktvpcsdk.RequestOpts{OkCodes: []int{200}})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+	resp, err := client.Get(getURL(client, id), &r.Body, &gophercloud.RequestOpts{OkCodes: []int{200}})
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes the specified cluster ID.
-func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -82,14 +82,14 @@ type ListOpts struct {
 
 // ToClustersListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToClustersListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List returns a Pager which allows you to iterate over a collection of
 // clusters. It accepts a ListOptsBuilder, which allows you to sort
 // the returned collection for greater efficiency.
-func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(c)
 	if opts != nil {
 		query, err := opts.ToClustersListQuery()
@@ -107,7 +107,7 @@ func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 // clusters with detailed information.
 // It accepts a ListOptsBuilder, which allows you to sort the returned
 // collection for greater efficiency.
-func ListDetail(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func ListDetail(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listDetailURL(c)
 	if opts != nil {
 		query, err := opts.ToClustersListQuery()
@@ -144,11 +144,11 @@ type UpdateOptsBuilder interface {
 // ToClusterUpdateMap assembles a request body based on the contents of
 // UpdateOpts.
 func (opts UpdateOpts) ToClustersUpdateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "")
+	return gophercloud.BuildRequestBody(opts, "")
 }
 
 // Update implements cluster updated request.
-func Update(client *ktvpcsdk.ServiceClient, id string, opts []UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *gophercloud.ServiceClient, id string, opts []UpdateOptsBuilder) (r UpdateResult) {
 	var o []map[string]interface{}
 	for _, opt := range opts {
 		b, err := opt.ToClustersUpdateMap()
@@ -158,10 +158,10 @@ func Update(client *ktvpcsdk.ServiceClient, id string, opts []UpdateOptsBuilder)
 		}
 		o = append(o, b)
 	}
-	resp, err := client.Patch(updateURL(client, id), o, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Patch(updateURL(client, id), o, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200, 202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -183,21 +183,21 @@ func (opts UpgradeOpts) ToClustersUpgradeMap() (map[string]interface{}, error) {
 		defaultMaxBatchSize := 1
 		opts.MaxBatchSize = &defaultMaxBatchSize
 	}
-	return ktvpcsdk.BuildRequestBody(opts, "")
+	return gophercloud.BuildRequestBody(opts, "")
 }
 
 // Upgrade implements cluster upgrade request.
-func Upgrade(client *ktvpcsdk.ServiceClient, id string, opts UpgradeOptsBuilder) (r UpgradeResult) {
+func Upgrade(client *gophercloud.ServiceClient, id string, opts UpgradeOptsBuilder) (r UpgradeResult) {
 	b, err := opts.ToClustersUpgradeMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Post(upgradeURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(upgradeURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -216,19 +216,19 @@ type ResizeOpts struct {
 
 // ToClusterResizeMap constructs a request body from ResizeOpts.
 func (opts ResizeOpts) ToClusterResizeMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "")
+	return gophercloud.BuildRequestBody(opts, "")
 }
 
 // Resize an existing cluster node count.
-func Resize(client *ktvpcsdk.ServiceClient, id string, opts ResizeOptsBuilder) (r ResizeResult) {
+func Resize(client *gophercloud.ServiceClient, id string, opts ResizeOptsBuilder) (r ResizeResult) {
 	b, err := opts.ToClusterResizeMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(resizeURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(resizeURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200, 202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

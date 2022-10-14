@@ -36,12 +36,12 @@ type ListOpts struct {
 
 // ToRecordSetListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToRecordSetListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // ListByZone implements the recordset list request.
-func ListByZone(client *ktvpcsdk.ServiceClient, zoneID string, opts ListOptsBuilder) pagination.Pager {
+func ListByZone(client *gophercloud.ServiceClient, zoneID string, opts ListOptsBuilder) pagination.Pager {
 	url := baseURL(client, zoneID)
 	if opts != nil {
 		query, err := opts.ToRecordSetListQuery()
@@ -56,9 +56,9 @@ func ListByZone(client *ktvpcsdk.ServiceClient, zoneID string, opts ListOptsBuil
 }
 
 // Get implements the recordset Get request.
-func Get(client *ktvpcsdk.ServiceClient, zoneID string, rrsetID string) (r GetResult) {
+func Get(client *gophercloud.ServiceClient, zoneID string, rrsetID string) (r GetResult) {
 	resp, err := client.Get(rrsetURL(client, zoneID, rrsetID), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -89,7 +89,7 @@ type CreateOpts struct {
 
 // ToRecordSetCreateMap formats an CreateOpts structure into a request body.
 func (opts CreateOpts) ToRecordSetCreateMap() (map[string]interface{}, error) {
-	b, err := ktvpcsdk.BuildRequestBody(opts, "")
+	b, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -98,16 +98,16 @@ func (opts CreateOpts) ToRecordSetCreateMap() (map[string]interface{}, error) {
 }
 
 // Create creates a recordset in a given zone.
-func Create(client *ktvpcsdk.ServiceClient, zoneID string, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, zoneID string, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToRecordSetCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(baseURL(client, zoneID), &b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(baseURL(client, zoneID), &b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{201, 202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -132,7 +132,7 @@ type UpdateOpts struct {
 
 // ToRecordSetUpdateMap formats an UpdateOpts structure into a request body.
 func (opts UpdateOpts) ToRecordSetUpdateMap() (map[string]interface{}, error) {
-	b, err := ktvpcsdk.BuildRequestBody(opts, "")
+	b, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -154,24 +154,24 @@ func (opts UpdateOpts) ToRecordSetUpdateMap() (map[string]interface{}, error) {
 }
 
 // Update updates a recordset in a given zone
-func Update(client *ktvpcsdk.ServiceClient, zoneID string, rrsetID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *gophercloud.ServiceClient, zoneID string, rrsetID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToRecordSetUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Put(rrsetURL(client, zoneID, rrsetID), &b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Put(rrsetURL(client, zoneID, rrsetID), &b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200, 202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete removes an existing RecordSet.
-func Delete(client *ktvpcsdk.ServiceClient, zoneID string, rrsetID string) (r DeleteResult) {
-	resp, err := client.Delete(rrsetURL(client, zoneID, rrsetID), &ktvpcsdk.RequestOpts{
+func Delete(client *gophercloud.ServiceClient, zoneID string, rrsetID string) (r DeleteResult) {
+	resp, err := client.Delete(rrsetURL(client, zoneID, rrsetID), &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

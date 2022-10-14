@@ -3,7 +3,7 @@ package imageimport
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // GetResult represents the result of a get operation. Call its Extract method
@@ -15,7 +15,7 @@ type GetResult struct {
 // CreateResult is the result of import Create operation. Call its ExtractErr
 // method to determine if the request succeeded or failed.
 type CreateResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // ImportInfo represents information data for the Import API.

@@ -5,7 +5,7 @@ import (
 )
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 type TriggerResult struct {

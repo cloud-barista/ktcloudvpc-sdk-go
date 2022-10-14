@@ -15,7 +15,7 @@ type Event struct {
 	// The time the event occurred.
 	Time time.Time `json:"-"`
 	// The URLs to the event.
-	Links []ktvpcsdk.Link `json:"links"`
+	Links []gophercloud.Link `json:"links"`
 	// The logical ID of the stack resource.
 	LogicalResourceID string `json:"logical_resource_id"`
 	// The reason of the status of the event.
@@ -47,7 +47,7 @@ func (r *Event) UnmarshalJSON(b []byte) error {
 	if s.Time != "" {
 		t, err := time.Parse(time.RFC3339, s.Time)
 		if err != nil {
-			t, err = time.Parse(ktvpcsdk.RFC3339NoZ, s.Time)
+			t, err = time.Parse(gophercloud.RFC3339NoZ, s.Time)
 			if err != nil {
 				return err
 			}
@@ -60,7 +60,7 @@ func (r *Event) UnmarshalJSON(b []byte) error {
 
 // FindResult represents the result of a Find operation.
 type FindResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract returns a slice of Event objects and is called after a
@@ -115,7 +115,7 @@ func ExtractResourceEvents(page pagination.Page) ([]Event, error) {
 
 // GetResult represents the result of a Get operation.
 type GetResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract returns a pointer to an Event object and is called after a

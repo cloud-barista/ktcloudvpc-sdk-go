@@ -10,7 +10,7 @@ import (
 
 // WaitForCapsuleStatus will poll a capsule's status until it either matches
 // the specified status or the status becomes Failed.
-func WaitForCapsuleStatus(client *ktvpcsdk.ServiceClient, uuid, status string) error {
+func WaitForCapsuleStatus(client *gophercloud.ServiceClient, uuid, status string) error {
 	return tools.WaitFor(func() (bool, error) {
 		v, err := capsules.Get(client, uuid).Extract()
 		if err != nil {

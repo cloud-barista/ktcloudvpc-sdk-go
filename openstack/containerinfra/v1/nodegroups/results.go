@@ -8,7 +8,7 @@ import (
 )
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 func (r commonResult) Extract() (*NodeGroup, error) {
@@ -38,7 +38,7 @@ type UpdateResult struct {
 // DeleteResult is the response from a Delete request.
 // Use the ExtractErr method to extract the error from the result.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // NodeGroup is the API representation of a Magnum node group.
@@ -53,7 +53,7 @@ type NodeGroup struct {
 	LabelsAdded      map[string]string  `json:"labels_added"`
 	LabelsOverridden map[string]string  `json:"labels_overridden"`
 	LabelsSkipped    map[string]string  `json:"labels_skipped"`
-	Links            []ktvpcsdk.Link `json:"links"`
+	Links            []gophercloud.Link `json:"links"`
 	FlavorID         string             `json:"flavor_id"`
 	ImageID          string             `json:"image_id"`
 	NodeAddresses    []string           `json:"node_addresses"`

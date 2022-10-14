@@ -16,7 +16,7 @@ criteria and when none do. The minimum that can be specified is a Type, but you
 will also often need to specify a Name and/or a Region depending on what's
 available on your OpenStack deployment.
 */
-func V2EndpointURL(catalog *tokens2.ServiceCatalog, opts ktvpcsdk.EndpointOpts) (string, error) {
+func V2EndpointURL(catalog *tokens2.ServiceCatalog, opts gophercloud.EndpointOpts) (string, error) {
 	// Extract Endpoints from the catalog entries that match the requested Type, Name if provided, and Region if provided.
 	var endpoints = make([]tokens2.Endpoint, 0, 1)
 	for _, entry := range catalog.Entries {
@@ -40,12 +40,12 @@ func V2EndpointURL(catalog *tokens2.ServiceCatalog, opts ktvpcsdk.EndpointOpts) 
 	// Extract the appropriate URL from the matching Endpoint.
 	for _, endpoint := range endpoints {
 		switch opts.Availability {
-		case ktvpcsdk.AvailabilityPublic:
-			return ktvpcsdk.NormalizeURL(endpoint.PublicURL), nil
-		case ktvpcsdk.AvailabilityInternal:
-			return ktvpcsdk.NormalizeURL(endpoint.InternalURL), nil
-		case ktvpcsdk.AvailabilityAdmin:
-			return ktvpcsdk.NormalizeURL(endpoint.AdminURL), nil
+		case gophercloud.AvailabilityPublic:
+			return gophercloud.NormalizeURL(endpoint.PublicURL), nil
+		case gophercloud.AvailabilityInternal:
+			return gophercloud.NormalizeURL(endpoint.InternalURL), nil
+		case gophercloud.AvailabilityAdmin:
+			return gophercloud.NormalizeURL(endpoint.AdminURL), nil
 		default:
 			err := &ErrInvalidAvailabilityProvided{}
 			err.Argument = "Availability"
@@ -55,7 +55,7 @@ func V2EndpointURL(catalog *tokens2.ServiceCatalog, opts ktvpcsdk.EndpointOpts) 
 	}
 
 	// Report an error if there were no matching endpoints.
-	err := &ktvpcsdk.ErrEndpointNotFound{}
+	err := &gophercloud.ErrEndpointNotFound{}
 	return "", err
 }
 
@@ -69,22 +69,22 @@ criteria and when none do. The minimum that can be specified is a Type, but you
 will also often need to specify a Name and/or a Region depending on what's
 available on your OpenStack deployment.
 */
-func V3EndpointURL(catalog *tokens3.ServiceCatalog, opts ktvpcsdk.EndpointOpts) (string, error) {
+func V3EndpointURL(catalog *tokens3.ServiceCatalog, opts gophercloud.EndpointOpts) (string, error) {
 	// Extract Endpoints from the catalog entries that match the requested Type, Interface,
 	// Name if provided, and Region if provided.
 	var endpoints = make([]tokens3.Endpoint, 0, 1)
 	for _, entry := range catalog.Entries {
 		if (entry.Type == opts.Type) && (opts.Name == "" || entry.Name == opts.Name) {
 			for _, endpoint := range entry.Endpoints {
-				if opts.Availability != ktvpcsdk.AvailabilityAdmin &&
-					opts.Availability != ktvpcsdk.AvailabilityPublic &&
-					opts.Availability != ktvpcsdk.AvailabilityInternal {
+				if opts.Availability != gophercloud.AvailabilityAdmin &&
+					opts.Availability != gophercloud.AvailabilityPublic &&
+					opts.Availability != gophercloud.AvailabilityInternal {
 					err := &ErrInvalidAvailabilityProvided{}
 					err.Argument = "Availability"
 					err.Value = opts.Availability
 					return "", err
 				}
-				if (opts.Availability == ktvpcsdk.Availability(endpoint.Interface)) &&
+				if (opts.Availability == gophercloud.Availability(endpoint.Interface)) &&
 					(opts.Region == "" || endpoint.Region == opts.Region || endpoint.RegionID == opts.Region) {
 					endpoints = append(endpoints, endpoint)
 				}
@@ -102,10 +102,10 @@ func V3EndpointURL(catalog *tokens3.ServiceCatalog, opts ktvpcsdk.EndpointOpts) 
 
 	// Extract the URL from the matching Endpoint.
 	for _, endpoint := range endpoints {
-		return ktvpcsdk.NormalizeURL(endpoint.URL), nil
+		return gophercloud.NormalizeURL(endpoint.URL), nil
 	}
 
 	// Report an error if there were no matching endpoints.
-	err := &ktvpcsdk.ErrEndpointNotFound{}
+	err := &gophercloud.ErrEndpointNotFound{}
 	return "", err
 }

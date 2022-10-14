@@ -2,30 +2,30 @@ package ports
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-func createURL(client *ktvpcsdk.ServiceClient) string {
+func createURL(client *gophercloud.ServiceClient) string {
 	return client.ServiceURL("ports")
 }
 
-func listURL(client *ktvpcsdk.ServiceClient) string {
+func listURL(client *gophercloud.ServiceClient) string {
 	return createURL(client)
 }
 
-func listDetailURL(client *ktvpcsdk.ServiceClient) string {
+func listDetailURL(client *gophercloud.ServiceClient) string {
 	return client.ServiceURL("ports", "detail")
 }
 
-func resourceURL(client *ktvpcsdk.ServiceClient, id string) string {
+func resourceURL(client *gophercloud.ServiceClient, id string) string {
 	return client.ServiceURL("ports", id)
 }
 
-func deleteURL(client *ktvpcsdk.ServiceClient, id string) string {
+func deleteURL(client *gophercloud.ServiceClient, id string) string {
 	return resourceURL(client, id)
 }
 
-func getURL(client *ktvpcsdk.ServiceClient, id string) string {
+func getURL(client *gophercloud.ServiceClient, id string) string {
 	return resourceURL(client, id)
 }
 
-func updateURL(client *ktvpcsdk.ServiceClient, id string) string {
+func updateURL(client *gophercloud.ServiceClient, id string) string {
 	return resourceURL(client, id)
 }

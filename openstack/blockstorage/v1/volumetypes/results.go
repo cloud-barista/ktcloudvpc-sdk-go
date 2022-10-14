@@ -24,7 +24,7 @@ type GetResult struct {
 
 // DeleteResult contains the response error from a Delete request.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // VolumeTypePage is a pagination.Pager that is returned from a call to the List function.
@@ -48,7 +48,7 @@ func ExtractVolumeTypes(r pagination.Page) ([]VolumeType, error) {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract will get the Volume Type object out of the commonResult object.

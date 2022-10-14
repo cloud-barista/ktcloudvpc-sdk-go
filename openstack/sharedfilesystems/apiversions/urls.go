@@ -7,13 +7,13 @@ import (
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/utils"
 )
 
-func getURL(c *ktvpcsdk.ServiceClient, version string) string {
+func getURL(c *gophercloud.ServiceClient, version string) string {
 	baseEndpoint, _ := utils.BaseEndpoint(c.Endpoint)
 	endpoint := strings.TrimRight(baseEndpoint, "/") + "/" + strings.TrimRight(version, "/") + "/"
 	return endpoint
 }
 
-func listURL(c *ktvpcsdk.ServiceClient) string {
+func listURL(c *gophercloud.ServiceClient) string {
 	baseEndpoint, _ := utils.BaseEndpoint(c.Endpoint)
 	endpoint := strings.TrimRight(baseEndpoint, "/") + "/"
 	return endpoint

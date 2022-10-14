@@ -116,12 +116,12 @@ type ListOpts struct {
 
 // ToNodeListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToNodeListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List makes a request against the API to list nodes accessible to you.
-func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToNodeListQuery()
@@ -142,13 +142,13 @@ func (opts ListOpts) ToNodeListDetailQuery() (string, error) {
 		return "", fmt.Errorf("fields is not a valid option when getting a detailed listing of nodes")
 	}
 
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // Return a list of bare metal Nodes with complete details. Some filtering is possible by passing in flags in ListOpts,
 // but you cannot limit by the fields returned.
-func ListDetail(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func ListDetail(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	// This URL is deprecated. In the future, we should compare the microversion and if >= 1.43, hit the listURL
 	// with ListOpts{Detail: true,}
 	url := listDetailURL(client)
@@ -165,11 +165,11 @@ func ListDetail(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination
 }
 
 // Get requests details on a single node, by ID.
-func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(getURL(client, id), &r.Body, &ktvpcsdk.RequestOpts{
+func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+	resp, err := client.Get(getURL(client, id), &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -257,7 +257,7 @@ type CreateOpts struct {
 
 // ToNodeCreateMap assembles a request body based on the contents of a CreateOpts.
 func (opts CreateOpts) ToNodeCreateMap() (map[string]interface{}, error) {
-	body, err := ktvpcsdk.BuildRequestBody(opts, "")
+	body, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -266,7 +266,7 @@ func (opts CreateOpts) ToNodeCreateMap() (map[string]interface{}, error) {
 }
 
 // Create requests a node to be created
-func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	reqBody, err := opts.ToNodeCreateMap()
 	if err != nil {
 		r.Err = err
@@ -274,7 +274,7 @@ func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateRes
 	}
 
 	resp, err := client.Post(createURL(client), reqBody, &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -300,11 +300,11 @@ type UpdateOperation struct {
 }
 
 func (opts UpdateOperation) ToNodeUpdateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "")
+	return gophercloud.BuildRequestBody(opts, "")
 }
 
 // Update requests that a node be updated
-func Update(client *ktvpcsdk.ServiceClient, id string, opts UpdateOpts) (r UpdateResult) {
+func Update(client *gophercloud.ServiceClient, id string, opts UpdateOpts) (r UpdateResult) {
 	body := make([]map[string]interface{}, len(opts))
 	for i, patch := range opts {
 		result, err := patch.ToNodeUpdateMap()
@@ -315,37 +315,37 @@ func Update(client *ktvpcsdk.ServiceClient, id string, opts UpdateOpts) (r Updat
 
 		body[i] = result
 	}
-	resp, err := client.Patch(updateURL(client, id), body, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Patch(updateURL(client, id), body, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete requests that a node be removed
-func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Request that Ironic validate whether the Node’s driver has enough information to manage the Node. This polls each
 // interface on the driver, and returns the status of that interface.
-func Validate(client *ktvpcsdk.ServiceClient, id string) (r ValidateResult) {
-	resp, err := client.Get(validateURL(client, id), &r.Body, &ktvpcsdk.RequestOpts{
+func Validate(client *gophercloud.ServiceClient, id string) (r ValidateResult) {
+	resp, err := client.Get(validateURL(client, id), &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Inject NMI (Non-Masking Interrupts) for the given Node. This feature can be used for hardware diagnostics, and
 // actual support depends on a driver.
-func InjectNMI(client *ktvpcsdk.ServiceClient, id string) (r InjectNMIResult) {
-	resp, err := client.Put(injectNMIURL(client, id), map[string]string{}, nil, &ktvpcsdk.RequestOpts{
+func InjectNMI(client *gophercloud.ServiceClient, id string) (r InjectNMIResult) {
+	resp, err := client.Put(injectNMIURL(client, id), map[string]string{}, nil, &gophercloud.RequestOpts{
 		OkCodes: []int{204},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -362,7 +362,7 @@ type BootDeviceOptsBuilder interface {
 
 // ToBootDeviceSetMap assembles a request body based on the contents of a BootDeviceOpts.
 func (opts BootDeviceOpts) ToBootDeviceMap() (map[string]interface{}, error) {
-	body, err := ktvpcsdk.BuildRequestBody(opts, "")
+	body, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -372,35 +372,35 @@ func (opts BootDeviceOpts) ToBootDeviceMap() (map[string]interface{}, error) {
 
 // Set the boot device for the given Node, and set it persistently or for one-time boot. The exact behaviour
 // of this depends on the hardware driver.
-func SetBootDevice(client *ktvpcsdk.ServiceClient, id string, bootDevice BootDeviceOptsBuilder) (r SetBootDeviceResult) {
+func SetBootDevice(client *gophercloud.ServiceClient, id string, bootDevice BootDeviceOptsBuilder) (r SetBootDeviceResult) {
 	reqBody, err := bootDevice.ToBootDeviceMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Put(bootDeviceURL(client, id), reqBody, nil, &ktvpcsdk.RequestOpts{
+	resp, err := client.Put(bootDeviceURL(client, id), reqBody, nil, &gophercloud.RequestOpts{
 		OkCodes: []int{204},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get the current boot device for the given Node.
-func GetBootDevice(client *ktvpcsdk.ServiceClient, id string) (r BootDeviceResult) {
-	resp, err := client.Get(bootDeviceURL(client, id), &r.Body, &ktvpcsdk.RequestOpts{
+func GetBootDevice(client *gophercloud.ServiceClient, id string) (r BootDeviceResult) {
+	resp, err := client.Get(bootDeviceURL(client, id), &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Retrieve the acceptable set of supported boot devices for a specific Node.
-func GetSupportedBootDevices(client *ktvpcsdk.ServiceClient, id string) (r SupportedBootDeviceResult) {
-	resp, err := client.Get(supportedBootDeviceURL(client, id), &r.Body, &ktvpcsdk.RequestOpts{
+func GetSupportedBootDevices(client *gophercloud.ServiceClient, id string) (r SupportedBootDeviceResult) {
+	resp, err := client.Get(supportedBootDeviceURL(client, id), &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -460,7 +460,7 @@ type ProvisionStateOpts struct {
 
 // ToProvisionStateMap assembles a request body based on the contents of a CreateOpts.
 func (opts ProvisionStateOpts) ToProvisionStateMap() (map[string]interface{}, error) {
-	body, err := ktvpcsdk.BuildRequestBody(opts, "")
+	body, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -470,17 +470,17 @@ func (opts ProvisionStateOpts) ToProvisionStateMap() (map[string]interface{}, er
 
 // Request a change to the Node’s provision state. Acceptable target states depend on the Node’s current provision
 // state. More detailed documentation of the Ironic State Machine is available in the developer docs.
-func ChangeProvisionState(client *ktvpcsdk.ServiceClient, id string, opts ProvisionStateOptsBuilder) (r ChangeStateResult) {
+func ChangeProvisionState(client *gophercloud.ServiceClient, id string, opts ProvisionStateOptsBuilder) (r ChangeStateResult) {
 	reqBody, err := opts.ToProvisionStateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Put(provisionStateURL(client, id), reqBody, nil, &ktvpcsdk.RequestOpts{
+	resp, err := client.Put(provisionStateURL(client, id), reqBody, nil, &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -508,7 +508,7 @@ type PowerStateOpts struct {
 
 // ToPowerStateMap assembles a request body based on the contents of a PowerStateOpts.
 func (opts PowerStateOpts) ToPowerStateMap() (map[string]interface{}, error) {
-	body, err := ktvpcsdk.BuildRequestBody(opts, "")
+	body, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -517,17 +517,17 @@ func (opts PowerStateOpts) ToPowerStateMap() (map[string]interface{}, error) {
 }
 
 // Request to change a Node's power state.
-func ChangePowerState(client *ktvpcsdk.ServiceClient, id string, opts PowerStateOptsBuilder) (r ChangePowerStateResult) {
+func ChangePowerState(client *gophercloud.ServiceClient, id string, opts PowerStateOptsBuilder) (r ChangePowerStateResult) {
 	reqBody, err := opts.ToPowerStateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Put(powerStateURL(client, id), reqBody, nil, &ktvpcsdk.RequestOpts{
+	resp, err := client.Put(powerStateURL(client, id), reqBody, nil, &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -607,7 +607,7 @@ type LogicalDisk struct {
 }
 
 func (opts RAIDConfigOpts) ToRAIDConfigMap() (map[string]interface{}, error) {
-	body, err := ktvpcsdk.BuildRequestBody(opts, "")
+	body, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -626,17 +626,17 @@ func (opts RAIDConfigOpts) ToRAIDConfigMap() (map[string]interface{}, error) {
 }
 
 // Request to change a Node's RAID config.
-func SetRAIDConfig(client *ktvpcsdk.ServiceClient, id string, raidConfigOptsBuilder RAIDConfigOptsBuilder) (r ChangeStateResult) {
+func SetRAIDConfig(client *gophercloud.ServiceClient, id string, raidConfigOptsBuilder RAIDConfigOptsBuilder) (r ChangeStateResult) {
 	reqBody, err := raidConfigOptsBuilder.ToRAIDConfigMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Put(raidConfigURL(client, id), reqBody, nil, &ktvpcsdk.RequestOpts{
+	resp, err := client.Put(raidConfigURL(client, id), reqBody, nil, &gophercloud.RequestOpts{
 		OkCodes: []int{204},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -661,13 +661,13 @@ func (opts ListBIOSSettingsOpts) ToListBIOSSettingsOptsQuery() (string, error) {
 		return "", fmt.Errorf("cannot have both fields and detail options for BIOS settings")
 	}
 
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // Get the current BIOS Settings for the given Node.
 // To use the opts requires microversion 1.74.
-func ListBIOSSettings(client *ktvpcsdk.ServiceClient, id string, opts ListBIOSSettingsOptsBuilder) (r ListBIOSSettingsResult) {
+func ListBIOSSettings(client *gophercloud.ServiceClient, id string, opts ListBIOSSettingsOptsBuilder) (r ListBIOSSettingsResult) {
 	url := biosListSettingsURL(client, id)
 	if opts != nil {
 
@@ -679,19 +679,19 @@ func ListBIOSSettings(client *ktvpcsdk.ServiceClient, id string, opts ListBIOSSe
 		url += query
 	}
 
-	resp, err := client.Get(url, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Get(url, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get one BIOS Setting for the given Node.
-func GetBIOSSetting(client *ktvpcsdk.ServiceClient, id string, setting string) (r GetBIOSSettingResult) {
-	resp, err := client.Get(biosGetSettingURL(client, id, setting), &r.Body, &ktvpcsdk.RequestOpts{
+func GetBIOSSetting(client *gophercloud.ServiceClient, id string, setting string) (r GetBIOSSettingResult) {
+	resp, err := client.Get(biosGetSettingURL(client, id, setting), &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -702,31 +702,31 @@ type CallVendorPassthruOpts struct {
 
 // ToGetSubscriptionMap assembles a query based on the contents of a CallVendorPassthruOpts
 func ToGetAllSubscriptionMap(opts CallVendorPassthruOpts) (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // Get all vendor_passthru methods available for the given Node.
-func GetVendorPassthruMethods(client *ktvpcsdk.ServiceClient, id string) (r VendorPassthruMethodsResult) {
-	resp, err := client.Get(vendorPassthruMethodsURL(client, id), &r.Body, &ktvpcsdk.RequestOpts{
+func GetVendorPassthruMethods(client *gophercloud.ServiceClient, id string) (r VendorPassthruMethodsResult) {
+	resp, err := client.Get(vendorPassthruMethodsURL(client, id), &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get all subscriptions available for the given Node.
-func GetAllSubscriptions(client *ktvpcsdk.ServiceClient, id string, method CallVendorPassthruOpts) (r GetAllSubscriptionsVendorPassthruResult) {
+func GetAllSubscriptions(client *gophercloud.ServiceClient, id string, method CallVendorPassthruOpts) (r GetAllSubscriptionsVendorPassthruResult) {
 	query, err := ToGetAllSubscriptionMap(method)
 	if err != nil {
 		r.Err = err
 		return
 	}
 	url := vendorPassthruCallURL(client, id) + query
-	resp, err := client.Get(url, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Get(url, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -737,11 +737,11 @@ type GetSubscriptionOpts struct {
 
 // ToGetSubscriptionMap assembles a query based on the contents of CallVendorPassthruOpts and a request body based on the contents of a GetSubscriptionOpts
 func ToGetSubscriptionMap(method CallVendorPassthruOpts, opts GetSubscriptionOpts) (string, map[string]interface{}, error) {
-	q, err := ktvpcsdk.BuildQueryString(method)
+	q, err := gophercloud.BuildQueryString(method)
 	if err != nil {
 		return q.String(), nil, err
 	}
-	body, err := ktvpcsdk.BuildRequestBody(opts, "")
+	body, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return q.String(), nil, err
 	}
@@ -750,18 +750,18 @@ func ToGetSubscriptionMap(method CallVendorPassthruOpts, opts GetSubscriptionOpt
 }
 
 // Get a subscription on the given Node.
-func GetSubscription(client *ktvpcsdk.ServiceClient, id string, method CallVendorPassthruOpts, subscriptionOpts GetSubscriptionOpts) (r SubscriptionVendorPassthruResult) {
+func GetSubscription(client *gophercloud.ServiceClient, id string, method CallVendorPassthruOpts, subscriptionOpts GetSubscriptionOpts) (r SubscriptionVendorPassthruResult) {
 	query, reqBody, err := ToGetSubscriptionMap(method, subscriptionOpts)
 	if err != nil {
 		r.Err = err
 		return
 	}
 	url := vendorPassthruCallURL(client, id) + query
-	resp, err := client.Get(url, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Get(url, &r.Body, &gophercloud.RequestOpts{
 		JSONBody: reqBody,
 		OkCodes:  []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -772,11 +772,11 @@ type DeleteSubscriptionOpts struct {
 
 // ToDeleteSubscriptionMap assembles a query based on the contents of CallVendorPassthruOpts and a request body based on the contents of a DeleteSubscriptionOpts
 func ToDeleteSubscriptionMap(method CallVendorPassthruOpts, opts DeleteSubscriptionOpts) (string, map[string]interface{}, error) {
-	q, err := ktvpcsdk.BuildQueryString(method)
+	q, err := gophercloud.BuildQueryString(method)
 	if err != nil {
 		return q.String(), nil, err
 	}
-	body, err := ktvpcsdk.BuildRequestBody(opts, "")
+	body, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return q.String(), nil, err
 	}
@@ -784,18 +784,18 @@ func ToDeleteSubscriptionMap(method CallVendorPassthruOpts, opts DeleteSubscript
 }
 
 // Delete a subscription on the given node.
-func DeleteSubscription(client *ktvpcsdk.ServiceClient, id string, method CallVendorPassthruOpts, subscriptionOpts DeleteSubscriptionOpts) (r DeleteSubscriptionVendorPassthruResult) {
+func DeleteSubscription(client *gophercloud.ServiceClient, id string, method CallVendorPassthruOpts, subscriptionOpts DeleteSubscriptionOpts) (r DeleteSubscriptionVendorPassthruResult) {
 	query, reqBody, err := ToDeleteSubscriptionMap(method, subscriptionOpts)
 	if err != nil {
 		r.Err = err
 		return
 	}
 	url := vendorPassthruCallURL(client, id) + query
-	resp, err := client.Delete(url, &ktvpcsdk.RequestOpts{
+	resp, err := client.Delete(url, &gophercloud.RequestOpts{
 		JSONBody: reqBody,
 		OkCodes:  []int{200, 202, 204},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return r
 }
 
@@ -810,11 +810,11 @@ type CreateSubscriptionOpts struct {
 
 // ToCreateSubscriptionMap assembles a query based on the contents of CallVendorPassthruOpts and a request body based on the contents of a CreateSubscriptionOpts
 func ToCreateSubscriptionMap(method CallVendorPassthruOpts, opts CreateSubscriptionOpts) (string, map[string]interface{}, error) {
-	q, err := ktvpcsdk.BuildQueryString(method)
+	q, err := gophercloud.BuildQueryString(method)
 	if err != nil {
 		return q.String(), nil, err
 	}
-	body, err := ktvpcsdk.BuildRequestBody(opts, "")
+	body, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return q.String(), nil, err
 	}
@@ -822,17 +822,17 @@ func ToCreateSubscriptionMap(method CallVendorPassthruOpts, opts CreateSubscript
 }
 
 // Creates a subscription on the given node.
-func CreateSubscription(client *ktvpcsdk.ServiceClient, id string, method CallVendorPassthruOpts, subscriptionOpts CreateSubscriptionOpts) (r SubscriptionVendorPassthruResult) {
+func CreateSubscription(client *gophercloud.ServiceClient, id string, method CallVendorPassthruOpts, subscriptionOpts CreateSubscriptionOpts) (r SubscriptionVendorPassthruResult) {
 	query, reqBody, err := ToCreateSubscriptionMap(method, subscriptionOpts)
 	if err != nil {
 		r.Err = err
 		return
 	}
 	url := vendorPassthruCallURL(client, id) + query
-	resp, err := client.Post(url, reqBody, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(url, reqBody, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return r
 }
 
@@ -848,7 +848,7 @@ type MaintenanceOptsBuilder interface {
 
 // ToMaintenanceMap assembles a request body based on the contents of a MaintenanceOpts.
 func (opts MaintenanceOpts) ToMaintenanceMap() (map[string]interface{}, error) {
-	body, err := ktvpcsdk.BuildRequestBody(opts, "")
+	body, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -857,25 +857,25 @@ func (opts MaintenanceOpts) ToMaintenanceMap() (map[string]interface{}, error) {
 }
 
 // Request to set the Node's maintenance mode.
-func SetMaintenance(client *ktvpcsdk.ServiceClient, id string, opts MaintenanceOptsBuilder) (r SetMaintenanceResult) {
+func SetMaintenance(client *gophercloud.ServiceClient, id string, opts MaintenanceOptsBuilder) (r SetMaintenanceResult) {
 	reqBody, err := opts.ToMaintenanceMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Put(maintenanceURL(client, id), reqBody, nil, &ktvpcsdk.RequestOpts{
+	resp, err := client.Put(maintenanceURL(client, id), reqBody, nil, &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Request to unset the Node's maintenance mode.
-func UnsetMaintenance(client *ktvpcsdk.ServiceClient, id string) (r SetMaintenanceResult) {
-	resp, err := client.Delete(maintenanceURL(client, id), &ktvpcsdk.RequestOpts{
+func UnsetMaintenance(client *gophercloud.ServiceClient, id string) (r SetMaintenanceResult) {
+	resp, err := client.Delete(maintenanceURL(client, id), &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

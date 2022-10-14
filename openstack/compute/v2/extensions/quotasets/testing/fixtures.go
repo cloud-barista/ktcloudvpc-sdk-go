@@ -144,20 +144,20 @@ const PartialUpdateBody = `{"quota_set":{"cores":200, "force":true}}`
 
 //Result of Quota-update
 var UpdatedQuotaSet = quotasets.UpdateOpts{
-	FixedIPs:                 ktvpcsdk.IntToPointer(0),
-	FloatingIPs:              ktvpcsdk.IntToPointer(0),
-	InjectedFileContentBytes: ktvpcsdk.IntToPointer(10240),
-	InjectedFilePathBytes:    ktvpcsdk.IntToPointer(255),
-	InjectedFiles:            ktvpcsdk.IntToPointer(5),
-	KeyPairs:                 ktvpcsdk.IntToPointer(10),
-	MetadataItems:            ktvpcsdk.IntToPointer(128),
-	RAM:                      ktvpcsdk.IntToPointer(9216000),
-	SecurityGroupRules:       ktvpcsdk.IntToPointer(20),
-	SecurityGroups:           ktvpcsdk.IntToPointer(10),
-	Cores:                    ktvpcsdk.IntToPointer(200),
-	Instances:                ktvpcsdk.IntToPointer(25),
-	ServerGroups:             ktvpcsdk.IntToPointer(2),
-	ServerGroupMembers:       ktvpcsdk.IntToPointer(3),
+	FixedIPs:                 gophercloud.IntToPointer(0),
+	FloatingIPs:              gophercloud.IntToPointer(0),
+	InjectedFileContentBytes: gophercloud.IntToPointer(10240),
+	InjectedFilePathBytes:    gophercloud.IntToPointer(255),
+	InjectedFiles:            gophercloud.IntToPointer(5),
+	KeyPairs:                 gophercloud.IntToPointer(10),
+	MetadataItems:            gophercloud.IntToPointer(128),
+	RAM:                      gophercloud.IntToPointer(9216000),
+	SecurityGroupRules:       gophercloud.IntToPointer(20),
+	SecurityGroups:           gophercloud.IntToPointer(10),
+	Cores:                    gophercloud.IntToPointer(200),
+	Instances:                gophercloud.IntToPointer(25),
+	ServerGroups:             gophercloud.IntToPointer(2),
+	ServerGroupMembers:       gophercloud.IntToPointer(3),
 }
 
 // HandleGetSuccessfully configures the test server to respond to a Get request for sample tenant

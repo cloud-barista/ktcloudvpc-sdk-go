@@ -16,7 +16,7 @@ import (
 
 // CreateSnapshot will create a snapshot of the specified volume.
 // Snapshot will be assigned a random name and description.
-func CreateSnapshot(t *testing.T, client *ktvpcsdk.ServiceClient, volume *volumes.Volume) (*snapshots.Snapshot, error) {
+func CreateSnapshot(t *testing.T, client *gophercloud.ServiceClient, volume *volumes.Volume) (*snapshots.Snapshot, error) {
 	snapshotName := tools.RandomString("ACPTTEST", 16)
 	snapshotDescription := tools.RandomString("ACPTTEST", 16)
 	t.Logf("Attempting to create snapshot: %s", snapshotName)
@@ -44,7 +44,7 @@ func CreateSnapshot(t *testing.T, client *ktvpcsdk.ServiceClient, volume *volume
 
 // CreateVolume will create a volume with a random name and size of 1GB. An
 // error will be returned if the volume was unable to be created.
-func CreateVolume(t *testing.T, client *ktvpcsdk.ServiceClient) (*volumes.Volume, error) {
+func CreateVolume(t *testing.T, client *gophercloud.ServiceClient) (*volumes.Volume, error) {
 	volumeName := tools.RandomString("ACPTTEST", 16)
 	volumeDescription := tools.RandomString("ACPTTEST-DESC", 16)
 	t.Logf("Attempting to create volume: %s", volumeName)
@@ -77,7 +77,7 @@ func CreateVolume(t *testing.T, client *ktvpcsdk.ServiceClient) (*volumes.Volume
 
 // CreateVolumeFromImage will create a volume from with a random name and size of
 // 1GB. An error will be returned if the volume was unable to be created.
-func CreateVolumeFromImage(t *testing.T, client *ktvpcsdk.ServiceClient) (*volumes.Volume, error) {
+func CreateVolumeFromImage(t *testing.T, client *gophercloud.ServiceClient) (*volumes.Volume, error) {
 	choices, err := clients.AcceptanceTestChoicesFromEnv()
 	if err != nil {
 		t.Fatal(err)
@@ -117,7 +117,7 @@ func CreateVolumeFromImage(t *testing.T, client *ktvpcsdk.ServiceClient) (*volum
 
 // DeleteVolume will delete a volume. A fatal error will occur if the volume
 // failed to be deleted. This works best when used as a deferred function.
-func DeleteVolume(t *testing.T, client *ktvpcsdk.ServiceClient, volume *volumes.Volume) {
+func DeleteVolume(t *testing.T, client *gophercloud.ServiceClient, volume *volumes.Volume) {
 	t.Logf("Attempting to delete volume: %s", volume.ID)
 
 	err := volumes.Delete(client, volume.ID, volumes.DeleteOpts{}).ExtractErr()
@@ -130,7 +130,7 @@ func DeleteVolume(t *testing.T, client *ktvpcsdk.ServiceClient, volume *volumes.
 
 // DeleteSnapshot will delete a snapshot. A fatal error will occur if the
 // snapshot failed to be deleted.
-func DeleteSnapshot(t *testing.T, client *ktvpcsdk.ServiceClient, snapshot *snapshots.Snapshot) {
+func DeleteSnapshot(t *testing.T, client *gophercloud.ServiceClient, snapshot *snapshots.Snapshot) {
 	t.Logf("Attempting to delete snapshot: %s", snapshot.ID)
 
 	err := snapshots.Delete(client, snapshot.ID).ExtractErr()

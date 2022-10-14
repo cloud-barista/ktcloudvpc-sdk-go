@@ -9,7 +9,7 @@ import (
 )
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets a GetResult, CreateResult or UpdateResult as a RecordSet.
@@ -46,7 +46,7 @@ type UpdateResult struct {
 // DeleteResult is result of a Delete operation. Call its ExtractErr method to
 // determine if the operation succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // IsEmpty returns true if the page contains no results.
@@ -111,7 +111,7 @@ type RecordSet struct {
 	// Links includes HTTP references to the itself,
 	// useful for passing along to other APIs that might want a recordset
 	// reference.
-	Links []ktvpcsdk.Link `json:"-"`
+	Links []gophercloud.Link `json:"-"`
 
 	// Metadata contains the total_count of resources matching the filter
 	Metadata struct {
@@ -123,8 +123,8 @@ func (r *RecordSet) UnmarshalJSON(b []byte) error {
 	type tmp RecordSet
 	var s struct {
 		tmp
-		CreatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"updated_at"`
+		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
+		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
 		Links     map[string]interface{}          `json:"links"`
 	}
 	err := json.Unmarshal(b, &s)
@@ -139,7 +139,7 @@ func (r *RecordSet) UnmarshalJSON(b []byte) error {
 	if s.Links != nil {
 		for rel, href := range s.Links {
 			if v, ok := href.(string); ok {
-				link := ktvpcsdk.Link{
+				link := gophercloud.Link{
 					Rel:  rel,
 					Href: v,
 				}

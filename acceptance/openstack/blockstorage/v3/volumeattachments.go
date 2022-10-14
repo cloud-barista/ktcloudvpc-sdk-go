@@ -12,7 +12,7 @@ import (
 
 // CreateVolumeAttachment will attach a volume to an instance. An error will be
 // returned if the attachment failed.
-func CreateVolumeAttachment(t *testing.T, client *ktvpcsdk.ServiceClient, volume *v3.Volume, server *servers.Server) error {
+func CreateVolumeAttachment(t *testing.T, client *gophercloud.ServiceClient, volume *v3.Volume, server *servers.Server) error {
 	if testing.Short() {
 		t.Skip("Skipping test that requires volume attachment in short mode.")
 	}
@@ -95,7 +95,7 @@ func CreateVolumeAttachment(t *testing.T, client *ktvpcsdk.ServiceClient, volume
 
 // DeleteVolumeAttachment will detach a volume from an instance. A fatal error
 // will occur if the attachment failed to be deleted.
-func DeleteVolumeAttachment(t *testing.T, client *ktvpcsdk.ServiceClient, volume *v3.Volume) {
+func DeleteVolumeAttachment(t *testing.T, client *gophercloud.ServiceClient, volume *v3.Volume) {
 	t.Logf("Attepting to detach volume volume: %s", volume.ID)
 
 	if err := attachments.Delete(client, volume.Attachments[0].AttachmentID).ExtractErr(); err != nil {

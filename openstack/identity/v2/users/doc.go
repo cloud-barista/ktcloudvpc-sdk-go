@@ -23,7 +23,7 @@ Example to Create a User
 	createOpts := users.CreateOpts{
 		Name:     "name",
 		TenantID: "c39e3de9be2d4c779f1dfd6abacc176d",
-		Enabled:  ktvpcsdk.Enabled,
+		Enabled:  gophercloud.Enabled,
 	}
 
 	user, err := users.Create(identityClient, createOpts).Extract()
@@ -37,7 +37,7 @@ Example to Update a User
 
 	updateOpts := users.UpdateOpts{
 		Name:    "new_name",
-		Enabled: ktvpcsdk.Disabled,
+		Enabled: gophercloud.Disabled,
 	}
 
 	user, err := users.Update(identityClient, userID, updateOpts).Extract()

@@ -27,14 +27,14 @@ type ListOpts struct {
 // ToContainerListParams formats a ListOpts into a query string and boolean
 // representing whether to list complete information for each container.
 func (opts ListOpts) ToContainerListParams() (bool, string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return opts.Full, q.String(), err
 }
 
 // List is a function that retrieves containers associated with the account as
 // well as account metadata. It returns a pager which can be iterated with the
 // EachPage function.
-func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	headers := map[string]string{"Accept": "text/plain", "Content-Type": "text/plain"}
 
 	url := listURL(c)
@@ -84,7 +84,7 @@ type CreateOpts struct {
 
 // ToContainerCreateMap formats a CreateOpts into a map of headers.
 func (opts CreateOpts) ToContainerCreateMap() (map[string]string, error) {
-	h, err := ktvpcsdk.BuildHeaders(opts)
+	h, err := gophercloud.BuildHeaders(opts)
 	if err != nil {
 		return nil, err
 	}
@@ -95,7 +95,7 @@ func (opts CreateOpts) ToContainerCreateMap() (map[string]string, error) {
 }
 
 // Create is a function that creates a new container.
-func Create(c *ktvpcsdk.ServiceClient, containerName string, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *gophercloud.ServiceClient, containerName string, opts CreateOptsBuilder) (r CreateResult) {
 	h := make(map[string]string)
 	if opts != nil {
 		headers, err := opts.ToContainerCreateMap()
@@ -107,16 +107,16 @@ func Create(c *ktvpcsdk.ServiceClient, containerName string, opts CreateOptsBuil
 			h[k] = v
 		}
 	}
-	resp, err := c.Request("PUT", createURL(c, containerName), &ktvpcsdk.RequestOpts{
+	resp, err := c.Request("PUT", createURL(c, containerName), &gophercloud.RequestOpts{
 		MoreHeaders: h,
 		OkCodes:     []int{201, 202, 204},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // BulkDelete is a function that bulk deletes containers.
-func BulkDelete(c *ktvpcsdk.ServiceClient, containers []string) (r BulkDeleteResult) {
+func BulkDelete(c *gophercloud.ServiceClient, containers []string) (r BulkDeleteResult) {
 	// urlencode container names to be on the safe side
 	// https://github.com/openstack/swift/blob/stable/train/swift/common/middleware/bulk.py#L160
 	// https://github.com/openstack/swift/blob/stable/train/swift/common/swob.py#L302
@@ -125,21 +125,21 @@ func BulkDelete(c *ktvpcsdk.ServiceClient, containers []string) (r BulkDeleteRes
 		encodedContainers[i] = v
 	}
 	b := strings.NewReader(strings.Join(encodedContainers, "\n") + "\n")
-	resp, err := c.Post(bulkDeleteURL(c), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := c.Post(bulkDeleteURL(c), b, &r.Body, &gophercloud.RequestOpts{
 		MoreHeaders: map[string]string{
 			"Accept":       "application/json",
 			"Content-Type": "text/plain",
 		},
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete is a function that deletes a container.
-func Delete(c *ktvpcsdk.ServiceClient, containerName string) (r DeleteResult) {
+func Delete(c *gophercloud.ServiceClient, containerName string) (r DeleteResult) {
 	resp, err := c.Delete(deleteURL(c, containerName), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -170,7 +170,7 @@ type UpdateOpts struct {
 
 // ToContainerUpdateMap formats a UpdateOpts into a map of headers.
 func (opts UpdateOpts) ToContainerUpdateMap() (map[string]string, error) {
-	h, err := ktvpcsdk.BuildHeaders(opts)
+	h, err := gophercloud.BuildHeaders(opts)
 	if err != nil {
 		return nil, err
 	}
@@ -188,7 +188,7 @@ func (opts UpdateOpts) ToContainerUpdateMap() (map[string]string, error) {
 
 // Update is a function that creates, updates, or deletes a container's
 // metadata.
-func Update(c *ktvpcsdk.ServiceClient, containerName string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *gophercloud.ServiceClient, containerName string, opts UpdateOptsBuilder) (r UpdateResult) {
 	h := make(map[string]string)
 	if opts != nil {
 		headers, err := opts.ToContainerUpdateMap()
@@ -201,11 +201,11 @@ func Update(c *ktvpcsdk.ServiceClient, containerName string, opts UpdateOptsBuil
 			h[k] = v
 		}
 	}
-	resp, err := c.Request("POST", updateURL(c, containerName), &ktvpcsdk.RequestOpts{
+	resp, err := c.Request("POST", updateURL(c, containerName), &gophercloud.RequestOpts{
 		MoreHeaders: h,
 		OkCodes:     []int{201, 202, 204},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -222,13 +222,13 @@ type GetOpts struct {
 
 // ToContainerGetMap formats a GetOpts into a map of headers.
 func (opts GetOpts) ToContainerGetMap() (map[string]string, error) {
-	return ktvpcsdk.BuildHeaders(opts)
+	return gophercloud.BuildHeaders(opts)
 }
 
 // Get is a function that retrieves the metadata of a container. To extract just
 // the custom metadata, pass the GetResult response to the ExtractMetadata
 // function.
-func Get(c *ktvpcsdk.ServiceClient, containerName string, opts GetOptsBuilder) (r GetResult) {
+func Get(c *gophercloud.ServiceClient, containerName string, opts GetOptsBuilder) (r GetResult) {
 	h := make(map[string]string)
 	if opts != nil {
 		headers, err := opts.ToContainerGetMap()
@@ -241,10 +241,10 @@ func Get(c *ktvpcsdk.ServiceClient, containerName string, opts GetOptsBuilder) (
 			h[k] = v
 		}
 	}
-	resp, err := c.Head(getURL(c, containerName), &ktvpcsdk.RequestOpts{
+	resp, err := c.Head(getURL(c, containerName), &gophercloud.RequestOpts{
 		MoreHeaders: h,
 		OkCodes:     []int{200, 204},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

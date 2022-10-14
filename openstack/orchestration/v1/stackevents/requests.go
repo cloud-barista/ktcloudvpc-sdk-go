@@ -6,9 +6,9 @@ import (
 )
 
 // Find retrieves stack events for the given stack name.
-func Find(c *ktvpcsdk.ServiceClient, stackName string) (r FindResult) {
+func Find(c *gophercloud.ServiceClient, stackName string) (r FindResult) {
 	resp, err := c.Get(findURL(c, stackName), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -98,12 +98,12 @@ type ListOpts struct {
 
 // ToStackEventListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToStackEventListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List makes a request against the API to list resources for the given stack.
-func List(client *ktvpcsdk.ServiceClient, stackName, stackID string, opts ListOptsBuilder) pagination.Pager {
+func List(client *gophercloud.ServiceClient, stackName, stackID string, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client, stackName, stackID)
 	if opts != nil {
 		query, err := opts.ToStackEventListQuery()
@@ -155,12 +155,12 @@ type ListResourceEventsOpts struct {
 
 // ToResourceEventListQuery formats a ListResourceEventsOpts into a query string.
 func (opts ListResourceEventsOpts) ToResourceEventListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // ListResourceEvents makes a request against the API to list resources for the given stack.
-func ListResourceEvents(client *ktvpcsdk.ServiceClient, stackName, stackID, resourceName string, opts ListResourceEventsOptsBuilder) pagination.Pager {
+func ListResourceEvents(client *gophercloud.ServiceClient, stackName, stackID, resourceName string, opts ListResourceEventsOptsBuilder) pagination.Pager {
 	url := listResourceEventsURL(client, stackName, stackID, resourceName)
 	if opts != nil {
 		query, err := opts.ToResourceEventListQuery()
@@ -177,8 +177,8 @@ func ListResourceEvents(client *ktvpcsdk.ServiceClient, stackName, stackID, reso
 }
 
 // Get retreives data for the given stack resource.
-func Get(c *ktvpcsdk.ServiceClient, stackName, stackID, resourceName, eventID string) (r GetResult) {
+func Get(c *gophercloud.ServiceClient, stackName, stackID, resourceName, eventID string) (r GetResult) {
 	resp, err := c.Get(getURL(c, stackName, stackID, resourceName, eventID), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

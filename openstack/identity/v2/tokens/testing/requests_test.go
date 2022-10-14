@@ -9,7 +9,7 @@ import (
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
 )
 
-func tokenPost(t *testing.T, options ktvpcsdk.AuthOptions, requestJSON string) tokens.CreateResult {
+func tokenPost(t *testing.T, options gophercloud.AuthOptions, requestJSON string) tokens.CreateResult {
 	th.SetupHTTP()
 	defer th.TeardownHTTP()
 	HandleTokenPost(t, requestJSON)
@@ -17,7 +17,7 @@ func tokenPost(t *testing.T, options ktvpcsdk.AuthOptions, requestJSON string) t
 	return tokens.Create(client.ServiceClient(), options)
 }
 
-func tokenPostErr(t *testing.T, options ktvpcsdk.AuthOptions, expectedErr error) {
+func tokenPostErr(t *testing.T, options gophercloud.AuthOptions, expectedErr error) {
 	th.SetupHTTP()
 	defer th.TeardownHTTP()
 	HandleTokenPost(t, "")
@@ -27,7 +27,7 @@ func tokenPostErr(t *testing.T, options ktvpcsdk.AuthOptions, expectedErr error)
 }
 
 func TestCreateWithPassword(t *testing.T) {
-	options := ktvpcsdk.AuthOptions{
+	options := gophercloud.AuthOptions{
 		Username: "me",
 		Password: "swordfish",
 	}
@@ -45,7 +45,7 @@ func TestCreateWithPassword(t *testing.T) {
 }
 
 func TestCreateTokenWithTenantID(t *testing.T) {
-	options := ktvpcsdk.AuthOptions{
+	options := gophercloud.AuthOptions{
 		Username: "me",
 		Password: "opensesame",
 		TenantID: "fc394f2ab2df4114bde39905f800dc57",
@@ -65,7 +65,7 @@ func TestCreateTokenWithTenantID(t *testing.T) {
 }
 
 func TestCreateTokenWithTenantName(t *testing.T) {
-	options := ktvpcsdk.AuthOptions{
+	options := gophercloud.AuthOptions{
 		Username:   "me",
 		Password:   "opensesame",
 		TenantName: "demo",
@@ -85,11 +85,11 @@ func TestCreateTokenWithTenantName(t *testing.T) {
 }
 
 func TestRequireUsername(t *testing.T) {
-	options := ktvpcsdk.AuthOptions{
+	options := gophercloud.AuthOptions{
 		Password: "thing",
 	}
 
-	tokenPostErr(t, options, ktvpcsdk.ErrMissingInput{Argument: "Username"})
+	tokenPostErr(t, options, gophercloud.ErrMissingInput{Argument: "Username"})
 }
 
 func tokenGet(t *testing.T, tokenId string) tokens.GetResult {

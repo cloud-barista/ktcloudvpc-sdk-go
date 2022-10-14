@@ -12,7 +12,7 @@ import (
 )
 
 // CreateExecution creates an execution for the given workflow.
-func CreateExecution(t *testing.T, client *ktvpcsdk.ServiceClient, workflow *workflows.Workflow) (*executions.Execution, error) {
+func CreateExecution(t *testing.T, client *gophercloud.ServiceClient, workflow *workflows.Workflow) (*executions.Execution, error) {
 	executionDescription := tools.RandomString("execution_", 5)
 
 	t.Logf("Attempting to create execution: %s", executionDescription)
@@ -58,7 +58,7 @@ func CreateExecution(t *testing.T, client *ktvpcsdk.ServiceClient, workflow *wor
 }
 
 // DeleteExecution deletes an execution.
-func DeleteExecution(t *testing.T, client *ktvpcsdk.ServiceClient, execution *executions.Execution) {
+func DeleteExecution(t *testing.T, client *gophercloud.ServiceClient, execution *executions.Execution) {
 	err := executions.Delete(client, execution.ID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete executions %s: %v", execution.Description, err)
@@ -67,7 +67,7 @@ func DeleteExecution(t *testing.T, client *ktvpcsdk.ServiceClient, execution *ex
 }
 
 // ListExecutions lists the executions.
-func ListExecutions(t *testing.T, client *ktvpcsdk.ServiceClient, opts executions.ListOptsBuilder) ([]executions.Execution, error) {
+func ListExecutions(t *testing.T, client *gophercloud.ServiceClient, opts executions.ListOptsBuilder) ([]executions.Execution, error) {
 	allPages, err := executions.List(client, opts).AllPages()
 	if err != nil {
 		t.Fatalf("Unable to list executions: %v", err)

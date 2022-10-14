@@ -5,9 +5,9 @@ import (
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
 )
 
-func createClient() *ktvpcsdk.ServiceClient {
-	return &ktvpcsdk.ServiceClient{
-		ProviderClient: &ktvpcsdk.ProviderClient{TokenID: "abc123"},
+func createClient() *gophercloud.ServiceClient {
+	return &gophercloud.ServiceClient{
+		ProviderClient: &gophercloud.ProviderClient{TokenID: "abc123"},
 		Endpoint:       testhelper.Endpoint(),
 	}
 }

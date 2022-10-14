@@ -114,34 +114,34 @@ type CreateOpts struct {
 
 // ToConnectionCreateMap casts a CreateOpts struct to a map.
 func (opts CreateOpts) ToConnectionCreateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "ipsec_site_connection")
+	return gophercloud.BuildRequestBody(opts, "ipsec_site_connection")
 }
 
 // Create accepts a CreateOpts struct and uses the values to create a new
 // IPSec site connection.
-func Create(c *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToConnectionCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Post(rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete will permanently delete a particular IPSec site connection based on its
 // unique ID.
-func Delete(c *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := c.Delete(resourceURL(c, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get retrieves a particular IPSec site connection based on its unique ID.
-func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
 	resp, err := c.Get(resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -175,14 +175,14 @@ type ListOpts struct {
 
 // ToConnectionListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToConnectionListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List returns a Pager which allows you to iterate over a collection of
 // IPSec site connections. It accepts a ListOpts struct, which allows you to filter
 // and sort the returned collection for greater efficiency.
-func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := rootURL(c)
 	if opts != nil {
 		query, err := opts.ToConnectionListQuery()
@@ -228,19 +228,19 @@ type UpdateOpts struct {
 
 // ToConnectionUpdateMap casts an UpdateOpts struct to a map.
 func (opts UpdateOpts) ToConnectionUpdateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "ipsec_site_connection")
+	return gophercloud.BuildRequestBody(opts, "ipsec_site_connection")
 }
 
 // Update allows IPSec site connections to be updated.
-func Update(c *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToConnectionUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

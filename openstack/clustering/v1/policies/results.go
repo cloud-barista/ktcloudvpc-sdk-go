@@ -38,7 +38,7 @@ func (r *Policy) UnmarshalJSON(b []byte) error {
 	*r = Policy(s.tmp)
 
 	if s.CreatedAt != "" {
-		r.CreatedAt, err = time.Parse(ktvpcsdk.RFC3339MilliNoZ, s.CreatedAt)
+		r.CreatedAt, err = time.Parse(gophercloud.RFC3339MilliNoZ, s.CreatedAt)
 		if err != nil {
 			r.CreatedAt, err = time.Parse(time.RFC3339, s.CreatedAt)
 			if err != nil {
@@ -48,7 +48,7 @@ func (r *Policy) UnmarshalJSON(b []byte) error {
 	}
 
 	if s.UpdatedAt != "" {
-		r.UpdatedAt, err = time.Parse(ktvpcsdk.RFC3339MilliNoZ, s.UpdatedAt)
+		r.UpdatedAt, err = time.Parse(gophercloud.RFC3339MilliNoZ, s.UpdatedAt)
 		if err != nil {
 			r.UpdatedAt, err = time.Parse(time.RFC3339, s.UpdatedAt)
 			if err != nil {
@@ -109,7 +109,7 @@ func (r Spec) MarshalJSON() ([]byte, error) {
 
 // policyResult is the resposne of a base Policy result.
 type policyResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interpets any policyResult-base result as a Policy.
@@ -149,7 +149,7 @@ type ValidateResult struct {
 // DeleteResult is the result of a Delete operation. Call its Extract
 // method to interpret it as a DeleteHeader.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // PolicyPage contains a list page of all policies from a List call.

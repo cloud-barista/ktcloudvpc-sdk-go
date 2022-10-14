@@ -7,7 +7,7 @@ import (
 
 // GetResult temporarily holds the response from a Get call.
 type GetResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract provides access to the individual Flavor returned by the Get function.
@@ -32,7 +32,7 @@ type Flavor struct {
 	Name string `json:"name"`
 
 	// Links to access the flavor.
-	Links []ktvpcsdk.Link
+	Links []gophercloud.Link
 
 	// The flavor's unique identifier as a string
 	StrID string `json:"str_id"`
@@ -52,13 +52,13 @@ func (page FlavorPage) IsEmpty() (bool, error) {
 // NextPageURL uses the response's embedded link reference to navigate to the next page of results.
 func (page FlavorPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []ktvpcsdk.Link `json:"flavors_links"`
+		Links []gophercloud.Link `json:"flavors_links"`
 	}
 	err := page.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return ktvpcsdk.ExtractNextURL(s.Links)
+	return gophercloud.ExtractNextURL(s.Links)
 }
 
 // ExtractFlavors provides access to the list of flavors in a page acquired from the List operation.

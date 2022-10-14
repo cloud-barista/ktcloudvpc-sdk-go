@@ -19,7 +19,7 @@ import (
 
 // CreateEmptyImage will create an image, but with no actual image data.
 // An error will be returned if an image was unable to be created.
-func CreateEmptyImage(t *testing.T, client *ktvpcsdk.ServiceClient) (*images.Image, error) {
+func CreateEmptyImage(t *testing.T, client *gophercloud.ServiceClient) (*images.Image, error) {
 	var image *images.Image
 
 	name := tools.RandomString("ACPTTEST", 16)
@@ -61,7 +61,7 @@ func CreateEmptyImage(t *testing.T, client *ktvpcsdk.ServiceClient) (*images.Ima
 // DeleteImage deletes an image.
 // A fatal error will occur if the image failed to delete. This works best when
 // used as a deferred function.
-func DeleteImage(t *testing.T, client *ktvpcsdk.ServiceClient, image *images.Image) {
+func DeleteImage(t *testing.T, client *gophercloud.ServiceClient, image *images.Image) {
 	err := images.Delete(client, image.ID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete image %s: %v", image.ID, err)
@@ -75,7 +75,7 @@ const ImportImageURL = "http://download.cirros-cloud.net/0.4.0/cirros-0.4.0-x86_
 
 // CreateTask will create a task to import the CirrOS image.
 // An error will be returned if a task couldn't be created.
-func CreateTask(t *testing.T, client *ktvpcsdk.ServiceClient, imageURL string) (*tasks.Task, error) {
+func CreateTask(t *testing.T, client *gophercloud.ServiceClient, imageURL string) (*tasks.Task, error) {
 	t.Logf("Attempting to create an Imageservice import task with image: %s", imageURL)
 	opts := tasks.CreateOpts{
 		Type: "import",
@@ -102,7 +102,7 @@ func CreateTask(t *testing.T, client *ktvpcsdk.ServiceClient, imageURL string) (
 }
 
 // GetImportInfo will retrieve Import API information.
-func GetImportInfo(t *testing.T, client *ktvpcsdk.ServiceClient) (*imageimport.ImportInfo, error) {
+func GetImportInfo(t *testing.T, client *gophercloud.ServiceClient) (*imageimport.ImportInfo, error) {
 	t.Log("Attempting to get the Imageservice Import API information")
 	importInfo, err := imageimport.Get(client).Extract()
 	if err != nil {
@@ -113,7 +113,7 @@ func GetImportInfo(t *testing.T, client *ktvpcsdk.ServiceClient) (*imageimport.I
 }
 
 // StageImage will stage local image file to the referenced remote queued image.
-func StageImage(t *testing.T, client *ktvpcsdk.ServiceClient, filepath, imageID string) error {
+func StageImage(t *testing.T, client *gophercloud.ServiceClient, filepath, imageID string) error {
 	imageData, err := os.Open(filepath)
 	if err != nil {
 		return err
@@ -159,7 +159,7 @@ func DeleteImageFile(t *testing.T, filepath string) {
 }
 
 // ImportImage will import image data from the remote source to the Imageservice.
-func ImportImage(t *testing.T, client *ktvpcsdk.ServiceClient, imageID string) error {
+func ImportImage(t *testing.T, client *gophercloud.ServiceClient, imageID string) error {
 	importOpts := imageimport.CreateOpts{
 		Name: imageimport.WebDownloadMethod,
 		URI:  ImportImageURL,

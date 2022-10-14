@@ -6,7 +6,7 @@ import (
 )
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 func (r commonResult) Extract() (*RuleType, error) {

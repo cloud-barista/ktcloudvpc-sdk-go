@@ -15,10 +15,10 @@ type ListOpts struct {
 }
 
 // List enumerates the Tenants to which the current token has access.
-func List(client *ktvpcsdk.ServiceClient, opts *ListOpts) pagination.Pager {
+func List(client *gophercloud.ServiceClient, opts *ListOpts) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
-		q, err := ktvpcsdk.BuildQueryString(opts)
+		q, err := gophercloud.BuildQueryString(opts)
 		if err != nil {
 			return pagination.Pager{Err: err}
 		}
@@ -50,27 +50,27 @@ type CreateOptsBuilder interface {
 // ToTenantCreateMap assembles a request body based on the contents of
 // a CreateOpts.
 func (opts CreateOpts) ToTenantCreateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "tenant")
+	return gophercloud.BuildRequestBody(opts, "tenant")
 }
 
 // Create is the operation responsible for creating new tenant.
-func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToTenantCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200, 201},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get requests details on a single tenant by ID.
-func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
 	resp, err := client.Get(getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -95,26 +95,26 @@ type UpdateOpts struct {
 
 // ToTenantUpdateMap formats an UpdateOpts structure into a request body.
 func (opts UpdateOpts) ToTenantUpdateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "tenant")
+	return gophercloud.BuildRequestBody(opts, "tenant")
 }
 
 // Update is the operation responsible for updating exist tenants by their TenantID.
-func Update(client *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToTenantUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Put(updateURL(client, id), &b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Put(updateURL(client, id), &b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete is the operation responsible for permanently deleting a tenant.
-func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

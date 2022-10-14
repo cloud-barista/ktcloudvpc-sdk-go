@@ -54,8 +54,8 @@ func (r *Order) UnmarshalJSON(b []byte) error {
 	type tmp Order
 	var s struct {
 		tmp
-		Created ktvpcsdk.JSONRFC3339NoZ `json:"created"`
-		Updated ktvpcsdk.JSONRFC3339NoZ `json:"updated"`
+		Created gophercloud.JSONRFC3339NoZ `json:"created"`
+		Updated gophercloud.JSONRFC3339NoZ `json:"updated"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -93,7 +93,7 @@ func (r *Meta) UnmarshalJSON(b []byte) error {
 	type tmp Meta
 	var s struct {
 		tmp
-		Expiration ktvpcsdk.JSONRFC3339NoZ `json:"expiration"`
+		Expiration gophercloud.JSONRFC3339NoZ `json:"expiration"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -107,7 +107,7 @@ func (r *Meta) UnmarshalJSON(b []byte) error {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // GetResult is the response from a Get operation. Call its Extract method
@@ -125,7 +125,7 @@ type CreateResult struct {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr to
 // determine if the request succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // OrderPage is a single page of orders results.

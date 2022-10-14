@@ -32,8 +32,8 @@ type ListOpts struct {
 //
 // Default policy settings return only those pools that are owned by the
 // tenant who submits the request, unless an admin user submits the request.
-func List(c *ktvpcsdk.ServiceClient, opts ListOpts) pagination.Pager {
-	q, err := ktvpcsdk.BuildQueryString(&opts)
+func List(c *gophercloud.ServiceClient, opts ListOpts) pagination.Pager {
+	q, err := gophercloud.BuildQueryString(&opts)
 	if err != nil {
 		return pagination.Pager{Err: err}
 	}
@@ -93,26 +93,26 @@ type CreateOpts struct {
 
 // ToLBPoolCreateMap builds a request body based on CreateOpts.
 func (opts CreateOpts) ToLBPoolCreateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "pool")
+	return gophercloud.BuildRequestBody(opts, "pool")
 }
 
 // Create accepts a CreateOptsBuilder and uses the values to create a new
 // load balancer pool.
-func Create(c *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToLBPoolCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Post(rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get retrieves a particular pool based on its unique ID.
-func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
 	resp, err := c.Get(resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -135,27 +135,27 @@ type UpdateOpts struct {
 
 // ToLBPoolUpdateMap builds a request body based on UpdateOpts.
 func (opts UpdateOpts) ToLBPoolUpdateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "pool")
+	return gophercloud.BuildRequestBody(opts, "pool")
 }
 
 // Update allows pools to be updated.
-func Update(c *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToLBPoolUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete will permanently delete a particular pool based on its unique ID.
-func Delete(c *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := c.Delete(resourceURL(c, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -164,18 +164,18 @@ func Delete(c *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
 // pool and will deactivate these members if they are deemed unhealthy. A
 // member can be deactivated (status set to INACTIVE) if any of health monitors
 // finds it unhealthy.
-func AssociateMonitor(c *ktvpcsdk.ServiceClient, poolID, monitorID string) (r AssociateResult) {
+func AssociateMonitor(c *gophercloud.ServiceClient, poolID, monitorID string) (r AssociateResult) {
 	b := map[string]interface{}{"health_monitor": map[string]string{"id": monitorID}}
 	resp, err := c.Post(associateURL(c, poolID), b, &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // DisassociateMonitor will disassociate a health monitor with a particular
 // pool. When dissociation is successful, the health monitor will no longer
 // check for the health of the members of the pool.
-func DisassociateMonitor(c *ktvpcsdk.ServiceClient, poolID, monitorID string) (r AssociateResult) {
+func DisassociateMonitor(c *gophercloud.ServiceClient, poolID, monitorID string) (r AssociateResult) {
 	resp, err := c.Delete(disassociateURL(c, poolID, monitorID), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

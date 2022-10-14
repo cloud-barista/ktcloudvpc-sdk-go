@@ -7,26 +7,26 @@ const (
 	apiName    = "policies"
 )
 
-func policyListURL(client *ktvpcsdk.ServiceClient) string {
+func policyListURL(client *gophercloud.ServiceClient) string {
 	return client.ServiceURL(apiVersion, apiName)
 }
 
-func policyCreateURL(client *ktvpcsdk.ServiceClient) string {
+func policyCreateURL(client *gophercloud.ServiceClient) string {
 	return client.ServiceURL(apiVersion, apiName)
 }
 
-func policyDeleteURL(client *ktvpcsdk.ServiceClient, policyID string) string {
+func policyDeleteURL(client *gophercloud.ServiceClient, policyID string) string {
 	return client.ServiceURL(apiVersion, apiName, policyID)
 }
 
-func policyGetURL(client *ktvpcsdk.ServiceClient, policyID string) string {
+func policyGetURL(client *gophercloud.ServiceClient, policyID string) string {
 	return client.ServiceURL(apiVersion, apiName, policyID)
 }
 
-func updateURL(client *ktvpcsdk.ServiceClient, policyID string) string {
+func updateURL(client *gophercloud.ServiceClient, policyID string) string {
 	return client.ServiceURL(apiVersion, apiName, policyID)
 }
 
-func validateURL(client *ktvpcsdk.ServiceClient) string {
+func validateURL(client *gophercloud.ServiceClient) string {
 	return client.ServiceURL(apiVersion, apiName, "validate")
 }

@@ -46,7 +46,7 @@ type CreateOpts struct {
 
 // ToCronTriggerCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToCronTriggerCreateMap() (map[string]interface{}, error) {
-	b, err := ktvpcsdk.BuildRequestBody(opts, "")
+	b, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -59,7 +59,7 @@ func (opts CreateOpts) ToCronTriggerCreateMap() (map[string]interface{}, error) 
 }
 
 // Create requests the creation of a new cron trigger.
-func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToCronTriggerCreateMap()
 	if err != nil {
 		r.Err = err
@@ -67,22 +67,22 @@ func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateRes
 	}
 
 	resp, err := client.Post(createURL(client), b, &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes the specified cron trigger.
-func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get retrieves details of a single cron trigger.
 // Use Extract to convert its result into an CronTrigger.
-func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
 	resp, err := client.Get(getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -157,7 +157,7 @@ type ListDateFilter struct {
 }
 
 func (l ListDateFilter) String() string {
-	v := l.Value.Format(ktvpcsdk.RFC3339ZNoTNoZ)
+	v := l.Value.Format(gophercloud.RFC3339ZNoTNoZ)
 	if l.Filter != "" {
 		return fmt.Sprintf("%s:%s", l.Filter, v)
 	}
@@ -205,7 +205,7 @@ const (
 
 // ToCronTriggerListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToCronTriggerListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	if err != nil {
 		return "", err
 	}
@@ -241,7 +241,7 @@ func (opts ListOpts) ToCronTriggerListQuery() (string, error) {
 
 // List performs a call to list cron triggers.
 // You may provide options to filter the results.
-func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToCronTriggerListQuery()

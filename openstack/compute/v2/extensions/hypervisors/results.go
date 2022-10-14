@@ -249,7 +249,7 @@ func ExtractHypervisors(p pagination.Page) ([]Hypervisor, error) {
 }
 
 type HypervisorResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets any HypervisorResult as a Hypervisor, if possible.
@@ -302,7 +302,7 @@ type Statistics struct {
 }
 
 type StatisticsResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets any StatisticsResult as a Statistics, if possible.
@@ -364,7 +364,7 @@ func (r *Uptime) UnmarshalJSON(b []byte) error {
 }
 
 type UptimeResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets any UptimeResult as a Uptime, if possible.

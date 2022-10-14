@@ -86,5 +86,5 @@ func (r GetResult) Extract() (*Limits, error) {
 // GetResult is the response from a Get operation. Call its Extract
 // method to interpret it as an Absolute.
 type GetResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }

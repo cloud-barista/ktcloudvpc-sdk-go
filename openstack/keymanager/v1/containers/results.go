@@ -42,8 +42,8 @@ func (r *Container) UnmarshalJSON(b []byte) error {
 	type tmp Container
 	var s struct {
 		tmp
-		Created ktvpcsdk.JSONRFC3339NoZ `json:"created"`
-		Updated ktvpcsdk.JSONRFC3339NoZ `json:"updated"`
+		Created gophercloud.JSONRFC3339NoZ `json:"created"`
+		Updated gophercloud.JSONRFC3339NoZ `json:"updated"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -73,7 +73,7 @@ type SecretRef struct {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets any commonResult as a Container.
@@ -98,7 +98,7 @@ type CreateResult struct {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr to
 // determine if the request succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // ContainerPage is a single page of container results.
@@ -157,8 +157,8 @@ func (r *Consumer) UnmarshalJSON(b []byte) error {
 	type tmp Consumer
 	var s struct {
 		tmp
-		Created ktvpcsdk.JSONRFC3339NoZ `json:"created"`
-		Updated ktvpcsdk.JSONRFC3339NoZ `json:"updated"`
+		Created gophercloud.JSONRFC3339NoZ `json:"created"`
+		Updated gophercloud.JSONRFC3339NoZ `json:"updated"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -173,7 +173,7 @@ func (r *Consumer) UnmarshalJSON(b []byte) error {
 }
 
 type consumerResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets any consumerResult as a Consumer.
@@ -247,5 +247,5 @@ type CreateSecretRefResult struct {
 
 // DeleteSecretRefResult is the response from a DeleteSecretRef operation.
 type DeleteSecretRefResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

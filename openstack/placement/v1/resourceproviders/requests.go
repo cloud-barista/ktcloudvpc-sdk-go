@@ -38,12 +38,12 @@ type ListOpts struct {
 
 // ToResourceProviderListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToResourceProviderListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List makes a request against the API to list resource providers.
-func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := resourceProvidersListURL(client)
 
 	if opts != nil {
@@ -76,7 +76,7 @@ type CreateOpts struct {
 
 // ToResourceProviderCreateMap constructs a request body from CreateOpts.
 func (opts CreateOpts) ToResourceProviderCreateMap() (map[string]interface{}, error) {
-	b, err := ktvpcsdk.BuildRequestBody(opts, "")
+	b, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
@@ -85,31 +85,31 @@ func (opts CreateOpts) ToResourceProviderCreateMap() (map[string]interface{}, er
 }
 
 // Create makes a request against the API to create a resource provider
-func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToResourceProviderCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Post(resourceProvidersListURL(client), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(resourceProvidersListURL(client), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete accepts a unique ID and deletes the resource provider associated with it.
-func Delete(c *ktvpcsdk.ServiceClient, resourceProviderID string) (r DeleteResult) {
+func Delete(c *gophercloud.ServiceClient, resourceProviderID string) (r DeleteResult) {
 	resp, err := c.Delete(deleteURL(c, resourceProviderID), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get retrieves a specific resource provider based on its unique ID.
-func Get(c *ktvpcsdk.ServiceClient, resourceProviderID string) (r GetResult) {
+func Get(c *gophercloud.ServiceClient, resourceProviderID string) (r GetResult) {
 	resp, err := c.Get(getURL(c, resourceProviderID), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -132,44 +132,44 @@ type UpdateOpts struct {
 
 // ToResourceProviderUpdateMap constructs a request body from UpdateOpts.
 func (opts UpdateOpts) ToResourceProviderUpdateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "")
+	return gophercloud.BuildRequestBody(opts, "")
 }
 
 // Update makes a request against the API to create a resource provider
-func Update(client *ktvpcsdk.ServiceClient, resourceProviderID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *gophercloud.ServiceClient, resourceProviderID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToResourceProviderUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Put(updateURL(client, resourceProviderID), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Put(updateURL(client, resourceProviderID), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
-func GetUsages(client *ktvpcsdk.ServiceClient, resourceProviderID string) (r GetUsagesResult) {
+func GetUsages(client *gophercloud.ServiceClient, resourceProviderID string) (r GetUsagesResult) {
 	resp, err := client.Get(getResourceProviderUsagesURL(client, resourceProviderID), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
-func GetInventories(client *ktvpcsdk.ServiceClient, resourceProviderID string) (r GetInventoriesResult) {
+func GetInventories(client *gophercloud.ServiceClient, resourceProviderID string) (r GetInventoriesResult) {
 	resp, err := client.Get(getResourceProviderInventoriesURL(client, resourceProviderID), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
-func GetAllocations(client *ktvpcsdk.ServiceClient, resourceProviderID string) (r GetAllocationsResult) {
+func GetAllocations(client *gophercloud.ServiceClient, resourceProviderID string) (r GetAllocationsResult) {
 	resp, err := client.Get(getResourceProviderAllocationsURL(client, resourceProviderID), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
-func GetTraits(client *ktvpcsdk.ServiceClient, resourceProviderID string) (r GetTraitsResult) {
+func GetTraits(client *gophercloud.ServiceClient, resourceProviderID string) (r GetTraitsResult) {
 	resp, err := client.Get(getResourceProviderTraitsURL(client, resourceProviderID), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

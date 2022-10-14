@@ -46,7 +46,7 @@ func (r *Service) UnmarshalJSON(b []byte) error {
 	var s struct {
 		tmp
 		ID        interface{}                     `json:"id"`
-		UpdatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"updated_at"`
+		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -73,7 +73,7 @@ func (r *Service) UnmarshalJSON(b []byte) error {
 }
 
 type serviceResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets any UpdateResult as a service, if possible.
@@ -113,5 +113,5 @@ func ExtractServices(r pagination.Page) ([]Service, error) {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

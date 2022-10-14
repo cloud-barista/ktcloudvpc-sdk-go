@@ -44,5 +44,5 @@ func ExtractRoles(r pagination.Page) ([]Role, error) {
 // a DeleteUserRole operation. Call its ExtractErr method to determine
 // if the request succeeded or failed.
 type UserRoleResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

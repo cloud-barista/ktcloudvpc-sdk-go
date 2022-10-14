@@ -6,7 +6,7 @@ import (
 )
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract is a function that accepts a result and extracts a subnet resource.
@@ -39,7 +39,7 @@ type UpdateResult struct {
 // DeleteResult represents the result of a delete operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // AllocationPool represents a sub-range of cidr available for dynamic
@@ -114,13 +114,13 @@ type SubnetPage struct {
 // to do this, it needs to construct the next page's URL.
 func (r SubnetPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []ktvpcsdk.Link `json:"subnets_links"`
+		Links []gophercloud.Link `json:"subnets_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return ktvpcsdk.ExtractNextURL(s.Links)
+	return gophercloud.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether a SubnetPage struct is empty.

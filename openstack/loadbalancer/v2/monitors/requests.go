@@ -42,7 +42,7 @@ type ListOpts struct {
 
 // ToMonitorListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToMonitorListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	if err != nil {
 		return "", err
 	}
@@ -55,7 +55,7 @@ func (opts ListOpts) ToMonitorListQuery() (string, error) {
 //
 // Default policy settings return only those health monitors that are owned by the
 // tenant who submits the request, unless an admin user submits the request.
-func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := rootURL(c)
 	if opts != nil {
 		query, err := opts.ToMonitorListQuery()
@@ -145,7 +145,7 @@ type CreateOpts struct {
 
 // ToMonitorCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToMonitorCreateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "healthmonitor")
+	return gophercloud.BuildRequestBody(opts, "healthmonitor")
 }
 
 /*
@@ -163,21 +163,21 @@ func (opts CreateOpts) ToMonitorCreateMap() (map[string]interface{}, error) {
  CreateOpts{Type: TypeHTTP, Delay: 20, Timeout: 10, MaxRetries: 3,
  HttpMethod: "HEAD", ExpectedCodes: "200", PoolID: "2c946bfc-1804-43ab-a2ff-58f6a762b505"}
 */
-func Create(c *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToMonitorCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Post(rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get retrieves a particular Health Monitor based on its unique ID.
-func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
 	resp, err := c.Get(resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -228,28 +228,28 @@ type UpdateOpts struct {
 
 // ToMonitorUpdateMap builds a request body from UpdateOpts.
 func (opts UpdateOpts) ToMonitorUpdateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "healthmonitor")
+	return gophercloud.BuildRequestBody(opts, "healthmonitor")
 }
 
 // Update is an operation which modifies the attributes of the specified
 // Monitor.
-func Update(c *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToMonitorUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200, 202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete will permanently delete a particular Monitor based on its unique ID.
-func Delete(c *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := c.Delete(resourceURL(c, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

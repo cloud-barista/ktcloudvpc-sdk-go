@@ -7,12 +7,12 @@ import (
 
 // commonResult is the response of a base result.
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // CreateResult is the response of a Create operations.
 type CreateResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // MessagePage contains a single page of all clusters from a ListDetails call.
@@ -23,22 +23,22 @@ type MessagePage struct {
 // DeleteResult is the result from a Delete operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // CreateResult is the response of a Create operations.
 type PopResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // GetMessagesResult is the response of a GetMessages operations.
 type GetMessagesResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // GetResult is the response of a Get operations.
 type GetResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Message represents a message on a queue.
@@ -117,14 +117,14 @@ func (r MessagePage) IsEmpty() (bool, error) {
 // next page of results.
 func (r MessagePage) NextPageURL() (string, error) {
 	var s struct {
-		Links []ktvpcsdk.Link `json:"links"`
+		Links []gophercloud.Link `json:"links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
 
-	next, err := ktvpcsdk.ExtractNextURL(s.Links)
+	next, err := gophercloud.ExtractNextURL(s.Links)
 	if err != nil {
 		return "", err
 	}

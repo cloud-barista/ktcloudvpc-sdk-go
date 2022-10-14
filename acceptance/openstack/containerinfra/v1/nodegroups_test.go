@@ -61,7 +61,7 @@ func TestNodeGroupsCRUD(t *testing.T) {
 	t.Run("delete", func(t *testing.T) { testNodeGroupDelete(t, client, clusterID, nodeGroupID) })
 }
 
-func testNodeGroupsList(t *testing.T, client *ktvpcsdk.ServiceClient, clusterID string) {
+func testNodeGroupsList(t *testing.T, client *gophercloud.ServiceClient, clusterID string) {
 	allPages, err := nodegroups.List(client, clusterID, nil).AllPages()
 	th.AssertNoErr(t, err)
 
@@ -72,7 +72,7 @@ func testNodeGroupsList(t *testing.T, client *ktvpcsdk.ServiceClient, clusterID 
 	th.AssertEquals(t, 2, len(allNodeGroups))
 }
 
-func testNodeGroupGet(t *testing.T, client *ktvpcsdk.ServiceClient, clusterID string) {
+func testNodeGroupGet(t *testing.T, client *gophercloud.ServiceClient, clusterID string) {
 	listOpts := nodegroups.ListOpts{
 		Role: "worker",
 	}
@@ -95,7 +95,7 @@ func testNodeGroupGet(t *testing.T, client *ktvpcsdk.ServiceClient, clusterID st
 	th.AssertEquals(t, "worker", ng.Role)
 }
 
-func testNodeGroupCreate(t *testing.T, client *ktvpcsdk.ServiceClient, clusterID string) string {
+func testNodeGroupCreate(t *testing.T, client *gophercloud.ServiceClient, clusterID string) string {
 	name := tools.RandomString("test-ng-", 8)
 
 	// have to create two nodes for the Update test (can't set minimum above actual node count)
@@ -112,7 +112,7 @@ func testNodeGroupCreate(t *testing.T, client *ktvpcsdk.ServiceClient, clusterID
 	return ng.UUID
 }
 
-func testNodeGroupUpdate(t *testing.T, client *ktvpcsdk.ServiceClient, clusterID, nodeGroupID string) {
+func testNodeGroupUpdate(t *testing.T, client *gophercloud.ServiceClient, clusterID, nodeGroupID string) {
 	// Node group starts with min=1, max=unset
 	// Set min, then set max, then set both
 
@@ -158,14 +158,14 @@ func testNodeGroupUpdate(t *testing.T, client *ktvpcsdk.ServiceClient, clusterID
 	th.AssertEquals(t, 3, *ng.MaxNodeCount)
 }
 
-func testNodeGroupDelete(t *testing.T, client *ktvpcsdk.ServiceClient, clusterID, nodeGroupID string) {
+func testNodeGroupDelete(t *testing.T, client *gophercloud.ServiceClient, clusterID, nodeGroupID string) {
 	err := nodegroups.Delete(client, clusterID, nodeGroupID).ExtractErr()
 	th.AssertNoErr(t, err)
 
 	// Wait for the node group to be deleted
 	err = tools.WaitFor(func() (bool, error) {
 		_, err := nodegroups.Get(client, clusterID, nodeGroupID).Extract()
-		if _, ok := err.(ktvpcsdk.ErrDefault404); ok {
+		if _, ok := err.(gophercloud.ErrDefault404); ok {
 			return true, nil
 		}
 		return false, nil

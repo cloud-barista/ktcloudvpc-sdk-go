@@ -8,7 +8,7 @@ import (
 const jroot = "bgp_peer"
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract is a function that accepts a result and extracts a bgp peer resource.
@@ -86,7 +86,7 @@ type CreateResult struct {
 // DeleteResult represents the result of a delete operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // UpdateResult represents the result of an update operation. Call its Extract

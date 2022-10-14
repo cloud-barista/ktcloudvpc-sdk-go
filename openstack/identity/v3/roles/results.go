@@ -48,7 +48,7 @@ func (r *Role) UnmarshalJSON(b []byte) error {
 			return err
 		}
 		if resultMap, ok := result.(map[string]interface{}); ok {
-			r.Extra = ktvpcsdk.RemainingKeys(Role{}, resultMap)
+			r.Extra = gophercloud.RemainingKeys(Role{}, resultMap)
 		}
 	}
 
@@ -56,7 +56,7 @@ func (r *Role) UnmarshalJSON(b []byte) error {
 }
 
 type roleResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // GetResult is the response from a Get operation. Call its Extract method
@@ -80,7 +80,7 @@ type UpdateResult struct {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr to
 // determine if the request succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // RolePage is a single page of Role results.
@@ -211,11 +211,11 @@ func ExtractRoleAssignments(r pagination.Page) ([]RoleAssignment, error) {
 // AssignmentResult represents the result of an assign operation.
 // Call ExtractErr method to determine if the request succeeded or failed.
 type AssignmentResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // UnassignmentResult represents the result of an unassign operation.
 // Call ExtractErr method to determine if the request succeeded or failed.
 type UnassignmentResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

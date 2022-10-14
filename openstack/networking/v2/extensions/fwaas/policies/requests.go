@@ -32,7 +32,7 @@ type ListOpts struct {
 
 // ToPolicyListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToPolicyListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
@@ -42,7 +42,7 @@ func (opts ListOpts) ToPolicyListQuery() (string, error) {
 //
 // Default policy settings return only those firewall policies that are owned by
 // the tenant who submits the request, unless an admin user submits the request.
-func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := rootURL(c)
 	if opts != nil {
 		query, err := opts.ToPolicyListQuery()
@@ -78,26 +78,26 @@ type CreateOpts struct {
 
 // ToFirewallPolicyCreateMap casts a CreateOpts struct to a map.
 func (opts CreateOpts) ToFirewallPolicyCreateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "firewall_policy")
+	return gophercloud.BuildRequestBody(opts, "firewall_policy")
 }
 
 // Create accepts a CreateOpts struct and uses the values to create a new
 // firewall policy.
-func Create(c *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToFirewallPolicyCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Post(rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get retrieves a particular firewall policy based on its unique ID.
-func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
 	resp, err := c.Get(resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -118,28 +118,28 @@ type UpdateOpts struct {
 
 // ToFirewallPolicyUpdateMap casts a CreateOpts struct to a map.
 func (opts UpdateOpts) ToFirewallPolicyUpdateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "firewall_policy")
+	return gophercloud.BuildRequestBody(opts, "firewall_policy")
 }
 
 // Update allows firewall policies to be updated.
-func Update(c *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToFirewallPolicyUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete will permanently delete a particular firewall policy based on its
 // unique ID.
-func Delete(c *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := c.Delete(resourceURL(c, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -157,29 +157,29 @@ type InsertRuleOpts struct {
 }
 
 func (opts InsertRuleOpts) ToFirewallPolicyInsertRuleMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "")
+	return gophercloud.BuildRequestBody(opts, "")
 }
 
 // AddRule will add a rule to a policy.
-func AddRule(c *ktvpcsdk.ServiceClient, id string, opts InsertRuleOptsBuilder) (r InsertRuleResult) {
+func AddRule(c *gophercloud.ServiceClient, id string, opts InsertRuleOptsBuilder) (r InsertRuleResult) {
 	b, err := opts.ToFirewallPolicyInsertRuleMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(insertURL(c, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := c.Put(insertURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // RemoveRule will add a rule to a policy.
-func RemoveRule(c *ktvpcsdk.ServiceClient, id, ruleID string) (r RemoveRuleResult) {
+func RemoveRule(c *gophercloud.ServiceClient, id, ruleID string) (r RemoveRuleResult) {
 	b := map[string]interface{}{"firewall_rule_id": ruleID}
-	resp, err := c.Put(removeURL(c, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := c.Put(removeURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

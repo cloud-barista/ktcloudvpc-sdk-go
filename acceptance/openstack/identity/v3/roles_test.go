@@ -307,7 +307,7 @@ func TestRoleListAssignmentForUserOnDomain(t *testing.T) {
 	th.AssertNoErr(t, err)
 
 	domain, err := CreateDomain(t, client, &domains.CreateOpts{
-		Enabled: ktvpcsdk.Disabled,
+		Enabled: gophercloud.Disabled,
 	})
 	th.AssertNoErr(t, err)
 	defer DeleteDomain(t, client, domain.ID)
@@ -437,7 +437,7 @@ func TestRoleListAssignmentForGroupOnDomain(t *testing.T) {
 	th.AssertNoErr(t, err)
 
 	domain, err := CreateDomain(t, client, &domains.CreateOpts{
-		Enabled: ktvpcsdk.Disabled,
+		Enabled: gophercloud.Disabled,
 	})
 	th.AssertNoErr(t, err)
 	defer DeleteDomain(t, client, domain.ID)
@@ -575,7 +575,7 @@ func TestRolesAssignToUserOnDomain(t *testing.T) {
 	th.AssertNoErr(t, err)
 
 	domain, err := CreateDomain(t, client, &domains.CreateOpts{
-		Enabled: ktvpcsdk.Disabled,
+		Enabled: gophercloud.Disabled,
 	})
 	th.AssertNoErr(t, err)
 	defer DeleteDomain(t, client, domain.ID)
@@ -648,7 +648,7 @@ func TestRolesAssignToGroupOnDomain(t *testing.T) {
 	th.AssertNoErr(t, err)
 
 	domain, err := CreateDomain(t, client, &domains.CreateOpts{
-		Enabled: ktvpcsdk.Disabled,
+		Enabled: gophercloud.Disabled,
 	})
 	th.AssertNoErr(t, err)
 	defer DeleteDomain(t, client, domain.ID)

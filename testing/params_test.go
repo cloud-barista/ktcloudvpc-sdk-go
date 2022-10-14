@@ -13,24 +13,24 @@ import (
 func TestMaybeString(t *testing.T) {
 	testString := ""
 	var expected *string
-	actual := ktvpcsdk.MaybeString(testString)
+	actual := gophercloud.MaybeString(testString)
 	th.CheckDeepEquals(t, expected, actual)
 
 	testString = "carol"
 	expected = &testString
-	actual = ktvpcsdk.MaybeString(testString)
+	actual = gophercloud.MaybeString(testString)
 	th.CheckDeepEquals(t, expected, actual)
 }
 
 func TestMaybeInt(t *testing.T) {
 	testInt := 0
 	var expected *int
-	actual := ktvpcsdk.MaybeInt(testInt)
+	actual := gophercloud.MaybeInt(testInt)
 	th.CheckDeepEquals(t, expected, actual)
 
 	testInt = 4
 	expected = &testInt
-	actual = ktvpcsdk.MaybeInt(testInt)
+	actual = gophercloud.MaybeInt(testInt)
 	th.CheckDeepEquals(t, expected, actual)
 }
 
@@ -57,7 +57,7 @@ func TestBuildQueryString(t *testing.T) {
 		M:  map[string]string{"k1": "success1"},
 	}
 	expected := &url.URL{RawQuery: "c=true&f=false&j=2&m=%7B%27k1%27%3A%27success1%27%7D&r=red&s=one&s=two&s=three&ti=1&ti=2&ts=a&ts=b"}
-	actual, err := ktvpcsdk.BuildQueryString(&opts)
+	actual, err := gophercloud.BuildQueryString(&opts)
 	if err != nil {
 		t.Errorf("Error building query string: %v", err)
 	}
@@ -76,13 +76,13 @@ func TestBuildQueryString(t *testing.T) {
 		J: 2,
 		C: true,
 	}
-	_, err = ktvpcsdk.BuildQueryString(&opts)
+	_, err = gophercloud.BuildQueryString(&opts)
 	if err == nil {
 		t.Errorf("Expected error: 'Required field not set'")
 	}
 	th.CheckDeepEquals(t, expected, actual)
 
-	_, err = ktvpcsdk.BuildQueryString(map[string]interface{}{"Number": 4})
+	_, err = gophercloud.BuildQueryString(map[string]interface{}{"Number": 4})
 	if err == nil {
 		t.Errorf("Expected error: 'Options type is not a struct'")
 	}
@@ -101,17 +101,17 @@ func TestBuildHeaders(t *testing.T) {
 		Style:         true,
 	}
 	expected := map[string]string{"Accept": "application/json", "Number": "4", "Style": "true", "Content-Length": "256"}
-	actual, err := ktvpcsdk.BuildHeaders(&testStruct)
+	actual, err := gophercloud.BuildHeaders(&testStruct)
 	th.CheckNoErr(t, err)
 	th.CheckDeepEquals(t, expected, actual)
 
 	testStruct.Num = 0
-	_, err = ktvpcsdk.BuildHeaders(&testStruct)
+	_, err = gophercloud.BuildHeaders(&testStruct)
 	if err == nil {
 		t.Errorf("Expected error: 'Required header not set'")
 	}
 
-	_, err = ktvpcsdk.BuildHeaders(map[string]interface{}{"Number": 4})
+	_, err = gophercloud.BuildHeaders(map[string]interface{}{"Number": 4})
 	if err == nil {
 		t.Errorf("Expected error: 'Options type is not a struct'")
 	}
@@ -125,7 +125,7 @@ func TestQueriesAreEscaped(t *testing.T) {
 
 	expected := &url.URL{RawQuery: "else=Triangl+e&something=blah%2B%3F%21%21foo"}
 
-	actual, err := ktvpcsdk.BuildQueryString(foo{Name: "blah+?!!foo", Shape: "Triangl e"})
+	actual, err := gophercloud.BuildQueryString(foo{Name: "blah+?!!foo", Shape: "Triangl e"})
 	th.AssertNoErr(t, err)
 
 	th.AssertDeepEquals(t, expected, actual)
@@ -147,7 +147,7 @@ func TestBuildRequestBody(t *testing.T) {
 		F2     int `json:"f2,omitempty" or:"F1"`
 	}
 
-	// AuthOptions wraps a ktvpcsdk AuthOptions in order to adhere to the AuthOptionsBuilder
+	// AuthOptions wraps a gophercloud AuthOptions in order to adhere to the AuthOptionsBuilder
 	// interface.
 	type AuthOptions struct {
 		PasswordCredentials *PasswordCredentials `json:"passwordCredentials,omitempty" xor:"TokenCredentials"`
@@ -203,7 +203,7 @@ func TestBuildRequestBody(t *testing.T) {
 	}
 
 	for _, successCase := range successCases {
-		actual, err := ktvpcsdk.BuildRequestBody(successCase.opts, "auth")
+		actual, err := gophercloud.BuildRequestBody(successCase.opts, "auth")
 		th.AssertNoErr(t, err)
 		th.AssertDeepEquals(t, successCase.expected, actual)
 	}
@@ -217,7 +217,7 @@ func TestBuildRequestBody(t *testing.T) {
 				TenantID:   "987654321",
 				TenantName: "me",
 			},
-			ktvpcsdk.ErrMissingInput{},
+			gophercloud.ErrMissingInput{},
 		},
 		{
 			AuthOptions{
@@ -229,7 +229,7 @@ func TestBuildRequestBody(t *testing.T) {
 					Password: "swordfish",
 				},
 			},
-			ktvpcsdk.ErrMissingInput{},
+			gophercloud.ErrMissingInput{},
 		},
 		{
 			AuthOptions{
@@ -237,7 +237,7 @@ func TestBuildRequestBody(t *testing.T) {
 					Password: "swordfish",
 				},
 			},
-			ktvpcsdk.ErrMissingInput{},
+			gophercloud.ErrMissingInput{},
 		},
 		{
 			AuthOptions{
@@ -249,12 +249,12 @@ func TestBuildRequestBody(t *testing.T) {
 					Filler: 2,
 				},
 			},
-			ktvpcsdk.ErrMissingInput{},
+			gophercloud.ErrMissingInput{},
 		},
 	}
 
 	for _, failCase := range failCases {
-		_, err := ktvpcsdk.BuildRequestBody(failCase.opts, "auth")
+		_, err := gophercloud.BuildRequestBody(failCase.opts, "auth")
 		th.AssertDeepEquals(t, reflect.TypeOf(failCase.expected), reflect.TypeOf(err))
 	}
 
@@ -271,7 +271,7 @@ func TestBuildRequestBody(t *testing.T) {
 		"username": "jdoe",
 	}
 
-	actual, err := ktvpcsdk.BuildRequestBody(complexFields, "")
+	actual, err := gophercloud.BuildRequestBody(complexFields, "")
 	th.AssertNoErr(t, err)
 	th.AssertDeepEquals(t, expectedComplexFields, actual)
 

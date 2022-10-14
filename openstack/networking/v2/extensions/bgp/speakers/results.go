@@ -8,7 +8,7 @@ import (
 const jroot = "bgp_speaker"
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract is a function that accepts a result and extracts a bgp speaker resource.
@@ -98,7 +98,7 @@ type CreateResult struct {
 // DeleteResult represents the result of a delete operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // UpdateResult represents the result of an update operation. Call its Extract
@@ -109,7 +109,7 @@ type UpdateResult struct {
 
 // AddBGPPeerResult represent the response of the PUT /v2.0/bgp-speakers/{bgp-speaker-id}/add-bgp-peer
 type AddBGPPeerResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract is a function that accepts a result and extracts a AddBGPPeerResult resource
@@ -126,7 +126,7 @@ func (r AddBGPPeerResult) ExtractInto(v interface{}) error {
 // RemoveBGPPeerResult represent the response of the PUT /v2.0/bgp-speakers/{bgp-speaker-id}/remove-bgp-peer
 // There is no body content for the response of a successful DELETE request.
 type RemoveBGPPeerResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // AdvertisedRoute represents an advertised route
@@ -165,7 +165,7 @@ func ExtractAdvertisedRoutesInto(r pagination.Page, v interface{}) error {
 // AddGatewayNetworkResult represents the data that would be PUT to
 // /v2.0/bgp-speakers/{bgp-speaker-id}/add_gateway_network
 type AddGatewayNetworkResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 func (r AddGatewayNetworkResult) Extract() (*AddGatewayNetworkOpts, error) {
@@ -177,5 +177,5 @@ func (r AddGatewayNetworkResult) Extract() (*AddGatewayNetworkOpts, error) {
 // RemoveGatewayNetworkResult represents the data that would be PUT to
 // /v2.0/bgp-speakers/{bgp-speaker-id}/remove_gateway_network
 type RemoveGatewayNetworkResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

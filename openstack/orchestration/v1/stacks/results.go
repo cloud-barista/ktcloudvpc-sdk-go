@@ -11,12 +11,12 @@ import (
 // CreatedStack represents the object extracted from a Create operation.
 type CreatedStack struct {
 	ID    string             `json:"id"`
-	Links []ktvpcsdk.Link `json:"links"`
+	Links []gophercloud.Link `json:"links"`
 }
 
 // CreateResult represents the result of a Create operation.
 type CreateResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract returns a pointer to a CreatedStack object and is called after a
@@ -51,7 +51,7 @@ type ListedStack struct {
 	CreationTime time.Time          `json:"-"`
 	Description  string             `json:"description"`
 	ID           string             `json:"id"`
-	Links        []ktvpcsdk.Link `json:"links"`
+	Links        []gophercloud.Link `json:"links"`
 	Name         string             `json:"stack_name"`
 	Status       string             `json:"stack_status"`
 	StatusReason string             `json:"stack_status_reason"`
@@ -77,7 +77,7 @@ func (r *ListedStack) UnmarshalJSON(b []byte) error {
 	if s.CreationTime != "" {
 		t, err := time.Parse(time.RFC3339, s.CreationTime)
 		if err != nil {
-			t, err = time.Parse(ktvpcsdk.RFC3339NoZ, s.CreationTime)
+			t, err = time.Parse(gophercloud.RFC3339NoZ, s.CreationTime)
 			if err != nil {
 				return err
 			}
@@ -88,7 +88,7 @@ func (r *ListedStack) UnmarshalJSON(b []byte) error {
 	if s.UpdatedTime != "" {
 		t, err := time.Parse(time.RFC3339, s.UpdatedTime)
 		if err != nil {
-			t, err = time.Parse(ktvpcsdk.RFC3339NoZ, s.UpdatedTime)
+			t, err = time.Parse(gophercloud.RFC3339NoZ, s.UpdatedTime)
 			if err != nil {
 				return err
 			}
@@ -116,7 +116,7 @@ type RetrievedStack struct {
 	Description         string                   `json:"description"`
 	DisableRollback     bool                     `json:"disable_rollback"`
 	ID                  string                   `json:"id"`
-	Links               []ktvpcsdk.Link       `json:"links"`
+	Links               []gophercloud.Link       `json:"links"`
 	NotificationTopics  []interface{}            `json:"notification_topics"`
 	Outputs             []map[string]interface{} `json:"outputs"`
 	Parameters          map[string]string        `json:"parameters"`
@@ -147,7 +147,7 @@ func (r *RetrievedStack) UnmarshalJSON(b []byte) error {
 	if s.CreationTime != "" {
 		t, err := time.Parse(time.RFC3339, s.CreationTime)
 		if err != nil {
-			t, err = time.Parse(ktvpcsdk.RFC3339NoZ, s.CreationTime)
+			t, err = time.Parse(gophercloud.RFC3339NoZ, s.CreationTime)
 			if err != nil {
 				return err
 			}
@@ -158,7 +158,7 @@ func (r *RetrievedStack) UnmarshalJSON(b []byte) error {
 	if s.UpdatedTime != "" {
 		t, err := time.Parse(time.RFC3339, s.UpdatedTime)
 		if err != nil {
-			t, err = time.Parse(ktvpcsdk.RFC3339NoZ, s.UpdatedTime)
+			t, err = time.Parse(gophercloud.RFC3339NoZ, s.UpdatedTime)
 			if err != nil {
 				return err
 			}
@@ -171,7 +171,7 @@ func (r *RetrievedStack) UnmarshalJSON(b []byte) error {
 
 // GetResult represents the result of a Get operation.
 type GetResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract returns a pointer to a RetrievedStack object and is called after a
@@ -186,12 +186,12 @@ func (r GetResult) Extract() (*RetrievedStack, error) {
 
 // UpdateResult represents the result of a Update operation.
 type UpdateResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // DeleteResult represents the result of a Delete operation.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // PreviewedStack represents the result of a Preview operation.
@@ -201,7 +201,7 @@ type PreviewedStack struct {
 	Description         string             `json:"description"`
 	DisableRollback     bool               `json:"disable_rollback"`
 	ID                  string             `json:"id"`
-	Links               []ktvpcsdk.Link `json:"links"`
+	Links               []gophercloud.Link `json:"links"`
 	Name                string             `json:"stack_name"`
 	NotificationTopics  []interface{}      `json:"notification_topics"`
 	Parameters          map[string]string  `json:"parameters"`
@@ -229,7 +229,7 @@ func (r *PreviewedStack) UnmarshalJSON(b []byte) error {
 	if s.CreationTime != "" {
 		t, err := time.Parse(time.RFC3339, s.CreationTime)
 		if err != nil {
-			t, err = time.Parse(ktvpcsdk.RFC3339NoZ, s.CreationTime)
+			t, err = time.Parse(gophercloud.RFC3339NoZ, s.CreationTime)
 			if err != nil {
 				return err
 			}
@@ -240,7 +240,7 @@ func (r *PreviewedStack) UnmarshalJSON(b []byte) error {
 	if s.UpdatedTime != "" {
 		t, err := time.Parse(time.RFC3339, s.UpdatedTime)
 		if err != nil {
-			t, err = time.Parse(ktvpcsdk.RFC3339NoZ, s.UpdatedTime)
+			t, err = time.Parse(gophercloud.RFC3339NoZ, s.UpdatedTime)
 			if err != nil {
 				return err
 			}
@@ -253,7 +253,7 @@ func (r *PreviewedStack) UnmarshalJSON(b []byte) error {
 
 // PreviewResult represents the result of a Preview operation.
 type PreviewResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract returns a pointer to a PreviewedStack object and is called after a
@@ -282,7 +282,7 @@ type AbandonedStack struct {
 
 // AbandonResult represents the result of an Abandon operation.
 type AbandonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract returns a pointer to an AbandonedStack object and is called after an

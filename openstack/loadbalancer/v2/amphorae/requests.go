@@ -31,14 +31,14 @@ type ListOpts struct {
 
 // ToAmphoraListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToAmphoraListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List returns a Pager which allows you to iterate over a collection of
 // amphorae. It accepts a ListOpts struct, which allows you to filter
 // and sort the returned collection for greater efficiency.
-func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := rootURL(c)
 	if opts != nil {
 		query, err := opts.ToAmphoraListQuery()
@@ -53,17 +53,17 @@ func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 }
 
 // Get retrieves a particular amphora based on its unique ID.
-func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
 	resp, err := c.Get(resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Failover performs a failover of an amphora.
-func Failover(c *ktvpcsdk.ServiceClient, id string) (r FailoverResult) {
-	resp, err := c.Put(failoverRootURL(c, id), nil, nil, &ktvpcsdk.RequestOpts{
+func Failover(c *gophercloud.ServiceClient, id string) (r FailoverResult) {
+	resp, err := c.Put(failoverRootURL(c, id), nil, nil, &gophercloud.RequestOpts{
 		OkCodes: []int{202},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

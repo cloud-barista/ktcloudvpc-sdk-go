@@ -18,7 +18,7 @@ import (
 
 // CreateFloatingIP creates a floating IP on a given network and port. An error
 // will be returned if the creation failed.
-func CreateFloatingIP(t *testing.T, client *ktvpcsdk.ServiceClient, networkID, portID string) (*floatingips.FloatingIP, error) {
+func CreateFloatingIP(t *testing.T, client *gophercloud.ServiceClient, networkID, portID string) (*floatingips.FloatingIP, error) {
 	t.Logf("Attempting to create floating IP on port: %s", portID)
 
 	fipDescription := "Test floating IP"
@@ -42,7 +42,7 @@ func CreateFloatingIP(t *testing.T, client *ktvpcsdk.ServiceClient, networkID, p
 
 // CreateFloatingIPWithFixedIP creates a floating IP on a given network and port with a
 // defined fixed IP. An error will be returned if the creation failed.
-func CreateFloatingIPWithFixedIP(t *testing.T, client *ktvpcsdk.ServiceClient, networkID, portID, fixedIP string) (*floatingips.FloatingIP, error) {
+func CreateFloatingIPWithFixedIP(t *testing.T, client *gophercloud.ServiceClient, networkID, portID, fixedIP string) (*floatingips.FloatingIP, error) {
 	t.Logf("Attempting to create floating IP on port: %s and address: %s", portID, fixedIP)
 
 	fipDescription := "Test floating IP"
@@ -68,7 +68,7 @@ func CreateFloatingIPWithFixedIP(t *testing.T, client *ktvpcsdk.ServiceClient, n
 
 // CreatePortForwarding creates a port forwarding for a given floating IP
 // and port. An error will be returned if the creation failed.
-func CreatePortForwarding(t *testing.T, client *ktvpcsdk.ServiceClient, fipID string, portID string, portFixedIPs []ports.IP) (*portforwarding.PortForwarding, error) {
+func CreatePortForwarding(t *testing.T, client *gophercloud.ServiceClient, fipID string, portID string, portFixedIPs []ports.IP) (*portforwarding.PortForwarding, error) {
 	t.Logf("Attempting to create Port forwarding for floating IP with ID: %s", fipID)
 
 	fixedIP := portFixedIPs[0]
@@ -95,7 +95,7 @@ func CreatePortForwarding(t *testing.T, client *ktvpcsdk.ServiceClient, fipID st
 
 // DeletePortForwarding deletes a Port Forwarding with a given ID and a given floating IP ID.
 // A fatal error is returned if the deletion fails. Works best as a deferred function
-func DeletePortForwarding(t *testing.T, client *ktvpcsdk.ServiceClient, fipID string, pfID string) {
+func DeletePortForwarding(t *testing.T, client *gophercloud.ServiceClient, fipID string, pfID string) {
 	t.Logf("Attempting to delete the port forwarding with ID %s for floating IP with ID %s", pfID, fipID)
 
 	err := portforwarding.Delete(client, fipID, pfID).ExtractErr()
@@ -109,7 +109,7 @@ func DeletePortForwarding(t *testing.T, client *ktvpcsdk.ServiceClient, fipID st
 // CreateExternalRouter creates a router on the external network. This requires
 // the OS_EXTGW_ID environment variable to be set. An error is returned if the
 // creation failed.
-func CreateExternalRouter(t *testing.T, client *ktvpcsdk.ServiceClient) (*routers.Router, error) {
+func CreateExternalRouter(t *testing.T, client *gophercloud.ServiceClient) (*routers.Router, error) {
 	var router *routers.Router
 	choices, err := clients.AcceptanceTestChoicesFromEnv()
 	if err != nil {
@@ -152,7 +152,7 @@ func CreateExternalRouter(t *testing.T, client *ktvpcsdk.ServiceClient) (*router
 
 // CreateRouter creates a router on a specified Network ID. An error will be
 // returned if the creation failed.
-func CreateRouter(t *testing.T, client *ktvpcsdk.ServiceClient, networkID string) (*routers.Router, error) {
+func CreateRouter(t *testing.T, client *gophercloud.ServiceClient, networkID string) (*routers.Router, error) {
 	routerName := tools.RandomString("TESTACC-", 8)
 	routerDescription := tools.RandomString("TESTACC-DESC-", 8)
 
@@ -184,7 +184,7 @@ func CreateRouter(t *testing.T, client *ktvpcsdk.ServiceClient, networkID string
 
 // CreateRouterInterface will attach a subnet to a router. An error will be
 // returned if the operation fails.
-func CreateRouterInterface(t *testing.T, client *ktvpcsdk.ServiceClient, portID, routerID string) (*routers.InterfaceInfo, error) {
+func CreateRouterInterface(t *testing.T, client *gophercloud.ServiceClient, portID, routerID string) (*routers.InterfaceInfo, error) {
 	t.Logf("Attempting to add port %s to router %s", portID, routerID)
 
 	aiOpts := routers.AddInterfaceOpts{
@@ -206,7 +206,7 @@ func CreateRouterInterface(t *testing.T, client *ktvpcsdk.ServiceClient, portID,
 
 // CreateRouterInterfaceOnSubnet will attach a subnet to a router. An error will be
 // returned if the operation fails.
-func CreateRouterInterfaceOnSubnet(t *testing.T, client *ktvpcsdk.ServiceClient, subnetID, routerID string) (*routers.InterfaceInfo, error) {
+func CreateRouterInterfaceOnSubnet(t *testing.T, client *gophercloud.ServiceClient, subnetID, routerID string) (*routers.InterfaceInfo, error) {
 	t.Logf("Attempting to add subnet %s to router %s", subnetID, routerID)
 
 	aiOpts := routers.AddInterfaceOpts{
@@ -228,7 +228,7 @@ func CreateRouterInterfaceOnSubnet(t *testing.T, client *ktvpcsdk.ServiceClient,
 
 // DeleteRouter deletes a router of a specified ID. A fatal error will occur
 // if the deletion failed. This works best when used as a deferred function.
-func DeleteRouter(t *testing.T, client *ktvpcsdk.ServiceClient, routerID string) {
+func DeleteRouter(t *testing.T, client *gophercloud.ServiceClient, routerID string) {
 	t.Logf("Attempting to delete router: %s", routerID)
 
 	err := routers.Delete(client, routerID).ExtractErr()
@@ -246,7 +246,7 @@ func DeleteRouter(t *testing.T, client *ktvpcsdk.ServiceClient, routerID string)
 // DeleteRouterInterface will detach a subnet to a router. A fatal error will
 // occur if the deletion failed. This works best when used as a deferred
 // function.
-func DeleteRouterInterface(t *testing.T, client *ktvpcsdk.ServiceClient, portID, routerID string) {
+func DeleteRouterInterface(t *testing.T, client *gophercloud.ServiceClient, portID, routerID string) {
 	t.Logf("Attempting to detach port %s from router %s", portID, routerID)
 
 	riOpts := routers.RemoveInterfaceOpts{
@@ -268,7 +268,7 @@ func DeleteRouterInterface(t *testing.T, client *ktvpcsdk.ServiceClient, portID,
 // DeleteFloatingIP deletes a floatingIP of a specified ID. A fatal error will
 // occur if the deletion failed. This works best when used as a deferred
 // function.
-func DeleteFloatingIP(t *testing.T, client *ktvpcsdk.ServiceClient, floatingIPID string) {
+func DeleteFloatingIP(t *testing.T, client *gophercloud.ServiceClient, floatingIPID string) {
 	t.Logf("Attempting to delete floating IP: %s", floatingIPID)
 
 	err := floatingips.Delete(client, floatingIPID).ExtractErr()
@@ -279,7 +279,7 @@ func DeleteFloatingIP(t *testing.T, client *ktvpcsdk.ServiceClient, floatingIPID
 	t.Logf("Deleted floating IP: %s", floatingIPID)
 }
 
-func WaitForRouterToCreate(client *ktvpcsdk.ServiceClient, routerID string) error {
+func WaitForRouterToCreate(client *gophercloud.ServiceClient, routerID string) error {
 	return tools.WaitFor(func() (bool, error) {
 		r, err := routers.Get(client, routerID).Extract()
 		if err != nil {
@@ -294,11 +294,11 @@ func WaitForRouterToCreate(client *ktvpcsdk.ServiceClient, routerID string) erro
 	})
 }
 
-func WaitForRouterToDelete(client *ktvpcsdk.ServiceClient, routerID string) error {
+func WaitForRouterToDelete(client *gophercloud.ServiceClient, routerID string) error {
 	return tools.WaitFor(func() (bool, error) {
 		_, err := routers.Get(client, routerID).Extract()
 		if err != nil {
-			if _, ok := err.(ktvpcsdk.ErrDefault404); ok {
+			if _, ok := err.(gophercloud.ErrDefault404); ok {
 				return true, nil
 			}
 
@@ -309,7 +309,7 @@ func WaitForRouterToDelete(client *ktvpcsdk.ServiceClient, routerID string) erro
 	})
 }
 
-func WaitForRouterInterfaceToAttach(client *ktvpcsdk.ServiceClient, routerInterfaceID string) error {
+func WaitForRouterInterfaceToAttach(client *gophercloud.ServiceClient, routerInterfaceID string) error {
 	return tools.WaitFor(func() (bool, error) {
 		r, err := ports.Get(client, routerInterfaceID).Extract()
 		if err != nil {
@@ -324,15 +324,15 @@ func WaitForRouterInterfaceToAttach(client *ktvpcsdk.ServiceClient, routerInterf
 	})
 }
 
-func WaitForRouterInterfaceToDetach(client *ktvpcsdk.ServiceClient, routerInterfaceID string) error {
+func WaitForRouterInterfaceToDetach(client *gophercloud.ServiceClient, routerInterfaceID string) error {
 	return tools.WaitFor(func() (bool, error) {
 		r, err := ports.Get(client, routerInterfaceID).Extract()
 		if err != nil {
-			if _, ok := err.(ktvpcsdk.ErrDefault404); ok {
+			if _, ok := err.(gophercloud.ErrDefault404); ok {
 				return true, nil
 			}
 
-			if errCode, ok := err.(ktvpcsdk.ErrUnexpectedResponseCode); ok {
+			if errCode, ok := err.(gophercloud.ErrUnexpectedResponseCode); ok {
 				if errCode.Actual == 409 {
 					return false, nil
 				}
@@ -351,7 +351,7 @@ func WaitForRouterInterfaceToDetach(client *ktvpcsdk.ServiceClient, routerInterf
 
 // CreateAddressScope will create an address-scope. An error will be returned if
 // the address-scope could not be created.
-func CreateAddressScope(t *testing.T, client *ktvpcsdk.ServiceClient) (*addressscopes.AddressScope, error) {
+func CreateAddressScope(t *testing.T, client *gophercloud.ServiceClient) (*addressscopes.AddressScope, error) {
 	addressScopeName := tools.RandomString("TESTACC-", 8)
 	createOpts := addressscopes.CreateOpts{
 		Name:      addressScopeName,
@@ -368,14 +368,14 @@ func CreateAddressScope(t *testing.T, client *ktvpcsdk.ServiceClient) (*addresss
 	t.Logf("Successfully created the addressscopes.")
 
 	th.AssertEquals(t, addressScope.Name, addressScopeName)
-	th.AssertEquals(t, addressScope.IPVersion, int(ktvpcsdk.IPv4))
+	th.AssertEquals(t, addressScope.IPVersion, int(gophercloud.IPv4))
 
 	return addressScope, nil
 }
 
 // DeleteAddressScope will delete an address-scope with the specified ID.
 // A fatal error will occur if the delete was not successful.
-func DeleteAddressScope(t *testing.T, client *ktvpcsdk.ServiceClient, addressScopeID string) {
+func DeleteAddressScope(t *testing.T, client *gophercloud.ServiceClient, addressScopeID string) {
 	t.Logf("Attempting to delete the address-scope: %s", addressScopeID)
 
 	err := addressscopes.Delete(client, addressScopeID).ExtractErr()

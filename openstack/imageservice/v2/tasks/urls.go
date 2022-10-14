@@ -10,23 +10,23 @@ import (
 
 const resourcePath = "tasks"
 
-func rootURL(c *ktvpcsdk.ServiceClient) string {
+func rootURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL(resourcePath)
 }
 
-func resourceURL(c *ktvpcsdk.ServiceClient, taskID string) string {
+func resourceURL(c *gophercloud.ServiceClient, taskID string) string {
 	return c.ServiceURL(resourcePath, taskID)
 }
 
-func listURL(c *ktvpcsdk.ServiceClient) string {
+func listURL(c *gophercloud.ServiceClient) string {
 	return rootURL(c)
 }
 
-func getURL(c *ktvpcsdk.ServiceClient, taskID string) string {
+func getURL(c *gophercloud.ServiceClient, taskID string) string {
 	return resourceURL(c, taskID)
 }
 
-func createURL(c *ktvpcsdk.ServiceClient) string {
+func createURL(c *gophercloud.ServiceClient) string {
 	return rootURL(c)
 }
 
@@ -41,7 +41,7 @@ func nextPageURL(serviceURL, requestedNext string) (string, error) {
 		return "", err
 	}
 
-	base = ktvpcsdk.NormalizeURL(base)
+	base = gophercloud.NormalizeURL(base)
 	nextPath := base + strings.TrimPrefix(requestedNextURL.Path, "/")
 
 	nextURL, err := url.Parse(nextPath)

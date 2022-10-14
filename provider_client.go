@@ -1,4 +1,4 @@
-package ktvpcsdk
+package gophercloud
 
 import (
 	"bytes"
@@ -14,7 +14,7 @@ import (
 
 // DefaultUserAgent is the default User-Agent string set in the request header.
 const (
-	DefaultUserAgent         = "ktvpcsdk/2.0.0"
+	DefaultUserAgent         = "gophercloud/2.0.0"
 	DefaultMaxBackoffRetries = 60
 )
 
@@ -368,7 +368,7 @@ func (client *ProviderClient) doRequest(method, url string, options *RequestOpts
 	// io.ReadSeeker as-is. Default the content-type to application/json.
 	if options.JSONBody != nil {
 		if options.RawBody != nil {
-			return nil, errors.New("please provide only one of JSONBody or RawBody to ktvpcsdk.Request()")
+			return nil, errors.New("please provide only one of JSONBody or RawBody to gophercloud.Request()")
 		}
 
 		rendered, err := json.Marshal(options.JSONBody)

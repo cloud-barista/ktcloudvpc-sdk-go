@@ -67,7 +67,7 @@ func (r *Action) UnmarshalJSON(b []byte) error {
 
 // commonResult is the response of a base result.
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets any commonResult-based result as an Action.

@@ -16,14 +16,14 @@ type GetOpts struct {
 
 // ToAccountGetMap formats a GetOpts into a map[string]string of headers.
 func (opts GetOpts) ToAccountGetMap() (map[string]string, error) {
-	return ktvpcsdk.BuildHeaders(opts)
+	return gophercloud.BuildHeaders(opts)
 }
 
 // Get is a function that retrieves an account's metadata. To extract just the
 // custom metadata, call the ExtractMetadata method on the GetResult. To extract
 // all the headers that are returned (including the metadata), call the
 // Extract method on the GetResult.
-func Get(c *ktvpcsdk.ServiceClient, opts GetOptsBuilder) (r GetResult) {
+func Get(c *gophercloud.ServiceClient, opts GetOptsBuilder) (r GetResult) {
 	h := make(map[string]string)
 	if opts != nil {
 		headers, err := opts.ToAccountGetMap()
@@ -35,11 +35,11 @@ func Get(c *ktvpcsdk.ServiceClient, opts GetOptsBuilder) (r GetResult) {
 			h[k] = v
 		}
 	}
-	resp, err := c.Head(getURL(c), &ktvpcsdk.RequestOpts{
+	resp, err := c.Head(getURL(c), &gophercloud.RequestOpts{
 		MoreHeaders: h,
 		OkCodes:     []int{204},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -62,7 +62,7 @@ type UpdateOpts struct {
 
 // ToAccountUpdateMap formats an UpdateOpts into a map[string]string of headers.
 func (opts UpdateOpts) ToAccountUpdateMap() (map[string]string, error) {
-	headers, err := ktvpcsdk.BuildHeaders(opts)
+	headers, err := gophercloud.BuildHeaders(opts)
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +80,7 @@ func (opts UpdateOpts) ToAccountUpdateMap() (map[string]string, error) {
 
 // Update is a function that creates, updates, or deletes an account's metadata.
 // To extract the headers returned, call the Extract method on the UpdateResult.
-func Update(c *ktvpcsdk.ServiceClient, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *gophercloud.ServiceClient, opts UpdateOptsBuilder) (r UpdateResult) {
 	h := make(map[string]string)
 	if opts != nil {
 		headers, err := opts.ToAccountUpdateMap()
@@ -92,10 +92,10 @@ func Update(c *ktvpcsdk.ServiceClient, opts UpdateOptsBuilder) (r UpdateResult) 
 			h[k] = v
 		}
 	}
-	resp, err := c.Request("POST", updateURL(c), &ktvpcsdk.RequestOpts{
+	resp, err := c.Request("POST", updateURL(c), &gophercloud.RequestOpts{
 		MoreHeaders: h,
 		OkCodes:     []int{201, 202, 204},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

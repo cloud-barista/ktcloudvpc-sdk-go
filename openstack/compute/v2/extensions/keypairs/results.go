@@ -62,7 +62,7 @@ func ExtractKeyPairs(r pagination.Page) ([]KeyPair, error) {
 }
 
 type keyPairResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract is a method that attempts to interpret any KeyPair resource response
@@ -90,5 +90,5 @@ type GetResult struct {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr
 // method to determine if the call succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

@@ -51,12 +51,12 @@ type ListOpts struct {
 
 // ToImageListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToImageListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List enumerates the available images.  // $$$ Added by B.T. Oh.
-func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	urlBefore := listURL(client)
 	
 	// For Check!!
@@ -83,7 +83,7 @@ func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager
 
 
 // ListDetail enumerates the available images.
-func ListDetail(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func ListDetail(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listDetailURL(client)
 	if opts != nil {
 		query, err := opts.ToImageListQuery()
@@ -98,15 +98,15 @@ func ListDetail(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination
 }
 
 // Get returns data about a specific image by its ID.
-func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
 	resp, err := client.Get(getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes the specified image ID.
-func Delete(client *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

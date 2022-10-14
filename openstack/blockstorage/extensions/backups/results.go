@@ -81,7 +81,7 @@ type GetResult struct {
 
 // DeleteResult contains the response body and error from a Delete request.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // BackupPage is a pagination.Pager that is returned from a call to the List function.
@@ -94,9 +94,9 @@ func (r *Backup) UnmarshalJSON(b []byte) error {
 	type tmp Backup
 	var s struct {
 		tmp
-		CreatedAt     ktvpcsdk.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt     ktvpcsdk.JSONRFC3339MilliNoZ `json:"updated_at"`
-		DataTimestamp ktvpcsdk.JSONRFC3339MilliNoZ `json:"data_timestamp"`
+		CreatedAt     gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
+		UpdatedAt     gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
+		DataTimestamp gophercloud.JSONRFC3339MilliNoZ `json:"data_timestamp"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -119,13 +119,13 @@ func (r BackupPage) IsEmpty() (bool, error) {
 
 func (page BackupPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []ktvpcsdk.Link `json:"backups_links"`
+		Links []gophercloud.Link `json:"backups_links"`
 	}
 	err := page.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return ktvpcsdk.ExtractNextURL(s.Links)
+	return gophercloud.ExtractNextURL(s.Links)
 }
 
 // ExtractBackups extracts and returns Backups. It is used while iterating over a backups.List call.
@@ -141,7 +141,7 @@ type UpdateResult struct {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract will get the Backup object out of the commonResult object.
@@ -221,7 +221,7 @@ type ImportResponse struct {
 
 // ImportResult contains the response body and error from an import request.
 type ImportResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract will get the Backup object out of the commonResult object.

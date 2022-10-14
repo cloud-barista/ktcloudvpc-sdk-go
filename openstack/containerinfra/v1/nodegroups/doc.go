@@ -17,7 +17,7 @@ Create a client to use:
         panic(err)
     }
 
-    client, err := openstack.NewContainerInfraV1(provider, ktvpcsdk.EndpointOpts{Region: os.Getenv("OS_REGION_NAME")})
+    client, err := openstack.NewContainerInfraV1(provider, gophercloud.EndpointOpts{Region: os.Getenv("OS_REGION_NAME")})
     if err != nil {
         panic(err)
     }

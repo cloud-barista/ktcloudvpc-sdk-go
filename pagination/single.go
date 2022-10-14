@@ -20,7 +20,7 @@ func (current SinglePageBase) IsEmpty() (bool, error) {
 	if b, ok := current.Body.([]interface{}); ok {
 		return len(b) == 0, nil
 	}
-	err := ktvpcsdk.ErrUnexpectedType{}
+	err := gophercloud.ErrUnexpectedType{}
 	err.Expected = "[]interface{}"
 	err.Actual = fmt.Sprintf("%v", reflect.TypeOf(current.Body))
 	return true, err

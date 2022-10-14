@@ -9,64 +9,64 @@ import (
 
 // AttachResult contains the response body and error from an Attach request.
 type AttachResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // BeginDetachingResult contains the response body and error from a BeginDetach
 // request.
 type BeginDetachingResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // DetachResult contains the response body and error from a Detach request.
 type DetachResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // UploadImageResult contains the response body and error from an UploadImage
 // request.
 type UploadImageResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // SetImageMetadataResult contains the response body and error from an SetImageMetadata
 // request.
 type SetImageMetadataResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // SetBootableResult contains the response body and error from a SetBootable
 // request.
 type SetBootableResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // ReserveResult contains the response body and error from a Reserve request.
 type ReserveResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // UnreserveResult contains the response body and error from an Unreserve
 // request.
 type UnreserveResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // TerminateConnectionResult contains the response body and error from a
 // TerminateConnection request.
 type TerminateConnectionResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // InitializeConnectionResult contains the response body and error from an
 // InitializeConnection request.
 type InitializeConnectionResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // ExtendSizeResult contains the response body and error from an ExtendSize request.
 type ExtendSizeResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // Extract will get the connection information out of the
@@ -120,9 +120,9 @@ func (r *ImageVolumeType) UnmarshalJSON(b []byte) error {
 	type tmp ImageVolumeType
 	var s struct {
 		tmp
-		CreatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"created_at"`
-		UpdatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"updated_at"`
-		DeletedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"deleted_at"`
+		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
+		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
+		DeletedAt gophercloud.JSONRFC3339MilliNoZ `json:"deleted_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -182,7 +182,7 @@ func (r *VolumeImage) UnmarshalJSON(b []byte) error {
 	type tmp VolumeImage
 	var s struct {
 		tmp
-		UpdatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"updated_at"`
+		UpdatedAt gophercloud.JSONRFC3339MilliNoZ `json:"updated_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -207,10 +207,10 @@ func (r UploadImageResult) Extract() (VolumeImage, error) {
 
 // ForceDeleteResult contains the response body and error from a ForceDelete request.
 type ForceDeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // ChangeTypeResult contains the response body and error from an ChangeType request.
 type ChangeTypeResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

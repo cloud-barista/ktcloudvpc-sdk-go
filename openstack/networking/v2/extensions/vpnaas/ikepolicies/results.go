@@ -42,7 +42,7 @@ type Policy struct {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 type Lifetime struct {
 	// Units is the unit for the lifetime
@@ -74,13 +74,13 @@ type PolicyPage struct {
 // In order to do this, it needs to construct the next page's URL.
 func (r PolicyPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []ktvpcsdk.Link `json:"ikepolicies_links"`
+		Links []gophercloud.Link `json:"ikepolicies_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return ktvpcsdk.ExtractNextURL(s.Links)
+	return gophercloud.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether a PolicyPage struct is empty.
@@ -115,7 +115,7 @@ type GetResult struct {
 // DeleteResult represents the results of a Delete operation. Call its ExtractErr method
 // to determine whether the operation succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // UpdateResult represents the result of an update operation. Call its Extract method

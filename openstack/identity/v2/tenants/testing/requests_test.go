@@ -39,7 +39,7 @@ func TestCreateTenant(t *testing.T) {
 	opts := tenants.CreateOpts{
 		Name:        "new_tenant",
 		Description: "This is new tenant",
-		Enabled:     ktvpcsdk.Enabled,
+		Enabled:     gophercloud.Enabled,
 	}
 
 	tenant, err := tenants.Create(client.ServiceClient(), opts).Extract()
@@ -77,7 +77,7 @@ func TestUpdateTenant(t *testing.T) {
 	opts := tenants.UpdateOpts{
 		Name:        "new_name",
 		Description: &description,
-		Enabled:     ktvpcsdk.Enabled,
+		Enabled:     gophercloud.Enabled,
 	}
 
 	tenant, err := tenants.Update(client.ServiceClient(), id, opts).Extract()

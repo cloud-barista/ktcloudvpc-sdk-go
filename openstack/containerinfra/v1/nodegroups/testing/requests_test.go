@@ -38,7 +38,7 @@ func TestGetNodeGroupNotFound(t *testing.T) {
 	_, err := nodegroups.Get(sc, clusterUUID, badNodeGroupUUID).Extract()
 	th.AssertEquals(t, true, err != nil)
 
-	_, isNotFound := err.(ktvpcsdk.ErrDefault404)
+	_, isNotFound := err.(gophercloud.ErrDefault404)
 	th.AssertEquals(t, true, isNotFound)
 }
 
@@ -56,7 +56,7 @@ func TestGetNodeGroupClusterNotFound(t *testing.T) {
 	_, err := nodegroups.Get(sc, badClusterUUID, badNodeGroupUUID).Extract()
 	th.AssertEquals(t, true, err != nil)
 
-	_, isNotFound := err.(ktvpcsdk.ErrDefault404)
+	_, isNotFound := err.(gophercloud.ErrDefault404)
 	th.AssertEquals(t, true, isNotFound)
 }
 
@@ -117,7 +117,7 @@ func TestListNodeGroupsClusterNotFound(t *testing.T) {
 	_, err := nodegroups.List(sc, clusterUUID, nodegroups.ListOpts{}).AllPages()
 	th.AssertEquals(t, true, err != nil)
 
-	_, isNotFound := err.(ktvpcsdk.ErrDefault404)
+	_, isNotFound := err.(gophercloud.ErrDefault404)
 	th.AssertEquals(t, true, isNotFound)
 }
 
@@ -133,7 +133,7 @@ func TestCreateNodeGroupSuccess(t *testing.T) {
 
 	createOpts := nodegroups.CreateOpts{
 		Name:        "test-ng",
-		MergeLabels: ktvpcsdk.Enabled,
+		MergeLabels: gophercloud.Enabled,
 	}
 
 	ng, err := nodegroups.Create(sc, clusterUUID, createOpts).Extract()
@@ -158,7 +158,7 @@ func TestCreateNodeGroupDuplicate(t *testing.T) {
 
 	_, err := nodegroups.Create(sc, clusterUUID, createOpts).Extract()
 	th.AssertEquals(t, true, err != nil)
-	_, isNotAccepted := err.(ktvpcsdk.ErrDefault409)
+	_, isNotAccepted := err.(gophercloud.ErrDefault409)
 	th.AssertEquals(t, true, isNotAccepted)
 }
 
@@ -180,7 +180,7 @@ func TestCreateNodeGroupMaster(t *testing.T) {
 
 	_, err := nodegroups.Create(sc, clusterUUID, createOpts).Extract()
 	th.AssertEquals(t, true, err != nil)
-	_, isBadRequest := err.(ktvpcsdk.ErrDefault400)
+	_, isBadRequest := err.(gophercloud.ErrDefault400)
 	th.AssertEquals(t, true, isBadRequest)
 }
 
@@ -204,7 +204,7 @@ func TestCreateNodeGroupBadSizes(t *testing.T) {
 
 	_, err := nodegroups.Create(sc, clusterUUID, createOpts).Extract()
 	th.AssertEquals(t, true, err != nil)
-	_, isNotAccepted := err.(ktvpcsdk.ErrDefault409)
+	_, isNotAccepted := err.(gophercloud.ErrDefault409)
 	th.AssertEquals(t, true, isNotAccepted)
 }
 
@@ -252,7 +252,7 @@ func TestUpdateNodeGroupInternal(t *testing.T) {
 
 	_, err := nodegroups.Update(sc, clusterUUID, nodeGroup2UUID, updateOpts).Extract()
 	th.AssertEquals(t, true, err != nil)
-	_, isBadRequest := err.(ktvpcsdk.ErrDefault400)
+	_, isBadRequest := err.(gophercloud.ErrDefault400)
 	th.AssertEquals(t, true, isBadRequest)
 }
 
@@ -277,7 +277,7 @@ func TestUpdateNodeGroupBadField(t *testing.T) {
 
 	_, err := nodegroups.Update(sc, clusterUUID, nodeGroup2UUID, updateOpts).Extract()
 	th.AssertEquals(t, true, err != nil)
-	_, isBadRequest := err.(ktvpcsdk.ErrDefault400)
+	_, isBadRequest := err.(gophercloud.ErrDefault400)
 	th.AssertEquals(t, true, isBadRequest)
 }
 
@@ -302,7 +302,7 @@ func TestUpdateNodeGroupBadMin(t *testing.T) {
 
 	_, err := nodegroups.Update(sc, clusterUUID, nodeGroup2UUID, updateOpts).Extract()
 	th.AssertEquals(t, true, err != nil)
-	_, isNotAccepted := err.(ktvpcsdk.ErrDefault409)
+	_, isNotAccepted := err.(gophercloud.ErrDefault409)
 	th.AssertEquals(t, true, isNotAccepted)
 }
 
@@ -331,7 +331,7 @@ func TestDeleteNodeGroupNotFound(t *testing.T) {
 	sc.Endpoint = sc.Endpoint + "v1/"
 
 	err := nodegroups.Delete(sc, clusterUUID, badNodeGroupUUID).ExtractErr()
-	_, isNotFound := err.(ktvpcsdk.ErrDefault404)
+	_, isNotFound := err.(gophercloud.ErrDefault404)
 	th.AssertEquals(t, true, isNotFound)
 }
 
@@ -346,7 +346,7 @@ func TestDeleteNodeGroupClusterNotFound(t *testing.T) {
 	sc.Endpoint = sc.Endpoint + "v1/"
 
 	err := nodegroups.Delete(sc, badClusterUUID, badNodeGroupUUID).ExtractErr()
-	_, isNotFound := err.(ktvpcsdk.ErrDefault404)
+	_, isNotFound := err.(gophercloud.ErrDefault404)
 	th.AssertEquals(t, true, isNotFound)
 }
 
@@ -361,6 +361,6 @@ func TestDeleteNodeGroupDefault(t *testing.T) {
 	sc.Endpoint = sc.Endpoint + "v1/"
 
 	err := nodegroups.Delete(sc, clusterUUID, nodeGroup2UUID).ExtractErr()
-	_, isBadRequest := err.(ktvpcsdk.ErrDefault400)
+	_, isBadRequest := err.(gophercloud.ErrDefault400)
 	th.AssertEquals(t, true, isBadRequest)
 }

@@ -9,7 +9,7 @@ import (
 )
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // CreateResult is the response of a Post operations. Call its Extract method to interpret it as a CronTrigger.
@@ -24,7 +24,7 @@ type GetResult struct {
 
 // DeleteResult is the result from a Delete operation. Call its ExtractErr method to determine the success of the call.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // Extract helps to get a CronTrigger struct from a Get or a Create function.
@@ -83,9 +83,9 @@ func (r *CronTrigger) UnmarshalJSON(b []byte) error {
 	type tmp CronTrigger
 	var s struct {
 		tmp
-		CreatedAt          ktvpcsdk.JSONRFC3339ZNoTNoZ  `json:"created_at"`
-		FirstExecutionTime *ktvpcsdk.JSONRFC3339ZNoTNoZ `json:"first_execution_time"`
-		NextExecutionTime  *ktvpcsdk.JSONRFC3339ZNoTNoZ `json:"next_execution_time"`
+		CreatedAt          gophercloud.JSONRFC3339ZNoTNoZ  `json:"created_at"`
+		FirstExecutionTime *gophercloud.JSONRFC3339ZNoTNoZ `json:"first_execution_time"`
+		NextExecutionTime  *gophercloud.JSONRFC3339ZNoTNoZ `json:"next_execution_time"`
 		WorkflowInput      string                          `json:"workflow_input"`
 		WorkflowParams     string                          `json:"workflow_params"`
 	}

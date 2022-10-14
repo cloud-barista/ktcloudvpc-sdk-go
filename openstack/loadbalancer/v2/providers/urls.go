@@ -7,6 +7,6 @@ const (
 	resourcePath = "providers"
 )
 
-func rootURL(c *ktvpcsdk.ServiceClient) string {
+func rootURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL(rootPath, resourcePath)
 }

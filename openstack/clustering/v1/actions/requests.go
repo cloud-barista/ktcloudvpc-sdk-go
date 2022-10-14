@@ -25,12 +25,12 @@ type ListOpts struct {
 
 // ToClusterListQuery builds a query string from ListOpts.
 func (opts ListOpts) ToActionListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List instructs OpenStack to provide a list of actions.
-func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToActionListQuery()
@@ -45,8 +45,8 @@ func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager
 }
 
 // Get retrieves details of a single action.
-func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(getURL(client, id), &r.Body, &ktvpcsdk.RequestOpts{OkCodes: []int{200}})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
+	resp, err := client.Get(getURL(client, id), &r.Body, &gophercloud.RequestOpts{OkCodes: []int{200}})
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

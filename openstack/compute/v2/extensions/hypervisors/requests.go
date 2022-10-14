@@ -35,12 +35,12 @@ type ListOpts struct {
 
 // ToHypervisorListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToHypervisorListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // List makes a request against the API to list hypervisors.
-func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := hypervisorsListDetailURL(client)
 	if opts != nil {
 		query, err := opts.ToHypervisorListQuery()
@@ -56,28 +56,28 @@ func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager
 }
 
 // Statistics makes a request against the API to get hypervisors statistics.
-func GetStatistics(client *ktvpcsdk.ServiceClient) (r StatisticsResult) {
-	resp, err := client.Get(hypervisorsStatisticsURL(client), &r.Body, &ktvpcsdk.RequestOpts{
+func GetStatistics(client *gophercloud.ServiceClient) (r StatisticsResult) {
+	resp, err := client.Get(hypervisorsStatisticsURL(client), &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get makes a request against the API to get details for specific hypervisor.
-func Get(client *ktvpcsdk.ServiceClient, hypervisorID string) (r HypervisorResult) {
-	resp, err := client.Get(hypervisorsGetURL(client, hypervisorID), &r.Body, &ktvpcsdk.RequestOpts{
+func Get(client *gophercloud.ServiceClient, hypervisorID string) (r HypervisorResult) {
+	resp, err := client.Get(hypervisorsGetURL(client, hypervisorID), &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // GetUptime makes a request against the API to get uptime for specific hypervisor.
-func GetUptime(client *ktvpcsdk.ServiceClient, hypervisorID string) (r UptimeResult) {
-	resp, err := client.Get(hypervisorsUptimeURL(client, hypervisorID), &r.Body, &ktvpcsdk.RequestOpts{
+func GetUptime(client *gophercloud.ServiceClient, hypervisorID string) (r UptimeResult) {
+	resp, err := client.Get(hypervisorsUptimeURL(client, hypervisorID), &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

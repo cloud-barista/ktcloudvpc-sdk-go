@@ -9,7 +9,7 @@ createOpts := siteconnections.CreateOpts{
 		Name:           "Connection1",
 		PSK:            "secret",
 		Initiator:      siteconnections.InitiatorBiDirectional,
-		AdminStateUp:   ktvpcsdk.Enabled,
+		AdminStateUp:   gophercloud.Enabled,
 		IPSecPolicyID:  "4ab0a72e-64ef-4809-be43-c3f7e0e5239b",
 		PeerEPGroupID:  "5f5801b1-b383-4cf0-bf61-9e85d4044b2d",
 		IKEPolicyID:    "47a880f9-1da9-468c-b289-219c9eca78f0",

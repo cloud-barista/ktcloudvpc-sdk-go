@@ -25,8 +25,8 @@ func (r *Config) UnmarshalJSON(b []byte) error {
 	type tmp Config
 	var s struct {
 		tmp
-		Created ktvpcsdk.JSONRFC3339NoZ `json:"created"`
-		Updated ktvpcsdk.JSONRFC3339NoZ `json:"updated"`
+		Created gophercloud.JSONRFC3339NoZ `json:"created"`
+		Updated gophercloud.JSONRFC3339NoZ `json:"updated"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -61,7 +61,7 @@ func ExtractConfigs(r pagination.Page) ([]Config, error) {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract will retrieve a Config resource from an operation result.
@@ -85,17 +85,17 @@ type CreateResult struct {
 
 // UpdateResult represents the result of an Update operation.
 type UpdateResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // ReplaceResult represents the result of a Replace operation.
 type ReplaceResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // DeleteResult represents the result of a Delete operation.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // Param represents a configuration parameter API resource.
@@ -130,7 +130,7 @@ func ExtractParams(r pagination.Page) ([]Param, error) {
 // ParamResult represents the result of an operation which retrieves details
 // about a particular configuration param.
 type ParamResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract will retrieve a param from an operation result.

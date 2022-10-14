@@ -18,12 +18,12 @@ type GetOpts struct {
 
 // ToLimitsQuery formats a GetOpts into a query string.
 func (opts GetOpts) ToLimitsQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // Get returns the limits about the currently scoped tenant.
-func Get(client *ktvpcsdk.ServiceClient, opts GetOptsBuilder) (r GetResult) {
+func Get(client *gophercloud.ServiceClient, opts GetOptsBuilder) (r GetResult) {
 	url := getURL(client)
 	if opts != nil {
 		query, err := opts.ToLimitsQuery()
@@ -35,6 +35,6 @@ func Get(client *ktvpcsdk.ServiceClient, opts GetOptsBuilder) (r GetResult) {
 	}
 
 	resp, err := client.Get(url, &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

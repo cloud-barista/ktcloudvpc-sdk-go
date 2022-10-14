@@ -23,7 +23,7 @@ func (r *Transfer) UnmarshalJSON(b []byte) error {
 	type tmp Transfer
 	var s struct {
 		tmp
-		CreatedAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"created_at"`
+		CreatedAt gophercloud.JSONRFC3339MilliNoZ `json:"created_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -37,7 +37,7 @@ func (r *Transfer) UnmarshalJSON(b []byte) error {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract will get the Transfer object out of the commonResult object.
@@ -64,7 +64,7 @@ type GetResult struct {
 
 // DeleteResult contains the response body and error from a Delete request.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // ExtractTransfers extracts and returns Transfers. It is used while iterating over a transfers.List call.
@@ -92,11 +92,11 @@ func (r TransferPage) IsEmpty() (bool, error) {
 
 func (page TransferPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []ktvpcsdk.Link `json:"transfers_links"`
+		Links []gophercloud.Link `json:"transfers_links"`
 	}
 	err := page.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return ktvpcsdk.ExtractNextURL(s.Links)
+	return gophercloud.ExtractNextURL(s.Links)
 }

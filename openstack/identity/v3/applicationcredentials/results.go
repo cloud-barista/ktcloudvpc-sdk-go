@@ -63,7 +63,7 @@ func (r *ApplicationCredential) UnmarshalJSON(b []byte) error {
 	type tmp ApplicationCredential
 	var s struct {
 		tmp
-		ExpiresAt ktvpcsdk.JSONRFC3339MilliNoZ `json:"expires_at"`
+		ExpiresAt gophercloud.JSONRFC3339MilliNoZ `json:"expires_at"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -77,7 +77,7 @@ func (r *ApplicationCredential) UnmarshalJSON(b []byte) error {
 }
 
 type applicationCredentialResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // GetResult is the response from a Get operation. Call its Extract method
@@ -95,7 +95,7 @@ type CreateResult struct {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr to
 // determine if the request succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // an ApplicationCredentialPage is a single page of an ApplicationCredential results.
@@ -145,7 +145,7 @@ func (r applicationCredentialResult) Extract() (*ApplicationCredential, error) {
 // GetAccessRuleResult is the response from a Get operation. Call its Extract method
 // to interpret it as an AccessRule.
 type GetAccessRuleResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // an AccessRulePage is a single page of an AccessRule results.

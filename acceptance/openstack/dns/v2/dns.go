@@ -14,7 +14,7 @@ import (
 
 // CreateRecordSet will create a RecordSet with a random name. An error will
 // be returned if the zone was unable to be created.
-func CreateRecordSet(t *testing.T, client *ktvpcsdk.ServiceClient, zone *zones.Zone) (*recordsets.RecordSet, error) {
+func CreateRecordSet(t *testing.T, client *gophercloud.ServiceClient, zone *zones.Zone) (*recordsets.RecordSet, error) {
 	t.Logf("Attempting to create recordset: %s", zone.Name)
 
 	createOpts := recordsets.CreateOpts{
@@ -48,7 +48,7 @@ func CreateRecordSet(t *testing.T, client *ktvpcsdk.ServiceClient, zone *zones.Z
 
 // CreateZone will create a Zone with a random name. An error will
 // be returned if the zone was unable to be created.
-func CreateZone(t *testing.T, client *ktvpcsdk.ServiceClient) (*zones.Zone, error) {
+func CreateZone(t *testing.T, client *gophercloud.ServiceClient) (*zones.Zone, error) {
 	zoneName := tools.RandomString("ACPTTEST", 8) + ".com."
 
 	t.Logf("Attempting to create zone: %s", zoneName)
@@ -86,7 +86,7 @@ func CreateZone(t *testing.T, client *ktvpcsdk.ServiceClient) (*zones.Zone, erro
 // be returned if the zone was unable to be created.
 //
 // This is only for example purposes as it will try to do a zone transfer.
-func CreateSecondaryZone(t *testing.T, client *ktvpcsdk.ServiceClient) (*zones.Zone, error) {
+func CreateSecondaryZone(t *testing.T, client *gophercloud.ServiceClient) (*zones.Zone, error) {
 	zoneName := tools.RandomString("ACPTTEST", 8) + ".com."
 
 	t.Logf("Attempting to create zone: %s", zoneName)
@@ -120,7 +120,7 @@ func CreateSecondaryZone(t *testing.T, client *ktvpcsdk.ServiceClient) (*zones.Z
 
 // CreateTransferRequest will create a Transfer Request to a spectified Zone. An error will
 // be returned if the zone transfer request was unable to be created.
-func CreateTransferRequest(t *testing.T, client *ktvpcsdk.ServiceClient, zone *zones.Zone, targetProjectID string) (*transferRequests.TransferRequest, error) {
+func CreateTransferRequest(t *testing.T, client *gophercloud.ServiceClient, zone *zones.Zone, targetProjectID string) (*transferRequests.TransferRequest, error) {
 	t.Logf("Attempting to create Transfer Request to Zone: %s", zone.Name)
 
 	createOpts := transferRequests.CreateOpts{
@@ -152,7 +152,7 @@ func CreateTransferRequest(t *testing.T, client *ktvpcsdk.ServiceClient, zone *z
 
 // CreateTransferAccept will accept a spectified Transfer Request. An error will
 // be returned if the zone transfer accept was unable to be created.
-func CreateTransferAccept(t *testing.T, client *ktvpcsdk.ServiceClient, zoneTransferRequestID string, key string) (*transferAccepts.TransferAccept, error) {
+func CreateTransferAccept(t *testing.T, client *gophercloud.ServiceClient, zoneTransferRequestID string, key string) (*transferAccepts.TransferAccept, error) {
 	t.Logf("Attempting to accept specified transfer reqeust: %s", zoneTransferRequestID)
 	createOpts := transferAccepts.CreateOpts{
 		ZoneTransferRequestID: zoneTransferRequestID,
@@ -177,7 +177,7 @@ func CreateTransferAccept(t *testing.T, client *ktvpcsdk.ServiceClient, zoneTran
 // DeleteTransferRequest will delete a specified zone transfer request. A fatal error will occur if
 // the transfer request failed to be deleted. This works best when used as a deferred
 // function.
-func DeleteTransferRequest(t *testing.T, client *ktvpcsdk.ServiceClient, tr *transferRequests.TransferRequest) {
+func DeleteTransferRequest(t *testing.T, client *gophercloud.ServiceClient, tr *transferRequests.TransferRequest) {
 	err := transferRequests.Delete(client, tr.ID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete zone transfer request %s: %v", tr.ID, err)
@@ -188,7 +188,7 @@ func DeleteTransferRequest(t *testing.T, client *ktvpcsdk.ServiceClient, tr *tra
 // DeleteRecordSet will delete a specified record set. A fatal error will occur if
 // the record set failed to be deleted. This works best when used as a deferred
 // function.
-func DeleteRecordSet(t *testing.T, client *ktvpcsdk.ServiceClient, rs *recordsets.RecordSet) {
+func DeleteRecordSet(t *testing.T, client *gophercloud.ServiceClient, rs *recordsets.RecordSet) {
 	err := recordsets.Delete(client, rs.ZoneID, rs.ID).ExtractErr()
 	if err != nil {
 		t.Fatalf("Unable to delete record set %s: %v", rs.ID, err)
@@ -200,7 +200,7 @@ func DeleteRecordSet(t *testing.T, client *ktvpcsdk.ServiceClient, rs *recordset
 // DeleteZone will delete a specified zone. A fatal error will occur if
 // the zone failed to be deleted. This works best when used as a deferred
 // function.
-func DeleteZone(t *testing.T, client *ktvpcsdk.ServiceClient, zone *zones.Zone) {
+func DeleteZone(t *testing.T, client *gophercloud.ServiceClient, zone *zones.Zone) {
 	_, err := zones.Delete(client, zone.ID).Extract()
 	if err != nil {
 		t.Fatalf("Unable to delete zone %s: %v", zone.ID, err)
@@ -211,7 +211,7 @@ func DeleteZone(t *testing.T, client *ktvpcsdk.ServiceClient, zone *zones.Zone) 
 
 // WaitForRecordSetStatus will poll a record set's status until it either matches
 // the specified status or the status becomes ERROR.
-func WaitForRecordSetStatus(client *ktvpcsdk.ServiceClient, rs *recordsets.RecordSet, status string) error {
+func WaitForRecordSetStatus(client *gophercloud.ServiceClient, rs *recordsets.RecordSet, status string) error {
 	return tools.WaitFor(func() (bool, error) {
 		current, err := recordsets.Get(client, rs.ZoneID, rs.ID).Extract()
 		if err != nil {
@@ -228,7 +228,7 @@ func WaitForRecordSetStatus(client *ktvpcsdk.ServiceClient, rs *recordsets.Recor
 
 // WaitForTransferRequestStatus will poll a transfer reqeust's status until it either matches
 // the specified status or the status becomes ERROR.
-func WaitForTransferRequestStatus(client *ktvpcsdk.ServiceClient, tr *transferRequests.TransferRequest, status string) error {
+func WaitForTransferRequestStatus(client *gophercloud.ServiceClient, tr *transferRequests.TransferRequest, status string) error {
 	return tools.WaitFor(func() (bool, error) {
 		current, err := transferRequests.Get(client, tr.ID).Extract()
 		if err != nil {
@@ -243,7 +243,7 @@ func WaitForTransferRequestStatus(client *ktvpcsdk.ServiceClient, tr *transferRe
 
 // WaitForTransferAcceptStatus will poll a transfer accept's status until it either matches
 // the specified status or the status becomes ERROR.
-func WaitForTransferAcceptStatus(client *ktvpcsdk.ServiceClient, ta *transferAccepts.TransferAccept, status string) error {
+func WaitForTransferAcceptStatus(client *gophercloud.ServiceClient, ta *transferAccepts.TransferAccept, status string) error {
 	return tools.WaitFor(func() (bool, error) {
 		current, err := transferAccepts.Get(client, ta.ID).Extract()
 		if err != nil {
@@ -258,7 +258,7 @@ func WaitForTransferAcceptStatus(client *ktvpcsdk.ServiceClient, ta *transferAcc
 
 // WaitForZoneStatus will poll a zone's status until it either matches
 // the specified status or the status becomes ERROR.
-func WaitForZoneStatus(client *ktvpcsdk.ServiceClient, zone *zones.Zone, status string) error {
+func WaitForZoneStatus(client *gophercloud.ServiceClient, zone *zones.Zone, status string) error {
 	return tools.WaitFor(func() (bool, error) {
 		current, err := zones.Get(client, zone.ID).Extract()
 		if err != nil {

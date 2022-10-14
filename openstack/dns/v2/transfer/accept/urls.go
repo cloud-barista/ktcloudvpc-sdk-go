@@ -8,10 +8,10 @@ const (
 	resourcePath = "transfer_accepts"
 )
 
-func baseURL(c *ktvpcsdk.ServiceClient) string {
+func baseURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL(rootPath, tasksPath, resourcePath)
 }
 
-func resourceURL(c *ktvpcsdk.ServiceClient, transferAcceptID string) string {
+func resourceURL(c *gophercloud.ServiceClient, transferAcceptID string) string {
 	return c.ServiceURL(rootPath, tasksPath, resourcePath, transferAcceptID)
 }

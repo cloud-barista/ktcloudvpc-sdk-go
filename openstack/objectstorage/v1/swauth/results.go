@@ -7,7 +7,7 @@ import (
 // GetAuthResult contains the response from the Auth request. Call its Extract
 // method to interpret it as an AuthResult.
 type GetAuthResult struct {
-	ktvpcsdk.HeaderResult
+	gophercloud.HeaderResult
 }
 
 // AuthResult contains the authentication information from a Swauth

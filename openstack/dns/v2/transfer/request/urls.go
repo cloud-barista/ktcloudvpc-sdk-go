@@ -8,14 +8,14 @@ const (
 	resourcePath = "transfer_requests"
 )
 
-func baseURL(c *ktvpcsdk.ServiceClient) string {
+func baseURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL(rootPath, tasksPath, resourcePath)
 }
 
-func createURL(c *ktvpcsdk.ServiceClient, zoneID string) string {
+func createURL(c *gophercloud.ServiceClient, zoneID string) string {
 	return c.ServiceURL(rootPath, zoneID, tasksPath, resourcePath)
 }
 
-func resourceURL(c *ktvpcsdk.ServiceClient, transferID string) string {
+func resourceURL(c *gophercloud.ServiceClient, transferID string) string {
 	return c.ServiceURL(rootPath, tasksPath, resourcePath, transferID)
 }

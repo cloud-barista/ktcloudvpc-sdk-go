@@ -67,13 +67,13 @@ type PoolPage struct {
 // to do this, it needs to construct the next page's URL.
 func (r PoolPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []ktvpcsdk.Link `json:"pools_links"`
+		Links []gophercloud.Link `json:"pools_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return ktvpcsdk.ExtractNextURL(s.Links)
+	return gophercloud.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether a PoolPage struct is empty.
@@ -94,7 +94,7 @@ func ExtractPools(r pagination.Page) ([]Pool, error) {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract is a function that accepts a result and extracts a router.
@@ -127,7 +127,7 @@ type UpdateResult struct {
 // DeleteResult represents the result of a delete operation. Call its
 // ExtractErr method to interpret it as a Pool.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // AssociateResult represents the result of an association operation. Call its Extract

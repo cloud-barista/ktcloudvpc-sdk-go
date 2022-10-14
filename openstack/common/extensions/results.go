@@ -8,7 +8,7 @@ import (
 // GetResult temporarily stores the result of a Get call.
 // Use its Extract() method to interpret it as an Extension.
 type GetResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets a GetResult as an Extension.

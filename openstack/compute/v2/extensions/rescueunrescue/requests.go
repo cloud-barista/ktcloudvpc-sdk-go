@@ -28,26 +28,26 @@ type RescueOpts struct {
 // ToServerRescueMap formats a RescueOpts as a map that can be used as a JSON
 // request body for the Rescue request.
 func (opts RescueOpts) ToServerRescueMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "rescue")
+	return gophercloud.BuildRequestBody(opts, "rescue")
 }
 
 // Rescue instructs the provider to place the server into RESCUE mode.
-func Rescue(client *ktvpcsdk.ServiceClient, id string, opts RescueOptsBuilder) (r RescueResult) {
+func Rescue(client *gophercloud.ServiceClient, id string, opts RescueOptsBuilder) (r RescueResult) {
 	b, err := opts.ToServerRescueMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(extensions.ActionURL(client, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(extensions.ActionURL(client, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Unrescue instructs the provider to return the server from RESCUE mode.
-func Unrescue(client *ktvpcsdk.ServiceClient, id string) (r UnrescueResult) {
+func Unrescue(client *gophercloud.ServiceClient, id string) (r UnrescueResult) {
 	resp, err := client.Post(extensions.ActionURL(client, id), map[string]interface{}{"unrescue": nil}, nil, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

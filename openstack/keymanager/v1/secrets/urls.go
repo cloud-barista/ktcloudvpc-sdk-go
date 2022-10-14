@@ -2,34 +2,34 @@ package secrets
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-func listURL(client *ktvpcsdk.ServiceClient) string {
+func listURL(client *gophercloud.ServiceClient) string {
 	return client.ServiceURL("secrets")
 }
 
-func getURL(client *ktvpcsdk.ServiceClient, id string) string {
+func getURL(client *gophercloud.ServiceClient, id string) string {
 	return client.ServiceURL("secrets", id)
 }
 
-func createURL(client *ktvpcsdk.ServiceClient) string {
+func createURL(client *gophercloud.ServiceClient) string {
 	return client.ServiceURL("secrets")
 }
 
-func deleteURL(client *ktvpcsdk.ServiceClient, id string) string {
+func deleteURL(client *gophercloud.ServiceClient, id string) string {
 	return client.ServiceURL("secrets", id)
 }
 
-func updateURL(client *ktvpcsdk.ServiceClient, id string) string {
+func updateURL(client *gophercloud.ServiceClient, id string) string {
 	return client.ServiceURL("secrets", id)
 }
 
-func payloadURL(client *ktvpcsdk.ServiceClient, id string) string {
+func payloadURL(client *gophercloud.ServiceClient, id string) string {
 	return client.ServiceURL("secrets", id, "payload")
 }
 
-func metadataURL(client *ktvpcsdk.ServiceClient, id string) string {
+func metadataURL(client *gophercloud.ServiceClient, id string) string {
 	return client.ServiceURL("secrets", id, "metadata")
 }
 
-func metadatumURL(client *ktvpcsdk.ServiceClient, id, key string) string {
+func metadatumURL(client *gophercloud.ServiceClient, id, key string) string {
 	return client.ServiceURL("secrets", id, "metadata", key)
 }

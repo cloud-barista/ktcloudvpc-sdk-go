@@ -241,7 +241,7 @@ const ListBGPSpeakersResult = `
         "4022d79f-835e-4271-b5d1-d90dce5662df"
       ],
       "project_id": "89f56d77-fee7-4b2f-8b1e-583717a93690",
-      "name": "ktvpcsdk-testing-speaker",
+      "name": "gophercloud-testing-speaker",
       "tenant_id": "5c372f0b-051e-485c-a82c-9dd732e7df83",
       "local_as": 12345,
       "advertise_tenant_networks": true,

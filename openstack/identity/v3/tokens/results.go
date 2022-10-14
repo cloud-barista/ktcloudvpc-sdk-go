@@ -79,7 +79,7 @@ type Project struct {
 // commonResult is the response from a request. A commonResult has various
 // methods which can be used to extract different details about the result.
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract is a shortcut for ExtractToken.
@@ -102,14 +102,14 @@ func (r commonResult) ExtractToken() (*Token, error) {
 	return &s, err
 }
 
-// ExtractTokenID implements the ktvpcsdk.AuthResult interface. The returned
+// ExtractTokenID implements the gophercloud.AuthResult interface. The returned
 // string is the same as the ID field of the Token struct returned from
 // ExtractToken().
 func (r CreateResult) ExtractTokenID() (string, error) {
 	return r.Header.Get("X-Subject-Token"), r.Err
 }
 
-// ExtractTokenID implements the ktvpcsdk.AuthResult interface. The returned
+// ExtractTokenID implements the gophercloud.AuthResult interface. The returned
 // string is the same as the ID field of the Token struct returned from
 // ExtractToken().
 func (r GetResult) ExtractTokenID() (string, error) {

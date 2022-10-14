@@ -8,10 +8,10 @@ const (
 	resourcePath = "remote-consoles"
 )
 
-func rootURL(c *ktvpcsdk.ServiceClient, serverID string) string {
+func rootURL(c *gophercloud.ServiceClient, serverID string) string {
 	return c.ServiceURL(rootPath, serverID, resourcePath)
 }
 
-func createURL(c *ktvpcsdk.ServiceClient, serverID string) string {
+func createURL(c *gophercloud.ServiceClient, serverID string) string {
 	return rootURL(c, serverID)
 }

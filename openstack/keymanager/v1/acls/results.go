@@ -29,8 +29,8 @@ func (r *ACLDetails) UnmarshalJSON(b []byte) error {
 	type tmp ACLDetails
 	var s struct {
 		tmp
-		Created ktvpcsdk.JSONRFC3339NoZ `json:"created"`
-		Updated ktvpcsdk.JSONRFC3339NoZ `json:"updated"`
+		Created gophercloud.JSONRFC3339NoZ `json:"created"`
+		Updated gophercloud.JSONRFC3339NoZ `json:"updated"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {
@@ -48,7 +48,7 @@ func (r *ACLDetails) UnmarshalJSON(b []byte) error {
 type ACLRef string
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract interprets any commonResult as an ACL.
@@ -67,7 +67,7 @@ type ACLResult struct {
 // ACLRefResult is the response from a Set or Update operation. Call its
 // Extract method to interpret it as an ACLRef.
 type ACLRefResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 func (r ACLRefResult) Extract() (*ACLRef, error) {
@@ -81,5 +81,5 @@ func (r ACLRefResult) Extract() (*ACLRef, error) {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr to
 // determine if the request succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }

@@ -75,7 +75,7 @@ type ListOpts struct {
 
 // ToRuleListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToRuleListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	if err != nil {
 		return "", err
 	}
@@ -88,7 +88,7 @@ func (opts ListOpts) ToRuleListQuery() (string, error) {
 //
 // Default policy settings return only those firewall rules that are owned by the
 // tenant who submits the request, unless an admin user submits the request.
-func List(c *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := rootURL(c)
 
 	if opts != nil {
@@ -119,7 +119,7 @@ type CreateOpts struct {
 	TenantID             string                `json:"tenant_id,omitempty"`
 	Name                 string                `json:"name,omitempty"`
 	Description          string                `json:"description,omitempty"`
-	IPVersion            ktvpcsdk.IPVersion `json:"ip_version,omitempty"`
+	IPVersion            gophercloud.IPVersion `json:"ip_version,omitempty"`
 	SourceIPAddress      string                `json:"source_ip_address,omitempty"`
 	DestinationIPAddress string                `json:"destination_ip_address,omitempty"`
 	SourcePort           string                `json:"source_port,omitempty"`
@@ -130,7 +130,7 @@ type CreateOpts struct {
 
 // ToRuleCreateMap casts a CreateOpts struct to a map.
 func (opts CreateOpts) ToRuleCreateMap() (map[string]interface{}, error) {
-	b, err := ktvpcsdk.BuildRequestBody(opts, "firewall_rule")
+	b, err := gophercloud.BuildRequestBody(opts, "firewall_rule")
 	if err != nil {
 		return nil, err
 	}
@@ -143,21 +143,21 @@ func (opts CreateOpts) ToRuleCreateMap() (map[string]interface{}, error) {
 }
 
 // Create accepts a CreateOpts struct and uses the values to create a new firewall rule
-func Create(c *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToRuleCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 	resp, err := c.Post(rootURL(c), b, &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get retrieves a particular firewall rule based on its unique ID.
-func Get(c *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
 	resp, err := c.Get(resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -175,7 +175,7 @@ type UpdateOpts struct {
 	Action               *Action                `json:"action,omitempty"`
 	Name                 *string                `json:"name,omitempty"`
 	Description          *string                `json:"description,omitempty"`
-	IPVersion            *ktvpcsdk.IPVersion `json:"ip_version,omitempty"`
+	IPVersion            *gophercloud.IPVersion `json:"ip_version,omitempty"`
 	SourceIPAddress      *string                `json:"source_ip_address,omitempty"`
 	DestinationIPAddress *string                `json:"destination_ip_address,omitempty"`
 	SourcePort           *string                `json:"source_port,omitempty"`
@@ -186,26 +186,26 @@ type UpdateOpts struct {
 
 // ToRuleUpdateMap casts a UpdateOpts struct to a map.
 func (opts UpdateOpts) ToRuleUpdateMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "firewall_rule")
+	return gophercloud.BuildRequestBody(opts, "firewall_rule")
 }
 
 // Update allows firewall policies to be updated.
-func Update(c *ktvpcsdk.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToRuleUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete will permanently delete a particular firewall rule based on its unique ID.
-func Delete(c *ktvpcsdk.ServiceClient, id string) (r DeleteResult) {
+func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := c.Delete(resourceURL(c, id), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

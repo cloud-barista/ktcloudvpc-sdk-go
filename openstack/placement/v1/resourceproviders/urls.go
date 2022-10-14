@@ -6,34 +6,34 @@ const (
 	apiName = "resource_providers"
 )
 
-func resourceProvidersListURL(client *ktvpcsdk.ServiceClient) string {
+func resourceProvidersListURL(client *gophercloud.ServiceClient) string {
 	return client.ServiceURL(apiName)
 }
 
-func deleteURL(client *ktvpcsdk.ServiceClient, resourceProviderID string) string {
+func deleteURL(client *gophercloud.ServiceClient, resourceProviderID string) string {
 	return client.ServiceURL(apiName, resourceProviderID)
 }
 
-func getURL(client *ktvpcsdk.ServiceClient, resourceProviderID string) string {
+func getURL(client *gophercloud.ServiceClient, resourceProviderID string) string {
 	return client.ServiceURL(apiName, resourceProviderID)
 }
 
-func updateURL(client *ktvpcsdk.ServiceClient, resourceProviderID string) string {
+func updateURL(client *gophercloud.ServiceClient, resourceProviderID string) string {
 	return client.ServiceURL(apiName, resourceProviderID)
 }
 
-func getResourceProviderUsagesURL(client *ktvpcsdk.ServiceClient, resourceProviderID string) string {
+func getResourceProviderUsagesURL(client *gophercloud.ServiceClient, resourceProviderID string) string {
 	return client.ServiceURL(apiName, resourceProviderID, "usages")
 }
 
-func getResourceProviderInventoriesURL(client *ktvpcsdk.ServiceClient, resourceProviderID string) string {
+func getResourceProviderInventoriesURL(client *gophercloud.ServiceClient, resourceProviderID string) string {
 	return client.ServiceURL(apiName, resourceProviderID, "inventories")
 }
 
-func getResourceProviderAllocationsURL(client *ktvpcsdk.ServiceClient, resourceProviderID string) string {
+func getResourceProviderAllocationsURL(client *gophercloud.ServiceClient, resourceProviderID string) string {
 	return client.ServiceURL(apiName, resourceProviderID, "allocations")
 }
 
-func getResourceProviderTraitsURL(client *ktvpcsdk.ServiceClient, resourceProviderID string) string {
+func getResourceProviderTraitsURL(client *gophercloud.ServiceClient, resourceProviderID string) string {
 	return client.ServiceURL(apiName, resourceProviderID, "traits")
 }

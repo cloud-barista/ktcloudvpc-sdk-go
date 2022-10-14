@@ -12,7 +12,7 @@ import (
 
 // PageResult stores the HTTP response that returned the current page of results.
 type PageResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 	url.URL
 }
 
@@ -43,7 +43,7 @@ func PageResultFrom(resp *http.Response) (PageResult, error) {
 // body parsed as JSON (and closed).
 func PageResultFromParsed(resp *http.Response, body interface{}) PageResult {
 	return PageResult{
-		Result: ktvpcsdk.Result{
+		Result: gophercloud.Result{
 			Body:   body,
 			Header: resp.Header,
 		},
@@ -52,8 +52,8 @@ func PageResultFromParsed(resp *http.Response, body interface{}) PageResult {
 }
 
 // Request performs an HTTP request and extracts the http.Response from the result.
-func Request(client *ktvpcsdk.ServiceClient, headers map[string]string, url string) (*http.Response, error) {
-	return client.Get(url, nil, &ktvpcsdk.RequestOpts{
+func Request(client *gophercloud.ServiceClient, headers map[string]string, url string) (*http.Response, error) {
+	return client.Get(url, nil, &gophercloud.RequestOpts{
 		MoreHeaders:      headers,
 		OkCodes:          []int{200, 204, 300},
 		KeepResponseBody: true,

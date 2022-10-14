@@ -22,8 +22,8 @@ Example to Get a Detailed Quota Set
 Example to Update a Quota Set
 
 	updateOpts := quotasets.UpdateOpts{
-		FixedIPs: ktvpcsdk.IntToPointer(100),
-		Cores:    ktvpcsdk.IntToPointer(64),
+		FixedIPs: gophercloud.IntToPointer(100),
+		Cores:    gophercloud.IntToPointer(64),
 	}
 
 	quotaset, err := quotasets.Update(computeClient, "tenant-id", updateOpts).Extract()

@@ -142,7 +142,7 @@ func ExtractQuotaSets(r pagination.Page) ([]QuotaSet, error) {
 }
 
 type quotaResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract is a method that attempts to interpret any QuotaSet resource response
@@ -174,7 +174,7 @@ type DeleteResult struct {
 }
 
 type quotaDetailResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // GetDetailResult is the response from a Get operation. Call its Extract

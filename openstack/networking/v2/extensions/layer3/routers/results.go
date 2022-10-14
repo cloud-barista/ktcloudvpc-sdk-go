@@ -89,13 +89,13 @@ type RouterPage struct {
 // to do this, it needs to construct the next page's URL.
 func (r RouterPage) NextPageURL() (string, error) {
 	var s struct {
-		Links []ktvpcsdk.Link `json:"routers_links"`
+		Links []gophercloud.Link `json:"routers_links"`
 	}
 	err := r.ExtractInto(&s)
 	if err != nil {
 		return "", err
 	}
-	return ktvpcsdk.ExtractNextURL(s.Links)
+	return gophercloud.ExtractNextURL(s.Links)
 }
 
 // IsEmpty checks whether a RouterPage struct is empty.
@@ -116,7 +116,7 @@ func ExtractRouters(r pagination.Page) ([]Router, error) {
 }
 
 type commonResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract is a function that accepts a result and extracts a router.
@@ -149,7 +149,7 @@ type UpdateResult struct {
 // DeleteResult represents the result of a delete operation. Call its ExtractErr
 // method to determine if the request succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // InterfaceInfo represents information about a particular router interface. As
@@ -173,7 +173,7 @@ type InterfaceInfo struct {
 // AddInterface() and RemoveInterface(). Call its Extract method to interpret
 // the result as a InterfaceInfo.
 type InterfaceResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // Extract is a function that accepts a result and extracts an information struct.
@@ -241,9 +241,9 @@ func (r *L3Agent) UnmarshalJSON(b []byte) error {
 	type tmp L3Agent
 	var s struct {
 		tmp
-		CreatedAt          ktvpcsdk.JSONRFC3339ZNoTNoZ `json:"created_at"`
-		StartedAt          ktvpcsdk.JSONRFC3339ZNoTNoZ `json:"started_at"`
-		HeartbeatTimestamp ktvpcsdk.JSONRFC3339ZNoTNoZ `json:"heartbeat_timestamp"`
+		CreatedAt          gophercloud.JSONRFC3339ZNoTNoZ `json:"created_at"`
+		StartedAt          gophercloud.JSONRFC3339ZNoTNoZ `json:"started_at"`
+		HeartbeatTimestamp gophercloud.JSONRFC3339ZNoTNoZ `json:"heartbeat_timestamp"`
 	}
 	err := json.Unmarshal(b, &s)
 	if err != nil {

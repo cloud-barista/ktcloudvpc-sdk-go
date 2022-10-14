@@ -30,12 +30,12 @@ type ListOpts struct {
 }
 
 func (opts ListOpts) ToMessageListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // ListMessages lists messages on a specific queue based off queue name.
-func List(client *ktvpcsdk.ServiceClient, queueName string, opts ListOptsBuilder) pagination.Pager {
+func List(client *gophercloud.ServiceClient, queueName string, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client, queueName)
 	if opts != nil {
 		query, err := opts.ToMessageListQuery()
@@ -87,21 +87,21 @@ func (opts BatchCreateOpts) ToMessageCreateMap() (map[string]interface{}, error)
 
 // ToMap constructs a request body from UpdateOpts.
 func (opts CreateOpts) ToMap() (map[string]interface{}, error) {
-	return ktvpcsdk.BuildRequestBody(opts, "")
+	return gophercloud.BuildRequestBody(opts, "")
 }
 
 // Create creates a message on a specific queue based of off queue name.
-func Create(client *ktvpcsdk.ServiceClient, queueName string, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, queueName string, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToMessageCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
 
-	resp, err := client.Post(createURL(client, queueName), b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(createURL(client, queueName), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -118,12 +118,12 @@ type DeleteMessagesOpts struct {
 
 // ToMessagesDeleteQuery formats a DeleteMessagesOpts structure into a query string.
 func (opts DeleteMessagesOpts) ToMessagesDeleteQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // DeleteMessages deletes multiple messages based off of ID.
-func DeleteMessages(client *ktvpcsdk.ServiceClient, queueName string, opts DeleteMessagesOptsBuilder) (r DeleteResult) {
+func DeleteMessages(client *gophercloud.ServiceClient, queueName string, opts DeleteMessagesOptsBuilder) (r DeleteResult) {
 	url := deleteURL(client, queueName)
 	if opts != nil {
 		query, err := opts.ToMessagesDeleteQuery()
@@ -133,10 +133,10 @@ func DeleteMessages(client *ktvpcsdk.ServiceClient, queueName string, opts Delet
 		}
 		url += query
 	}
-	resp, err := client.Delete(url, &ktvpcsdk.RequestOpts{
+	resp, err := client.Delete(url, &gophercloud.RequestOpts{
 		OkCodes: []int{200, 204},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -153,12 +153,12 @@ type PopMessagesOpts struct {
 
 // ToMessagesPopQuery formats a PopMessagesOpts structure into a query string.
 func (opts PopMessagesOpts) ToMessagesPopQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // PopMessages deletes and returns multiple messages based off of number of messages.
-func PopMessages(client *ktvpcsdk.ServiceClient, queueName string, opts PopMessagesOptsBuilder) (r PopResult) {
+func PopMessages(client *gophercloud.ServiceClient, queueName string, opts PopMessagesOptsBuilder) (r PopResult) {
 	url := deleteURL(client, queueName)
 	if opts != nil {
 		query, err := opts.ToMessagesPopQuery()
@@ -168,11 +168,11 @@ func PopMessages(client *ktvpcsdk.ServiceClient, queueName string, opts PopMessa
 		}
 		url += query
 	}
-	resp, err := client.Delete(url, &ktvpcsdk.RequestOpts{
+	resp, err := client.Delete(url, &gophercloud.RequestOpts{
 		JSONResponse: &r.Body,
 		OkCodes:      []int{200, 204},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -189,12 +189,12 @@ type GetMessagesOpts struct {
 
 // ToGetMessagesListQuery formats a GetMessagesOpts structure into a query string.
 func (opts GetMessagesOpts) ToGetMessagesListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // GetMessages requests details on a multiple messages, by IDs.
-func GetMessages(client *ktvpcsdk.ServiceClient, queueName string, opts GetMessagesOptsBuilder) (r GetMessagesResult) {
+func GetMessages(client *gophercloud.ServiceClient, queueName string, opts GetMessagesOptsBuilder) (r GetMessagesResult) {
 	url := getURL(client, queueName)
 	if opts != nil {
 		query, err := opts.ToGetMessagesListQuery()
@@ -204,19 +204,19 @@ func GetMessages(client *ktvpcsdk.ServiceClient, queueName string, opts GetMessa
 		}
 		url += query
 	}
-	resp, err := client.Get(url, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Get(url, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Get requests details on a single message, by ID.
-func Get(client *ktvpcsdk.ServiceClient, queueName string, messageID string) (r GetResult) {
-	resp, err := client.Get(messageURL(client, queueName, messageID), &r.Body, &ktvpcsdk.RequestOpts{
+func Get(client *gophercloud.ServiceClient, queueName string, messageID string) (r GetResult) {
+	resp, err := client.Get(messageURL(client, queueName, messageID), &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -234,12 +234,12 @@ type DeleteOpts struct {
 
 // ToMessageDeleteQuery formats a DeleteOpts structure into a query string.
 func (opts DeleteOpts) ToMessageDeleteQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	return q.String(), err
 }
 
 // Delete deletes a specific message from the queue.
-func Delete(client *ktvpcsdk.ServiceClient, queueName string, messageID string, opts DeleteOptsBuilder) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClient, queueName string, messageID string, opts DeleteOptsBuilder) (r DeleteResult) {
 	url := DeleteMessageURL(client, queueName, messageID)
 	if opts != nil {
 		query, err := opts.ToMessageDeleteQuery()
@@ -249,9 +249,9 @@ func Delete(client *ktvpcsdk.ServiceClient, queueName string, messageID string, 
 		}
 		url += query
 	}
-	resp, err := client.Delete(url, &ktvpcsdk.RequestOpts{
+	resp, err := client.Delete(url, &gophercloud.RequestOpts{
 		OkCodes: []int{204},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

@@ -23,7 +23,7 @@ var goodStatus = map[string]bool{
 // ChooseVersion queries the base endpoint of an API to choose the most recent non-experimental alternative from a service's
 // published versions.
 // It returns the highest-Priority Version among the alternatives that are provided, as well as its corresponding endpoint.
-func ChooseVersion(client *ktvpcsdk.ProviderClient, recognized []*Version) (*Version, string, error) {
+func ChooseVersion(client *gophercloud.ProviderClient, recognized []*Version) (*Version, string, error) {
 	type linkResp struct {
 		Href string `json:"href"`
 		Rel  string `json:"rel"`
@@ -59,7 +59,7 @@ func ChooseVersion(client *ktvpcsdk.ProviderClient, recognized []*Version) (*Ver
 	}
 
 	var resp response
-	_, err := client.Request("GET", client.IdentityBase, &ktvpcsdk.RequestOpts{
+	_, err := client.Request("GET", client.IdentityBase, &gophercloud.RequestOpts{
 		JSONResponse: &resp,
 		OkCodes:      []int{200, 300},
 	})

@@ -49,15 +49,15 @@ func TestQuotasetGetUsage(t *testing.T) {
 }
 
 var UpdateQuotaOpts = quotasets.UpdateOpts{
-	Volumes:            ktvpcsdk.IntToPointer(100),
-	Snapshots:          ktvpcsdk.IntToPointer(200),
-	Gigabytes:          ktvpcsdk.IntToPointer(300),
-	PerVolumeGigabytes: ktvpcsdk.IntToPointer(50),
-	Backups:            ktvpcsdk.IntToPointer(2),
-	BackupGigabytes:    ktvpcsdk.IntToPointer(300),
-	Groups:             ktvpcsdk.IntToPointer(350),
+	Volumes:            gophercloud.IntToPointer(100),
+	Snapshots:          gophercloud.IntToPointer(200),
+	Gigabytes:          gophercloud.IntToPointer(300),
+	PerVolumeGigabytes: gophercloud.IntToPointer(50),
+	Backups:            gophercloud.IntToPointer(2),
+	BackupGigabytes:    gophercloud.IntToPointer(300),
+	Groups:             gophercloud.IntToPointer(350),
 	Extra: map[string]interface{}{
-		"volumes_foo": ktvpcsdk.IntToPointer(100),
+		"volumes_foo": gophercloud.IntToPointer(100),
 	},
 }
 
@@ -170,7 +170,7 @@ func TestQuotasetDelete(t *testing.T) {
 
 // getClientAndProject reduces boilerplate by returning a new blockstorage v3
 // ServiceClient and a project ID obtained from the OS_PROJECT_NAME envvar.
-func getClientAndProject(t *testing.T) (*ktvpcsdk.ServiceClient, string) {
+func getClientAndProject(t *testing.T) (*gophercloud.ServiceClient, string) {
 	client, err := clients.NewBlockStorageV3Client()
 	th.AssertNoErr(t, err)
 

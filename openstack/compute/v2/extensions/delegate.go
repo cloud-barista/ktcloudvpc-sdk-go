@@ -12,12 +12,12 @@ func ExtractExtensions(page pagination.Page) ([]common.Extension, error) {
 }
 
 // Get retrieves information for a specific extension using its alias.
-func Get(c *ktvpcsdk.ServiceClient, alias string) common.GetResult {
+func Get(c *gophercloud.ServiceClient, alias string) common.GetResult {
 	return common.Get(c, alias)
 }
 
 // List returns a Pager which allows you to iterate over the full collection of extensions.
 // It does not accept query parameters.
-func List(c *ktvpcsdk.ServiceClient) pagination.Pager {
+func List(c *gophercloud.ServiceClient) pagination.Pager {
 	return common.List(c)
 }

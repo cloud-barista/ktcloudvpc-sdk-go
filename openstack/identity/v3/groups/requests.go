@@ -29,7 +29,7 @@ type ListOpts struct {
 
 // ToGroupListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToGroupListQuery() (string, error) {
-	q, err := ktvpcsdk.BuildQueryString(opts)
+	q, err := gophercloud.BuildQueryString(opts)
 	if err != nil {
 		return "", err
 	}
@@ -49,7 +49,7 @@ func (opts ListOpts) ToGroupListQuery() (string, error) {
 }
 
 // List enumerates the Groups to which the current token has access.
-func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	url := listURL(client)
 	if opts != nil {
 		query, err := opts.ToGroupListQuery()
@@ -64,9 +64,9 @@ func List(client *ktvpcsdk.ServiceClient, opts ListOptsBuilder) pagination.Pager
 }
 
 // Get retrieves details on a single group, by ID.
-func Get(client *ktvpcsdk.ServiceClient, id string) (r GetResult) {
+func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
 	resp, err := client.Get(getURL(client, id), &r.Body, nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -93,7 +93,7 @@ type CreateOpts struct {
 
 // ToGroupCreateMap formats a CreateOpts into a create request.
 func (opts CreateOpts) ToGroupCreateMap() (map[string]interface{}, error) {
-	b, err := ktvpcsdk.BuildRequestBody(opts, "group")
+	b, err := gophercloud.BuildRequestBody(opts, "group")
 	if err != nil {
 		return nil, err
 	}
@@ -110,16 +110,16 @@ func (opts CreateOpts) ToGroupCreateMap() (map[string]interface{}, error) {
 }
 
 // Create creates a new Group.
-func Create(client *ktvpcsdk.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToGroupCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), &b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Post(createURL(client), &b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{201},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
@@ -146,7 +146,7 @@ type UpdateOpts struct {
 
 // ToGroupUpdateMap formats a UpdateOpts into an update request.
 func (opts UpdateOpts) ToGroupUpdateMap() (map[string]interface{}, error) {
-	b, err := ktvpcsdk.BuildRequestBody(opts, "group")
+	b, err := gophercloud.BuildRequestBody(opts, "group")
 	if err != nil {
 		return nil, err
 	}
@@ -163,22 +163,22 @@ func (opts UpdateOpts) ToGroupUpdateMap() (map[string]interface{}, error) {
 }
 
 // Update updates an existing Group.
-func Update(client *ktvpcsdk.ServiceClient, groupID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *gophercloud.ServiceClient, groupID string, opts UpdateOptsBuilder) (r UpdateResult) {
 	b, err := opts.ToGroupUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Patch(updateURL(client, groupID), &b, &r.Body, &ktvpcsdk.RequestOpts{
+	resp, err := client.Patch(updateURL(client, groupID), &b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete deletes a group.
-func Delete(client *ktvpcsdk.ServiceClient, groupID string) (r DeleteResult) {
+func Delete(client *gophercloud.ServiceClient, groupID string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, groupID), nil)
-	_, r.Header, r.Err = ktvpcsdk.ParseResponse(resp, err)
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

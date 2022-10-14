@@ -49,7 +49,7 @@ func (r *Policy) UnmarshalJSON(b []byte) error {
 			return err
 		}
 		if resultMap, ok := result.(map[string]interface{}); ok {
-			r.Extra = ktvpcsdk.RemainingKeys(Policy{}, resultMap)
+			r.Extra = gophercloud.RemainingKeys(Policy{}, resultMap)
 		}
 	}
 
@@ -57,7 +57,7 @@ func (r *Policy) UnmarshalJSON(b []byte) error {
 }
 
 type policyResult struct {
-	ktvpcsdk.Result
+	gophercloud.Result
 }
 
 // CreateResult is the response from a Create operation. Call its Extract method
@@ -81,7 +81,7 @@ type UpdateResult struct {
 // DeleteResult is the response from a Delete operation. Call its ExtractErr to
 // determine if the request succeeded or failed.
 type DeleteResult struct {
-	ktvpcsdk.ErrResult
+	gophercloud.ErrResult
 }
 
 // PolicyPage is a single page of Policy results.

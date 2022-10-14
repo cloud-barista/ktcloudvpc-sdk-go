@@ -6,7 +6,7 @@ import (
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
-var nilOptions = ktvpcsdk.AuthOptions{}
+var nilOptions = gophercloud.AuthOptions{}
 
 /*
 AuthOptionsFromEnv fills out an identity.AuthOptions structure with the
@@ -33,7 +33,7 @@ by sourcing an `openrc` file), then:
 	opts, err := openstack.AuthOptionsFromEnv()
 	provider, err := openstack.AuthenticatedClient(opts)
 */
-func AuthOptionsFromEnv() (ktvpcsdk.AuthOptions, error) {
+func AuthOptionsFromEnv() (gophercloud.AuthOptions, error) {
 	authURL := os.Getenv("OS_AUTH_URL")
 	username := os.Getenv("OS_USERNAME")
 	userID := os.Getenv("OS_USERID")
@@ -58,7 +58,7 @@ func AuthOptionsFromEnv() (ktvpcsdk.AuthOptions, error) {
 	}
 
 	if authURL == "" {
-		err := ktvpcsdk.ErrMissingEnvironmentVariable{
+		err := gophercloud.ErrMissingEnvironmentVariable{
 			EnvironmentVariable: "OS_AUTH_URL",
 		}
 		return nilOptions, err
@@ -67,7 +67,7 @@ func AuthOptionsFromEnv() (ktvpcsdk.AuthOptions, error) {
 	if userID == "" && username == "" {
 		// Empty username and userID could be ignored, when applicationCredentialID and applicationCredentialSecret are set
 		if applicationCredentialID == "" && applicationCredentialSecret == "" {
-			err := ktvpcsdk.ErrMissingAnyoneOfEnvironmentVariables{
+			err := gophercloud.ErrMissingAnyoneOfEnvironmentVariables{
 				EnvironmentVariables: []string{"OS_USERID", "OS_USERNAME"},
 			}
 			return nilOptions, err
@@ -75,7 +75,7 @@ func AuthOptionsFromEnv() (ktvpcsdk.AuthOptions, error) {
 	}
 
 	if password == "" && passcode == "" && applicationCredentialID == "" && applicationCredentialName == "" {
-		err := ktvpcsdk.ErrMissingEnvironmentVariable{
+		err := gophercloud.ErrMissingEnvironmentVariable{
 			// silently ignore TOTP passcode warning, since it is not a common auth method
 			EnvironmentVariable: "OS_PASSWORD",
 		}
@@ -83,14 +83,14 @@ func AuthOptionsFromEnv() (ktvpcsdk.AuthOptions, error) {
 	}
 
 	if (applicationCredentialID != "" || applicationCredentialName != "") && applicationCredentialSecret == "" {
-		err := ktvpcsdk.ErrMissingEnvironmentVariable{
+		err := gophercloud.ErrMissingEnvironmentVariable{
 			EnvironmentVariable: "OS_APPLICATION_CREDENTIAL_SECRET",
 		}
 		return nilOptions, err
 	}
 
 	if domainID == "" && domainName == "" && tenantID == "" && tenantName != "" {
-		err := ktvpcsdk.ErrMissingEnvironmentVariable{
+		err := gophercloud.ErrMissingEnvironmentVariable{
 			EnvironmentVariable: "OS_PROJECT_ID",
 		}
 		return nilOptions, err
@@ -98,18 +98,18 @@ func AuthOptionsFromEnv() (ktvpcsdk.AuthOptions, error) {
 
 	if applicationCredentialID == "" && applicationCredentialName != "" && applicationCredentialSecret != "" {
 		if userID == "" && username == "" {
-			return nilOptions, ktvpcsdk.ErrMissingAnyoneOfEnvironmentVariables{
+			return nilOptions, gophercloud.ErrMissingAnyoneOfEnvironmentVariables{
 				EnvironmentVariables: []string{"OS_USERID", "OS_USERNAME"},
 			}
 		}
 		if username != "" && domainID == "" && domainName == "" {
-			return nilOptions, ktvpcsdk.ErrMissingAnyoneOfEnvironmentVariables{
+			return nilOptions, gophercloud.ErrMissingAnyoneOfEnvironmentVariables{
 				EnvironmentVariables: []string{"OS_DOMAIN_ID", "OS_DOMAIN_NAME"},
 			}
 		}
 	}
 
-	ao := ktvpcsdk.AuthOptions{
+	ao := gophercloud.AuthOptions{
 		IdentityEndpoint:            authURL,
 		UserID:                      userID,
 		Username:                    username,

@@ -7,26 +7,26 @@ const (
 	rulepath     = "os-security-group-rules"
 )
 
-func resourceURL(c *ktvpcsdk.ServiceClient, id string) string {
+func resourceURL(c *gophercloud.ServiceClient, id string) string {
 	return c.ServiceURL(secgrouppath, id)
 }
 
-func rootURL(c *ktvpcsdk.ServiceClient) string {
+func rootURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL(secgrouppath)
 }
 
-func listByServerURL(c *ktvpcsdk.ServiceClient, serverID string) string {
+func listByServerURL(c *gophercloud.ServiceClient, serverID string) string {
 	return c.ServiceURL("servers", serverID, secgrouppath)
 }
 
-func rootRuleURL(c *ktvpcsdk.ServiceClient) string {
+func rootRuleURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL(rulepath)
 }
 
-func resourceRuleURL(c *ktvpcsdk.ServiceClient, id string) string {
+func resourceRuleURL(c *gophercloud.ServiceClient, id string) string {
 	return c.ServiceURL(rulepath, id)
 }
 
-func serverActionURL(c *ktvpcsdk.ServiceClient, id string) string {
+func serverActionURL(c *gophercloud.ServiceClient, id string) string {
 	return c.ServiceURL("servers", id, "action")
 }
