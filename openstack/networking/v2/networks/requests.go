@@ -14,7 +14,7 @@ import (
 var cblogger *logrus.Logger
 
 func init() {
-	cblogger = cblog.GetLogger("OpenStack Client")
+	cblogger = cblog.GetLogger("KTCloud VPC Client")
 }
 
 // ListOptsBuilder allows extensions to add additional parameters to the
