@@ -133,17 +133,55 @@ type CreateOpts struct {								// Modified by B.T. Oh
 
 // ToSubnetCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToSubnetCreateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "subnet")
+	b, err := gophercloud.BuildRequestBody(opts, "")  // Caution!!
 	if err != nil {
 		return nil, err
 	}
-
-	if m := b["subnet"].(map[string]interface{}); m["gateway_ip"] == "" {
-		m["gateway_ip"] = nil
-	}
-
 	return b, nil
 }
+/*
+b, err := gophercloud.BuildRequestBody(opts, "subnet") 
+==> 
+# body :
+(map[string]interface {}) (len=1) {
+	(string) (len=6) "subnet": (map[string]interface {}) (len=5) {
+		(string) (len=4) "name": (string) (len=9) "ktsubnet3",
+		(string) (len=4) "zone": (string) (len=5) "DX-M1",
+		(string) (len=4) "type": (string) (len=4) "tier",
+		(string) (len=10) "usercustom": (string) (len=1) "y",
+		(string) (len=6) "detail": (map[string]interface {}) (len=8) {
+			(string) (len=7) "bmendip": (string) (len=12) "172.25.7.250",
+			(string) (len=7) "gateway": (string) (len=10) "172.25.7.1",
+			(string) (len=4) "cidr": (string) (len=13) "172.25.7.0/24",
+			(string) (len=7) "startip": (string) (len=11) "172.25.7.11",
+			(string) (len=5) "endip": (string) (len=12) "172.25.7.120",
+			(string) (len=9) "lbstartip": (string) (len=12) "172.25.7.140",
+			(string) (len=7) "lbendip": (string) (len=12) "172.25.7.190",
+			(string) (len=9) "bmstartip": (string) (len=12) "172.25.7.201"
+		}
+	}
+}
+
+b, err := gophercloud.BuildRequestBody(opts, "")
+==>
+# body :
+(map[string]interface {}) (len=5) {
+	(string) (len=4) "name": (string) (len=9) "ktsubnet3",
+	(string) (len=4) "zone": (string) (len=5) "DX-M1",
+	(string) (len=4) "type": (string) (len=4) "tier",
+	(string) (len=10) "usercustom": (string) (len=1) "y",
+	(string) (len=6) "detail": (map[string]interface {}) (len=8) {
+		(string) (len=7) "bmendip": (string) (len=12) "172.25.7.250",
+		(string) (len=7) "gateway": (string) (len=10) "172.25.7.1",
+		(string) (len=4) "cidr": (string) (len=13) "172.25.7.0/24",
+		(string) (len=7) "startip": (string) (len=11) "172.25.7.11",
+		(string) (len=5) "endip": (string) (len=12) "172.25.7.120",
+		(string) (len=9) "lbstartip": (string) (len=12) "172.25.7.140",
+		(string) (len=7) "lbendip": (string) (len=12) "172.25.7.190",
+		(string) (len=9) "bmstartip": (string) (len=12) "172.25.7.201"
+	}
+}
+*/
 
 // Create accepts a CreateOpts struct and creates a new subnet using the values
 // provided. You must remember to provide a valid NetworkID, CIDR and IP
@@ -203,11 +241,6 @@ func (opts UpdateOpts) ToSubnetUpdateMap() (map[string]interface{}, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	if m := b["subnet"].(map[string]interface{}); m["gateway_ip"] == "" {
-		m["gateway_ip"] = nil
-	}
-
 	return b, nil
 }
 
