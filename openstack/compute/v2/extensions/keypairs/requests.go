@@ -1,6 +1,8 @@
 package keypairs
 
 import (
+	// "github.com/davecgh/go-spew/spew"
+
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/compute/v2/servers"
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
@@ -72,22 +74,9 @@ type CreateOptsBuilder interface {
 }
 
 // CreateOpts specifies KeyPair creation or import parameters.
-type CreateOpts struct {
+type CreateOpts struct {					// Modified by B.T. Oh.
 	// Name is a friendly name to refer to this KeyPair in other services.
 	Name string `json:"name" required:"true"`
-
-	// UserID [optional] is the user_id for a keypair.
-	// This allows administrative users to upload keys for other users than themselves.
-	// This requires microversion 2.10 or higher.
-	UserID string `json:"user_id,omitempty"`
-
-	// The type of the keypair. Allowed values are ssh or x509
-	// This requires microversion 2.2 or higher.
-	Type string `json:"type,omitempty"`
-
-	// PublicKey [optional] is a pregenerated OpenSSH-formatted public key.
-	// If provided, this key will be imported and no new key will be created.
-	PublicKey string `json:"public_key,omitempty"`
 }
 
 // ToKeyPairCreateMap constructs a request body from CreateOpts.
