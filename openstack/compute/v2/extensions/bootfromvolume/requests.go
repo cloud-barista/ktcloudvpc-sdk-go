@@ -42,7 +42,7 @@ const (
 // server. The block device may be created from an image, snapshot, new volume,
 // or existing volume. The destination may be a new volume, existing volume
 // which will be attached to the instance, ephemeral disk, or boot device.
-type BlockDevice struct {
+type BlockDevice struct {										// Modified by B.T. Oh
 	// DestinationType is the type that gets created. Possible values are "volume"
 	// and "local".
 	DestinationType DestinationType `json:"destination_type,omitempty"`
@@ -60,27 +60,6 @@ type BlockDevice struct {
 	// UUID is the unique identifier for the existing volume, snapshot, or
 	// image (see above).
 	UUID string `json:"uuid,omitempty"`
-
-
-
-	// DeleteOnTermination specifies whether or not to delete the attached volume
-	// when the server is deleted. Defaults to `false`.
-	DeleteOnTermination bool `json:"delete_on_termination"`
-
-	// GuestFormat specifies the format of the block device.
-	GuestFormat string `json:"guest_format,omitempty"`
-
-	// DeviceType specifies the device type of the block devices.
-	// Examples of this are disk, cdrom, floppy, lun, etc.
-	DeviceType string `json:"device_type,omitempty"`
-
-	// DiskBus is the bus type of the block devices.
-	// Examples of this are ide, usb, virtio, scsi, etc.
-	DiskBus string `json:"disk_bus,omitempty"`
-
-	// VolumeType is the volume type of the block device.
-	// This requires Compute API microversion 2.67 or later.
-	VolumeType string `json:"volume_type,omitempty"`
 }
 
 // CreateOptsExt is a structure that extends the server `CreateOpts` structure
