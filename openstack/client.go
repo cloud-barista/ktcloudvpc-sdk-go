@@ -14,9 +14,9 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
-	"github.com/davecgh/go-spew/spew"
-	cblog "github.com/cloud-barista/cb-log"
 
+	cblog "github.com/cloud-barista/cb-log"
+	
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 	tokens2 "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v2/tokens"
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/extensions/ec2tokens"
@@ -128,13 +128,13 @@ func Authenticate(client *gophercloud.ProviderClient, options gophercloud.AuthOp
 		return err
 	}
 
-	cblogger.Info("\n# chosen.ID : ")
-	spew.Dump(chosen.ID)
-	cblogger.Info("\n\n")
+	// cblogger.Info("\n# version ID : ")
+	// spew.Dump(chosen.ID)
+	// cblogger.Info("\n\n")
 
-	cblogger.Info("\n# endpoint : ")
-	spew.Dump(endpoint)
-	cblogger.Info("\n\n")
+	// cblogger.Info("\n# endpoint : ")
+	// spew.Dump(endpoint)
+	// cblogger.Info("\n\n")
 
 	switch chosen.ID {
 	case v2:
@@ -387,6 +387,10 @@ func NewIdentityV3(client *gophercloud.ProviderClient, eo gophercloud.EndpointOp
 
 	endpoint = gophercloud.NormalizeURL(base)  // Modified by B.T. Oh.
 
+	// cblogger.Info("\n")
+	// cblogger.Infof("\n# base endpoint : %s", endpoint)
+	// cblogger.Info("\n\n")
+
 	return &gophercloud.ServiceClient{
 		ProviderClient: client,
 		Endpoint:       endpoint,
@@ -450,9 +454,6 @@ func NewObjectStorageV1(client *gophercloud.ProviderClient, eo gophercloud.Endpo
 // NewComputeV2 creates a ServiceClient that may be used with the v2 compute
 // package.
 func NewComputeV2(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
-	cblogger.Info("\n# eo in NewComputeV2() : ")
-	spew.Dump(eo)
-	cblogger.Info("\n\n")
 	return initClientOpts(client, eo, "compute")
 }
 

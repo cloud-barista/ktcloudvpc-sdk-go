@@ -117,24 +117,10 @@ type CreateOptsBuilder interface {
 
 // Network is used within CreateOpts to control a new server's network
 // attachments.
-type Network struct {
+type Network struct {									// Modified by B.T. Oh
 	// UUID of a network to attach to the newly provisioned server.
 	// Required unless Port is provided.
 	UUID string
-
-	// Port of a neutron network to attach to the newly provisioned server.
-	// Required unless UUID is provided.
-	Port string
-
-	// FixedIP specifies a fixed IPv4 address to be used on this network.
-	FixedIP string
-
-	// Tag may contain an optional device role tag for the server's virtual
-	// network interface. This can be used to identify network interfaces when
-	// multiple networks are connected to one server.
-	//
-	// Requires microversion 2.32 through 2.36 or 2.42 or later.
-	Tag string
 }
 
 // Personality is an array of files that are injected into the server at launch.
@@ -215,15 +201,6 @@ func (opts CreateOpts) ToServerCreateMap() (map[string]interface{}, error) {  	/
 				networks[i] = make(map[string]interface{})
 				if net.UUID != "" {
 					networks[i]["uuid"] = net.UUID
-				}
-				if net.Port != "" {
-					networks[i]["port"] = net.Port
-				}
-				if net.FixedIP != "" {
-					networks[i]["fixed_ip"] = net.FixedIP
-				}
-				if net.Tag != "" {
-					networks[i]["tag"] = net.Tag
 				}
 			}
 			b["networks"] = networks
