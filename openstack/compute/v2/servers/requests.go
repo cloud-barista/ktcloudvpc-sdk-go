@@ -174,6 +174,9 @@ type CreateOpts struct {								// Modified by B.T. Oh
 	// UserData contains configuration information or scripts to use upon launch.
 	// Create will base64-encode it for you, if it isn't already.
 	UserData []byte `json:"-"`
+
+	// Server Usage Plan Type : 'monthly' or 'hourly'
+	UsagePlanType string `json:"usage_plan_type,omitempty"` // Added by B.T. Oh. (Not Mentioned in the API Manual.)
 }
 
 // ToServerCreateMap assembles a request body based on the contents of a CreateOpts.
