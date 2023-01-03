@@ -2,7 +2,7 @@ package floatingips
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-const resourcePath = "os-floating-ips"
+const resourcePath = "IpAddress"  						// Modified by B.T. Oh
 
 func resourceURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL(resourcePath)
