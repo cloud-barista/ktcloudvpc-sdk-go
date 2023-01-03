@@ -26,6 +26,10 @@ type FloatingIP struct {
 	Pool string `json:"pool"`
 }
 
+type AssociatePublicIpResponse struct {
+	JopID string `json:"job_id"`
+}
+
 func (r *FloatingIP) UnmarshalJSON(b []byte) error {
 	type tmp FloatingIP
 	var s struct {
@@ -82,6 +86,14 @@ func (r FloatingIPResult) Extract() (*FloatingIP, error) {
 	}
 	err := r.ExtractInto(&s)
 	return s.FloatingIP, err
+}
+
+func (r FloatingIPResult) ExtractJobInfo() (*AssociatePublicIpResponse, error) {
+	var s struct {
+		AssociatePublicIpResponse *AssociatePublicIpResponse `json:"nc_associateentpublicipresponse"`
+	}
+	err := r.ExtractInto(&s)
+	return s.AssociatePublicIpResponse, err
 }
 
 // CreateResult is the response from a Create operation. Call its Extract method

@@ -21,7 +21,7 @@ type CreateOptsBuilder interface {
 // CreateOpts specifies a Floating IP allocation request.
 type CreateOpts struct {
 	// Pool is the pool of Floating IPs to allocate one from.
-	Pool string `json:"pool" required:"true"`
+	// Pool string `json:"pool" required:"true"`  // Modified by B.T. Oh
 }
 
 // ToFloatingIPCreateMap constructs a request body from CreateOpts.
