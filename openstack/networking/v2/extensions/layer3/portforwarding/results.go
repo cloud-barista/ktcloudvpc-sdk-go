@@ -27,6 +27,10 @@ type PortForwarding struct {
 	InternalIPAddress string `json:"internal_ip_address"`
 }
 
+type CreatePortforwardingResponse struct {											// Added by B.T. Oh
+	JopID string `json:"job_id"`
+}
+
 type commonResult struct {
 	gophercloud.Result
 }
@@ -64,6 +68,14 @@ func (r commonResult) Extract() (*PortForwarding, error) {
 
 func (r commonResult) ExtractInto(v interface{}) error {
 	return r.Result.ExtractIntoStructPtr(v, "port_forwarding")
+}
+
+func (r commonResult) ExtractJobInfo() (*CreatePortforwardingResponse, error) {   	// Added by B.T. Oh
+	var s struct {
+		CreatePortforwardingResponse *CreatePortforwardingResponse `json:"nc_createportforwardingruleresponse"`
+	}
+	err := r.ExtractInto(&s)
+	return s.CreatePortforwardingResponse, err
 }
 
 // PortForwardingPage is the page returned by a pager when traversing over a
