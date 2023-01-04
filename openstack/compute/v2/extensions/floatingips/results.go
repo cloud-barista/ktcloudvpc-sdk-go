@@ -88,7 +88,7 @@ func (r FloatingIPResult) Extract() (*FloatingIP, error) {
 	return s.FloatingIP, err
 }
 
-func (r FloatingIPResult) ExtractJobInfo() (*AssociatePublicIpResponse, error) {
+func (r FloatingIPResult) ExtractJobInfo() (*AssociatePublicIpResponse, error) {   // Added by B.T. Oh
 	var s struct {
 		AssociatePublicIpResponse *AssociatePublicIpResponse `json:"nc_associateentpublicipresponse"`
 	}
