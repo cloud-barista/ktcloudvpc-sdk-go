@@ -64,7 +64,9 @@ type CreateOpts struct {																		// Modified by B.T. Oh
 	PrivateIpAddresss string `json:"vmguestip"`
 	PublicIpId 		  string `json:"entpublicipid"`
 	InternalPort      string `json:"privateport"`
+	InternalEndPort   string `json:"privateendport"`
 	ExternalPort      string `json:"publicport"`
+	ExternalEndPort   string `json:"publicendport"`
 	Protocol          string `json:"protocol"`
 }
 
