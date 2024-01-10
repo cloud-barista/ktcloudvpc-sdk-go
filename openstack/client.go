@@ -447,7 +447,7 @@ func initClientOpts(client *gophercloud.ProviderClient, eo gophercloud.EndpointO
     case "volumev2":
 		sc.Endpoint = volumeV2Endpoint + projectID + "/"		
     }
-	// ### Volume Info API URL : https://api.ucloudbiz.olleh.com/d1/volume/{project_id}/volumes/{volume_id}
+	// ### KT Cloud Volume Info API URL : https://api.ucloudbiz.olleh.com/d1/volume/{project_id}/volumes/{volume_id}
 
 	cblogger.Infof("\n# sc.Type in initClientOpts() : %s", sc.Type)
 	cblogger.Infof("\n# sc.Endpoint in initClientOpts() : %s", sc.Endpoint)
