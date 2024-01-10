@@ -58,16 +58,20 @@ func Get(client *gophercloud.ServiceClient, floatingIpId string, pfId string) (r
 	return
 }
 
-// CreateOpts contains all the values needed to create a new port forwarding
-// resource. All attributes are required.
+// CreateOpts contains all the values needed to create a new port forwarding resource. All attributes are required.
 type CreateOpts struct {																		// Modified by B.T. Oh
-	PrivateIpAddresss string `json:"vmguestip"`
-	PublicIpId 		  string `json:"entpublicipid"`
-	InternalPort      string `json:"privateport"`
-	InternalEndPort   string `json:"privateendport"`
-	ExternalPort      string `json:"publicport"`
-	ExternalEndPort   string `json:"publicendport"`
-	Protocol          string `json:"protocol"`
+	ZoneId 	  		  	string `json:"zoneid"` 			 // Ex. KT Cloud D1 Platform => 'DX-M1'
+	PrivateIpAddr 	  	string `json:"vmguestip"`        // Private IP address (allocated to the server(VM))
+	PublicIpId 		  	string `json:"entpublicipid"`
+	Protocol          	string `json:"protocol"`
+
+	ExternalPort      	string `json:"publicport"`
+	ExternalStartPort   string `json:"startpublicport"`  // Public IP Start Port number (equal to the 'publicport' value),
+	ExternalEndPort   	string `json:"endpublicport"`
+
+	InternalPort      	string `json:"privateport"`
+	InternalStartPort   string `json:"startprivateport"` // Private IP Start Port number (equal to the 'privateport' value),
+	InternalEndPort   	string `json:"endprivateport"`
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
@@ -82,8 +86,7 @@ func (opts CreateOpts) ToPortForwardingCreateMap() (map[string]interface{}, erro
 	return gophercloud.BuildRequestBody(opts, "")	
 }
 
-// Create accepts a CreateOpts struct and uses the values provided to create a
-// new port forwarding for an existing floating IP.
+// Create accepts a CreateOpts struct and uses the values provided to create a new port forwarding for an existing floating IP.
 func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {		// Modified by B.T. Oh
 	b, err := opts.ToPortForwardingCreateMap()
 	if err != nil {
@@ -99,11 +102,18 @@ func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r Create
 
 // UpdateOpts contains the values used when updating a port forwarding resource.
 type UpdateOpts struct {
-	InternalPortID    string `json:"internal_port_id,omitempty"`
-	InternalIPAddress string `json:"internal_ip_address,omitempty"`
-	InternalPort      int    `json:"internal_port,omitempty"`
-	ExternalPort      int    `json:"external_port,omitempty"`
-	Protocol          string `json:"protocol,omitempty"`
+	ZoneId 	  		  	string `json:"zoneid"` 			 // Ex. KT Cloud D1 Platform => 'DX-M1'
+	PrivateIpAddr 	  	string `json:"vmguestip"`        // Private IP address (allocated to the server(VM))
+	PublicIpId 		  	string `json:"entpublicipid"`
+	Protocol          	string `json:"protocol"`
+
+	ExternalPort      	string `json:"publicport"`
+	ExternalStartPort   string `json:"startpublicport"`  // Public IP Start Port number (equal to the 'publicport' value),
+	ExternalEndPort   	string `json:"endpublicport"`
+
+	InternalPort      	string `json:"privateport"`
+	InternalStartPort   string `json:"startprivateport"` // Private IP Start Port number (equal to the 'privateport' value),
+	InternalEndPort   	string `json:"endprivateport"`
 }
 
 // ToPortForwardingUpdateMap allows UpdateOpts to satisfy the UpdateOptsBuilder
