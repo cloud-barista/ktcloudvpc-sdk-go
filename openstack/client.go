@@ -14,14 +14,15 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+	// "github.com/davecgh/go-spew/spew"
 
 	cblog "github.com/cloud-barista/cb-log"
-	
+
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 	tokens2 "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v2/tokens"
+	tokens3 "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/tokens"
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/extensions/ec2tokens"
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/extensions/oauth1"
-	tokens3 "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/tokens"
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/utils"
 )
 
@@ -408,6 +409,34 @@ func initClientOpts(client *gophercloud.ProviderClient, eo gophercloud.EndpointO
 	// }
 	// sc.Endpoint = url
 
+	// ### To get ProjectID from the ProviderClient Object
+	authResult := client.GetAuthResult().(tokens3.CreateResult)
+	// Type assert to access the Body map
+	body, ok := authResult.Body.(map[string]interface{})
+	if !ok {
+		newErr := fmt.Errorf("Error: Body type assertion failed")
+		return nil, newErr
+	}
+	// Access the token map
+	token, ok := body["token"].(map[string]interface{})
+	if !ok {
+		newErr := fmt.Errorf("Error: Token type assertion failed")
+		return nil, newErr
+	}
+	// Access the project map
+	project, ok := token["project"].(map[string]interface{})
+	if !ok {
+		newErr := fmt.Errorf("Error: Project type assertion failed")
+		return nil, newErr
+	}
+	// Retrieve the project ID
+	projectID, ok := project["id"].(string)
+	if !ok {
+		newErr := fmt.Errorf("Error: Project ID type assertion failed")
+		return nil, newErr
+	}
+	// fmt.Println("# Project ID:", projectID)
+
 	sc.ProviderClient = client
 	sc.Type = clientType
 
@@ -419,8 +448,9 @@ func initClientOpts(client *gophercloud.ProviderClient, eo gophercloud.EndpointO
     case "network":
 		sc.Endpoint = networkEndpoint
     case "volumev2":
-		sc.Endpoint = volumeV2Endpoint
+		sc.Endpoint = volumeV2Endpoint + projectID + "/"		
     }
+	// ### KT Cloud Volume Info API URL : https://api.ucloudbiz.olleh.com/d1/volume/{project_id}/volumes/{volume_id}
 
 	cblogger.Infof("\n# sc.Type in initClientOpts() : %s", sc.Type)
 	cblogger.Infof("\n# sc.Endpoint in initClientOpts() : %s", sc.Endpoint)
