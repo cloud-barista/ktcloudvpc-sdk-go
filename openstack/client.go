@@ -20,10 +20,9 @@ import (
 
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 	tokens2 "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v2/tokens"
+	tokens3 "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/tokens"
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/extensions/ec2tokens"
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/extensions/oauth1"
-	tokens3 "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/tokens"
-	// "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/provider"
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/utils"
 )
 
@@ -415,22 +414,26 @@ func initClientOpts(client *gophercloud.ProviderClient, eo gophercloud.EndpointO
 	// Type assert to access the Body map
 	body, ok := authResult.Body.(map[string]interface{})
 	if !ok {
-		fmt.Println("Error: Body type assertion failed")
+		newErr := fmt.Errorf("Error: Body type assertion failed")
+		return nil, newErr
 	}
 	// Access the token map
 	token, ok := body["token"].(map[string]interface{})
 	if !ok {
-		fmt.Println("Error: Token type assertion failed")
+		newErr := fmt.Errorf("Error: Token type assertion failed")
+		return nil, newErr
 	}
 	// Access the project map
 	project, ok := token["project"].(map[string]interface{})
 	if !ok {
-		fmt.Println("Error: Project type assertion failed")
+		newErr := fmt.Errorf("Error: Project type assertion failed")
+		return nil, newErr
 	}
 	// Retrieve the project ID
 	projectID, ok := project["id"].(string)
 	if !ok {
-		fmt.Println("Error: Project ID type assertion failed")
+		newErr := fmt.Errorf("Error: Project ID type assertion failed")
+		return nil, newErr
 	}
 	// fmt.Println("# Project ID:", projectID)
 
