@@ -5,30 +5,21 @@ import (
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
 )
 
-type PortForwarding struct {
+type PortForwarding struct {									// Modified
 	// The ID of the floating IP port forwarding
-	ID string `json:"id"`
-
-	// The ID of the Neutron port associated to the floating IP port forwarding.
-	InternalPortID string `json:"internal_port_id"`
-
-	// The TCP/UDP/other protocol port number of the port forwarding’s floating IP address.
-	ExternalPort int `json:"external_port"`
-
+	PortForwardingID 	string `json:"id"`
+	PortForwardingName 	string `json:"name"`
+	PrivateIP 			string `json:"vmguestip"`	
+	PublicIP	  		string `json:"ipaddress"`
+	PublicIpID	  		string `json:"ipaddressid"`
 	// The IP protocol used in the floating IP port forwarding.
-	Protocol string `json:"protocol"`
-
-	// The TCP/UDP/other protocol port number of the Neutron port fixed
-	// IP address associated to the floating ip port forwarding.
-	InternalPort int `json:"internal_port"`
-
-	// The fixed IPv4 address of the Neutron port associated
-	// to the floating IP port forwarding.
-	InternalIPAddress string `json:"internal_ip_address"`
-}
-
-type CreatePortforwardingResponse struct {											// Added by B.T. Oh
-	JopID string `json:"job_id"`
+	Protocol 			string `json:"protocol"`
+	ExternalPort      	string `json:"publicport"`
+	ExternalEndPort   	string `json:"publicendport"`  // Caution!!) Spelling (Reqest struct : endpublicport)
+	VpcID 				string `json:"vpcid"`
+	SubnetID 			string `json:"networkid"`
+	InternalPort      	string `json:"privateport"`
+	InternalEndPort   	string `json:"privateendport"` // Caution!!) Spelling (Reqest struct : endprivateport)	
 }
 
 type commonResult struct {
@@ -58,6 +49,9 @@ type UpdateResult struct {
 type DeleteResult struct {
 	gophercloud.ErrResult
 }
+// type DeleteResult struct {															// Modified
+// 	commonResult
+// }
 
 // Extract will extract a Port Forwarding resource from a result.
 func (r commonResult) Extract() (*PortForwarding, error) {
@@ -66,17 +60,33 @@ func (r commonResult) Extract() (*PortForwarding, error) {
 	return &s, err
 }
 
-func (r commonResult) ExtractInto(v interface{}) error {
-	return r.Result.ExtractIntoStructPtr(v, "port_forwarding")
+// func (r commonResult) ExtractInto(v interface{}) error {
+// 	return r.Result.ExtractIntoStructPtr(v, "job_id")
+// }
+
+type CreatePortforwardingResponse struct {											// Added
+	JopID string `json:"job_id"`
 }
 
-func (r commonResult) ExtractJobInfo() (*CreatePortforwardingResponse, error) {   	// Added by B.T. Oh
+func (r commonResult) ExtractJobInfo() (*CreatePortforwardingResponse, error) {   	// Added
 	var s struct {
 		CreatePortforwardingResponse *CreatePortforwardingResponse `json:"nc_createportforwardingruleresponse"`
 	}
 	err := r.ExtractInto(&s)
 	return s.CreatePortforwardingResponse, err
 }
+
+// type DellPortforwardingResponse struct {											// Added
+// 	JopID string `json:"job_id"`
+// }
+
+// func (r commonResult) ExtractDelJobInfo() (*DellPortforwardingResponse, error) {   	// Added
+// 	var s struct {
+// 		DellPortforwardingResponse *DellPortforwardingResponse `json:"nc_deleteportforwardingruleresponse"`
+// 	}
+// 	err := r.ExtractInto(&s)
+// 	return s.DellPortforwardingResponse, err
+// }
 
 // PortForwardingPage is the page returned by a pager when traversing over a
 // collection of port forwardings.
@@ -104,13 +114,17 @@ func (r PortForwardingPage) IsEmpty() (bool, error) {
 	return len(is) == 0, err
 }
 
+type PFRules struct {											  // Added
+	PortForwardings []PortForwarding `json:"portforwardingrule"`
+}
+
 // ExtractPortForwardings accepts a Page struct, specifically a PortForwardingPage
 // struct, and extracts the elements into a slice of PortForwarding structs. In
 // other words, a generic collection is mapped into a relevant slice.
-func ExtractPortForwardings(r pagination.Page) ([]PortForwarding, error) {
+func ExtractPortForwardings(r pagination.Page) ([]PortForwarding, error) {		// Modified
 	var s struct {
-		PortForwardings []PortForwarding `json:"port_forwardings"`
+		PFRule PFRules `json:"nc_listportforwardingrulesresponse"`
 	}
 	err := (r.(PortForwardingPage)).ExtractInto(&s)
-	return s.PortForwardings, err
+	return s.PFRule.PortForwardings, err
 }

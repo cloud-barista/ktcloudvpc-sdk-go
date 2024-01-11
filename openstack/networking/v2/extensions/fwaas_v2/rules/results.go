@@ -5,23 +5,40 @@ import (
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
 )
 
-// Rule represents a firewall rule
-type Rule struct {
-	ID                   string   `json:"id"`
-	Name                 string   `json:"name,omitempty"`
-	Description          string   `json:"description,omitempty"`
-	Protocol             string   `json:"protocol"`
-	Action               string   `json:"action"`
-	IPVersion            int      `json:"ip_version,omitempty"`
-	SourceIPAddress      string   `json:"source_ip_address,omitempty"`
-	DestinationIPAddress string   `json:"destination_ip_address,omitempty"`
-	SourcePort           string   `json:"source_port,omitempty"`
-	DestinationPort      string   `json:"destination_port,omitempty"`
-	Shared               bool     `json:"shared,omitempty"`
-	Enabled              bool     `json:"enabled,omitempty"`
-	FirewallPolicyID     []string `json:"firewall_policy_id"`
-	TenantID             string   `json:"tenant_id"`
-	ProjectID            string   `json:"project_id"`
+type Rule struct {											// Added
+    Acls      []Acl  `json:"acls"`
+    VpcID     string `json:"vpcid"`
+}
+
+type Acl struct {											// Added
+    SrcIntfs  []NetworkInterface `json:"srcintfs"`
+    Schedule  string             `json:"schedule"`
+    Comments  string             `json:"comments"`
+    NatIP     string             `json:"natip"`
+    DstAddrs  []Address          `json:"dstaddrs"`
+    Name      string             `json:"name"`
+    DstIntfs  []NetworkInterface `json:"dstintfs"`
+    Action    string             `json:"action"`
+    ID        int                `json:"id"`
+    Services  []Service          `json:"services"`
+    SrcAddrs  []Address          `json:"srcaddrs"`
+    Status    string             `json:"status"`
+}
+
+type NetworkInterface struct {								// Added
+    NetworkName string `json:"networkname"`
+    NetworkID   string `json:"networkid"`
+    Interface   string `json:"interface"`
+}
+
+type Address struct {										// Added
+    IP string `json:"ip"`
+}
+
+type Service struct {										// Added
+    StartPort string `json:"startport"`
+    Protocol  string `json:"protocol"`
+    EndPort   string `json:"endport"`
 }
 
 // RulePage is the page returned by a pager when traversing over a
@@ -50,15 +67,19 @@ func (r RulePage) IsEmpty() (bool, error) {
 	return len(is) == 0, err
 }
 
+type FirewallRules struct {											    // Added
+	Rules []Rule `json:"firewallrules"`
+}
+
 // ExtractRules accepts a Page struct, specifically a RouterPage struct,
 // and extracts the elements into a slice of Router structs. In other words,
 // a generic collection is mapped into a relevant slice.
-func ExtractRules(r pagination.Page) ([]Rule, error) {
+func ExtractRules(r pagination.Page) ([]Rule, error) {					// Modified
 	var s struct {
-		Rules []Rule `json:"firewall_rules"`
+		RuleList FirewallRules `json:"nc_listfirewallrulesresponse"`
 	}
 	err := (r.(RulePage)).ExtractInto(&s)
-	return s.Rules, err
+	return s.RuleList.Rules, err
 }
 
 type commonResult struct {
@@ -74,6 +95,30 @@ func (r commonResult) Extract() (*Rule, error) {
 	return s.Rule, err
 }
 
+type CreateFirewallRuleResponse struct {											// Added
+	JopID string `json:"job_id"`
+}
+
+func (r commonResult) ExtractJobInfo() (*CreateFirewallRuleResponse, error) {   	// Added
+	var s struct {
+		CreatePortforwardingResponse *CreateFirewallRuleResponse `json:"nc_createfirewallruleresponse"`
+	}
+	err := r.ExtractInto(&s)
+	return s.CreatePortforwardingResponse, err
+}
+
+// type DellFirewallRuleResponse struct {												// Added
+// 	JopID string `json:"job_id"`
+// }
+
+// func (r commonResult) ExtractDelJobInfo() (*DellFirewallRuleResponse, error) {   	// Added
+// 	var s struct {
+// 		DellFirewallRuleResponse *DellFirewallRuleResponse `json:"nc_deletefirewallruleresponse"`
+// 	}
+// 	err := r.ExtractInto(&s)
+// 	return s.DellFirewallRuleResponse, err
+// }
+
 // GetResult represents the result of a get operation.
 type GetResult struct {
 	commonResult
@@ -88,6 +133,9 @@ type UpdateResult struct {
 type DeleteResult struct {
 	gophercloud.ErrResult
 }
+// type DeleteResult struct {															// Modified
+// 	commonResult
+// }
 
 // CreateResult represents the result of a create operation.
 type CreateResult struct {

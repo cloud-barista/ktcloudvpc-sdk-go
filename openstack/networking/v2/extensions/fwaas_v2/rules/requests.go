@@ -113,43 +113,36 @@ type CreateOptsBuilder interface {
 }
 
 // CreateOpts contains all the values needed to create a new firewall rule.
-type CreateOpts struct {
+type CreateOpts struct {    																// Modified by B.T. Oh
+	SourceNetID    	 	 string                `json:"srcnetworkid,omitempty"`
+	PortFordingID 		 string 			   `json:"virtualipid" required:"true"`
+	DestIPAdds 		 	 string                `json:"dstip,omitempty"`
+	StartPort            string                `json:"startport,omitempty"`
+	EndPort      		 string                `json:"endport,omitempty"`
 	Protocol             Protocol              `json:"protocol" required:"true"`
+	DestNetID		 	 string                `json:"dstnetworkid" required:"true"`
 	Action               Action                `json:"action" required:"true"`
-	TenantID             string                `json:"tenant_id,omitempty"`
-	Name                 string                `json:"name,omitempty"`
-	Description          string                `json:"description,omitempty"`
-	IPVersion            gophercloud.IPVersion `json:"ip_version,omitempty"`
-	SourceIPAddress      string                `json:"source_ip_address,omitempty"`
-	DestinationIPAddress string                `json:"destination_ip_address,omitempty"`
-	SourcePort           string                `json:"source_port,omitempty"`
-	DestinationPort      string                `json:"destination_port,omitempty"`
-	Shared               *bool                 `json:"shared,omitempty"`
-	Enabled              *bool                 `json:"enabled,omitempty"`
 }
 
 // ToRuleCreateMap casts a CreateOpts struct to a map.
-func (opts CreateOpts) ToRuleCreateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "firewall_rule")
+func (opts CreateOpts) ToRuleCreateMap() (map[string]interface{}, error) {					// Modified
+	b, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
 	}
-
-	if m := b["firewall_rule"].(map[string]interface{}); m["protocol"] == "any" {
-		m["protocol"] = nil
-	}
-
 	return b, nil
 }
 
 // Create accepts a CreateOpts struct and uses the values to create a new firewall rule
-func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {		// Modified
 	b, err := opts.ToRuleCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Post(rootURL(c), b, &r.Body, nil)
+	resp, err := c.Post(rootURL(c), b, &r.Body, &gophercloud.RequestOpts{
+		OkCodes: []int{200},
+	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
@@ -204,8 +197,10 @@ func Update(c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r 
 }
 
 // Delete will permanently delete a particular firewall rule based on its unique ID.
-func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(resourceURL(c, id), nil)
+func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {						// Modified
+	resp, err := c.Delete(resourceURL(c, id), &gophercloud.RequestOpts{
+		OkCodes: []int{200},
+	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

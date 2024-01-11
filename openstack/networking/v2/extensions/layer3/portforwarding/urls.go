@@ -1,20 +1,15 @@
 package portforwarding
 
 import (
-	"strings"
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 )
 
-const resourcePath = "Portforwarding"
-const portForwardingPath = "port_forwardings"
+const resourcePath = "Portforwarding"									// Modified
 
-func portForwardingUrl(c *gophercloud.ServiceClient) string {
-	return strings.Replace(c.ServiceURL(resourcePath, "", ""), "Portforwarding//", "Portforwarding", 1) 
+func portForwardingUrl(c *gophercloud.ServiceClient) string {			// Modified
+	return c.ServiceURL(resourcePath)
 }
-// func portForwardingUrl(c *gophercloud.ServiceClient, id string) string {
-// 	return c.ServiceURL(resourcePath, id, portForwardingPath)
-// }
 
-func singlePortForwardingUrl(c *gophercloud.ServiceClient, id string, portForwardingID string) string {
-	return c.ServiceURL(resourcePath, id, portForwardingPath, portForwardingID)
+func singlePortForwardingUrl(c *gophercloud.ServiceClient, portForwardingID string) string {	// Modified
+	return c.ServiceURL(resourcePath, portForwardingID)
 }

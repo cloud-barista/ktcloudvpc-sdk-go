@@ -49,8 +49,10 @@ func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
 }
 
 // Delete requests the deletion of a previous allocated Floating IP.
-func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(deleteURL(client, id), nil)
+func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {	// Modified
+	resp, err := client.Delete(deleteURL(client, id), &gophercloud.RequestOpts{
+		OkCodes: []int{200},
+	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

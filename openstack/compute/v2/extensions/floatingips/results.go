@@ -64,13 +64,17 @@ func (page FloatingIPPage) IsEmpty() (bool, error) {
 	return len(va) == 0, err
 }
 
+type FloatingIPs struct {											    // Added
+	IPs []FloatingIP `json:"publicips"`
+}
+
 // ExtractFloatingIPs interprets a page of results as a slice of FloatingIPs.
-func ExtractFloatingIPs(r pagination.Page) ([]FloatingIP, error) {
+func ExtractFloatingIPs(r pagination.Page) ([]FloatingIP, error) {		// Modified
 	var s struct {
-		FloatingIPs []FloatingIP `json:"floating_ips"`
+		FloatingIPList FloatingIPs `json:"nc_listentpublicipsresponse"`
 	}
 	err := (r.(FloatingIPPage)).ExtractInto(&s)
-	return s.FloatingIPs, err
+	return s.FloatingIPList.IPs, err
 }
 
 // FloatingIPResult is the raw result from a FloatingIP request.

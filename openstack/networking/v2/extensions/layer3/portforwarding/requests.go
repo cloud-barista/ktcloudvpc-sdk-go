@@ -52,17 +52,17 @@ func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pa
 }
 
 // Get retrieves a particular port forwarding resource based on its unique ID.
-func Get(client *gophercloud.ServiceClient, floatingIpId string, pfId string) (r GetResult) {
-	resp, err := client.Get(singlePortForwardingUrl(client, floatingIpId, pfId), &r.Body, nil)
+func Get(client *gophercloud.ServiceClient, floatingIpId string, pfId string) (r GetResult) {	// Modified
+	resp, err := client.Get(singlePortForwardingUrl(client, pfId), &r.Body, nil)
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // CreateOpts contains all the values needed to create a new port forwarding resource. All attributes are required.
 type CreateOpts struct {																		// Modified by B.T. Oh
-	ZoneId 	  		  	string `json:"zoneid"` 			 // Ex. KT Cloud D1 Platform => 'DX-M1'
+	ZoneID 	  		  	string `json:"zoneid"` 			 // Ex. KT Cloud D1 Platform => 'DX-M1'
 	PrivateIpAddr 	  	string `json:"vmguestip"`        // Private IP address (allocated to the server(VM))
-	PublicIpId 		  	string `json:"entpublicipid"`
+	PublicIpID 		  	string `json:"entpublicipid"`
 	Protocol          	string `json:"protocol"`
 
 	ExternalPort      	string `json:"publicport"`
@@ -133,13 +133,13 @@ type UpdateOptsBuilder interface {
 }
 
 // Update allows port forwarding resources to be updated.
-func Update(client *gophercloud.ServiceClient, fipID string, pfID string, opts UpdateOptsBuilder) (r UpdateResult) {
+func Update(client *gophercloud.ServiceClient, pfID string, opts UpdateOptsBuilder) (r UpdateResult) {		// Modified
 	b, err := opts.ToPortForwardingUpdateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Put(singlePortForwardingUrl(client, fipID, pfID), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := client.Put(singlePortForwardingUrl(client, pfID), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200},
 	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
@@ -147,8 +147,10 @@ func Update(client *gophercloud.ServiceClient, fipID string, pfID string, opts U
 }
 
 // Delete will permanently delete a particular port forwarding for a given floating ID.
-func Delete(client *gophercloud.ServiceClient, floatingIpId string, pfId string) (r DeleteResult) {
-	resp, err := client.Delete(singlePortForwardingUrl(client, floatingIpId, pfId), nil)
+func Delete(client *gophercloud.ServiceClient, pfId string) (r DeleteResult) {								// Modified
+	resp, err := client.Delete(singlePortForwardingUrl(client, pfId), &gophercloud.RequestOpts{
+		OkCodes: []int{200},
+	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
