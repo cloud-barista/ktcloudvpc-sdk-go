@@ -3,14 +3,13 @@ package rules
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 const (
-	rootPath     = "fwaas"
-	resourcePath = "firewall_rules"
+	rootPath     = "Firewall"  							 		// Modified
 )
 
-func rootURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL(rootPath, resourcePath)
+func rootURL(c *gophercloud.ServiceClient) string {				// Modified
+	return c.ServiceURL(rootPath)	
 }
 
-func resourceURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(rootPath, resourcePath, id)
+func resourceURL(c *gophercloud.ServiceClient, id string) string {	// Modified
+	return c.ServiceURL(rootPath, id)
 }
