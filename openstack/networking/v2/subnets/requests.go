@@ -192,7 +192,9 @@ func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResul
 		r.Err = err
 		return
 	}
-	resp, err := c.Post(createURL(c), b, &r.Body, nil)
+	resp, err := c.Post(createURL(c), b, &r.Body, &gophercloud.RequestOpts{			// Modified
+		OkCodes: []int{200},
+	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
@@ -273,7 +275,9 @@ func Update(c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r 
 
 // Delete accepts a unique ID and deletes the subnet associated with it.
 func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := c.Delete(deleteURL(c, id), nil)
+	resp, err := c.Delete(deleteURL(c, id), &gophercloud.RequestOpts{			// Modified
+		OkCodes: []int{200},
+	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
