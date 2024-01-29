@@ -36,45 +36,53 @@ func (r *Attachment) UnmarshalJSON(b []byte) error {
 }
 
 // Volume contains all the information associated with an OpenStack Volume.
-type Volume struct {
+type Volume struct {							// Modified
 	// Unique identifier for the volume.
-	ID string `json:"id"`
+	ID 				string `json:"id"`
 	// Current status of the volume.
-	Status string `json:"status"`
+	Status 			string `json:"status"`
 	// Size of the volume in GB.
-	Size int `json:"size"`
+	Size 			int `json:"size"`
 	// AvailabilityZone is which availability zone the volume is in.
 	AvailabilityZone string `json:"availability_zone"`
 	// The date when this volume was created.
-	CreatedAt time.Time `json:"-"`
+	CreatedAt 		time.Time `json:"created_at"`
 	// The date when this volume was last updated
-	UpdatedAt time.Time `json:"-"`
+	UpdatedAt 		time.Time `json:"updated_at"`
 	// Instances onto which the volume is attached.
-	Attachments []Attachment `json:"attachments"`
+	Attachments 	[]Attachment `json:"attachments"`
 	// Human-readable display name for the volume.
-	Name string `json:"name"`
+	Name 			string `json:"name"`
 	// Human-readable description for the volume.
-	Description string `json:"description"`
+	Description 	string `json:"description"`
 	// The type of volume to create, either SATA or SSD.
-	VolumeType string `json:"volume_type"`
+	VolumeType 		string `json:"volume_type"`
 	// The ID of the snapshot from which the volume was created
-	SnapshotID string `json:"snapshot_id"`
+	SnapshotID 		string `json:"snapshot_id"`
 	// The ID of another block storage volume from which the current volume was created
-	SourceVolID string `json:"source_volid"`
+	SourceVolID 	string `json:"source_volid"`
 	// Arbitrary key-value pairs defined by the user.
-	Metadata map[string]string `json:"metadata"`
+	Metadata 		map[string]string `json:"metadata"`
+
+	VolumeImageMetadata	map[string]string `json:"volume_image_metadata"`
+
+	Links            []struct {
+		Rel  string `json:"rel"`
+		Href string `json:"href"`
+	} `json:"links"`
+
 	// UserID is the id of the user who created the volume.
-	UserID string `json:"user_id"`
+	UserID 			string `json:"user_id"`
 	// Indicates whether this is a bootable volume.
-	Bootable string `json:"bootable"`
+	Bootable 		string `json:"bootable"`
 	// Encrypted denotes if the volume is encrypted.
-	Encrypted bool `json:"encrypted"`
+	Encrypted 		bool `json:"encrypted"`
 	// ReplicationStatus is the status of replication.
 	ReplicationStatus string `json:"replication_status"`
 	// ConsistencyGroupID is the consistency group ID.
 	ConsistencyGroupID string `json:"consistencygroup_id"`
 	// Multiattach denotes if the volume is multi-attach capable.
-	Multiattach bool `json:"multiattach"`
+	Multiattach 	bool `json:"multiattach"`
 }
 
 func (r *Volume) UnmarshalJSON(b []byte) error {

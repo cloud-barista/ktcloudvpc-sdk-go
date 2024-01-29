@@ -14,30 +14,21 @@ type CreateOptsBuilder interface {
 // CreateOpts contains options for creating a Volume. This object is passed to
 // the volumes.Create function. For more information about these parameters,
 // see the Volume object.
-type CreateOpts struct {
-	// The size of the volume, in GB
-	Size int `json:"size" required:"true"`
+type CreateOpts struct {										// Modified
 	// The availability zone
-	AvailabilityZone string `json:"availability_zone,omitempty"`
-	// ConsistencyGroupID is the ID of a consistency group
-	ConsistencyGroupID string `json:"consistencygroup_id,omitempty"`
-	// The volume description
-	Description string `json:"description,omitempty"`
-	// One or more metadata key and value pairs to associate with the volume
-	Metadata map[string]string `json:"metadata,omitempty"`
+	AvailabilityZone 	string 	`json:"availability_zone,omitempty"`
+	// The size of the volume, in GB
+	Size 				int		`json:"size" required:"true"`
+
+	UsagePlanType 		string 	`json:"usage_plan_type,omitempty"`
+
 	// The volume name
-	Name string `json:"name,omitempty"`
+	Name 				string `json:"name,omitempty"`
+	
+	Bootable       		bool  `json:"bootable,omitempty"`
+	
 	// the ID of the existing volume snapshot
-	SnapshotID string `json:"snapshot_id,omitempty"`
-	// SourceReplica is a UUID of an existing volume to replicate with
-	SourceReplica string `json:"source_replica,omitempty"`
-	// the ID of the existing volume
-	SourceVolID string `json:"source_volid,omitempty"`
-	// The ID of the image from which you want to create the volume.
-	// Required to create a bootable volume.
-	ImageID string `json:"imageRef,omitempty"`
-	// The associated volume type
-	VolumeType string `json:"volume_type,omitempty"`
+	SnapshotID 			string `json:"snapshot_id,omitempty"`	
 }
 
 // ToVolumeCreateMap assembles a request body based on the contents of a
