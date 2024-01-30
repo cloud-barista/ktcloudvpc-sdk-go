@@ -133,21 +133,6 @@ func (r *Image) UnmarshalJSON(b []byte) error {
 	if err != nil {
 		return err
 	}
-	// if resultMap, ok := result.(map[string]interface{}); ok {
-	// 	delete(resultMap, "self")
-	// 	delete(resultMap, "size")
-	// 	delete(resultMap, "openstack-image-import-methods")
-	// 	delete(resultMap, "openstack-image-store-ids")
-	// 	r.Properties = gophercloud.RemainingKeys(Image{}, resultMap)
-	// }
-
-	// if v := strings.FieldsFunc(strings.TrimSpace(s.OpenStackImageImportMethods), splitFunc); len(v) > 0 {
-	// 	r.OpenStackImageImportMethods = v
-	// }
-	// if v := strings.FieldsFunc(strings.TrimSpace(s.OpenStackImageStoreIDs), splitFunc); len(v) > 0 {
-	// 	r.OpenStackImageStoreIDs = v
-	// }
-
 	return err
 }
 
