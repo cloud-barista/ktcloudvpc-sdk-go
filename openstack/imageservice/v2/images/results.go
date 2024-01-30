@@ -11,91 +11,95 @@ import (
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
 )
 
-// Image represents an image found in the OpenStack Image service.
-type Image struct {
+// Image represents an image found in the KT Cloud Image service.
+type Image struct {												// Modified
 	// ID is the image UUID.
-	ID string `json:"id"`
+	ID 					string `json:"id"`
 
 	// Name is the human-readable display name for the image.
-	Name string `json:"name"`
-
-	// Status is the image status. It can be "queued" or "active"
-	// See imageservice/v2/images/type.go
-	Status ImageStatus `json:"status"`
-
-	// Tags is a list of image tags. Tags are arbitrarily defined strings
-	// attached to an image.
-	Tags []string `json:"tags"`
-
-	// ContainerFormat is the format of the container.
-	// Valid values are ami, ari, aki, bare, and ovf.
-	ContainerFormat string `json:"container_format"`
+	Name 				string `json:"name"`
 
 	// DiskFormat is the format of the disk.
 	// If set, valid values are ami, ari, aki, vhd, vmdk, raw, qcow2, vdi,
 	// and iso.
-	DiskFormat string `json:"disk_format"`
+	DiskFormat 			string `json:"disk_format"`
+
+	// ContainerFormat is the format of the container.
+	// Valid values are ami, ari, aki, bare, and ovf.
+	ContainerFormat 	string `json:"container_format"`
+
+	// Visibility defines who can see/use the image.
+	Visibility 			ImageVisibility `json:"visibility"`
+
+	// SizeBytes is the size of the data that's associated with the image.
+	SizeBytes 			int64 `json:"size"`
+	
+	// VirtualSize is the virtual size of the image
+	VirtualSize 		int64 `json:"virtual_size"`
+
+	// Status is the image status. It can be "queued" or "active"
+	// See imageservice/v2/images/type.go
+	Status 				ImageStatus `json:"status"`
+
+	// Checksum is the checksum of the data that's associated with the image.
+	Checksum 			string `json:"checksum"`
+	
+	// Protected is whether the image is deletable or not.
+	Protected 			bool `json:"protected"`
+	
+	// MinRAMMegabytes [optional] is the amount of RAM in MB that is required to
+	// boot the image.
+	MinRAMMegabytes 	int `json:"min_ram"`
 
 	// MinDiskGigabytes is the amount of disk space in GB that is required to
 	// boot the image.
-	MinDiskGigabytes int `json:"min_disk"`
-
-	// MinRAMMegabytes [optional] is the amount of RAM in MB that is required to
-	// boot the image.
-	MinRAMMegabytes int `json:"min_ram"`
+	MinDiskGigabytes 	int `json:"min_disk"`
 
 	// Owner is the tenant ID the image belongs to.
-	Owner string `json:"owner"`
-
-	// Protected is whether the image is deletable or not.
-	Protected bool `json:"protected"`
-
-	// Visibility defines who can see/use the image.
-	Visibility ImageVisibility `json:"visibility"`
+	Owner 				string `json:"owner"`
 
 	// Hidden is whether the image is listed in default image list or not.
-	Hidden bool `json:"os_hidden"`
+	Hidden 				bool `json:"os_hidden"`
 
-	// Checksum is the checksum of the data that's associated with the image.
-	Checksum string `json:"checksum"`
+	OsHashAlgo      	string `json:"os_hash_algo"`
 
-	// SizeBytes is the size of the data that's associated with the image.
-	SizeBytes int64 `json:"-"`
+	OsHashValue     	string `json:"os_hash_value"`
 
+	// CreatedAt is the date when the image has been created.
+	CreatedAt 			time.Time `json:"created_at"`
+
+	// UpdatedAt is the date when the last change has been made to the image or
+	// it's properties.
+	UpdatedAt 			time.Time `json:"updated_at"`
+	
 	// Metadata is a set of metadata associated with the image.
 	// Image metadata allow for meaningfully define the image properties
 	// and tags.
 	// See http://docs.openstack.org/developer/glance/metadefs-concepts.html.
-	Metadata map[string]string `json:"metadata"`
+	Locations       	[]struct {
+		URL      string `json:"url"`
+		Metadata struct {
+			Store string `json:"store"`
+		} `json:"metadata"`
+	} `json:"locations"`
 
-	// Properties is a set of key-value pairs, if any, that are associated with
-	// the image.
-	Properties map[string]interface{}
+	DirectURL 			string   `json:"direct_url"`
 
-	// CreatedAt is the date when the image has been created.
-	CreatedAt time.Time `json:"created_at"`
+	// Tags is a list of image tags. Tags are arbitrarily defined strings
+	// attached to an image.
+	Tags 				[]string `json:"tags"`
 
-	// UpdatedAt is the date when the last change has been made to the image or
-	// it's properties.
-	UpdatedAt time.Time `json:"updated_at"`
+	Self      			string   `json:"self"`
 
 	// File is the trailing path after the glance endpoint that represent the
 	// location of the image or the path to retrieve it.
-	File string `json:"file"`
+	File 				string `json:"file"`
 
 	// Schema is the path to the JSON-schema that represent the image or image
 	// entity.
-	Schema string `json:"schema"`
+	Schema 				string `json:"schema"`	
 
-	// VirtualSize is the virtual size of the image
-	VirtualSize int64 `json:"virtual_size"`
-
-	// OpenStackImageImportMethods is a slice listing the types of import
-	// methods available in the cloud.
-	OpenStackImageImportMethods []string `json:"-"`
-	// OpenStackImageStoreIDs is a slice listing the store IDs available in
-	// the cloud.
-	OpenStackImageStoreIDs []string `json:"-"`
+	Stores    			string   `json:"stores"`
 }
 
 func (r *Image) UnmarshalJSON(b []byte) error {
@@ -129,20 +133,20 @@ func (r *Image) UnmarshalJSON(b []byte) error {
 	if err != nil {
 		return err
 	}
-	if resultMap, ok := result.(map[string]interface{}); ok {
-		delete(resultMap, "self")
-		delete(resultMap, "size")
-		delete(resultMap, "openstack-image-import-methods")
-		delete(resultMap, "openstack-image-store-ids")
-		r.Properties = gophercloud.RemainingKeys(Image{}, resultMap)
-	}
+	// if resultMap, ok := result.(map[string]interface{}); ok {
+	// 	delete(resultMap, "self")
+	// 	delete(resultMap, "size")
+	// 	delete(resultMap, "openstack-image-import-methods")
+	// 	delete(resultMap, "openstack-image-store-ids")
+	// 	r.Properties = gophercloud.RemainingKeys(Image{}, resultMap)
+	// }
 
-	if v := strings.FieldsFunc(strings.TrimSpace(s.OpenStackImageImportMethods), splitFunc); len(v) > 0 {
-		r.OpenStackImageImportMethods = v
-	}
-	if v := strings.FieldsFunc(strings.TrimSpace(s.OpenStackImageStoreIDs), splitFunc); len(v) > 0 {
-		r.OpenStackImageStoreIDs = v
-	}
+	// if v := strings.FieldsFunc(strings.TrimSpace(s.OpenStackImageImportMethods), splitFunc); len(v) > 0 {
+	// 	r.OpenStackImageImportMethods = v
+	// }
+	// if v := strings.FieldsFunc(strings.TrimSpace(s.OpenStackImageStoreIDs), splitFunc); len(v) > 0 {
+	// 	r.OpenStackImageStoreIDs = v
+	// }
 
 	return err
 }
