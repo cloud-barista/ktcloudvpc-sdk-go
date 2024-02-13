@@ -17,7 +17,7 @@ type PortForwarding struct {									// Modified
 	ExternalPort      	string `json:"publicport"`
 	ExternalEndPort   	string `json:"publicendport"`  // Caution!!) Spelling (Reqest struct : endpublicport)
 	VpcID 				string `json:"vpcid"`
-	SubnetID 			string `json:"networkid"`
+	SubnetID 			string `json:"networkid"`		// Tier ID
 	InternalPort      	string `json:"privateport"`
 	InternalEndPort   	string `json:"privateendport"` // Caution!!) Spelling (Reqest struct : endprivateport)	
 }
