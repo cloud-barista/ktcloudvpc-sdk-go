@@ -10,18 +10,18 @@ type (
 	Protocol string
 )
 
-const (
+const (											// Updated
 	// ProtocolAny is to allow any protocol
 	ProtocolAny Protocol = "any"
 
-	// ProtocolICMP is to allow the ICMP protocol
-	ProtocolICMP Protocol = "icmp"
-
 	// ProtocolTCP is to allow the TCP protocol
-	ProtocolTCP Protocol = "tcp"
+	ProtocolTCP Protocol = "TCP"
 
 	// ProtocolUDP is to allow the UDP protocol
-	ProtocolUDP Protocol = "udp"
+	ProtocolUDP Protocol = "UDP"
+
+	// ProtocolICMP is to allow the ICMP protocol
+	ProtocolICMP Protocol = "ICMP"
 )
 
 type (
@@ -113,10 +113,10 @@ type CreateOptsBuilder interface {
 }
 
 // CreateOpts contains all the values needed to create a new firewall rule.
-type CreateOpts struct {    																// Modified by B.T. Oh
-	SourceNetID    	 	 string                `json:"srcnetworkid,omitempty"`
+type InboundCreateOpts struct {    																// Modified
+	SourceNetID    	 	 string                `json:"srcnetworkid" required:"true"`
 	PortFordingID 		 string 			   `json:"virtualipid" required:"true"`
-	DestIPAdds 		 	 string                `json:"dstip,omitempty"`
+	DestIPAdds 		 	 string                `json:"dstip" required:"true"`
 	StartPort            string                `json:"startport,omitempty"`
 	EndPort      		 string                `json:"endport,omitempty"`
 	Protocol             Protocol              `json:"protocol" required:"true"`
@@ -125,7 +125,7 @@ type CreateOpts struct {    																// Modified by B.T. Oh
 }
 
 // ToRuleCreateMap casts a CreateOpts struct to a map.
-func (opts CreateOpts) ToRuleCreateMap() (map[string]interface{}, error) {					// Modified
+func (opts InboundCreateOpts) ToRuleCreateMap() (map[string]interface{}, error) {				// Modified
 	b, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err
@@ -134,8 +134,46 @@ func (opts CreateOpts) ToRuleCreateMap() (map[string]interface{}, error) {					/
 }
 
 // Create accepts a CreateOpts struct and uses the values to create a new firewall rule
-func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {		// Modified
+func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {			// Modified
 	b, err := opts.ToRuleCreateMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
+	resp, err := c.Post(rootURL(c), b, &r.Body, &gophercloud.RequestOpts{
+		OkCodes: []int{200},
+	})
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	return
+}
+
+type OutboundCreateOptsBuilder interface {
+	ToOutboundRuleCreateMap() (map[string]interface{}, error)
+}
+
+// OutboundCreateOpts contains all the values needed to create a new 'outbound' firewall rule.
+type OutboundCreateOpts struct {    																		// Added
+	SourceNetID    	 	 string                `json:"srcnetworkid" required:"true"` // Network(Tier) ID										
+	SourceIPAdds    	 string                `json:"srcip" required:"true"` 		 // Original network (~/24) or VM Private IP (~/32)
+	StartPort            string                `json:"startport,omitempty"`
+	EndPort      		 string                `json:"endport,omitempty"`
+	Protocol             Protocol              `json:"protocol" required:"true"`	 // TCP, UDP, ICMP, or ALL
+	DestNetID		 	 string                `json:"dstnetworkid" required:"true"` // Network(Tier) ID. Ex) External Network ID
+	DestIPAdds 		 	 string                `json:"dstip" required:"true"`  		 // Ex) "0.0.0.0/0"
+	SourceNAT    	 	 string                `json:"srcnat" required:"true"` 		 // Set as 'true' when setting an outbound firewall
+	Action               Action                `json:"action" required:"true"`
+}
+
+func (opts OutboundCreateOpts) ToOutboundRuleCreateMap() (map[string]interface{}, error) {					// Added
+	b, err := gophercloud.BuildRequestBody(opts, "")
+	if err != nil {
+		return nil, err
+	}
+	return b, nil
+}
+
+func OutboundCreate(c *gophercloud.ServiceClient, opts OutboundCreateOptsBuilder) (r CreateResult) {		// Added
+	b, err := opts.ToOutboundRuleCreateMap()
 	if err != nil {
 		r.Err = err
 		return
