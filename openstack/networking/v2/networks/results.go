@@ -161,11 +161,6 @@ func (r NetworkPage) IsEmpty() (bool, error) {						// Modified by B.T. Oh
 	return len(is) == 0, err
 }
 
-
-type ListVPCs struct {												// Added by B.T. Oh
-	VPCs []Network `json:"vpcs"` // Caution!!
-}
-
 // ExtractNetworks accepts a Page struct, specifically a NetworkPage struct,
 // and extracts the elements into a slice of Network structs. In other words,
 // a generic collection is mapped into a relevant slice.
@@ -176,6 +171,10 @@ func ExtractNetworks(r pagination.Page) ([]Network, error) {
 }
 
 func ExtractVPCs(r pagination.Page) ([]Network, error) {				// Added by B.T. Oh
+	type ListVPCs struct {												// Added by B.T. Oh
+		VPCs []Network `json:"vpcs"`
+	}
+	
 	var s struct {
 		ListVPC ListVPCs `json:"nc_listvpcsresponse"`
 	}		
