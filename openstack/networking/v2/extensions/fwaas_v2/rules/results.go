@@ -101,10 +101,10 @@ type CreateFirewallRuleResponse struct {											// Added
 
 func (r commonResult) ExtractJobInfo() (*CreateFirewallRuleResponse, error) {   	// Added
 	var s struct {
-		CreatePortforwardingResponse *CreateFirewallRuleResponse `json:"nc_createfirewallruleresponse"`
+		CreateFirewallRuleResponse *CreateFirewallRuleResponse `json:"nc_createfirewallruleresponse"`
 	}
 	err := r.ExtractInto(&s)
-	return s.CreatePortforwardingResponse, err
+	return s.CreateFirewallRuleResponse, err
 }
 
 // type DellFirewallRuleResponse struct {												// Added
