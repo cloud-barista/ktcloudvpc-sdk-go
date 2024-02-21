@@ -1,6 +1,7 @@
 package gophercloud
 
 import (
+	// "fmt"
 	"io"
 	"net/http"
 	"strings"
@@ -39,6 +40,7 @@ func (client *ServiceClient) ResourceBaseURL() string {    // Modified by B.T. O
 	if client.Endpoint == "" {
 		return "Failed to find 'client.Endpoint'"
 	}
+	// fmt.Printf("# client.Endpoint : %+v\n", client.Endpoint)
 
 	// # Origin
 	// if client.ResourceBase != "" {
@@ -50,6 +52,10 @@ func (client *ServiceClient) ResourceBaseURL() string {    // Modified by B.T. O
 // ServiceURL constructs a URL for a resource belonging to this provider.
 func (client *ServiceClient) ServiceURL(parts ...string) string {
 	return client.ResourceBaseURL() + strings.Join(parts, "/")
+}
+
+func (client *ServiceClient) GetServiceURL(parts ...string) string { // For 'Get method' call // Added
+	return client.ResourceBaseURL() + strings.Join(parts, "")
 }
 
 func (client *ServiceClient) initReqOpts(url string, JSONBody interface{}, JSONResponse interface{}, opts *RequestOpts) {
