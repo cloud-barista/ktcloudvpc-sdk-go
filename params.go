@@ -494,3 +494,57 @@ func IDSliceToQueryString(name string, ids []int) string {
 func IntWithinRange(val, min, max int) bool {
 	return val > min && val < max
 }
+
+func BuildGetMethodQueryString(opts interface{}) (string, error) {	// Added
+	optsValue := reflect.ValueOf(opts)
+	if optsValue.Kind() == reflect.Ptr {
+		optsValue = optsValue.Elem()
+	}
+
+	optsType := reflect.TypeOf(opts)
+	if optsType.Kind() == reflect.Ptr {
+		optsType = optsType.Elem()
+	}
+
+	params := url.Values{}
+
+	if optsValue.Kind() == reflect.Struct {
+		for i := 0; i < optsValue.NumField(); i++ {
+			v := optsValue.Field(i)
+			f := optsType.Field(i)
+			qTag := f.Tag.Get("q")
+
+			if qTag != "" {
+				tags := strings.Split(qTag, ",")
+
+				if !isZero(v) {
+				loop:
+					switch v.Kind() {
+					case reflect.Ptr:
+						if !v.IsNil() {
+							v = v.Elem()
+							goto loop
+						}
+					case reflect.String, reflect.Int, reflect.Bool:
+						// Handle basic types directly.
+						strValue := fmt.Sprintf("%v", v.Interface())
+						params.Add(tags[0], strValue)
+					}
+				} else {
+					if requiredTag := f.Tag.Get("required"); requiredTag == "true" {
+						return "", fmt.Errorf("required query parameter [%s] not set", f.Name)
+					}
+				}
+			}
+		}
+
+		encodedParams := params.Encode()
+		if encodedParams != "" {
+			// Prepend '&' to the encoded query string.
+			encodedParams = "&" + encodedParams
+		}
+		return encodedParams, nil
+	}
+
+	return "", fmt.Errorf("options type is not a struct")
+}

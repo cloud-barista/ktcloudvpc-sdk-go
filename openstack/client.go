@@ -40,6 +40,9 @@ const (
 	imageEndpoint = "https://api.ucloudbiz.olleh.com/d1/image/"  // Caution : Need to Add '/' at the end of the endpoint
 	networkEndpoint = "https://api.ucloudbiz.olleh.com/d1/nc/"  // Caution : Need to Add '/' at the end of the endpoint
 	volumeV2Endpoint = "https://api.ucloudbiz.olleh.com/d1/volume/"  // Caution : Need to Add '/' at the end of the endpoint
+
+	lbV2Endpoint = "https://api.ucloudbiz.olleh.com/d1/loadbalancer/api"  // Caution : Not need to Add '/' at the end of the endpoint
+	// ### KT Cloud LB Info API URL ex) : https://api.ucloudbiz.olleh.com/d1/loadbalancer/api?command=listLoadBalancers&...
 )
 
 func init() {
@@ -448,9 +451,12 @@ func initClientOpts(client *gophercloud.ProviderClient, eo gophercloud.EndpointO
     case "network":
 		sc.Endpoint = networkEndpoint
     case "volumev2":
-		sc.Endpoint = volumeV2Endpoint + projectID + "/"		
+		sc.Endpoint = volumeV2Endpoint + projectID + "/"
+	case "load-balancer-v1":
+		sc.Endpoint = lbV2Endpoint
     }
 	// ### KT Cloud Volume Info API URL : https://api.ucloudbiz.olleh.com/d1/volume/{project_id}/volumes/{volume_id}
+	// ### KT Cloud LB Info API URL ex) : https://api.ucloudbiz.olleh.com/d1/loadbalancer/api?command=listLoadBalancers&...
 
 	cblogger.Infof("\n# sc.Type in initClientOpts() : %s", sc.Type)
 	cblogger.Infof("\n# sc.Endpoint in initClientOpts() : %s", sc.Endpoint)
@@ -546,8 +552,16 @@ func NewDNSV2(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (
 // image service.
 func NewImageServiceV2(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "image")
-	sc.ResourceBase = sc.Endpoint   // Modified by B.T. Oh.
+	sc.ResourceBase = sc.Endpoint   // Modified
 	// sc.ResourceBase = sc.Endpoint + "v2/"
+	return sc, err
+}
+
+// # For KT Cloud D platform Looad Balancer
+func NewLoadBalancerV1(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) { // Added
+	sc, err := initClientOpts(client, eo, "load-balancer-v1")
+	sc.ResourceBase = sc.Endpoint
+
 	return sc, err
 }
 
@@ -555,10 +569,10 @@ func NewImageServiceV2(client *gophercloud.ProviderClient, eo gophercloud.Endpoi
 // load balancer service.
 func NewLoadBalancerV2(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 	sc, err := initClientOpts(client, eo, "load-balancer")
-
+	sc.ResourceBase = sc.Endpoint   // Modified
+	
 	// Fixes edge case having an OpenStack lb endpoint with trailing version number.
 	endpoint := strings.Replace(sc.Endpoint, "v2.0/", "", -1)
-
 	sc.ResourceBase = endpoint + "v2.0/"
 	return sc, err
 }
