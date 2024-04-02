@@ -8,6 +8,7 @@ const (
 
 	listCommand       = "?command=listLoadBalancers"
 	createCommand     = "?command=createLoadBalancer"
+	deleteCommand     = "?command=deleteLoadBalancer"
 	resourcePath   = ""
 	statusPath     = "status"
 	statisticsPath = "stats"
@@ -24,6 +25,10 @@ func listNlbURL(c *gophercloud.ServiceClient) string {
 
 func createNlbURL(c *gophercloud.ServiceClient) string {
 	return c.GetServiceURL(createCommand, resourcePath)
+}
+
+func deleteNlbURL(c *gophercloud.ServiceClient) string {
+	return c.GetServiceURL(deleteCommand, resourcePath)
 }
 
 func resourceURL(c *gophercloud.ServiceClient, id string) string {
