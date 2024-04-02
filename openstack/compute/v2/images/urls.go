@@ -12,7 +12,7 @@ package images
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
-func listURL(client *gophercloud.ServiceClient) string {   // Added by B.T. Oh.
+func listURL(client *gophercloud.ServiceClient) string {   // Added.
 	return client.ServiceURL("images", "")
 }
 

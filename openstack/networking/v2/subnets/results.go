@@ -10,7 +10,7 @@ type commonResult struct {
 }
 
 // Extract is a function that accepts a result and extracts a subnet resource.
-func (r commonResult) Extract() (*Subnet, error) {				// Modified by B.T. Oh
+func (r commonResult) Extract() (*Subnet, error) {				// Modified
 	var s struct {
 		Subnet *Subnet `json:"network"`  // Caution!!
 	}
@@ -59,48 +59,48 @@ type HostRoute struct {
 // Subnet represents a subnet. See package documentation for a top-level
 // description of what this is.
 // KT Cloud D1 API guide : https://cloud.kt.com/docs/open-api-guide/d/computing/tier
-type Subnet struct {									// Modified by B.T. Oh
-	EndIP string `json:"endip"`							// Added by B.T. Oh
+type Subnet struct {									// Modified
+	EndIP 		string `json:"endip"`						// Added
 
-	Shared string `json:"shared"`						// Added by B.T. Oh
+	Shared 		string `json:"shared"`						// Added
 
-	StartIP string `json:"startip"`						// Added by B.T. Oh
+	StartIP 	string `json:"startip"`						// Added
 	
-	Type string `json:"type"`							// Added by B.T. Oh
+	Type 		string `json:"type"`						// Added
 
-	VLan string `json:"vlan"`							// Added by B.T. Oh
+	VLan 		string `json:"vlan"`						// Added
 
-	Netmask string `json:"netmask"`						// Added by B.T. Oh
+	Netmask 	string `json:"netmask"`						// Added
 
 	// UUID of the parent network.
-	VpcID string `json:"vpcid"` 						// Modified by B.T. Oh
+	VpcID 		string `json:"vpcid"` 						// Modified
 
 	// Human-readable name for the subnet. Might not be unique.
-	Name string `json:"name"`
+	Name 		string `json:"name"`
 
-	ZoneID string `json:"zoneid"`						// Added by B.T. Oh
+	ZoneID 		string `json:"zoneid"`						// Added
 
-	DataLakeYN string `json:"datalakeyn"`				// Added by B.T. Oh
+	DataLakeYN 	string `json:"datalakeyn"`					// Added
 	
 	// CIDR representing IP range for this subnet, based on IP version.
-	CIDR string `json:"cidr"`
+	CIDR 		string `json:"cidr"`
 
 	// UUID representing the subnet.
-	ID string `json:"id"`
+	ID 			string `json:"id"`
 
 	// ProjectID is the project owner of the subnet.
-	ProjectID string `json:"projectid"`					// Modified by B.T. Oh
+	ProjectID 	string `json:"projectid"`					// Modified
 
 	// Default gateway used by devices in this subnet.
-	Gateway string `json:"gateway"`						// Modified by B.T. Oh
+	Gateway 	string `json:"gateway"`						// Modified
 
-	Account string `json:"account"`						// Added by B.T. Oh
+	Account 	string `json:"account"`						// Added
 
-	OsName string `json:"osname"`						// Added by B.T. Oh
+	OsName 		string `json:"osname"`						// Added
 
-	OsNetworkID string `json:"osnetworkid"`				// Added by B.T. Oh
+	OsNetworkID string `json:"osnetworkid"`					// Added
 
-	Status string `json:"status"`						// Added by B.T. Oh
+	Status 		string `json:"status"`						// Added
 }
 
 // SubnetPage is the page returned by a pager when traversing over a collection
@@ -129,14 +129,14 @@ func (r SubnetPage) IsEmpty() (bool, error) {
 	return len(is) == 0, err
 }
 
-type OsNetwork struct {												// Added by B.T. Oh
+type OsNetwork struct {												// Added
 	Subnets []Subnet `json:"networks"`  // Caution!!
 }
 
 // ExtractSubnets accepts a Page struct, specifically a SubnetPage struct,
 // and extracts the elements into a slice of Subnet structs. In other words,
 // a generic collection is mapped into a relevant slice.
-func ExtractSubnets(r pagination.Page) ([]Subnet, error) {			// Modified by B.T. Oh
+func ExtractSubnets(r pagination.Page) ([]Subnet, error) {			// Modified
 	var s struct {
 		OsNet OsNetwork `json:"nc_listosnetworksresponse"`
 	}		

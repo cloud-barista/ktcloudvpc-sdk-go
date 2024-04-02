@@ -36,7 +36,7 @@ type ServiceClient struct {
 }
 
 // ResourceBaseURL returns the base URL of any resources used by this service. It MUST end with a /.
-func (client *ServiceClient) ResourceBaseURL() string {    // Modified by B.T. Oh.
+func (client *ServiceClient) ResourceBaseURL() string {    // Modified.
 	if client.Endpoint == "" {
 		return "Failed to find 'client.Endpoint'"
 	}

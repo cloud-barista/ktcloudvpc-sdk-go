@@ -37,7 +37,7 @@ func (opts ListOpts) ToPortForwardingListQuery() (string, error) {
 // List returns a Pager which allows you to iterate over a collection of
 // Port Forwarding resources. It accepts a ListOpts struct, which allows you to
 // filter and sort the returned collection for greater efficiency.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {  			// Modified by B.T. Oh
+func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {  			// Modified
 	url := portForwardingUrl(client)
 	if opts != nil {
 		query, err := opts.ToPortForwardingListQuery()
@@ -59,7 +59,7 @@ func Get(client *gophercloud.ServiceClient, floatingIpId string, pfId string) (r
 }
 
 // CreateOpts contains all the values needed to create a new port forwarding resource. All attributes are required.
-type CreateOpts struct {																		// Modified by B.T. Oh
+type CreateOpts struct {																		// Modified
 	ZoneID 	  		  	string `json:"zoneid"` 			 // Ex. KT Cloud D1 Platform => 'DX-M1'
 	PrivateIpAddr 	  	string `json:"vmguestip"`        // Private IP address (allocated to the server(VM))
 	PublicIpID 		  	string `json:"entpublicipid"`
@@ -82,12 +82,12 @@ type CreateOptsBuilder interface {
 
 // ToPortForwardingCreateMap allows CreateOpts to satisfy the CreateOptsBuilder
 // interface
-func (opts CreateOpts) ToPortForwardingCreateMap() (map[string]interface{}, error) {			// Modified by B.T. Oh
+func (opts CreateOpts) ToPortForwardingCreateMap() (map[string]interface{}, error) {			// Modified
 	return gophercloud.BuildRequestBody(opts, "")	
 }
 
 // Create accepts a CreateOpts struct and uses the values provided to create a new port forwarding for an existing floating IP.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {		// Modified by B.T. Oh
+func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {		// Modified
 	b, err := opts.ToPortForwardingCreateMap()
 	if err != nil {
 		r.Err = err

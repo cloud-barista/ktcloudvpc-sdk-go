@@ -7,7 +7,7 @@ import (
 
 // KeyPair is an SSH key known to the OpenStack Cloud that is available to be
 // injected into servers.
-type KeyPair struct {									// Modified by B.T. Oh.
+type KeyPair struct {									// Modified.
 	// Name is used to refer to this keypair from other services within this
 	// region.
 	Name string `json:"name"`

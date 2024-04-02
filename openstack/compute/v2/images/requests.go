@@ -11,7 +11,7 @@
 package images
 
 import (
-	"log"
+	// "log"
 	"strings"
 
 	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
@@ -55,7 +55,7 @@ func (opts ListOpts) ToImageListQuery() (string, error) {
 	return q.String(), err
 }
 
-// List enumerates the available images.  // $$$ Added by B.T. Oh.
+// List enumerates the available images.  // $$$ Added.
 func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	urlBefore := listURL(client)
 	
@@ -65,8 +65,8 @@ func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pa
 	// $$$
 	url := strings.Replace(urlBefore, "/images/", "/images", -1)
 
-	// For Check!!
-	log.Println("\n### List Query URL : ", url)
+	// # For Check!!
+	// log.Println("\n### List Query URL : ", url)
 
 	if opts != nil {
 		query, err := opts.ToImageListQuery()

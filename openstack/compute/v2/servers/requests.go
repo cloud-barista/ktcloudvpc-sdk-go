@@ -117,7 +117,7 @@ type CreateOptsBuilder interface {
 
 // Network is used within CreateOpts to control a new server's network
 // attachments.
-type Network struct {									// Modified by B.T. Oh
+type Network struct {									// Modified
 	// UUID of a network to attach to the newly provisioned server.
 	// Required unless Port is provided.
 	UUID string
@@ -151,12 +151,12 @@ func (f *File) MarshalJSON() ([]byte, error) {
 }
 
 // CreateOpts specifies server creation parameters.
-type CreateOpts struct {								// Modified by B.T. Oh
+type CreateOpts struct {								// Modified
 	// Name is the name to assign to the newly launched server.
 	Name string `json:"name" required:"true"`
 
 	// KeyName is the Keypair name to assign to the newly launched server.   
-	KeyName string `json:"key_name" required:"true"`	// Added by B.T. Oh.
+	KeyName string `json:"key_name" required:"true"`	// Added.
 	
 	// FlavorRef is the ID or full URL to the flavor that describes the server's specs.
 	FlavorRef string `json:"flavorRef"`
@@ -176,11 +176,11 @@ type CreateOpts struct {								// Modified by B.T. Oh
 	UserData []byte `json:"-"`
 
 	// Server Usage Plan Type : 'monthly' or 'hourly'
-	UsagePlanType string `json:"usage_plan_type,omitempty"` // Added by B.T. Oh. (Not Mentioned in the API Manual.)
+	UsagePlanType string `json:"usage_plan_type,omitempty"` // Added. (Not Mentioned in the API Manual.)
 }
 
 // ToServerCreateMap assembles a request body based on the contents of a CreateOpts.
-func (opts CreateOpts) ToServerCreateMap() (map[string]interface{}, error) {  	// Modified by B.T. Oh
+func (opts CreateOpts) ToServerCreateMap() (map[string]interface{}, error) {  	// Modified
 	b, err := gophercloud.BuildRequestBody(opts, "")
 	if err != nil {
 		return nil, err

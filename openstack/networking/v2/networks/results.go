@@ -20,7 +20,7 @@ func (r commonResult) Extract() (*Network, error) {
 	return &s, err
 }
 
-func (r commonResult) ExtractInto(v interface{}) error {		// Modified by B.T. Oh
+func (r commonResult) ExtractInto(v interface{}) error {		// Modified
 	return r.Result.ExtractIntoStructPtr(v, "vpcs")
 }
 
@@ -49,7 +49,7 @@ type DeleteResult struct {
 	gophercloud.ErrResult
 }
 
-type StaticRoute struct {	// Added by B.T. Oh
+type StaticRoute struct {	// Added
 	Default bool `json:"default"`
 
 	// CIDR representing IP range for this VPC, based on IP version.	
@@ -62,7 +62,7 @@ type StaticRoute struct {	// Added by B.T. Oh
 	GatewayInterfaceName string `json:"gatewayinterfacename"`
 }
 
-type StaticRoutes struct {	// Added by B.T. Oh
+type StaticRoutes struct {	// Added
 	// UUID for the VPC
 	VpcID string `json:"vpcid"`
 
@@ -71,10 +71,10 @@ type StaticRoutes struct {	// Added by B.T. Oh
 
 // Network represents, well, a network.
 // KT Cloud D1 API guide : https://cloud.kt.com/docs/open-api-guide/d/computing/networking
-type Network struct {								// Modified by B.T. Oh
-	VpcOfferingID string `json:"vpcofferingid"`		// Added by B.T. Oh
+type Network struct {								// Modified
+	VpcOfferingID string `json:"vpcofferingid"`		// Added
 
-	SesionCount string `json:"sessioncount"`		// Added by B.T. Oh
+	SesionCount string `json:"sessioncount"`		// Added
 		
 	// UUID for the network
 	ID string `json:"id"`
@@ -82,22 +82,22 @@ type Network struct {								// Modified by B.T. Oh
 	// Human-readable name for the network. Might not be unique.
 	Name string `json:"name"`
 
-	ZoneID string `json:"zoneid"`					// Added by B.T. Oh
+	ZoneID string `json:"zoneid"`					// Added
 
-	Vdom string `json:"vdom"`						// Added by B.T. Oh
+	Vdom string `json:"vdom"`						// Added
 
 	// Subnets associated with this network.
-	Subnets []subnets.Subnet `json:"networks"`		// Caution!! // Modified by B.T. Oh
+	Subnets []subnets.Subnet `json:"networks"`		// Caution!! // Modified
 
-	StaticRoutes StaticRoutes `json:"staticroutes"`	// Added by B.T. Oh
+	StaticRoutes StaticRoutes `json:"staticroutes"`	// Added
 
-	Account string `json:"account"`					// Added by B.T. Oh
+	Account string `json:"account"`					// Added
 	
 	// CreatedAt contain ISO-8601 timestamps of when it was created.
 	CreatedAt time.Time `json:"-"`	
 }
 
-func (r *Network) UnmarshalJSON(b []byte) error {	// Modified by B.T. Oh
+func (r *Network) UnmarshalJSON(b []byte) error {	// Modified
 	type tmp Network
 
 	// Support for older neutron time format
@@ -156,7 +156,7 @@ func (r NetworkPage) NextPageURL() (string, error) {
 }
 
 // IsEmpty checks whether a NetworkPage struct is empty.
-func (r NetworkPage) IsEmpty() (bool, error) {						// Modified by B.T. Oh
+func (r NetworkPage) IsEmpty() (bool, error) {						// Modified
 	is, err := ExtractVPCs(r)
 	return len(is) == 0, err
 }
@@ -170,8 +170,8 @@ func ExtractNetworks(r pagination.Page) ([]Network, error) {
 	return s, err
 }
 
-func ExtractVPCs(r pagination.Page) ([]Network, error) {				// Added by B.T. Oh
-	type ListVPCs struct {												// Added by B.T. Oh
+func ExtractVPCs(r pagination.Page) ([]Network, error) {				// Added
+	type ListVPCs struct {												// Added
 		VPCs []Network `json:"vpcs"`
 	}
 	
@@ -182,6 +182,6 @@ func ExtractVPCs(r pagination.Page) ([]Network, error) {				// Added by B.T. Oh
 	return s.ListVPC.VPCs, err
 }
 
-func ExtractNetworksInto(r pagination.Page, v interface{}) error {		// Modified by B.T. Oh
+func ExtractNetworksInto(r pagination.Page, v interface{}) error {		// Modified
 	return r.(NetworkPage).Result.ExtractIntoSlicePtr(v, "vpcs")
 }
