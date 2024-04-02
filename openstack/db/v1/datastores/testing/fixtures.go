@@ -3,8 +3,8 @@ package testing
 import (
 	"fmt"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/db/v1/datastores"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/db/v1/datastores"
 )
 
 const version1JSON = `

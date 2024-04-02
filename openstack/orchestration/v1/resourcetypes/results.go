@@ -1,7 +1,7 @@
 package resourcetypes
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 // ResourceTypeSummary contains the result of listing an available resource

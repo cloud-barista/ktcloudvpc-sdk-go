@@ -6,10 +6,10 @@ package v3
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
-	compute "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/openstack/compute/v2"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/v3/volumes"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/clients"
+	compute "github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/openstack/compute/v2"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/blockstorage/v3/volumes"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 func TestVolumeAttachments(t *testing.T) {

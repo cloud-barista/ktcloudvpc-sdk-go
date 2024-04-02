@@ -3,7 +3,7 @@ package testing
 import (
 	"time"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/trunks"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/networking/v2/extensions/trunks"
 )
 
 const CreateRequest = `

@@ -1,7 +1,7 @@
 package volumeactions
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 // AttachOptsBuilder allows extensions to add additional parameters to the

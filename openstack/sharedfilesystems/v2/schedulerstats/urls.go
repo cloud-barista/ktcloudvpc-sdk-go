@@ -1,6 +1,6 @@
 package schedulerstats
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
 func poolsListURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL("scheduler-stats", "pools")

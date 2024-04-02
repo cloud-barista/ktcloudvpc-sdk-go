@@ -1,7 +1,7 @@
 package lockunlock
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 // LockResult and UnlockResult are the responses from a Lock and Unlock

@@ -1,7 +1,7 @@
 package portforwarding
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 const resourcePath = "Portforwarding"									// Modified

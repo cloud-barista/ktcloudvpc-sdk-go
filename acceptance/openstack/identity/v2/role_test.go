@@ -6,11 +6,11 @@ package v2
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v2/extensions/admin/roles"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v2/users"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/clients"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/identity/v2/extensions/admin/roles"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/identity/v2/users"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 func TestRolesAddToUser(t *testing.T) {

@@ -1,6 +1,6 @@
 package testing
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/bgp/peers"
+import "github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/networking/v2/extensions/bgp/peers"
 
 const ListBGPPeersResult = `
 {

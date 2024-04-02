@@ -3,7 +3,7 @@ package imagedata
 import (
 	"io"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 // Upload uploads an image file.

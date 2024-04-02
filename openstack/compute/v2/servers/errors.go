@@ -3,7 +3,7 @@ package servers
 import (
 	"fmt"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 // ErrNeitherImageIDNorImageNameProvided is the error when neither the image

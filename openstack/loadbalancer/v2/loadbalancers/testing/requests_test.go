@@ -3,16 +3,16 @@ package testing
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/loadbalancer/v2/l7policies"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/loadbalancer/v2/listeners"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/loadbalancer/v2/monitors"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/loadbalancer/v2/pools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/loadbalancer/v2/l7policies"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/loadbalancer/v2/listeners"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/loadbalancer/v2/monitors"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/loadbalancer/v2/pools"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/loadbalancer/v2/loadbalancers"
-	fake "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/loadbalancer/v2/testhelper"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/loadbalancer/v2/loadbalancers"
+	fake "github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/loadbalancer/v2/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 func TestListLoadbalancers(t *testing.T) {

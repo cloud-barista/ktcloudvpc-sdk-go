@@ -1,6 +1,6 @@
 package claims
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
 func (r CreateResult) Extract() ([]Messages, error) {
 	var s struct {

@@ -1,6 +1,6 @@
 package suspendresume
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
 // SuspendResult is the response from a Suspend operation. Call its
 // ExtractErr method to determine if the request succeeded or failed.

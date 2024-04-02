@@ -1,7 +1,7 @@
 package limits
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 // Get returns the limits about the currently scoped tenant.

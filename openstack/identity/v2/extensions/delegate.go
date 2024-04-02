@@ -1,9 +1,9 @@
 package extensions
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	common "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/common/extensions"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	common "github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/common/extensions"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
 // ExtensionPage is a single page of Extension results.

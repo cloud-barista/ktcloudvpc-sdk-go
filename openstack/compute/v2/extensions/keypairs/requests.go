@@ -3,9 +3,9 @@ package keypairs
 import (
 	// "github.com/davecgh/go-spew/spew"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/compute/v2/servers"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/compute/v2/servers"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
 // CreateOptsExt adds a KeyPair option to the base CreateOpts.

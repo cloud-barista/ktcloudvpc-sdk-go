@@ -3,11 +3,11 @@ package testing
 import (
 	"testing"
 
-	common "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/common/extensions"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/compute/v2/extensions"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
+	common "github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/common/extensions"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/compute/v2/extensions"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper/client"
 )
 
 func TestList(t *testing.T) {

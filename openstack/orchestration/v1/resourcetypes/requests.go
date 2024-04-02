@@ -1,7 +1,7 @@
 package resourcetypes
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 // SupportStatus is a type for specifying by which support status to filter the

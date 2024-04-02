@@ -1,6 +1,6 @@
 package policytypes
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
 const (
 	apiVersion = "v1"

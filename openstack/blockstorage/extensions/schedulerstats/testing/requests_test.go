@@ -3,10 +3,10 @@ package testing
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/extensions/schedulerstats"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/blockstorage/extensions/schedulerstats"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper/client"
 )
 
 func TestListStoragePoolsDetail(t *testing.T) {

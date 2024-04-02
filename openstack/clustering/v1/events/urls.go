@@ -1,6 +1,6 @@
 package events
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
 var apiVersion = "v1"
 var apiName = "events"

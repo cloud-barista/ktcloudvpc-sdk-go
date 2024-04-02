@@ -5,12 +5,12 @@ package v2
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v2/extensions/admin/roles"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v2/tenants"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v2/users"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/identity/v2/extensions/admin/roles"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/identity/v2/tenants"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/identity/v2/users"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 // AddUserRole will grant a role to a user in a tenant. An error will be

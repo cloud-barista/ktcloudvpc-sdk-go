@@ -3,7 +3,7 @@ package testing
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 func TestExtractToken(t *testing.T) {

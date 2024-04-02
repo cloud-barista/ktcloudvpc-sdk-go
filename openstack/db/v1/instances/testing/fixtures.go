@@ -5,10 +5,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/db/v1/datastores"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/db/v1/instances"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/fixture"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/db/v1/datastores"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/db/v1/instances"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper/fixture"
 )
 
 var (

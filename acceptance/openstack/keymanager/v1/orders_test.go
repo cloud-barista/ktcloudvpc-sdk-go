@@ -6,12 +6,12 @@ package v1
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/keymanager/v1/containers"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/keymanager/v1/orders"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/keymanager/v1/secrets"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/clients"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/keymanager/v1/containers"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/keymanager/v1/orders"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/keymanager/v1/secrets"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 func TestOrdersCRUD(t *testing.T) {

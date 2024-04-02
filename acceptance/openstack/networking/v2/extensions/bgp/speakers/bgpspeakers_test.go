@@ -3,13 +3,13 @@ package speakers
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
-	networking "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/openstack/networking/v2"
-	ap "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/openstack/networking/v2/extensions/bgp/peers"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/bgp/peers"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/bgp/speakers"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/clients"
+	networking "github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/openstack/networking/v2"
+	ap "github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/openstack/networking/v2/extensions/bgp/peers"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/networking/v2/extensions/bgp/peers"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/networking/v2/extensions/bgp/speakers"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 func TestBGPSpeakerCRUD(t *testing.T) {

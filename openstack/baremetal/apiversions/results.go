@@ -1,7 +1,7 @@
 package apiversions
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 // APIVersions represents the result from getting a list of all versions available

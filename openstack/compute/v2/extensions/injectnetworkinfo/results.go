@@ -1,7 +1,7 @@
 package injectnetworkinfo
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 // InjectNetworkResult is the response of a InjectNetworkInfo operation. Call

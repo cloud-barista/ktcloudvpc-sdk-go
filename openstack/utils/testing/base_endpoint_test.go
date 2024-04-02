@@ -3,8 +3,8 @@ package testing
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/utils"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/utils"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 type endpointTestCases struct {

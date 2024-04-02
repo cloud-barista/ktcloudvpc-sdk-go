@@ -1,6 +1,6 @@
 package applicationcredentials
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
 func listURL(client *gophercloud.ServiceClient, userID string) string {
 	return client.ServiceURL("users", userID, "application_credentials")

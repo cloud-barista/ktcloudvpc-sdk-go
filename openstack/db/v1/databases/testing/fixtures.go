@@ -3,7 +3,7 @@ package testing
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/fixture"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper/fixture"
 )
 
 var (

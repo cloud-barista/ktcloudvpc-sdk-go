@@ -1,6 +1,6 @@
 package servergroups
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
 const resourcePath = "os-server-groups"
 

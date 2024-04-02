@@ -3,7 +3,7 @@ package testing
 import (
 	"time"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/networks"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/networking/v2/networks"
 )
 
 const ListResponse = `

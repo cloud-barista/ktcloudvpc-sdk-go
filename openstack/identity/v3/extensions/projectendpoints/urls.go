@@ -1,6 +1,6 @@
 package projectendpoints
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
 func listURL(client *gophercloud.ServiceClient, projectID string) string {
 	return client.ServiceURL("OS-EP-FILTER", "projects", projectID, "endpoints")

@@ -6,10 +6,10 @@ package v1
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/clustering/v1/nodes"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/clustering/v1/webhooks"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/clients"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/clustering/v1/nodes"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/clustering/v1/webhooks"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 func TestClusteringWebhookTrigger(t *testing.T) {

@@ -1,7 +1,7 @@
 package limits
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
 // A limit is the limit that override the registered limit for each project.

@@ -7,10 +7,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	transferRequests "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/dns/v2/transfer/request"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	transferRequests "github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/dns/v2/transfer/request"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper/client"
 )
 
 // ListOutput is a sample response to a List call.

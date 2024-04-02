@@ -7,12 +7,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/applicationcredentials"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/tokens"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/clients"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/identity/v3/applicationcredentials"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/identity/v3/tokens"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 func TestApplicationCredentialsCRD(t *testing.T) {

@@ -1,7 +1,7 @@
 package quotas
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 var apiName = "quotas"

@@ -18,12 +18,12 @@ import (
 
 	cblog "github.com/cloud-barista/cb-log"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	tokens2 "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v2/tokens"
-	tokens3 "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/tokens"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/extensions/ec2tokens"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/extensions/oauth1"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/utils"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	tokens2 "github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/identity/v2/tokens"
+	tokens3 "github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/identity/v3/tokens"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/identity/v3/extensions/ec2tokens"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/identity/v3/extensions/oauth1"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/utils"
 )
 
 const (
