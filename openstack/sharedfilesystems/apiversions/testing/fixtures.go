@@ -6,9 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/sharedfilesystems/apiversions"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/sharedfilesystems/apiversions"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper/client"
 )
 
 const ManilaAPIVersionResponse = `

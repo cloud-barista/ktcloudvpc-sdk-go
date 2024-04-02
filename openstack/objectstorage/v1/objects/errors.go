@@ -1,6 +1,6 @@
 package objects
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
 // ErrWrongChecksum is the error when the checksum generated for an object
 // doesn't match the ETAG header.

@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 func TestEnvironmentValidation(t *testing.T) {

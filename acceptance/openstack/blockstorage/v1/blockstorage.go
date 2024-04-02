@@ -6,11 +6,11 @@ package v1
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/v1/snapshots"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/v1/volumes"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/v1/volumetypes"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/blockstorage/v1/snapshots"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/blockstorage/v1/volumes"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/blockstorage/v1/volumetypes"
 )
 
 // CreateSnapshot will create a volume snapshot based off of a given volume and

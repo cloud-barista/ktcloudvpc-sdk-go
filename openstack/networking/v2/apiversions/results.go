@@ -1,7 +1,7 @@
 package apiversions
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
 // APIVersion represents an API version for Neutron. It contains the status of

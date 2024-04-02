@@ -4,10 +4,10 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/loadbalancer/v2/listeners"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/loadbalancer/v2/pools"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/loadbalancer/v2/listeners"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/loadbalancer/v2/pools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
 // LoadBalancer is the primary load balancing configuration object that

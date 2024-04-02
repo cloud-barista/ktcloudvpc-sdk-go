@@ -1,7 +1,7 @@
 package acls
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 // GetContainerACL retrieves the ACL of a container.

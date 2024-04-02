@@ -3,8 +3,8 @@ package request
 import (
 	"net/http"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
 // ListOptsBuilder allows extensions to add parameters to the List request.

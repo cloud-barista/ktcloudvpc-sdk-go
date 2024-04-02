@@ -1,6 +1,6 @@
 package job
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
 // Querying task statuses URL
 func jobURL(sc *gophercloud.ServiceClient, jobId string) string {  			// Added

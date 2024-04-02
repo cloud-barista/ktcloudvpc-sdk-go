@@ -3,7 +3,7 @@ package openstack
 import (
 	"os"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 var nilOptions = gophercloud.AuthOptions{}

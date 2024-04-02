@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/lbaas_v2/pools"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/networking/v2/extensions/lbaas_v2/pools"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper/client"
 )
 
 // PoolsListBody contains the canned body of a pool list response.

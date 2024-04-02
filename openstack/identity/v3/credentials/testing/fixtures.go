@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/credentials"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/identity/v3/credentials"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper/client"
 )
 
 const userID = "bb5476fd12884539b41d5a88f838d773"

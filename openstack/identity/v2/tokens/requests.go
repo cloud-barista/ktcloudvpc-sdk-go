@@ -1,6 +1,6 @@
 package tokens
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
 // PasswordCredentialsV2 represents the required options to authenticate
 // with a username and password.

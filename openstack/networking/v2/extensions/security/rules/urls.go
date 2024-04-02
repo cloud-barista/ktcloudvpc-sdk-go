@@ -1,6 +1,6 @@
 package rules
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
 const rootPath = "security-group-rules"
 

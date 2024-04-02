@@ -3,9 +3,9 @@ package testing
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/external"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/networks"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/networking/v2/extensions/external"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/networking/v2/networks"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 func TestListExternal(t *testing.T) {

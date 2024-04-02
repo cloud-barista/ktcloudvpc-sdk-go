@@ -5,10 +5,10 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	fake "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/common"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/quotas"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	fake "github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/networking/v2/common"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/networking/v2/extensions/quotas"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 func TestGet(t *testing.T) {

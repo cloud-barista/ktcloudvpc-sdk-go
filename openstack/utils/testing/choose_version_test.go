@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/utils"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/utils"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 func setupVersionHandler() {

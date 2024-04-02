@@ -6,8 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
 // DateFilter represents a valid filter to use for filtering

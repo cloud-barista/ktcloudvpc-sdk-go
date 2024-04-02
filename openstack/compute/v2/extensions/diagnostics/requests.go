@@ -1,7 +1,7 @@
 package diagnostics
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 // Diagnostics

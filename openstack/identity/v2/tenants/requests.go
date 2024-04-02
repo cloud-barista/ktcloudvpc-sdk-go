@@ -1,8 +1,8 @@
 package tenants
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
 // ListOpts filters the Tenants that are returned by the List call.

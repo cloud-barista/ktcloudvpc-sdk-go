@@ -6,12 +6,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/groups"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/projects"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/identity/v3/users"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/identity/v3/groups"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/identity/v3/projects"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/identity/v3/users"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper/client"
 )
 
 // ListOutput provides a single page of User results.

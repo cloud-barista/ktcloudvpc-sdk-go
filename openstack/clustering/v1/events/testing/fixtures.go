@@ -6,10 +6,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/clustering/v1/events"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/clustering/v1/events"
 
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
-	fake "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
+	fake "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper/client"
 )
 
 const ListResponse = `

@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"testing"
 
-	az "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/extensions/availabilityzones"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
+	az "github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/blockstorage/extensions/availabilityzones"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper/client"
 )
 
 const GetOutput = `

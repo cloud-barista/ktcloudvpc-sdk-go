@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/imageservice/v2/imageimport"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
-	fakeclient "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/imageservice/v2/imageimport"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
+	fakeclient "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper/client"
 )
 
 func TestGet(t *testing.T) {

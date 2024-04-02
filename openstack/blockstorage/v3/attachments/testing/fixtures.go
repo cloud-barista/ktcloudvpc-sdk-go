@@ -6,10 +6,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/v3/attachments"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
-	fake "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/blockstorage/v3/attachments"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
+	fake "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper/client"
 )
 
 var (

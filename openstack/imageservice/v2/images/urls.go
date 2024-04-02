@@ -4,8 +4,8 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/utils"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/utils"
 )
 
 // `listURL` is a pure function. `listURL(c)` is a URL for which a GET

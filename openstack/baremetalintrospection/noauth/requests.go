@@ -3,7 +3,7 @@ package noauth
 import (
 	"fmt"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 // EndpointOpts specifies a "noauth" Ironic Inspector Endpoint.

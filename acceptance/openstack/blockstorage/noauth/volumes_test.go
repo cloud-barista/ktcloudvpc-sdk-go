@@ -6,9 +6,9 @@ package noauth
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/v3/volumes"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/clients"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/blockstorage/v3/volumes"
 )
 
 func TestVolumesList(t *testing.T) {

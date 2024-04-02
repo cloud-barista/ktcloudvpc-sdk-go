@@ -1,8 +1,8 @@
 package stackresources
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
 // Find retrieves stack resources for the given stack name.

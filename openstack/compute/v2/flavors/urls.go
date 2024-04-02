@@ -1,7 +1,7 @@
 package flavors
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 func getURL(client *gophercloud.ServiceClient, id string) string {

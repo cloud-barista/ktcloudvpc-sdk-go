@@ -3,13 +3,13 @@ package dns
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/dns"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/layer3/floatingips"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/networks"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/ports"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/networking/v2/extensions/dns"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/networking/v2/extensions/layer3/floatingips"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/networking/v2/networks"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/networking/v2/ports"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 // PortWithDNSExt represents a port with the DNS fields

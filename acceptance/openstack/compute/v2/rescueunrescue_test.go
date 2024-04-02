@@ -6,8 +6,8 @@ package v2
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/clients"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 func TestServerRescueUnrescue(t *testing.T) {

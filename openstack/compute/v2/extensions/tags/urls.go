@@ -1,6 +1,6 @@
 package tags
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
 const (
 	rootResourcePath = "servers"

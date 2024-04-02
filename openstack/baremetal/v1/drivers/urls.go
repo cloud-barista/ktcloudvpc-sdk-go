@@ -1,6 +1,6 @@
 package drivers
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
 func driversURL(client *gophercloud.ServiceClient) string {
 	return client.ServiceURL("drivers")

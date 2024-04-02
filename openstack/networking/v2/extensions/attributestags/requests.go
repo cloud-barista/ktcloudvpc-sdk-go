@@ -1,7 +1,7 @@
 package attributestags
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 // ReplaceAllOptsBuilder allows extensions to add additional parameters to

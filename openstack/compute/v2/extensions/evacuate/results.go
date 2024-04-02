@@ -1,7 +1,7 @@
 package evacuate
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 // EvacuateResult is the response from an Evacuate operation.

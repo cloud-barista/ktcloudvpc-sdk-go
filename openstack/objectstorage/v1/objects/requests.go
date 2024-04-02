@@ -11,10 +11,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/objectstorage/v1/accounts"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/objectstorage/v1/containers"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/objectstorage/v1/accounts"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/objectstorage/v1/containers"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
 // ListOptsBuilder allows extensions to add additional parameters to the List

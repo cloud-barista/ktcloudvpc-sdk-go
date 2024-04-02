@@ -3,7 +3,7 @@ package testing
 import (
 	"time"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/imageservice/v2/tasks"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/imageservice/v2/tasks"
 )
 
 // TasksListResult represents raw server response from a server to a list call.

@@ -3,10 +3,10 @@ package testing
 import (
 	"testing"
 
-	transferAccepts "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/dns/v2/transfer/accept"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
+	transferAccepts "github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/dns/v2/transfer/accept"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper/client"
 )
 
 func TestList(t *testing.T) {

@@ -3,7 +3,7 @@ package queues
 import (
 	"net/url"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 const (

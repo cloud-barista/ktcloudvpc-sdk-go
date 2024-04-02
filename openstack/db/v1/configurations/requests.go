@@ -1,9 +1,9 @@
 package configurations
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/db/v1/instances"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/db/v1/instances"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
 // List will list all of the available configurations.

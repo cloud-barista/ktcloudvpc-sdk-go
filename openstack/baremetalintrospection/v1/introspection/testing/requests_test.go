@@ -3,10 +3,10 @@ package testing
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/baremetalintrospection/v1/introspection"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/baremetalintrospection/v1/introspection"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper/client"
 )
 
 func TestListIntrospections(t *testing.T) {

@@ -3,8 +3,8 @@ package apiversions
 import (
 	"strings"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/utils"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/utils"
 )
 
 func listURL(c *gophercloud.ServiceClient) string {

@@ -6,9 +6,9 @@ package v2
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/messaging/v2/claims"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/clients"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/messaging/v2/claims"
 )
 
 func TestCRUDClaim(t *testing.T) {

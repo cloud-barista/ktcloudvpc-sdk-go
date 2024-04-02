@@ -6,9 +6,9 @@ package v1
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/containerinfra/v1/certificates"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/clients"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/containerinfra/v1/certificates"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 func TestCertificatesCRUD(t *testing.T) {

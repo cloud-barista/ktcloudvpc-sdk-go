@@ -3,11 +3,11 @@ package testing
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/placement/v1/resourceproviders"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/placement/v1/resourceproviders"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
-	fake "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
+	fake "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper/client"
 )
 
 func TestListResourceProviders(t *testing.T) {

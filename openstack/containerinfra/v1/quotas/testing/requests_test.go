@@ -3,9 +3,9 @@ package testing
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/containerinfra/v1/quotas"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
-	fake "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/containerinfra/v1/quotas"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
+	fake "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper/client"
 )
 
 func TestCreateQuota(t *testing.T) {

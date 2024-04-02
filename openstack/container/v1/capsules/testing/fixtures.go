@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/container/v1/capsules"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
-	fakeclient "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/container/v1/capsules"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
+	fakeclient "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper/client"
 )
 
 // ValidJSONTemplate is a valid OpenStack Capsule template in JSON format

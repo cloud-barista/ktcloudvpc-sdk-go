@@ -3,10 +3,10 @@ package testing
 import (
 	"testing"
 
-	fake "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/common"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/networking/v2/extensions/lbaas_v2/l7policies"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	fake "github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/networking/v2/common"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/networking/v2/extensions/lbaas_v2/l7policies"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 func TestCreateL7Policy(t *testing.T) {

@@ -6,11 +6,11 @@ package v1
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/clients"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/baremetal/v1/nodes"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/clients"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/baremetal/v1/nodes"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 func TestNodesCreateDestroy(t *testing.T) {

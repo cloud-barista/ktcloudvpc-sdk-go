@@ -5,8 +5,8 @@ import (
 	"github.com/sirupsen/logrus"
 	cblog "github.com/cloud-barista/cb-log"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
 var cblogger *logrus.Logger

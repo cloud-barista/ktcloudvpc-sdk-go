@@ -1,7 +1,7 @@
 package remoteconsoles
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 // ConsoleProtocol represents valid remote console protocol.

@@ -1,6 +1,6 @@
 package aggregates
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
 func aggregatesListURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL("os-aggregates")

@@ -3,9 +3,9 @@ package testing
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/compute/v2/extensions/schedulerhints"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/compute/v2/servers"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/compute/v2/extensions/schedulerhints"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/compute/v2/servers"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 func TestCreateOpts(t *testing.T) {

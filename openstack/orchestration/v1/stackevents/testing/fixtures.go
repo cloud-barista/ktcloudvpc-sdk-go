@@ -6,10 +6,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/orchestration/v1/stackevents"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
-	fake "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/orchestration/v1/stackevents"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
+	fake "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper/client"
 )
 
 var Timestamp1, _ = time.Parse(time.RFC3339, "2018-06-26T07:58:17Z")

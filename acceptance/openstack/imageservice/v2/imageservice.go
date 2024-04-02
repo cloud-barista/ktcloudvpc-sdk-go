@@ -8,13 +8,13 @@ import (
 	"os"
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/imageservice/v2/imagedata"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/imageservice/v2/imageimport"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/imageservice/v2/images"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/imageservice/v2/tasks"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/imageservice/v2/imagedata"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/imageservice/v2/imageimport"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/imageservice/v2/images"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/imageservice/v2/tasks"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 // CreateEmptyImage will create an image, but with no actual image data.

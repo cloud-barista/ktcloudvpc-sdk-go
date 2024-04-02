@@ -2,7 +2,7 @@ package job
 
 import (
 	"strings"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 // Querying the task status based on its job ID.

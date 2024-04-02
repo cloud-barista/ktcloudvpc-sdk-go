@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"testing"
 
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
-	fakeclient "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper/client"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
+	fakeclient "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper/client"
 )
 
 // HandleCreateImageMemberSuccessfully setup

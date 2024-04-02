@@ -3,7 +3,7 @@ package testing
 import (
 	"testing"
 
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 func TestBootFromNewVolume(t *testing.T) {

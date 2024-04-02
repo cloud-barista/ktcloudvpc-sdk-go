@@ -3,7 +3,7 @@ package stacks
 import (
 	"fmt"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 type ErrInvalidEnvironment struct {

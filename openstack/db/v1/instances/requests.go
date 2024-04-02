@@ -1,10 +1,10 @@
 package instances
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	db "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/db/v1/databases"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/db/v1/users"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/pagination"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	db "github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/db/v1/databases"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/db/v1/users"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
 // CreateOptsBuilder is the top-level interface for create options.

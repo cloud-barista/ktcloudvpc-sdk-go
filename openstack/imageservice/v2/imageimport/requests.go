@@ -1,6 +1,6 @@
 package imageimport
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
 // ImportMethod represents valid Import API method.
 type ImportMethod string

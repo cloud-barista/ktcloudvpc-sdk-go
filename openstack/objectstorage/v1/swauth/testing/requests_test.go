@@ -3,9 +3,9 @@ package testing
 import (
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/objectstorage/v1/swauth"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/objectstorage/v1/swauth"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 func TestAuth(t *testing.T) {

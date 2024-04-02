@@ -1,6 +1,6 @@
 package ruletypes
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
 func listRuleTypesURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL("qos", "rule-types")

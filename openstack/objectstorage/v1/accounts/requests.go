@@ -1,6 +1,6 @@
 package accounts
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
 // GetOptsBuilder allows extensions to add additional headers to the Get
 // request.

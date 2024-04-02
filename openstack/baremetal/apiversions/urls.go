@@ -1,7 +1,7 @@
 package apiversions
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 func getURL(c *gophercloud.ServiceClient, version string) string {

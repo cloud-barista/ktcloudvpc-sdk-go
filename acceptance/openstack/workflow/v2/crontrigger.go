@@ -4,11 +4,11 @@ import (
 	"testing"
 	"time"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/acceptance/tools"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/workflow/v2/crontriggers"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/workflow/v2/workflows"
-	th "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/testhelper"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/acceptance/tools"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/workflow/v2/crontriggers"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/workflow/v2/workflows"
+	th "github.com/cloud-barista/ktcloudvpc-sdk-go/testhelper"
 )
 
 // CreateCronTrigger creates a cron trigger for the given workflow.

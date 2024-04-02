@@ -9,7 +9,7 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 	yaml "gopkg.in/yaml.v2"
 )
 

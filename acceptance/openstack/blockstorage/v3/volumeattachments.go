@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/v3/attachments"
-	v3 "github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/blockstorage/v3/volumes"
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv/openstack/compute/v2/servers"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/blockstorage/v3/attachments"
+	v3 "github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/blockstorage/v3/volumes"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/compute/v2/servers"
 )
 
 // CreateVolumeAttachment will attach a volume to an instance. An error will be

@@ -1,7 +1,7 @@
 package limits
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
 // GetOptsBuilder allows extensions to add additional parameters to the
