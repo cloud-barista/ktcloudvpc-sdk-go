@@ -14,7 +14,7 @@ type Attachment struct {
 	Device       string    `json:"device"`
 	HostName     string    `json:"host_name"`
 	ID           string    `json:"id"`
-	ServerID     string    `json:"server_id"`
+	ServerID     string    `json:"server_id"` // Server(VM) ID with the Volume
 	VolumeID     string    `json:"volume_id"`
 }
 

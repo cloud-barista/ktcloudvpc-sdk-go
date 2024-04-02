@@ -250,7 +250,7 @@ func (p Pager) AllPages() (Page, error) {
 	return page.Elem().Interface().(Page), err
 }
 
-func (p Pager) FirstPage() (Page, error) {						// Added by B.T. Oh
+func (p Pager) FirstPage() (Page, error) {						// Added
 	// Grab a first page to ascertain the page body type.
 	firstPage, err := p.fetchNextPage(p.initialURL)
 	if err != nil {

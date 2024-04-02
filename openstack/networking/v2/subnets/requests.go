@@ -94,41 +94,41 @@ type CreateOptsBuilder interface {
 	ToSubnetCreateMap() (map[string]interface{}, error)
 }
 
-type DetailInfo struct {							// Added by B.T. Oh. Tier 상세 설정
-	Cclass string `json:"cclass,omitempty"`				// Added by B.T. Oh
+type DetailInfo struct {							// Added. Tier 상세 설정
+	Cclass 		string `json:"cclass,omitempty"`			// Added
 
-	CIDR string `json:"cidr,omitempty"`					// Added by B.T. Oh
+	CIDR 		string `json:"cidr,omitempty"`				// Added
 
-	StartIP string `json:"startip,omitempty"`			// Added by B.T. Oh. Server가 사용 가능한 첫번째 ip
+	StartIP 	string `json:"startip,omitempty"`			// Added. Server가 사용 가능한 첫번째 ip
 
-	EndIP string `json:"endip,omitempty"`			    // Added by B.T. Oh. Server가 사용 가능한 마지막 ip
+	EndIP 		string `json:"endip,omitempty"`			    // Added. Server가 사용 가능한 마지막 ip
 
-	LBStartIP string `json:"lbstartip,omitempty"`		// Added by B.T. Oh. LoadBalancer가 사용 가능한 첫번째 ip
+	LBStartIP 	string `json:"lbstartip,omitempty"`			// Added. LoadBalancer가 사용 가능한 첫번째 ip
 
-	LBEndIP string `json:"lbendip,omitempty"`			// Added by B.T. Oh. LoadBalancer가 사용 가능한 마지막 ip
+	LBEndIP 	string `json:"lbendip,omitempty"`			// Added. LoadBalancer가 사용 가능한 마지막 ip
 
-	BMStartIP string `json:"bmstartip,omitempty"`		// Added by B.T. Oh. Bare Metal 또는 기타 목적으로 사용 가능한 첫번째 ip
+	BMStartIP 	string `json:"bmstartip,omitempty"`			// Added. Bare Metal 또는 기타 목적으로 사용 가능한 첫번째 ip
 
-	BMEndIP string `json:"bmendip,omitempty"`			// Added by B.T. Oh.  또는 기타 목적으로 사용 가능한 마지막 ip
+	BMEndIP 	string `json:"bmendip,omitempty"`			// Added.  또는 기타 목적으로 사용 가능한 마지막 ip
 
-	Gateway string `json:"gateway,omitempty"`			// Added by B.T. Oh
+	Gateway 	string `json:"gateway,omitempty"`			// Added
 }
 
 // CreateOpts represents the attributes used when creating a new subnet.
-type CreateOpts struct {								// Modified by B.T. Oh
+type CreateOpts struct {								// Modified
 	// Name is a human-readable name of the subnet.
-	Name string `json:"name" required:"true"`
+	Name 		string `json:"name" required:"true"`
 
-	Zone string `json:"zone" required:"true"`					// Added by B.T. Oh
+	Zone 		string `json:"zone" required:"true"`		// Added
 
-	Type string `json:"type" required:"true"`					// Added by B.T. Oh. Network Creation type. 기본값으로 "tier"만 사용 가능
+	Type 		string `json:"type" required:"true"`		// Added. Network Creation type. 기본값으로 "tier"만 사용 가능
 
-	UserCustom string `json:"usercustom" required:"true"`		// Added by B.T. Oh.
+	UserCustom 	string `json:"usercustom" required:"true"`	// Added.
 	// 사용자가 tier 생성 정보를 수동으로 설정?. Default : "n"
 		// "n" : C class만 사용
 		// "y" : C class 미사용 및 그 외 필드 사용
 
-	Detail DetailInfo `json:"detail,omitempty"`		    // Added by B.T. Oh. Tier 상세 설정	
+	Detail DetailInfo `json:"detail,omitempty"`		    	// Added. Tier 상세 설정	
 }
 
 // ToSubnetCreateMap builds a request body from CreateOpts.

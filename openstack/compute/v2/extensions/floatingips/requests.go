@@ -19,7 +19,7 @@ type CreateOptsBuilder interface {
 }
 
 // CreateOpts specifies a Floating IP allocation request.
-type CreateOpts struct {    					  // Modified by B.T. Oh
+type CreateOpts struct {    					  // Modified
 }
 
 // ToFloatingIPCreateMap constructs a request body from CreateOpts.

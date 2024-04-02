@@ -3,11 +3,11 @@ package networks
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 func resourceURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("VPC", id)  // Modified by B.T. Oh
+	return c.ServiceURL("VPC", id)  // Modified
 }
 
 func rootURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("VPC")  // Modified by B.T. Oh
+	return c.ServiceURL("VPC")  // Modified
 }
 
 func getURL(c *gophercloud.ServiceClient, id string) string {

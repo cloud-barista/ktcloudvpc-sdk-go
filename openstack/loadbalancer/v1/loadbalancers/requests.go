@@ -83,13 +83,6 @@ func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
 // Create request.
-
-// GPT
-// type CreateOptsBuilder interface {
-// 	ToLoadBalancerCreateMap() (map[string]interface{}, error)
-// }
-
-
 type CreateOptsBuilder interface {
 	ToLoadBalancerCreateQuery() (string, error)
 }
@@ -111,7 +104,7 @@ type CreateOpts struct {											// Modified
 	TLSv1        	 string `q:"tlsv1"`				// Required when ServiceType is 'https'. Use TLSv1? : 'DISABLED' / 'ENABLED'
 	TLSv11         	 string `q:"tlsv11"`				// Required when ServiceType is 'https'. Use TLSv11? : 'DISABLED' / 'ENABLED'
 	TLSv12        	 string `q:"tlsv12"`				// Required when ServiceType is 'https'. Use TLSv12? : 'DISABLED' / 'ENABLED'
-	NetworkId        string `q:"networkid"` 			// Tier Network ID. Required in case of 'Enterprise Security'
+	NetworkID        string `q:"networkid"` 			// Tier Network ID. Required in case of 'Enterprise Security'
 }
 // ### To create query string : Not `json:"name"` But `q:"name"`
 
@@ -143,7 +136,7 @@ func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) pagination.Pag
 }
 */
 
-func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r GetResult)  { 	// Modified
+func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult)  { 	// Modified
 	url := createNlbURL(c)
 	if opts != nil {
 		query, err := opts.ToLoadBalancerCreateQuery()
@@ -157,65 +150,14 @@ func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r GetResult) 
 	// url = url + "&response=json"
 	fmt.Printf("\n### Call URL : %s\n\n", url)
 
-	resp, err := c.Get(url, &r.Body, nil) // ?????
+	resp, err := c.Get(url, &r.Body, nil) // Caution!!
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // ToLoadBalancerCreateMap builds a request body from CreateOpts.
-
 func (opts CreateOpts) ToLoadBalancerCreateMap() (map[string]interface{}, error) {
 	return gophercloud.BuildRequestBody(opts, "loadbalancer")
-}
-
-// Get retrieves a particular Loadbalancer based on its unique ID.
-func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(resourceURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
-}
-
-// UpdateOptsBuilder allows extensions to add additional parameters to the
-// Update request.
-type UpdateOptsBuilder interface {
-	ToLoadBalancerUpdateMap() (map[string]interface{}, error)
-}
-
-// UpdateOpts is the common options struct used in this package's Update
-// operation.
-type UpdateOpts struct {
-	// Human-readable name for the Loadbalancer. Does not have to be unique.
-	Name *string `json:"name,omitempty"`
-
-	// Human-readable description for the Loadbalancer.
-	Description *string `json:"description,omitempty"`
-
-	// The administrative state of the Loadbalancer. A valid value is true (UP)
-	// or false (DOWN).
-	AdminStateUp *bool `json:"admin_state_up,omitempty"`
-
-	// Tags is a set of resource tags.
-	Tags *[]string `json:"tags,omitempty"`
-}
-
-// ToLoadBalancerUpdateMap builds a request body from UpdateOpts.
-func (opts UpdateOpts) ToLoadBalancerUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "loadbalancer")
-}
-
-// Update is an operation which modifies the attributes of the specified
-// LoadBalancer.
-func Update(c *gophercloud.ServiceClient, id string, opts UpdateOpts) (r UpdateResult) {
-	b, err := opts.ToLoadBalancerUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200, 202},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
 }
 
 // DeleteOptsBuilder allows extensions to add additional parameters to the
@@ -227,29 +169,32 @@ type DeleteOptsBuilder interface {
 // DeleteOpts is the common options struct used in this package's Delete
 // operation.
 type DeleteOpts struct {
-	// Cascade will delete all children of the load balancer (listners, monitors, etc).
-	Cascade bool `q:"cascade"`
+	NlbID            string   `q:"loadbalancerid"`	
 }
 
 // ToLoadBalancerDeleteQuery formats a DeleteOpts into a query string.
-func (opts DeleteOpts) ToLoadBalancerDeleteQuery() (string, error) {
-	q, err := gophercloud.BuildQueryString(opts)
-	return q.String(), err
+func (opts DeleteOpts) ToLoadBalancerDeleteQuery() (string, error) { // Modified
+	q, err := gophercloud.BuildGetMethodQueryString(opts)
+	return q, err
 }
 
 // Delete will permanently delete a particular LoadBalancer based on its
 // unique ID.
-func Delete(c *gophercloud.ServiceClient, id string, opts DeleteOptsBuilder) (r DeleteResult) {
-	url := resourceURL(c, id)
+func Delete(c *gophercloud.ServiceClient, opts DeleteOptsBuilder) (r DeleteResult) { // Modified
+	url := deleteNlbURL(c)
 	if opts != nil {
 		query, err := opts.ToLoadBalancerDeleteQuery()
-		if err != nil {
-			r.Err = err
-			return
+		if err != nil {		
+			r.ErrResult.Err = err
+			return r
 		}
 		url += query
 	}
-	resp, err := c.Delete(url, nil)
+	
+	// url = url + "&response=json"
+	fmt.Printf("\n### Call URL : %s\n\n", url)
+
+	resp, err := c.Get(url, &r.Body, nil) // Caution!!) Not c.Delete(url, nil)
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }

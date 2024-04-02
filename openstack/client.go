@@ -35,7 +35,7 @@ const (
 	// The version can be anything from v3 to v3.x.
 	v3 = "v3"
 
-	// Added by B.T. Oh.
+	// Added.
 	computeEndpoint = "https://api.ucloudbiz.olleh.com/d1/server/"   // Caution : Need to Add '/' at the end of the endpoint
 	imageEndpoint = "https://api.ucloudbiz.olleh.com/d1/image/"  // Caution : Need to Add '/' at the end of the endpoint
 	networkEndpoint = "https://api.ucloudbiz.olleh.com/d1/nc/"  // Caution : Need to Add '/' at the end of the endpoint
@@ -231,7 +231,7 @@ func v3auth(client *gophercloud.ProviderClient, endpoint string, opts tokens3.Au
 	// cblogger.Info("\n\n")
 
 	if endpoint != "" {
-		v3Client.Endpoint = v3Client.IdentityBase   // Modified by B.T. Oh.
+		v3Client.Endpoint = v3Client.IdentityBase   // Modified.
 	}
 	// ### Original Code
 	// if endpoint != "" {
@@ -369,7 +369,7 @@ func NewIdentityV2(client *gophercloud.ProviderClient, eo gophercloud.EndpointOp
 // identity service.
 func NewIdentityV3(client *gophercloud.ProviderClient, eo gophercloud.EndpointOpts) (*gophercloud.ServiceClient, error) {
 
-	endpoint := client.IdentityBase  // Modified by B.T. Oh.
+	endpoint := client.IdentityBase  // Modified.
 	clientType := "identity"
 	var err error
 	if !reflect.DeepEqual(eo, gophercloud.EndpointOpts{}) {
@@ -389,7 +389,7 @@ func NewIdentityV3(client *gophercloud.ProviderClient, eo gophercloud.EndpointOp
 		return nil, err
 	}
 
-	endpoint = gophercloud.NormalizeURL(base)  // Modified by B.T. Oh.
+	endpoint = gophercloud.NormalizeURL(base)  // Modified.
 
 	// cblogger.Info("\n")
 	// cblogger.Infof("\n# base endpoint : %s", endpoint)
@@ -443,7 +443,7 @@ func initClientOpts(client *gophercloud.ProviderClient, eo gophercloud.EndpointO
 	sc.ProviderClient = client
 	sc.Type = clientType
 
-	switch eo.Type {   // Added by B.T. Oh. since Provider Client of KT Cloud does not provide correct endpoint URL.
+	switch eo.Type {   // Added. since Provider Client of KT Cloud does not provide correct endpoint URL.
     case "compute":
 		sc.Endpoint = computeEndpoint
     case "image":

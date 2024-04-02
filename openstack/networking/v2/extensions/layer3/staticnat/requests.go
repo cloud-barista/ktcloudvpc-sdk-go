@@ -24,7 +24,7 @@ func (opts ListOpts) ToStaticNatListQuery() (string, error) {
 // List returns a Pager which allows you to iterate over a collection of
 // Static NAT resources. It accepts a ListOpts struct, which allows you to
 // filter and sort the returned collection for greater efficiency.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {  			// Modified by B.T. Oh
+func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {  			// Modified
 	url := staticNatUrl(client)
 	if opts != nil {
 		query, err := opts.ToStaticNatListQuery()

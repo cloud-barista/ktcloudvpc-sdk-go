@@ -7,7 +7,7 @@ type jobResult struct {
 }
 
 // KT Cloud D1 Platfrom API (Networking : Get Job Statue with the ID of it) : https://cloud.kt.com/docs/open-api-guide/d/computing/networking
-type JobResult struct {												// Modified by B.T. Oh
+type JobResult struct {												// Modified
 	// Description of the request result 
 	IpAddress string `json:"ipaddress"`
 
@@ -21,7 +21,7 @@ type JobResult struct {												// Modified by B.T. Oh
 	Id string `json:"id"`
 }
 
-type AsyncJobResult struct {   										// Added by B.T. Oh
+type AsyncJobResult struct {   										// Added
 	JobResult JobResult `json:"result"`
 	
 	//Specifies the task status.
@@ -38,7 +38,7 @@ type JobExecResult struct {
 }
 
 // ExtractJobResult is a function that accepts a result and extracts a jobresult.
-func (r jobResult) ExtractJobResult() (*AsyncJobResult, error) { 	// Modified by B.T. Oh
+func (r jobResult) ExtractJobResult() (*AsyncJobResult, error) { 	// Modified
 	var s struct {
 		AsyncJobResult *AsyncJobResult `json:"nc_queryasyncjobresultresponse"`
 	}

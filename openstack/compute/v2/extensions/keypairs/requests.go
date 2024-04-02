@@ -74,7 +74,7 @@ type CreateOptsBuilder interface {
 }
 
 // CreateOpts specifies KeyPair creation or import parameters.
-type CreateOpts struct {					// Modified by B.T. Oh.
+type CreateOpts struct {					// Modified.
 	// Name is a friendly name to refer to this KeyPair in other services.
 	Name string `json:"name" required:"true"`
 }

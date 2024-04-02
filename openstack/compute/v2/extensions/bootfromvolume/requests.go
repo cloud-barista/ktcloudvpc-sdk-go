@@ -42,7 +42,7 @@ const (
 // server. The block device may be created from an image, snapshot, new volume,
 // or existing volume. The destination may be a new volume, existing volume
 // which will be attached to the instance, ephemeral disk, or boot device.
-type BlockDevice struct {										// Modified by B.T. Oh
+type BlockDevice struct {										// Modified
 	// DestinationType is the type that gets created. Possible values are "volume"
 	// and "local".
 	DestinationType DestinationType `json:"destination_type,omitempty"`
@@ -55,7 +55,7 @@ type BlockDevice struct {										// Modified by B.T. Oh
 
 	// VolumeSize is the size of the volume to create (in gigabytes). This can be
 	// omitted for existing volumes.
-	VolumeSize string `json:"volume_size,omitempty"`			// Modified by B.T. Oh
+	VolumeSize string `json:"volume_size,omitempty"`			// Modified
 
 	// UUID is the unique identifier for the existing volume, snapshot, or
 	// image (see above).

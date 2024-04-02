@@ -3,11 +3,11 @@ package subnets
 import "github.com/cloud-barista/ktcloudvpc-sdk-for-drv"
 
 func resourceURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("Network", id)  // Modified by B.T. Oh
+	return c.ServiceURL("Network", id)  // Modified
 }
 
 func rootURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("Network")  // Modified by B.T. Oh
+	return c.ServiceURL("Network")  // Modified
 }
 
 func listURL(c *gophercloud.ServiceClient) string {
