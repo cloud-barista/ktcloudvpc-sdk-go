@@ -57,6 +57,8 @@ type BlockDevice struct {										// Modified
 	// omitted for existing volumes.
 	VolumeSize string `json:"volume_size,omitempty"`			// Modified
 
+	VolumeType string `json:"volume_type,omitempty"`			// Added. Not mentioned in KT Cloud D platform API doc.
+
 	// UUID is the unique identifier for the existing volume, snapshot, or
 	// image (see above).
 	UUID string `json:"uuid,omitempty"`
