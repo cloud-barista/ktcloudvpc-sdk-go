@@ -19,17 +19,17 @@ type LoadBalancer struct {
 	CertificateName    string `json:"certificatename"`
 	CipherGroupName    string `json:"cipherGroupName"`
 	ClientIpYn         string `json:"clientIpYn"`
-	EstablishedConn    int    `json:"establishedconn"` // Caution!!) int
-	HealthCheckType    string `json:"healthchecktype"` // Health CheckType : http / https / tcp
+	EstablishedConn    int    `json:"establishedconn"` 	// Caution!!) int
+	HealthCheckType    string `json:"healthchecktype"` 	// Health CheckType : http / https / tcp
 	HealthCheckURL     string `json:"healthcheckurl"`
-	NlbID     		   int    `json:"loadbalancerid"`  // Caution!!) int
+	NlbID     		   int    `json:"loadbalancerid"`  	// Caution!!) int
 	NlbOption 		   string `json:"loadbalanceroption"`
 	Name               string `json:"name"`
 	NetworkID          string `json:"networkid"`
-	RequestsRate       int 	`  json:"requestsrate"` // Caution!!) int
+	RequestsRate       int 	`  json:"requestsrate"` 	// Caution!!) int
 	ServiceIP          string `json:"serviceip"`
 	ServicePort        string `json:"serviceport"`
-	ServiceType        string `json:"servicetype"` // NLB Service Type : https / http / sslbridge / tcp / ftp
+	ServiceType        string `json:"servicetype"` 		// NLB Service Type : https / http / sslbridge / tcp / ftp
 	SSLv2              string `json:"sslv2"`
 	SSLv3              string `json:"sslv3"`
 	State              string `json:"state"`
@@ -39,6 +39,19 @@ type LoadBalancer struct {
 	TLSv12             string `json:"tlsv12"`
 	ZoneID             string `json:"zoneid"`
 	ZoneName           string `json:"zonename"`
+}
+
+type LbServer struct {
+	NlbID     		   int    `json:"loadbalancerid"`  // Caution!!) int
+	ServiceID          int    `json:"serviceid"`
+	VmID          	   string `json:"virtualmachineid"`
+	IPAddress          string `json:"ipaddress"`
+	PublicPort         string `json:"publicport"`		// Caution!!) API doc incorrect!!
+	CurSrvRConnections int    `json:"cursrvrconnections"`	
+	VmState            string `json:"state"`
+	ThroughputRate     int    `json:"throughputrate"`
+	AvgSvrTTFB         int    `json:"avgsvrttfb"`
+	RequestsRate       int    `json:"requestsrate"`
 }
 
 func (r *LoadBalancer) UnmarshalJSON(b []byte) error {
@@ -141,6 +154,16 @@ func ExtractLoadBalancers(r pagination.Page) ([]LoadBalancer, error) { 		// Modi
 	return s.ListLoadBalancersResponse.LoadBalancers, err
 }
 
+func ExtractLbServers(r pagination.Page) ([]LbServer, error) { 		// Modified
+	var s struct {
+			ListLbServersResponse struct {
+			Count        	int `json:"count"`
+			LbVMs 			[]LbServer `json:"loadbalancerwebserver"`
+		} `json:"listLoadBalancerWebServersresponse"`
+	}
+	err := (r.(LoadBalancerPage)).ExtractInto(&s)
+	return s.ListLbServersResponse.LbVMs, err
+}
 
 // func ExtractLoadBalancers(r pagination.Page) ([]LoadBalancer, error) { 		// Modified
 // 	// var s struct {
@@ -264,4 +287,12 @@ type DeleteResult struct {
 // ExtractErr method to determine if the request succeeded or failed.
 type FailoverResult struct {
 	gophercloud.ErrResult
+}
+
+type AddServerResult struct {
+	commonResult
+}
+
+type RemoveServerResult struct {
+	commonResult
 }

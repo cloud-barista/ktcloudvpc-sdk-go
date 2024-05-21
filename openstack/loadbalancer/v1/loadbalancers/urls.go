@@ -5,10 +5,12 @@ import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 const (
 	rootPath       = "?command=listLoadBalancers" // Temperary
 
-
 	listCommand       = "?command=listLoadBalancers"
 	createCommand     = "?command=createLoadBalancer"
 	deleteCommand     = "?command=deleteLoadBalancer"
+	addServerCommand  = "?command=addLoadBalancerWebServer"
+	removeServerCommand  = "?command=removeLoadBalancerWebServer"
+	listLbServerCommand       = "?command=listLoadBalancerWebServers"
 	resourcePath   = ""
 	statusPath     = "status"
 	statisticsPath = "stats"
@@ -29,6 +31,18 @@ func createNlbURL(c *gophercloud.ServiceClient) string {
 
 func deleteNlbURL(c *gophercloud.ServiceClient) string {
 	return c.GetServiceURL(deleteCommand, resourcePath)
+}
+
+func addServerURL(c *gophercloud.ServiceClient) string {
+	return c.GetServiceURL(addServerCommand, resourcePath)
+}
+
+func removeServerURL(c *gophercloud.ServiceClient) string {
+	return c.GetServiceURL(removeServerCommand, resourcePath)
+}
+
+func listLbServerURL(c *gophercloud.ServiceClient) string {
+	return c.GetServiceURL(listLbServerCommand, resourcePath)
 }
 
 func resourceURL(c *gophercloud.ServiceClient, id string) string {
