@@ -221,3 +221,103 @@ func Failover(c *gophercloud.ServiceClient, id string) (r FailoverResult) {
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
+
+type AddServerOpts struct {											// Addied
+	NlbID 		 string `q:"loadbalancerid"`	// Required
+	VMID 		 string `q:"virtualmachineid"`	// Required
+	IPAddress    string `q:"ipaddress"`			// Required.	
+	PublicPort   string `q:"publicport"`		// Required
+}
+
+type AddServerOptsBuilder interface {
+	ToLoadBalancerAddServerQuery() (string, error)
+}
+
+func AddServer(c *gophercloud.ServiceClient, opts AddServerOptsBuilder) (r AddServerResult)  { 	// Added
+	url := addServerURL(c)
+	if opts != nil {
+		query, err := opts.ToLoadBalancerAddServerQuery()
+		if err != nil {		
+			r.commonResult.Result.Err = err		// Modified
+			return r
+		}
+		url += query
+	}
+	
+	// url = url + "&response=json"
+	fmt.Printf("\n### Call URL : %s\n\n", url)
+
+	resp, err := c.Get(url, &r.Body, nil) // Caution!!
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	return
+}
+
+func (opts AddServerOpts) ToLoadBalancerAddServerQuery() (string, error) { 	// Addeed
+	q, err := gophercloud.BuildGetMethodQueryString(opts)    		// # BuildGetMethodQueryString() method Created
+	return q, err
+}
+
+type RemoveServerOpts struct {											// Addied
+	VMID 		 string `q:"serviceid"`	// Required
+}
+
+type RemoveServerOptsBuilder interface {
+	ToLoadBalancerRemoveServerQuery() (string, error)
+}
+
+func RemoveServer(c *gophercloud.ServiceClient, opts RemoveServerOptsBuilder) (r RemoveServerResult)  { 	// Added
+	url := removeServerURL(c)
+	if opts != nil {
+		query, err := opts.ToLoadBalancerRemoveServerQuery()
+		if err != nil {		
+			r.commonResult.Result.Err = err		// Modified
+			return r
+		}
+		url += query
+	}
+	
+	// url = url + "&response=json"
+	fmt.Printf("\n### Call URL : %s\n\n", url)
+
+	resp, err := c.Get(url, &r.Body, nil) // Caution!!
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	return
+}
+
+func (opts RemoveServerOpts) ToLoadBalancerRemoveServerQuery() (string, error) { 	// Addeed
+	q, err := gophercloud.BuildGetMethodQueryString(opts)    		// # BuildGetMethodQueryString() method Created
+	return q, err
+}
+
+type ListLbServerOpts struct {
+	NlbID               string   `q:"loadbalancerid"`	
+}
+
+type ListLbServerOptsBuilder interface {
+	ToLbServerListQuery() (string, error)
+}
+
+func (opts ListOpts) ToLbServerListQuery() (string, error) { 	// Modified
+	q, err := gophercloud.BuildGetMethodQueryString(opts)    		// # BuildGetMethodQueryString() method Created
+	// q, err := gophercloud.BuildQueryString(opts)	
+	// return q.String(), err
+	return q, err
+}
+
+func ListLbServer(c *gophercloud.ServiceClient, opts ListLbServerOptsBuilder) pagination.Pager { 	// Modified
+	url := listLbServerURL(c)
+	if opts != nil {
+		query, err := opts.ToLbServerListQuery()
+		if err != nil {
+			return pagination.Pager{Err: err}
+		}
+		url += query		
+	}
+	
+	// url = url + "&response=json"
+	fmt.Printf("\n### Call URL : %s\n\n", url)
+
+	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
+		return LoadBalancerPage{pagination.LinkedPageBase{PageResult: r}}
+	})
+}
