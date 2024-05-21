@@ -144,7 +144,7 @@ func (r CreateImageResult) ExtractImageID() (string, error) {
 }
 
 // Server represents a server/instance in the OpenStack cloud.
-type Server struct {
+type Server struct {												// Modified
 	// ID uniquely identifies this server amongst all other servers,
 	// including those not accessible to the current tenant.
 	ID string `json:"id"`
@@ -202,25 +202,12 @@ type Server struct {
 	// KeyName indicates which public key was injected into the server on launch.
 	KeyName string `json:"key_name"`
 
-	// AdminPass will generally be empty ("").  However, it will contain the
-	// administrative password chosen when provisioning a new server without a
-	// set AdminPass setting in the first place.
-	// Note that this is the ONLY time this field will be valid.
-	AdminPass string `json:"adminPass"`
-
 	// SecurityGroups includes the security groups that this instance has applied
 	// to it.
 	SecurityGroups []map[string]interface{} `json:"security_groups"`
 
 	// AttachedVolumes includes the volume attachments of this instance
 	AttachedVolumes []AttachedVolume `json:"os-extended-volumes:volumes_attached"`
-
-	// Fault contains failure information about a server.
-	Fault Fault `json:"fault"`
-
-	// Tags is a slice/list of string tags in a server.
-	// The requires microversion 2.26 or later.
-	Tags *[]string `json:"tags"`
 
 	// ServerGroups is a slice of strings containing the UUIDs of the
 	// server groups to which the server belongs. Currently this can
@@ -231,13 +218,6 @@ type Server struct {
 
 type AttachedVolume struct {
 	ID string `json:"id"`
-}
-
-type Fault struct {
-	Code    int       `json:"code"`
-	Created time.Time `json:"created"`
-	Details string    `json:"details"`
-	Message string    `json:"message"`
 }
 
 func (r *Server) UnmarshalJSON(b []byte) error {
