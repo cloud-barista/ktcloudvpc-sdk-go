@@ -257,8 +257,8 @@ func (opts AddServerOpts) ToLoadBalancerAddServerQuery() (string, error) { 	// A
 	return q, err
 }
 
-type RemoveServerOpts struct {											// Addied
-	VMID 		 string `q:"serviceid"`	// Required
+type RemoveServerOpts struct {											// Added
+	ServiceID 		 string `q:"serviceid"`	// Required
 }
 
 type RemoveServerOptsBuilder interface {
