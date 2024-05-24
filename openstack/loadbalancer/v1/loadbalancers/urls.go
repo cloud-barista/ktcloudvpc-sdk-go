@@ -3,18 +3,19 @@ package loadbalancers
 import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
 const (
-	rootPath       = "?command=listLoadBalancers" // Temperary
+	rootPath       		= "?command=listLoadBalancers" // Temperary
 
-	listCommand       = "?command=listLoadBalancers"
-	createCommand     = "?command=createLoadBalancer"
-	deleteCommand     = "?command=deleteLoadBalancer"
-	addServerCommand  = "?command=addLoadBalancerWebServer"
-	removeServerCommand  = "?command=removeLoadBalancerWebServer"
-	listLbServerCommand       = "?command=listLoadBalancerWebServers"
-	resourcePath   = ""
-	statusPath     = "status"
-	statisticsPath = "stats"
-	failoverPath   = "failover"
+	listCommand       	= "?command=listLoadBalancers"
+	createCommand     	= "?command=createLoadBalancer"
+	deleteCommand     	= "?command=deleteLoadBalancer"
+	addServerCommand  	= "?command=addLoadBalancerWebServer"
+	removeServerCommand = "?command=removeLoadBalancerWebServer"
+	listLbServerCommand = "?command=listLoadBalancerWebServers"
+	createTagCommand   	= "?command=createTag"
+	resourcePath   		= ""
+	statusPath     		= "status"
+	statisticsPath 		= "stats"
+	failoverPath   		= "failover"
 )
 
 // func rootURL(c *gophercloud.ServiceClient) string {
@@ -43,6 +44,10 @@ func removeServerURL(c *gophercloud.ServiceClient) string {
 
 func listLbServerURL(c *gophercloud.ServiceClient) string {
 	return c.GetServiceURL(listLbServerCommand, resourcePath)
+}
+
+func createTagURL(c *gophercloud.ServiceClient) string {
+	return c.GetServiceURL(createTagCommand, resourcePath)
 }
 
 func resourceURL(c *gophercloud.ServiceClient, id string) string {
