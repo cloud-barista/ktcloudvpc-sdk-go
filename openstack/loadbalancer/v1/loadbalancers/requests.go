@@ -72,7 +72,7 @@ func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 		url += query		
 	}
 	
-	// url = url + "&response=json"
+	url = url + "&response=json"
 	fmt.Printf("\n### Call URL : %s\n\n", url)
 
 	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
@@ -147,7 +147,7 @@ func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResul
 		url += query
 	}
 	
-	// url = url + "&response=json"
+	url = url + "&response=json"
 	fmt.Printf("\n### Call URL : %s\n\n", url)
 
 	resp, err := c.Get(url, &r.Body, nil) // Caution!!
@@ -191,7 +191,7 @@ func Delete(c *gophercloud.ServiceClient, opts DeleteOptsBuilder) (r DeleteResul
 		url += query
 	}
 	
-	// url = url + "&response=json"
+	url = url + "&response=json"
 	fmt.Printf("\n### Call URL : %s\n\n", url)
 
 	resp, err := c.Get(url, &r.Body, nil) // Caution!!) Not c.Delete(url, nil)
@@ -222,6 +222,7 @@ func Failover(c *gophercloud.ServiceClient, id string) (r FailoverResult) {
 	return
 }
 
+// Add Load Balancer Server
 type AddServerOpts struct {											// Addied
 	NlbID 		 string `q:"loadbalancerid"`	// Required
 	VMID 		 string `q:"virtualmachineid"`	// Required
@@ -244,7 +245,7 @@ func AddServer(c *gophercloud.ServiceClient, opts AddServerOptsBuilder) (r AddSe
 		url += query
 	}
 	
-	// url = url + "&response=json"
+	url = url + "&response=json"
 	fmt.Printf("\n### Call URL : %s\n\n", url)
 
 	resp, err := c.Get(url, &r.Body, nil) // Caution!!
@@ -257,6 +258,7 @@ func (opts AddServerOpts) ToLoadBalancerAddServerQuery() (string, error) { 	// A
 	return q, err
 }
 
+// Remove Load Balancer Server
 type RemoveServerOpts struct {											// Added
 	ServiceID 		 string `q:"serviceid"`	// Required
 }
@@ -276,7 +278,7 @@ func RemoveServer(c *gophercloud.ServiceClient, opts RemoveServerOptsBuilder) (r
 		url += query
 	}
 	
-	// url = url + "&response=json"
+	url = url + "&response=json"
 	fmt.Printf("\n### Call URL : %s\n\n", url)
 
 	resp, err := c.Get(url, &r.Body, nil) // Caution!!
@@ -289,6 +291,7 @@ func (opts RemoveServerOpts) ToLoadBalancerRemoveServerQuery() (string, error) {
 	return q, err
 }
 
+// List Load Balancer
 type ListLbServerOpts struct {
 	NlbID               string   `q:"loadbalancerid"`	
 }
@@ -314,10 +317,44 @@ func ListLbServer(c *gophercloud.ServiceClient, opts ListLbServerOptsBuilder) pa
 		url += query		
 	}
 	
-	// url = url + "&response=json"
+	url = url + "&response=json"
 	fmt.Printf("\n### Call URL : %s\n\n", url)
 
 	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
 		return LoadBalancerPage{pagination.LinkedPageBase{PageResult: r}}
 	})
+}
+
+// Create Tag for Load Balancer
+type CreateTagOpts struct {											// Addied
+	NlbID 		 string `q:"loadbalancerid"`	// Required
+	Tag 		 string `q:"tag"`				// Required
+}
+
+type CreateTagOptsBuilder interface {
+	ToLoadBalancerCreateTagQuery() (string, error)
+}
+
+func CreateTag(c *gophercloud.ServiceClient, opts CreateTagOptsBuilder) (r CreateTagResult)  { 	// Added
+	url := createTagURL(c)
+	if opts != nil {
+		query, err := opts.ToLoadBalancerCreateTagQuery()
+		if err != nil {		
+			r.commonResult.Result.Err = err		// Modified
+			return r
+		}
+		url += query
+	}
+	
+	url = url + "&response=json"
+	fmt.Printf("\n### Call URL : %s\n\n", url)
+
+	resp, err := c.Get(url, &r.Body, nil) // Caution!!
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	return
+}
+
+func (opts CreateTagOpts) ToLoadBalancerCreateTagQuery() (string, error) { 	// Addeed
+	q, err := gophercloud.BuildGetMethodQueryString(opts)    		// # BuildGetMethodQueryString() method Created
+	return q, err
 }

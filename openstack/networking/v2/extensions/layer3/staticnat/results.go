@@ -64,11 +64,9 @@ type CreateStaticNatResponse struct {											// Added
 }
 
 func (r commonResult) ExtractInfo() (*CreateStaticNatResponse, error) {   	// Added
-	var s struct {
-		CreateStaticNatResponse *CreateStaticNatResponse `json:"nc_enablestaticnatresponse"`
-	}
+	var s CreateStaticNatResponse
 	err := r.ExtractInto(&s)
-	return s.CreateStaticNatResponse, err
+	return &s, err
 }
 
 // type DellPortforwardingResponse struct {											// Added

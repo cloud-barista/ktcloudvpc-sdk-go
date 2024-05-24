@@ -202,20 +202,74 @@ type CreateNLBResponse struct {
 		HealthCheckURL    	string `json:"healthcheckurl"`
 		ErrorCode    		string `json:"errorcode"`
 		ErrorText    		string `json:"errortext"`
-
 		DisplayText    		string `json:"displaytext"`		
 	} `json:"createLoadBalancerresponse"`
 }
 // Caution!!) Not `json:"createLoadBalancerresponse"` : API manul is incorrect!!
 
+type DeleteNLBResponse struct {
+	Deletenlbresponse struct {
+		Success    			bool `json:"success"`
+		DisplayText    		string `json:"displaytext"`		
+	} `json:"deleteLoadBalancerresponse"`
+}
+
+type AddServerResponse struct {
+	Addserverresponse struct {
+		NlbID     		   int    `json:"loadbalancerid"`  // Caution!!) int
+		ServiceID          int    `json:"serviceid"`
+		VmID          	   string `json:"virtualmachineid"`
+		IPAddress          string `json:"ipaddress"`
+		PublicPort         string `json:"publicport"`		// Caution!!) API doc incorrect!!
+	} `json:"addLoadBalancerWebServerresponse"`
+}
+
+type RemoveServerResponse struct {
+	Removeserverresponse struct {
+		Success    			bool `json:"success"`
+		DisplayText    		string `json:"displaytext"`		
+	} `json:"removeLoadbalancerWebServerresponse"`
+}
+
+type DeleteServerResponse struct {
+	Deleteserverresponse struct {
+		Success    			bool `json:"success"`
+		DisplayText    		string `json:"displaytext"`		
+	} `json:"removeLoadbalancerWebServerresponse"`
+}
 
 // Extract is a function that accepts a result and extracts a loadbalancer.
+// func (r commonResult) CreateNLBExtract() (*CreateNLBResponse, error) {
 func (r commonResult) Extract() (*CreateNLBResponse, error) {
 	var resp CreateNLBResponse
 
 	err := r.ExtractInto(&resp.Createnlbresponse)
 	return &resp, err
 }
+
+func (r commonResult) DeleteNLBExtract() (*DeleteNLBResponse, error) {
+	var resp DeleteNLBResponse
+
+	err := r.ExtractInto(&resp.Deletenlbresponse)
+	return &resp, err
+}
+
+func (r commonResult) AddServerExtract() (*AddServerResponse, error) {
+	var resp AddServerResponse
+
+	err := r.ExtractInto(&resp.Addserverresponse)
+	return &resp, err
+}
+
+func (r commonResult) RemoveServerExtract() (*RemoveServerResponse, error) {
+	var resp RemoveServerResponse
+
+	err := r.ExtractInto(&resp.Removeserverresponse)
+	return &resp, err
+}
+
+
+
 /*
 // Extract is a function that accepts a result and extracts a loadbalancer.
 func (r commonResult) Extract() (*LoadBalancer, error) {
@@ -294,5 +348,9 @@ type AddServerResult struct {
 }
 
 type RemoveServerResult struct {
+	commonResult
+}
+
+type CreateTagResult struct {
 	commonResult
 }
