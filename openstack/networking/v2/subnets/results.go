@@ -79,7 +79,7 @@ type Subnet struct {									// Modified
 	Name 		string `json:"name"`
 
 	ZoneID 		string `json:"zoneid"`						// Added
-
+	
 	DataLakeYN 	string `json:"datalakeyn"`					// Added
 	
 	// CIDR representing IP range for this subnet, based on IP version.
@@ -142,4 +142,20 @@ func ExtractSubnets(r pagination.Page) ([]Subnet, error) {			// Modified
 	}		
 	err := (r.(SubnetPage)).ExtractInto(&s)
 	return s.OsNet.Subnets, err
+}
+
+type CreateSubnetResponse struct {
+		NetworkID string 		`json:"network_id"`
+		VLAN      string 		`json:"vlan"`
+		Success   interface{}  	`json:"success"`
+} 
+// In case CIDR is 172.25.x.x/24 => KT API returns success : string type
+// In case CIDR is 10.25.x.x/24  => KT API returns success : bool type
+
+func (r commonResult) ExtractCreateInfo() (*CreateSubnetResponse, error) {			// Added
+	var s struct {
+		SubnetCreateInfo *CreateSubnetResponse `json:"nc_createosnetworkresponse"`
+	}
+	err := r.ExtractInto(&s)
+	return s.SubnetCreateInfo, err
 }
