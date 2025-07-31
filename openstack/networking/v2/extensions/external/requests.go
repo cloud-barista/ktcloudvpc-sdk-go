@@ -42,8 +42,8 @@ type CreateOptsExt struct {
 
 // ToNetworkCreateMap adds the router:external options to the base network
 // creation options.
-func (opts CreateOptsExt) ToNetworkCreateMap() (map[string]interface{}, error) {
-	base, err := opts.CreateOptsBuilder.ToNetworkCreateMap()
+func (opts CreateOptsExt) ToVPCCreateMap() (map[string]interface{}, error) {
+	base, err := opts.CreateOptsBuilder.ToVPCCreateMap()
 	if err != nil {
 		return nil, err
 	}
@@ -67,8 +67,8 @@ type UpdateOptsExt struct {
 }
 
 // ToNetworkUpdateMap casts an UpdateOpts struct to a map.
-func (opts UpdateOptsExt) ToNetworkUpdateMap() (map[string]interface{}, error) {
-	base, err := opts.UpdateOptsBuilder.ToNetworkUpdateMap()
+func (opts UpdateOptsExt) ToVPCUpdateMap() (map[string]interface{}, error) {
+	base, err := opts.UpdateOptsBuilder.ToVPCUpdateMap()
 	if err != nil {
 		return nil, err
 	}

@@ -15,7 +15,6 @@ import (
 	"reflect"
 	"strings"
 	// "github.com/davecgh/go-spew/spew"
-
 	cblog "github.com/cloud-barista/cb-log"
 
 	"github.com/cloud-barista/ktcloudvpc-sdk-go"
@@ -36,12 +35,11 @@ const (
 	v3 = "v3"
 
 	// Added.
-	computeEndpoint = "https://api.ucloudbiz.olleh.com/d1/server/"   // Caution : Need to Add '/' at the end of the endpoint
-	imageEndpoint = "https://api.ucloudbiz.olleh.com/d1/image/"  // Caution : Need to Add '/' at the end of the endpoint
-	networkEndpoint = "https://api.ucloudbiz.olleh.com/d1/nc/"  // Caution : Need to Add '/' at the end of the endpoint
+	computeEndpoint  = "https://api.ucloudbiz.olleh.com/d1/server/"   // Caution : Need to Add '/' at the end of the endpoint
+	imageEndpoint 	 = "https://api.ucloudbiz.olleh.com/d1/image/"  // Caution : Need to Add '/' at the end of the endpoint
+	networkEndpoint  = "https://api.ucloudbiz.olleh.com/d1/nsm/v1/"  // Caution : Need to Add '/' at the end of the endpoint
 	volumeV2Endpoint = "https://api.ucloudbiz.olleh.com/d1/volume/"  // Caution : Need to Add '/' at the end of the endpoint
-
-	lbV2Endpoint = "https://api.ucloudbiz.olleh.com/d1/loadbalancer/api"  // Caution : Not need to Add '/' at the end of the endpoint
+	lbV2Endpoint 	 = "https://api.ucloudbiz.olleh.com/d1/loadbalancer/api"  // Caution : Not need to Add '/' at the end of the endpoint
 	// ### KT Cloud LB Info API URL ex) : https://api.ucloudbiz.olleh.com/d1/loadbalancer/api?command=listLoadBalancers&...
 )
 

@@ -1,32 +1,26 @@
+// ### KT Cloud D1 platform > 'Tier' handler Go SDK
+// Open API Guide : https://cloud.kt.com/docs/open-api-guide/d/computing/tier
+
 package subnets
 
 import (
 	"github.com/cloud-barista/ktcloudvpc-sdk-go"
-	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
+    "github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
 type commonResult struct {
 	gophercloud.Result
 }
 
-// Extract is a function that accepts a result and extracts a subnet resource.
-func (r commonResult) Extract() (*Subnet, error) {				// Modified
-	var s struct {
-		Subnet *Subnet `json:"network"`  // Caution!!
-	}
-	err := r.ExtractInto(&s)
-	return s.Subnet, err
+// GetResult represents the result of a get operation. Call its Extract
+// method to interpret it as a Subnet.
+type GetResult struct {
+	commonResult
 }
 
 // CreateResult represents the result of a create operation. Call its Extract
 // method to interpret it as a Subnet.
 type CreateResult struct {
-	commonResult
-}
-
-// GetResult represents the result of a get operation. Call its Extract
-// method to interpret it as a Subnet.
-type GetResult struct {
 	commonResult
 }
 
@@ -42,120 +36,121 @@ type DeleteResult struct {
 	gophercloud.ErrResult
 }
 
-// AllocationPool represents a sub-range of cidr available for dynamic
-// allocation to ports, e.g. {Start: "10.0.0.2", End: "10.0.0.254"}
-type AllocationPool struct {
-	Start string `json:"start"`
-	End   string `json:"end"`
+type Subnet struct {                    // Modified
+    AccountID        string  `json:"accountId"`
+    NetworkID        string  `json:"networkId"`   // KT Cloud Tier's UUID (Note: differs from the Tier ID based on OpenStack Neutron.) 
+    ZoneID           string  `json:"zoneId"`      // Zone UUID  
+    NetworkType      string  `json:"networkType"` // External connection type of tier. TRUST: Internal connection, UNTRUST: External connection
+    StackType        string  `json:"stackType"`   // OS : OpenStack, CS : CloudStack
+    Type             string  `json:"type"`
+    VlanID           int     `json:"vlanId"`
+    VpcID            string  `json:"vpcId"`
+    ProjectID        string  `json:"projectId"`
+    IsPrivateSubnet  bool    `json:"isPrivateSubnet"`
+    IsCustom         bool    `json:"isCustom"`
+    GatewayIP        string  `json:"gatewayIp"`
+    CIDR             string  `json:"cidr"`
+    StartIP          string  `json:"startIp"`
+    EndIP            string  `json:"endIp"`
+    LbStartIP        *string `json:"lbStartIp"`
+    LbEndIP          *string `json:"lbEndIp"`
+    BmStartIP        *string `json:"bmStartIp"`
+    BmEndIP          *string `json:"bmEndIp"`
+    IscsiStartIP     string  `json:"iscsiStartIp"`
+    IscsiEndIP       string  `json:"iscsiEndIp"`
+    NetworkName      string  `json:"networkName"` // KT Cloud Tier Name
+    RefID            string  `json:"refId"` 	  // KT Cloud Tier ID based on OpenStack Neutron
+    RefName          string  `json:"refName"`     // KT Cloud Tier Name based on OpenStack Neutron
+    NetmaskIP        string  `json:"netmaskIp"`
+    PortalZoneID     string  `json:"portalZoneId"`// Zone ID
+    Shared           bool    `json:"shared"`
+    IsAllocate       bool    `json:"isAllocate"`
+    Interface        string  `json:"interface"`
+    Status           string  `json:"status"`      // Tier status
 }
 
-// HostRoute represents a route that should be used by devices with IPs from
-// a subnet (not including local subnet route).
-type HostRoute struct {
-	DestinationCIDR string `json:"destination"`
-	NextHop         string `json:"nexthop"`
+// SubnetResponse represents the full response structure for Subnet list.
+type SubnetResponse struct {                        // Added
+    HTTPStatus int              `json:"httpStatus"`
+    Meta       interface{}      `json:"meta"`
+    Pagination PaginationInfo   `json:"pagination"`
+    Data       []Subnet         `json:"data"`
 }
 
-// Subnet represents a subnet. See package documentation for a top-level
-// description of what this is.
-// KT Cloud D1 API guide : https://cloud.kt.com/docs/open-api-guide/d/computing/tier
-type Subnet struct {									// Modified
-	EndIP 		string `json:"endip"`						// Added
-
-	Shared 		string `json:"shared"`						// Added
-
-	StartIP 	string `json:"startip"`						// Added
-	
-	Type 		string `json:"type"`						// Added
-
-	VLan 		string `json:"vlan"`						// Added
-
-	Netmask 	string `json:"netmask"`						// Added
-
-	// UUID of the parent network.
-	VpcID 		string `json:"vpcid"` 						// Modified
-
-	// Human-readable name for the subnet. Might not be unique.
-	Name 		string `json:"name"`
-
-	ZoneID 		string `json:"zoneid"`						// Added
-	
-	DataLakeYN 	string `json:"datalakeyn"`					// Added
-	
-	// CIDR representing IP range for this subnet, based on IP version.
-	CIDR 		string `json:"cidr"`
-
-	// UUID representing the subnet.
-	ID 			string `json:"id"`
-
-	// ProjectID is the project owner of the subnet.
-	ProjectID 	string `json:"projectid"`					// Modified
-
-	// Default gateway used by devices in this subnet.
-	Gateway 	string `json:"gateway"`						// Modified
-
-	Account 	string `json:"account"`						// Added
-
-	OsName 		string `json:"osname"`						// Added
-
-	OsNetworkID string `json:"osnetworkid"`					// Added
-
-	Status 		string `json:"status"`						// Added
+// SubnetCreateResponse represents the response structure for subnet creation.
+type SubnetCreateResponse struct {                  // Modified
+    HTTPStatus int    `json:"httpStatus"`
+    JobID      string `json:"jobId,omitempty"`
+    Data       struct {
+        NetworkID string `json:"networkId"`
+        VlanID    int    `json:"vlanId"`
+    } `json:"data"`
 }
 
-// SubnetPage is the page returned by a pager when traversing over a collection
-// of subnets.
+// PaginationInfo represents pagination information in API responses.
+type PaginationInfo struct {
+    Size   int `json:"size"`
+    Total  int `json:"total"`
+    Offset int `json:"offset"`
+}
+
+// SubnetPage is the page returned by a pager when traversing over a collection of Subnets.
 type SubnetPage struct {
-	pagination.LinkedPageBase
-}
-
-// NextPageURL is invoked when a paginated collection of subnets has reached
-// the end of a page and the pager seeks to traverse over a new one. In order
-// to do this, it needs to construct the next page's URL.
-func (r SubnetPage) NextPageURL() (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"subnets_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
+    pagination.LinkedPageBase
 }
 
 // IsEmpty checks whether a SubnetPage struct is empty.
 func (r SubnetPage) IsEmpty() (bool, error) {
-	is, err := ExtractSubnets(r)
-	return len(is) == 0, err
+    subnets, err := ExtractSubnets(r)
+    return len(subnets) == 0, err
 }
 
-type OsNetwork struct {												// Added
-	Subnets []Subnet `json:"networks"`  // Caution!!
+// NextPageURL returns the next page URL for traversing over Subnet pages.
+func (r SubnetPage) NextPageURL() (string, error) {
+    // Pagination URL generation logic
+    // Currently, the API does not provide pagination links, so manual implementation is required.
+    return "", nil
 }
 
-// ExtractSubnets accepts a Page struct, specifically a SubnetPage struct,
-// and extracts the elements into a slice of Subnet structs. In other words,
-// a generic collection is mapped into a relevant slice.
-func ExtractSubnets(r pagination.Page) ([]Subnet, error) {			// Modified
-	var s struct {
-		OsNet OsNetwork `json:"nc_listosnetworksresponse"`
-	}		
-	err := (r.(SubnetPage)).ExtractInto(&s)
-	return s.OsNet.Subnets, err
+// ExtractSubnets extracts 'a slice of Subnet' from a SubnetPage.
+func ExtractSubnets(r pagination.Page) ([]Subnet, error) { // Modified
+    var s SubnetResponse
+    err := r.(SubnetPage).ExtractInto(&s)
+    return s.Data, err
 }
 
-type CreateSubnetResponse struct {
-		NetworkID string 		`json:"network_id"`
-		VLAN      string 		`json:"vlan"`
-		Success   interface{}  	`json:"success"`
-} 
-// In case CIDR is 172.25.x.x/24 => KT API returns success : string type
-// In case CIDR is 10.25.x.x/24  => KT API returns success : bool type
+// ExtractSubnet extracts 'a Subnet' from a GetSubnetResult.
+func (r GetResult) ExtractSubnet() (*Subnet, error) { // Added
+    var response SubnetResponse
+    err := r.ExtractInto(&response)
+    if err != nil {
+        return nil, err
+    }
+    
+    if len(response.Data) == 0 {
+        return nil, gophercloud.ErrDefault404{}
+    }
+    
+    return &response.Data[0], nil
+}
 
-func (r commonResult) ExtractCreateInfo() (*CreateSubnetResponse, error) {			// Added
-	var s struct {
-		SubnetCreateInfo *CreateSubnetResponse `json:"nc_createosnetworkresponse"`
-	}
-	err := r.ExtractInto(&s)
-	return s.SubnetCreateInfo, err
+// ExtractSubnetList extracts a SubnetResponse from the result.
+func (r commonResult) ExtractSubnetList() (*SubnetResponse, error) { // Added
+    var s SubnetResponse
+    err := r.Result.ExtractInto(&s)
+    return &s, err
+}
+
+// ExtractSubnetResponse extracts the full SubnetResponse from a result.
+func (r commonResult) ExtractSubnetResponse() (*SubnetResponse, error) { // Added
+    var s SubnetResponse
+    err := r.ExtractInto(&s)
+    return &s, err
+}
+
+// ExtractCreate extracts a SubnetCreateResponse from a CreateResult.
+func (r CreateResult) ExtractCreate() (*SubnetCreateResponse, error) { // Modified
+    var s SubnetCreateResponse
+    err := r.ExtractInto(&s)
+    return &s, err
 }
