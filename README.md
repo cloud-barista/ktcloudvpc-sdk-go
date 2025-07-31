@@ -2,6 +2,10 @@
 
 This repository is the Go SDK for 'KT Cloud VPC(KT Cloud D platform) connection driver' used in Cloud-Barista.
 
+## KT Cloud VPC (KT Cloud D platform) Open API
+[https://github.com/gophercloud/gophercloud](https://cloud.kt.com/docs/open-api-guide/d/guide/how-to-use)
+
+
 ## How to install
 
 Reference ktcloudvpc-sdk-go package in your code:
