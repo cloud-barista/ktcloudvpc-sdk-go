@@ -3,7 +3,7 @@ package rules
 import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
 const (
-	rootPath     = "Firewall"  							 		// Modified
+	rootPath = "firewall/policy"  							 		// Modified
 )
 
 func rootURL(c *gophercloud.ServiceClient) string {				// Modified
