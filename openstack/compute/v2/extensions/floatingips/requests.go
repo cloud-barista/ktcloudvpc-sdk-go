@@ -35,7 +35,7 @@ func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r Create
 		return
 	}
 	resp, err := client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
+		OkCodes: []int{200, 201},
 	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
@@ -51,7 +51,7 @@ func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
 // Delete requests the deletion of a previous allocated Floating IP.
 func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {	// Modified
 	resp, err := client.Delete(deleteURL(client, id), &gophercloud.RequestOpts{
-		OkCodes: []int{200},
+		OkCodes: []int{200, 201},
 	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return

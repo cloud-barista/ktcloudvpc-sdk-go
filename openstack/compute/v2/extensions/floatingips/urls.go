@@ -2,7 +2,7 @@ package floatingips
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
-const resourcePath = "IpAddress"  						// Modified
+const resourcePath = "publicIp"  						// Modified
 
 func resourceURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL(resourcePath)

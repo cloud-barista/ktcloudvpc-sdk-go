@@ -53,6 +53,35 @@ func (r *FloatingIP) UnmarshalJSON(b []byte) error {
 	return err
 }
 
+
+
+
+// PFResponse represents the full response structure for P/F list.
+type IPResponse struct {                    // Modified
+    HTTPStatus int              `json:"httpStatus"`
+    Meta       interface{}      `json:"meta"`
+    Pagination PaginationInfo   `json:"pagination"`
+    Data       []FloatingIP 	`json:"data"`
+}
+
+// PaginationInfo represents pagination information in API responses.
+type PaginationInfo struct {                // Added
+    Size   int `json:"size"`
+    Total  int `json:"total"`
+    Offset int `json:"offset"`
+}
+
+
+// SubnetCreateResponse represents the response structure for subnet creation.
+type IPCreateResponse struct {                  // Modified
+    HTTPStatus int    `json:"httpStatus"`
+    Data       struct {
+        PublicIpID string `json:"publicIpId"`
+    } `json:"data"`
+}
+
+
+
 // FloatingIPPage stores a single page of FloatingIPs from a List call.
 type FloatingIPPage struct {
 	pagination.SinglePageBase
@@ -128,4 +157,11 @@ type AssociateResult struct {
 // ExtractErr method to determine if the call succeeded or failed.
 type DisassociateResult struct {
 	gophercloud.ErrResult
+}
+
+// ExtractCreate extracts a SubnetCreateResponse from a CreateResult.
+func (r CreateResult) ExtractCreate() (*IPCreateResponse, error) { 		// Added
+    var s IPCreateResponse
+    err := r.ExtractInto(&s)
+    return &s, err
 }
