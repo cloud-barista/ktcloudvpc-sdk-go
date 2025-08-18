@@ -7,8 +7,11 @@ import (
 
 type PortForwarding struct {									// Modified
 	// The ID of the floating IP port forwarding
-	PortForwardingID 	string `json:"id"`
+	PortForwardingID 	string `json:"portForwardingId"`
 	PortForwardingName 	string `json:"name"`
+
+
+	
 	PrivateIP 			string `json:"vmguestip"`	
 	PublicIP	  		string `json:"ipaddress"`
 	PublicIpID	  		string `json:"ipaddressid"`
@@ -60,9 +63,28 @@ func (r commonResult) Extract() (*PortForwarding, error) {
 	return &s, err
 }
 
+
 // func (r commonResult) ExtractInto(v interface{}) error {
 // 	return r.Result.ExtractIntoStructPtr(v, "job_id")
 // }
+
+
+// PFResponse represents the full response structure for P/F list.
+type PFResponse struct {                    // Modified
+    HTTPStatus int              `json:"httpStatus"`
+    Meta       interface{}      `json:"meta"`
+    Pagination PaginationInfo   `json:"pagination"`
+    Data       []PortForwarding `json:"data"`
+}
+
+// PaginationInfo represents pagination information in API responses.
+type PaginationInfo struct {                // Added
+    Size   int `json:"size"`
+    Total  int `json:"total"`
+    Offset int `json:"offset"`
+}
+
+
 
 type CreatePortforwardingResponse struct {											// Added
 	JopID string `json:"job_id"`
@@ -127,4 +149,11 @@ func ExtractPortForwardings(r pagination.Page) ([]PortForwarding, error) {		// M
 	}
 	err := (r.(PortForwardingPage)).ExtractInto(&s)
 	return s.PFRule.PortForwardings, err
+}
+
+// ExtractPFs extracts 'a slice of PF' from a PortForwardingPage.
+func ExtractPFs(r pagination.Page) ([]PortForwarding, error) {
+    var s PFResponse
+    err := r.(PortForwardingPage).ExtractInto(&s)
+    return s.Data, err
 }

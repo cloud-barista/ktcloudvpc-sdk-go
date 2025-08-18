@@ -14,19 +14,29 @@ type ListOptsBuilder interface {
 // the port forwarding attributes you want to see returned. SortKey allows you to
 // sort by a particular network attribute. SortDir sets the direction, and is
 // either `asc' or `desc'. Marker and Limit are used for pagination.
-type ListOpts struct {
-	ID                string `q:"id"`
-	InternalPortID    string `q:"internal_port_id"`
-	ExternalPort      string `q:"external_port"`
-	InternalIPAddress string `q:"internal_ip_address"`
-	Protocol          string `q:"protocol"`
-	InternalPort      string `q:"internal_port"`
-	SortKey           string `q:"sort_key"`
-	SortDir           string `q:"sort_dir"`
-	Fields            string `q:"fields"`
-	Limit             int    `q:"limit"`
-	Marker            string `q:"marker"`
+// type ListOpts struct {
+// 	ID                string `q:"id"`
+// 	InternalPortID    string `q:"internal_port_id"`
+// 	ExternalPort      string `q:"external_port"`
+// 	InternalIPAddress string `q:"internal_ip_address"`
+// 	Protocol          string `q:"protocol"`
+// 	InternalPort      string `q:"internal_port"`
+// 	SortKey           string `q:"sort_key"`
+// 	SortDir           string `q:"sort_dir"`
+// 	Fields            string `q:"fields"`
+// 	Limit             int    `q:"limit"`
+// 	Marker            string `q:"marker"`
+// }
+
+// ListOpts allows filtering and sorting of paginated collections.
+type ListOpts struct {                   // Modified
+    Page     int    `q:"page"`
+    Size     int    `q:"size"`
+
+	
+
 }
+
 
 // ToPortForwardingListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToPortForwardingListQuery() (string, error) {

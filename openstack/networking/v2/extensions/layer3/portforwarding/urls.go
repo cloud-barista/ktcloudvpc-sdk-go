@@ -4,7 +4,7 @@ import (
 	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
-const resourcePath = "Portforwarding"									// Modified
+const resourcePath = "portforwarding"									// Modified
 
 func portForwardingUrl(c *gophercloud.ServiceClient) string {			// Modified
 	return c.ServiceURL(resourcePath)

@@ -66,7 +66,7 @@ func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
     })
 }
 
-// Get retrieves a specific Subnet based on its unique ID.
+// Get retrieves a specific Subnet based on its unique ID.(KT Cloud Tier 'NetworkID')
 func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
     cblogger.Infof("# Get Subnet URL : %s\n", getURL(c, id))
 
@@ -152,7 +152,7 @@ func UpdateSubnet(c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilde
 }
 
 // Delete accepts a unique ID and deletes the Subnet associated with it.
-// ### Need NetworkId, not TierId.
+// ### Need Subnet(Tier) 'NetworkId', not TierId.
 func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
     resp, err := c.Delete(deleteURL(c, id), &gophercloud.RequestOpts{ // Modified  
         OkCodes: []int{200, 202, 204},
