@@ -2,71 +2,107 @@
 package portforwarding enables management and retrieval of port forwarding resources for Floating IPs from the
 OpenStack Networking service.
 
-Example to list all Port Forwardings for a floating IP
+### Example to Create a Port Forwarding for a floating IP
 
-	fipID := "2f245a7b-796b-4f26-9cf9-9e82d248fda7"
-	allPages, err := portforwarding.List(client, portforwarding.ListOpts{}, fipID).AllPages()
-	if err != nil {
-		panic(err)
-	}
+package main
 
-	allPFs, err := portforwarding.ExtractPortForwardings(allPages)
-	if err != nil {
-		panic(err)
-	}
+import (
+    "fmt"
+    "log"
 
-	for _, pf := range allPFs {
-		fmt.Printf("%+v\n", pf)
-	}
+    "github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/networking/v2/extensions/layer3/portforwarding"
+    "github.com/cloud-barista/ktcloudvpc-sdk-go"
+)
 
-Example to Get a Port Forwarding with a certain ID
+func main() {
+    // Assume you have a valid gophercloud.ServiceClient named 'client'
+    var client *gophercloud.ServiceClient // Initialize this with your auth/session
 
-	fipID := "2f245a7b-796b-4f26-9cf9-9e82d248fda7"
-	pfID := "725ade3c-9760-4880-8080-8fc2dbab9acc"
-	pf, err := portforwarding.Get(client, fipID, pfID).Extract()
-	if err != nil {
-		panic(err)
-	}
+    // Define the port forwarding creation options
+    createOpts := portforwarding.CreateOpts{
+        PublicIPID:      "your-public-ip-id",      // required
+        MappedIP:        "192.168.0.10",           // required
+        Protocol:        "TCP",                    // required ("TCP" or "UDP")
+        StartPrivatePort: "8080",                  // required
+        EndPrivatePort:   "8080",                  // required
+        StartPublicPort:  "80",                    // required
+        EndPublicPort:    "80",                    // required
+    }
+
+    // Call the Create function
+    result := portforwarding.Create(client, createOpts)
+
+    // Check for errors
+    if result.Err != nil {
+        log.Fatalf("Failed to create port forwarding: %v", result.Err)
+    }
+
+    // Extract the created PortForwarding resource
+    pf, err := result.Extract()
+    if err != nil {
+        log.Fatalf("Failed to extract port forwarding result: %v", err)
+    }
+
+    // Print the created port forwarding rule details
+    fmt.Printf("Created Port Forwarding Rule:\n")
+    fmt.Printf("ID: %s\n", pf.ID)
+    fmt.Printf("Name: %s\n", pf.Name)
+    fmt.Printf("Mapped IP: %s\n", pf.MappedIP)
+    fmt.Printf("Protocol: %s\n", pf.Protocol)
+    fmt.Printf("Public IP: %s\n", pf.PublicIP)
+    fmt.Printf("Public IP ID: %s\n", pf.PublicIPID)
+    fmt.Printf("Stack Type: %s\n", pf.StackType)
+    fmt.Printf("Created At: %s\n", pf.CreateDate)
+}
 
 
-Example to Create a Port Forwarding for a floating IP
+// =============================================================================================================
 
-	createOpts := &portforwarding.CreateOpts{
-		Protocol:          "tcp",
-		InternalPort:      25,
-		ExternalPort:      2230,
-		InternalIPAddress: internalIP,
-		InternalPortID:    portID,
-	}
+// Example: List port forwarding rules using portforwarding.List()
 
-	pf, err := portforwarding.Create(networkingClient, floatingIPID, createOpts).Extract()
+package main
 
-	if err != nil {
-		panic(err)
-	}
+import (
+    "fmt"
+    "log"
 
-Example to Update a Port Forwarding
+    "github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/networking/v2/extensions/layer3/portforwarding"
+    "github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
+    "github.com/cloud-barista/ktcloudvpc-sdk-go"
+)
 
-	updateOpts := portforwarding.UpdateOpts{
-		Protocol:     "udp",
-		InternalPort: 30,
-		ExternalPort: 678,
-	}
-	fipID := "2f245a7b-796b-4f26-9cf9-9e82d248fda7"
-	pfID := "725ade3c-9760-4880-8080-8fc2dbab9acc"
+func main() {
+    // Assume you have a valid gophercloud.ServiceClient named 'client'
+    var client *gophercloud.ServiceClient // Initialize with your auth/session
 
-	pf, err := portforwarding.Update(client, fipID, pfID, updateOpts).Extract()
-	if err != nil {
-		panic(err)
-	}
+    // Set up filter options (example: filter by protocol and public IP)
+    listOpts := portforwarding.ListOpts{
+        Protocol:  "TCP",
+        PublicIP:  "203.0.113.10",
+        Page:      1,
+        Size:      10,
+    }
 
-Example to Delete a Port forwarding
+    // Call List() to get a Pager
+    pager := portforwarding.List(client, listOpts)
 
-	fipID := "2f245a7b-796b-4f26-9cf9-9e82d248fda7"
-	pfID := "725ade3c-9760-4880-8080-8fc2dbab9acc"
-	err := portforwarding.Delete(networkClient, fipID, pfID).ExtractErr()
-	if err != nil {
-		panic(err)
-	}
+    // Iterate through all pages and print rule info
+    err := pager.EachPage(func(page pagination.Page) (bool, error) {
+        pfList, err := portforwarding.ExtractPFs(page)
+        if err != nil {
+            return false, err
+        }
+        for _, pf := range pfList {
+            fmt.Printf("PortForwarding ID: %s, Name: %s, Protocol: %s, PublicIP: %s, MappedIP: %s\n",
+                pf.ID, pf.Name, pf.Protocol, pf.PublicIP, pf.MappedIP)
+        }
+        return true, nil
+    })
+    if err != nil {
+        log.Fatalf("Failed to list port forwarding rules: %v", err)
+    }
+}
+
+
 */
 package portforwarding
