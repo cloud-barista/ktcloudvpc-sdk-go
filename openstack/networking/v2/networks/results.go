@@ -8,6 +8,24 @@ import (
     "github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
+type VPC struct {                   // Modified
+    AccountID     string  `json:"accountId"`
+    VpcID         string  `json:"vpcId"`
+    ZoneID        string  `json:"zoneId"`
+    SessionCount  int     `json:"sessionCount"`
+    Name          string  `json:"name"`
+    BizareaType   string  `json:"bizareaType"`
+    VpcOfferingID string  `json:"vpcOfferingId"`
+    PortalZoneID  string  `json:"portalZoneId"`
+    Description   *string `json:"description"`
+    State         string  `json:"state"`
+    VdomInfo      string  `json:"vdomInfo"`
+    Type          string  `json:"type"`
+    DeviceID      string  `json:"deviceId"`
+    VdomName      string  `json:"vdomName"`
+    CreateDate    string  `json:"createDate"`
+}
+
 type commonResult struct {
 	gophercloud.Result
 }
@@ -34,24 +52,6 @@ type UpdateResult struct {
 // ExtractErr method to determine if the request succeeded or failed.
 type DeleteResult struct {
 	gophercloud.ErrResult
-}
-
-type VPC struct {                   // Modified
-    AccountID     string  `json:"accountId"`
-    VpcID         string  `json:"vpcId"`
-    ZoneID        string  `json:"zoneId"`
-    SessionCount  int     `json:"sessionCount"`
-    Name          string  `json:"name"`
-    BizareaType   string  `json:"bizareaType"`
-    VpcOfferingID string  `json:"vpcOfferingId"`
-    PortalZoneID  string  `json:"portalZoneId"`
-    Description   *string `json:"description"`
-    State         string  `json:"state"`
-    VdomInfo      string  `json:"vdomInfo"`
-    Type          string  `json:"type"`
-    DeviceID      string  `json:"deviceId"`
-    VdomName      string  `json:"vdomName"`
-    CreateDate    string  `json:"createDate"`
 }
 
 // VPCResponse represents the full response structure for VPC list.
