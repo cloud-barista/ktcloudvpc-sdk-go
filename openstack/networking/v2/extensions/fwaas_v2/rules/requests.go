@@ -1,16 +1,24 @@
 package rules
 
 import (
+	cblog "github.com/cloud-barista/cb-log"	
+	"github.com/sirupsen/logrus"
+
 	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
+var cblogger *logrus.Logger
+
+func init() {
+	cblogger = cblog.GetLogger("KTCloud VPC Client")
+}
+
 type (
-	// Protocol represents a valid rule protocol
 	Protocol string
 )
 
-const (											// Updated
+const (
 	// ProtocolAny is to allow any protocol
 	ProtocolAny Protocol = "any"
 
@@ -24,73 +32,33 @@ const (											// Updated
 	ProtocolICMP Protocol = "ICMP"
 )
 
-type (
-	// Action represents a valid rule protocol
-	Action string
-)
-
-const (
-	// ActionAllow is to allow traffic
-	ActionAllow Action = "allow"
-
-	// ActionDeny is to deny traffic
-	ActionDeny Action = "deny"
-
-	// ActionTCP is to reject traffic
-	ActionReject Action = "reject"
-)
-
-// ListOptsBuilder allows extensions to add additional parameters to the
-// List request.
+// ListOptsBuilder allows extensions to add additional parameters to the List request.
 type ListOptsBuilder interface {
-	ToRuleListQuery() (string, error)
+    ToRuleListQuery() (string, error)
 }
 
 // ListOpts allows the filtering and sorting of paginated collections through
 // the API. Filtering is achieved by passing in struct field values that map to
-// the Firewall rule attributes you want to see returned. SortKey allows you to
-// sort by a particular firewall rule attribute. SortDir sets the direction, and is
-// either `asc' or `desc'. Marker and Limit are used for pagination.
+// the rule attributes you want to see returned. Marker and Limit are used
+// for pagination.
 type ListOpts struct {
-	TenantID             string   `q:"tenant_id"`
-	Name                 string   `q:"name"`
-	Description          string   `q:"description"`
-	Protocol             Protocol `q:"protocol"`
-	Action               Action   `q:"action"`
-	IPVersion            int      `q:"ip_version"`
-	SourceIPAddress      string   `q:"source_ip_address"`
-	DestinationIPAddress string   `q:"destination_ip_address"`
-	SourcePort           string   `q:"source_port"`
-	DestinationPort      string   `q:"destination_port"`
-	Enabled              *bool    `q:"enabled"`
-	ID                   string   `q:"id"`
-	Shared               *bool    `q:"shared"`
-	ProjectID            string   `q:"project_id"`
-	FirewallPolicyID     string   `q:"firewall_policy_id"`
-	Limit                int      `q:"limit"`
-	Marker               string   `q:"marker"`
-	SortKey              string   `q:"sort_key"`
-	SortDir              string   `q:"sort_dir"`
+	PolicyID string `q:"policyId"`
+	Page     int    `q:"page"`
+    Size     int    `q:"size"`
 }
 
 // ToRuleListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToRuleListQuery() (string, error) {
 	q, err := gophercloud.BuildQueryString(opts)
-	if err != nil {
-		return "", err
-	}
-	return q.String(), nil
+	return q.String(), err
 }
 
 // List returns a Pager which allows you to iterate over a collection of
-// firewall rules. It accepts a ListOpts struct, which allows you to filter
-// and sort the returned collection for greater efficiency.
-//
-// Default policy settings return only those firewall rules that are owned by the
-// tenant who submits the request, unless an admin user submits the request.
+// firewall rules. It accepts a ListOptsBuilder, which allows you to
+// filter and sort the returned collection for greater efficiency.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+	// cblogger.Infof("# List URL : %s\n", rootURL(c))
 	url := rootURL(c)
-
 	if opts != nil {
 		query, err := opts.ToRuleListQuery()
 		if err != nil {
@@ -98,88 +66,78 @@ func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 		}
 		url += query
 	}
-
 	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return RulePage{pagination.LinkedPageBase{PageResult: r}}
+		return FirewallRulePage{pagination.LinkedPageBase{PageResult: r}}
 	})
 }
 
-// CreateOptsBuilder is the interface options structs have to satisfy in order
-// to be used in the main Create operation in this package. Since many
-// extensions decorate or modify the common logic, it is useful for them to
-// satisfy a basic interface in order for them to be used.
+// CreateOptsBuilder allows extensions to add additional parameters to the Create request.
 type CreateOptsBuilder interface {
 	ToRuleCreateMap() (map[string]interface{}, error)
 }
 
 // CreateOpts contains all the values needed to create a new firewall rule.
-type InboundCreateOpts struct {    																// Modified
-	SourceNetID    	 	 string                `json:"srcnetworkid" required:"true"`
-	PortFordingID 		 string 			   `json:"virtualipid" required:"true"`
-	DestIPAdds 		 	 string                `json:"dstip" required:"true"`
-	StartPort            string                `json:"startport,omitempty"`
-	EndPort      		 string                `json:"endport,omitempty"`
-	Protocol             Protocol              `json:"protocol" required:"true"`
-	DestNetID		 	 string                `json:"dstnetworkid" required:"true"`
-	Action               Action                `json:"action" required:"true"`
+type CreateOpts struct {
+	// [Required] Pool name creation flag
+	SrcNat bool `json:"srcNat,omitempty"`
+
+	// ### Caution!! : [Optional] Cannot be entered simultaneously with dstAddress and staticNatId
+	PortForwardingId string `json:"portForwardingId,omitempty"`
+
+	// ### Caution!! : [Optional] Cannot be entered simultaneously with dstAddress and portForwardingId
+	StaticNatId string `json:"staticNatId,omitempty"`
+
+	// ### Caution!! : [Optional] Cannot be entered simultaneously with srcNetwork
+	// Optional string parameter for source VLAN Name
+	SrcInterface string `json:"srcInterface,omitempty"`
+	
+	// ### Caution!! : [Optional] Cannot be entered simultaneously with dstNetwork
+	// Optional string parameter for destination VLAN Name
+	DstInterface string `json:"dstInterface,omitempty"`
+
+	// [Optional] [Default: true] true: accept / false : deny
+	Action bool `json:"action,omitempty"` // Not 'string' type
+
+	// [Optional] TCP/UDP/ICMP/FTP/ALL
+	Protocol string `json:"protocol,omitempty"`
+	
+	// [Optional] 'Required' when the protocol is TCP/UDP.
+	StartPort string `json:"startPort,omitempty"`
+
+	// [Optional] 'Required' when the protocol is TCP/UDP.
+	EndPort string `json:"endPort,omitempty"`
+
+	// ### Caution!! : [Optional] Cannot be entered simultaneously with srcInterface
+	SrcNetwork []string `json:"srcNetwork,omitempty"`
+
+	// ### Caution!! : [Optional] Cannot be entered simultaneously with dstInterface
+	DstNetwork []string `json:"dstNetwork,omitempty"`
+
+	// [Optional] Array parameter for IP subnet format or domain name format addresses
+	SrcAddress []string `json:"srcAddress,omitempty"`
+
+	// ### Caution!! : [Optional] Cannot be entered simultaneously with portForwardingId
+	DstAddress []string `json:"dstAddress,omitempty"`
+
+	// [Optional] Description
+	Comment string `json:"comment,omitempty"`
 }
 
 // ToRuleCreateMap casts a CreateOpts struct to a map.
-func (opts InboundCreateOpts) ToRuleCreateMap() (map[string]interface{}, error) {				// Modified
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-	return b, nil
+func (opts CreateOpts) ToRuleCreateMap() (map[string]interface{}, error) {
+	return gophercloud.BuildRequestBody(opts, "firewall_rule")
 }
 
-// Create accepts a CreateOpts struct and uses the values to create a new firewall rule
-func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {			// Modified
+// Create accepts a CreateOpts struct and uses the values to create a new
+// firewall rule.
+func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToRuleCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Post(rootURL(c), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
-}
-
-type OutboundCreateOptsBuilder interface {
-	ToOutboundRuleCreateMap() (map[string]interface{}, error)
-}
-
-// OutboundCreateOpts contains all the values needed to create a new 'outbound' firewall rule.
-type OutboundCreateOpts struct {    																		// Added
-	SourceNetID    	 	 string                `json:"srcnetworkid" required:"true"` // Network(Tier) ID										
-	SourceIPAdds    	 string                `json:"srcip" required:"true"` 		 // Original network (~/24) or VM Private IP (~/32)
-	StartPort            string                `json:"startport,omitempty"`
-	EndPort      		 string                `json:"endport,omitempty"`
-	Protocol             Protocol              `json:"protocol" required:"true"`	 // TCP, UDP, ICMP, or ALL
-	DestNetID		 	 string                `json:"dstnetworkid" required:"true"` // Network(Tier) ID. Ex) External Network ID
-	DestIPAdds 		 	 string                `json:"dstip" required:"true"`  		 // Ex) "0.0.0.0/0"
-	SourceNAT    	 	 string                `json:"srcnat" required:"true"` 		 // Set as 'true' when setting an outbound firewall
-	Action               Action                `json:"action" required:"true"`
-}
-
-func (opts OutboundCreateOpts) ToOutboundRuleCreateMap() (map[string]interface{}, error) {					// Added
-	b, err := gophercloud.BuildRequestBody(opts, "")
-	if err != nil {
-		return nil, err
-	}
-	return b, nil
-}
-
-func OutboundCreate(c *gophercloud.ServiceClient, opts OutboundCreateOptsBuilder) (r CreateResult) {		// Added
-	b, err := opts.ToOutboundRuleCreateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := c.Post(rootURL(c), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
+	resp, err := c.Post(createURL(c), b, &r.Body, &gophercloud.RequestOpts{
+		OkCodes: []int{200, 201, 202},
 	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
@@ -187,58 +145,118 @@ func OutboundCreate(c *gophercloud.ServiceClient, opts OutboundCreateOptsBuilder
 
 // Get retrieves a particular firewall rule based on its unique ID.
 func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := c.Get(resourceURL(c, id), &r.Body, nil)
+	_, r.Err = c.Get(resourceURL(c, id), &r.Body, nil)
+	return
+}
+
+// Delete will permanently delete a particular firewall rule based on its
+// unique ID.
+func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
+	// _, r.Err = c.Delete(deleteURL(c, id), nil)
+	// return
+
+	cblogger.Infof("# Delete URL : %s\n", deleteURL(c, id))
+	resp, err := c.Delete(deleteURL(c, id), &gophercloud.RequestOpts{
+		OkCodes: []int{200, 202, 204},
+	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
-// UpdateOptsBuilder is the interface options structs have to satisfy in order
-// to be used in the main Update operation in this package. Since many
-// extensions decorate or modify the common logic, it is useful for them to
-// satisfy a basic interface in order for them to be used.
-type UpdateOptsBuilder interface {
-	ToRuleUpdateMap() (map[string]interface{}, error)
+// InsertRuleOpts contains the values used when inserting a rule into a policy.
+type InsertRuleOpts struct {
+	// FirewallRuleID is the ID of the rule to insert.
+	FirewallRuleID string `json:"firewall_rule_id"`
+
+	// InsertAfter is the ID of the rule to insert after.
+	// If omitted, the rule is inserted at the top of the policy.
+	InsertAfter string `json:"insert_after,omitempty"`
+
+	// InsertBefore is the ID of the rule to insert before.
+	// If omitted, the rule is inserted at the bottom of the policy.
+	InsertBefore string `json:"insert_before,omitempty"`
 }
 
-// UpdateOpts contains the values used when updating a firewall rule.
-type UpdateOpts struct {
-	Protocol             *Protocol              `json:"protocol,omitempty"`
-	Action               *Action                `json:"action,omitempty"`
-	Name                 *string                `json:"name,omitempty"`
-	Description          *string                `json:"description,omitempty"`
-	IPVersion            *gophercloud.IPVersion `json:"ip_version,omitempty"`
-	SourceIPAddress      *string                `json:"source_ip_address,omitempty"`
-	DestinationIPAddress *string                `json:"destination_ip_address,omitempty"`
-	SourcePort           *string                `json:"source_port,omitempty"`
-	DestinationPort      *string                `json:"destination_port,omitempty"`
-	Shared               *bool                  `json:"shared,omitempty"`
-	Enabled              *bool                  `json:"enabled,omitempty"`
+// ToInsertRuleMap casts an InsertRuleOpts struct to a map.
+func (opts InsertRuleOpts) ToInsertRuleMap() (map[string]interface{}, error) {
+	return gophercloud.BuildRequestBody(opts, "")
 }
 
-// ToRuleUpdateMap casts a UpdateOpts struct to a map.
-func (opts UpdateOpts) ToRuleUpdateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "firewall_rule")
+// RemoveRuleOpts contains the values used when removing a rule from a policy.
+type RemoveRuleOpts struct {
+	// FirewallRuleID is the ID of the rule to remove.
+	FirewallRuleID string `json:"firewall_rule_id"`
 }
 
-// Update allows firewall policies to be updated.
-func Update(c *gophercloud.ServiceClient, id string, opts UpdateOptsBuilder) (r UpdateResult) {
-	b, err := opts.ToRuleUpdateMap()
+// ToRemoveRuleMap casts a RemoveRuleOpts struct to a map.
+func (opts RemoveRuleOpts) ToRemoveRuleMap() (map[string]interface{}, error) {
+	return gophercloud.BuildRequestBody(opts, "")
+}
+
+
+
+
+// // ValidateCreateOpts validates the CreateOpts structure.
+// func ValidateCreateOpts(opts CreateOpts) error {
+// 	if opts.Protocol == "" {
+// 		return fmt.Errorf("protocol is required")
+// 	}
+// 	if opts.Action == "" {
+// 		return fmt.Errorf("action is required")
+// 	}
+
+// 	// Validate action
+// 	validActions := map[string]bool{"allow": true, "deny": true, "reject": true}
+// 	if !validActions[opts.Action] {
+// 		return fmt.Errorf("invalid action: %s. Valid actions are: allow, deny, reject", opts.Action)
+// 	}
+
+// 	// Validate IP version
+// 	if opts.IPVersion != 0 && opts.IPVersion != 4 && opts.IPVersion != 6 {
+// 		return fmt.Errorf("invalid IP version: %d. Valid versions are: 4, 6", opts.IPVersion)
+// 	}
+
+// 	return nil
+// }
+
+
+
+
+
+
+/*
+
+// BatchCreateOpts contains options for creating multiple rules in a single request.
+type BatchCreateOpts struct {
+	// Rules is a slice of CreateOpts for batch creation.
+	Rules []CreateOpts `json:"firewall_rules"`
+}
+
+// ToRuleBatchCreateMap casts a BatchCreateOpts struct to a map.
+func (opts BatchCreateOpts) ToRuleBatchCreateMap() (map[string]interface{}, error) {
+	// Validate each rule before creating the map
+	for i, rule := range opts.Rules {
+		if err := ValidateCreateOpts(rule); err != nil {
+			return nil, fmt.Errorf("validation error for rule %d: %v", i, err)
+		}
+	}
+	
+	return gophercloud.BuildRequestBody(opts, "")
+}
+
+// BatchCreate accepts a BatchCreateOpts struct and uses the values to create
+// multiple firewall rules in a single request.
+func BatchCreate(c *gophercloud.ServiceClient, opts BatchCreateOpts) (r BatchCreateResult) {
+	b, err := opts.ToRuleBatchCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Put(resourceURL(c, id), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
+	resp, err := c.Put(batchURL(c), b, &r.Body, &gophercloud.RequestOpts{
+		OkCodes: []int{200, 202},
 	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
-// Delete will permanently delete a particular firewall rule based on its unique ID.
-func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {						// Modified
-	resp, err := c.Delete(resourceURL(c, id), &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
-}
+*/

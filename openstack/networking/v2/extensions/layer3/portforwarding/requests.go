@@ -1,42 +1,57 @@
 package portforwarding
 
 import (
+	cblog "github.com/cloud-barista/cb-log"	
+	"github.com/sirupsen/logrus"
+
 	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
+var cblogger *logrus.Logger
+
+func init() {
+	cblogger = cblog.GetLogger("KTCloud VPC Client")
+}
+
+// ListOptsBuilder allows extensions to add additional parameters to the List request.
 type ListOptsBuilder interface {
 	ToPortForwardingListQuery() (string, error)
 }
 
-// ListOpts allows the filtering and sorting of paginated collections through
-// the API. Filtering is achieved by passing in struct field values that map to
-// the port forwarding attributes you want to see returned. SortKey allows you to
-// sort by a particular network attribute. SortDir sets the direction, and is
-// either `asc' or `desc'. Marker and Limit are used for pagination.
-// type ListOpts struct {
-// 	ID                string `q:"id"`
-// 	InternalPortID    string `q:"internal_port_id"`
-// 	ExternalPort      string `q:"external_port"`
-// 	InternalIPAddress string `q:"internal_ip_address"`
-// 	Protocol          string `q:"protocol"`
-// 	InternalPort      string `q:"internal_port"`
-// 	SortKey           string `q:"sort_key"`
-// 	SortDir           string `q:"sort_dir"`
-// 	Fields            string `q:"fields"`
-// 	Limit             int    `q:"limit"`
-// 	Marker            string `q:"marker"`
-// }
+// CreateOptsBuilder allows extensions to add additional parameters to the Create request.
+type CreateOptsBuilder interface {
+    ToPortForwardingCreateMap() (map[string]interface{}, error)
+}
 
+// ListOpts allows the filtering and sorting of paginated collections through the API. 
 // ListOpts allows filtering and sorting of paginated collections.
 type ListOpts struct {                   // Modified
+	// Pagination options	
     Page     int    `q:"page"`
     Size     int    `q:"size"`
 
+	// MappedIP filters by the mapped private IP
+	MappedIP string `q:"mappedIp"`
+
+	// Protocol filters by protocol (TCP, UDP)
+	Protocol string `q:"protocol"`	
+
+	// // ID filters by the port forwarding rule ID
+	// ID string `q:"id"`
 	
+	// // Name filters by the port forwarding rule name
+	// Name string `q:"name"`	
 
+	// // PublicIP filters by public IP address
+	// PublicIP string `q:"public_ip"`
+	
+	// // PublicIPID filters by public IP ID
+	// PublicIPID string `q:"public_ip_id"`	
+
+	// // StackType filters by stack type
+	// StackType string `q:"stack_type"`
 }
-
 
 // ToPortForwardingListQuery formats a ListOpts into a query string.
 func (opts ListOpts) ToPortForwardingListQuery() (string, error) {
@@ -47,8 +62,10 @@ func (opts ListOpts) ToPortForwardingListQuery() (string, error) {
 // List returns a Pager which allows you to iterate over a collection of
 // Port Forwarding resources. It accepts a ListOpts struct, which allows you to
 // filter and sort the returned collection for greater efficiency.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {  			// Modified
-	url := portForwardingUrl(client)
+func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+	cblogger.Infof("# List URL : %s\n", listURL(c))
+
+	url := listURL(c)
 	if opts != nil {
 		query, err := opts.ToPortForwardingListQuery()
 		if err != nil {
@@ -56,38 +73,42 @@ func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pa
 		}
 		url += query
 	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
+	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
 		return PortForwardingPage{pagination.LinkedPageBase{PageResult: r}}
 	})
 }
 
 // Get retrieves a particular port forwarding resource based on its unique ID.
-func Get(client *gophercloud.ServiceClient, floatingIpId string, pfId string) (r GetResult) {	// Modified
-	resp, err := client.Get(singlePortForwardingUrl(client, pfId), &r.Body, nil)
+func Get(c *gophercloud.ServiceClient, floatingIpId string, pfId string) (r GetResult) {	// Modified
+	cblogger.Infof("# Get URL : %s\n", getURL(c, pfId))
+
+	resp, err := c.Get(getURL(c, pfId), &r.Body, nil)
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // CreateOpts contains all the values needed to create a new port forwarding resource. All attributes are required.
 type CreateOpts struct {																		// Modified
-	ZoneID 	  		  	string `json:"zoneid"` 			 // Ex. KT Cloud D1 Platform => 'DX-M1'
-	PrivateIpAddr 	  	string `json:"vmguestip"`        // Private IP address (allocated to the server(VM))
-	PublicIpID 		  	string `json:"entpublicipid"`
-	Protocol          	string `json:"protocol"`
+	// PublicIPID is the ID of the public IP to use
+	PublicIPID 		string `json:"publicipid" required:"true"`
+	
+	// MappedIP is the private IP address to forward to
+	MappedIP 		string `json:"mappedip" required:"true"`
+	
+	// Protocol specifies the protocol (TCP, UDP)
+	Protocol 		string `json:"protocol" required:"true"`
 
-	ExternalPort      	string `json:"publicport"`
-	ExternalStartPort   string `json:"startpublicport"`  // Public IP Start Port number (equal to the 'publicport' value),
-	ExternalEndPort   	string `json:"endpublicport"`
+	// StartPrivatePort is the starting private port number
+	StartPrivatePort string `json:"startPrivatePort" required:"true"`
+	
+	// EndPrivatePort is the ending private port number
+	EndPrivatePort 	string `json:"endPrivatePort" required:"true"`
 
-	InternalPort      	string `json:"privateport"`
-	InternalStartPort   string `json:"startprivateport"` // Private IP Start Port number (equal to the 'privateport' value),
-	InternalEndPort   	string `json:"endprivateport"`
-}
-
-// CreateOptsBuilder allows extensions to add additional parameters to the
-// Create request.
-type CreateOptsBuilder interface {
-	ToPortForwardingCreateMap() (map[string]interface{}, error)
+	// StartPublicPort is the starting public port number
+	StartPublicPort string `json:"startPublicPort" required:"true"`
+	
+	// EndPublicPort is the ending public port number
+	EndPublicPort 	string `json:"endPublicPort" required:"true"`
 }
 
 // ToPortForwardingCreateMap allows CreateOpts to satisfy the CreateOptsBuilder
@@ -97,69 +118,25 @@ func (opts CreateOpts) ToPortForwardingCreateMap() (map[string]interface{}, erro
 }
 
 // Create accepts a CreateOpts struct and uses the values provided to create a new port forwarding for an existing floating IP.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {		// Modified
+func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {		// Modified
+	cblogger.Infof("# Create URL : %s\n", createURL(c))
+
 	b, err := opts.ToPortForwardingCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(portForwardingUrl(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
-	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
-}
-
-// UpdateOpts contains the values used when updating a port forwarding resource.
-type UpdateOpts struct {
-	ZoneId 	  		  	string `json:"zoneid"` 			 // Ex. KT Cloud D1 Platform => 'DX-M1'
-	PrivateIpAddr 	  	string `json:"vmguestip"`        // Private IP address (allocated to the server(VM))
-	PublicIpId 		  	string `json:"entpublicipid"`
-	Protocol          	string `json:"protocol"`
-
-	ExternalPort      	string `json:"publicport"`
-	ExternalStartPort   string `json:"startpublicport"`  // Public IP Start Port number (equal to the 'publicport' value),
-	ExternalEndPort   	string `json:"endpublicport"`
-
-	InternalPort      	string `json:"privateport"`
-	InternalStartPort   string `json:"startprivateport"` // Private IP Start Port number (equal to the 'privateport' value),
-	InternalEndPort   	string `json:"endprivateport"`
-}
-
-// ToPortForwardingUpdateMap allows UpdateOpts to satisfy the UpdateOptsBuilder
-// interface
-func (opts UpdateOpts) ToPortForwardingUpdateMap() (map[string]interface{}, error) {
-	b, err := gophercloud.BuildRequestBody(opts, "port_forwarding")
-	if err != nil {
-		return nil, err
-	}
-	return b, nil
-}
-
-// UpdateOptsBuilder allows extensions to add additional parameters to the
-// Update request.
-type UpdateOptsBuilder interface {
-	ToPortForwardingUpdateMap() (map[string]interface{}, error)
-}
-
-// Update allows port forwarding resources to be updated.
-func Update(client *gophercloud.ServiceClient, pfID string, opts UpdateOptsBuilder) (r UpdateResult) {		// Modified
-	b, err := opts.ToPortForwardingUpdateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Put(singlePortForwardingUrl(client, pfID), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
+	resp, err := c.Post(createURL(c), b, &r.Body, &gophercloud.RequestOpts{
+		OkCodes: []int{200, 201},
 	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete will permanently delete a particular port forwarding for a given floating ID.
-func Delete(client *gophercloud.ServiceClient, pfId string) (r DeleteResult) {								// Modified
-	resp, err := client.Delete(singlePortForwardingUrl(client, pfId), &gophercloud.RequestOpts{
-		OkCodes: []int{200},
+func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {								// Modified
+	resp, err := c.Delete(deleteURL(c, id), &gophercloud.RequestOpts{
+		OkCodes: []int{200, 202, 204},
 	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return

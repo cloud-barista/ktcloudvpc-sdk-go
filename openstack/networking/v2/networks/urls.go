@@ -5,12 +5,14 @@ package networks
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
+const resourcePath = "vpc"									    // Modified
+
 func resourceURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL("vpc", id)  // Modified
+	return c.ServiceURL(resourcePath, id)  // Modified
 }
 
 func rootURL(c *gophercloud.ServiceClient) string {
-	return c.ServiceURL("vpc")  // Modified
+	return c.ServiceURL(resourcePath)  // Modified
 }
 
 // getURL constructs a URL for a specific VPC with query parameter
@@ -29,7 +31,7 @@ func getURL(c *gophercloud.ServiceClient, id string) string {  // Modified
 		cblogger.Errorf("\n\nFailed to Ceate Query String : %v\n", err)
     }
 
-    baseURL := c.ServiceURL("vpc")        
+    baseURL := c.ServiceURL(resourcePath)        
     return baseURL + q.String()
 }
 

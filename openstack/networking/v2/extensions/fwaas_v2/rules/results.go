@@ -5,139 +5,245 @@ import (
 	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
-type Rule struct {											// Added
-    Acls      []Acl  `json:"acls"`
-    VpcID     string `json:"vpcid"`
+// Interface represents network interface information
+type Interface struct {
+	NetworkID string `json:"networkId"`
+	Name      string `json:"name"`
+	VlanName  string `json:"vlanName"`
 }
 
-type Acl struct {											// Added
-    SrcIntfs  []NetworkInterface `json:"srcintfs"`
-    Schedule  string             `json:"schedule"`
-    Comments  string             `json:"comments"`
-    NatIP     string             `json:"natip"`
-    DstAddrs  []Address          `json:"dstaddrs"`
-    Name      string             `json:"name"`
-    DstIntfs  []NetworkInterface `json:"dstintfs"`
-    Action    string             `json:"action"`
-    ID        int                `json:"id"`
-    Services  []Service          `json:"services"`
-    SrcAddrs  []Address          `json:"srcaddrs"`
-    Status    string             `json:"status"`
+// Address represents address information with name
+type Address struct {
+	Name string `json:"name"`
 }
 
-type NetworkInterface struct {								// Added
-    NetworkName string `json:"networkname"`
-    NetworkID   string `json:"networkid"`
-    Interface   string `json:"interface"`
+// Service represents service/port information
+type Service struct {
+	Protocol  string `json:"protocol"`
+	StartPort string `json:"startPort"`
+	EndPort   string `json:"endPort"`
 }
 
-type Address struct {										// Added
-    IP string `json:"ip"`
+// FirewallRule represents a firewall rule structure.
+type FirewallRule struct {
+	// PolicyId policy id
+	PolicyID string `json:"policyId"`
+
+	// Action allow or deny value
+	Action string `json:"action"` // Not 'bool' type
+
+	// Schedule firewall rule schedule time
+	Schedule string `json:"schedule"`
+
+	// Priority firewall rule priority order
+	Priority int `json:"priority"`
+
+	// SrcAddress src ip address information
+	SrcAddress []Address `json:"srcAddress"`
+
+	// DstAddress destination ip address information
+	DstAddress []Address `json:"dstAddress"`
+
+	// SrcInterface src network information
+	SrcInterface []Interface `json:"srcInterface"`
+
+	// DstInterface destination network information
+	DstInterface []Interface `json:"dstInterface"`
+
+	// Services destination port information
+	Services []Service `json:"services"`
+
+	// Comment rule description
+	Comment string `json:"comment"`
+
+	// Mkey fortigate schedule ID
+	Mkey string `json:"mkey"`
+
+	// Nat poolname creation value
+	Nat string `json:"nat"`
+
+	// VpcId vpc id
+	VpcID string `json:"vpcId"`
+
+	// Risk risk level
+	Risk interface{} `json:"risk"`
+
+	// IpPool poolname creation value
+	IpPool string `json:"ipPool"`
+
+	// PoolName creation CIDR value
+	PoolName []interface{} `json:"poolName"`
+
+	// Status rule status
+	Status string `json:"status"`
+
+	// CreateDate creation time
+	CreateDate string `json:"createDate"`
 }
 
-type Service struct {										// Added
-    StartPort string `json:"startport"`
-    Protocol  string `json:"protocol"`
-    EndPort   string `json:"endport"`
-}
-
-// RulePage is the page returned by a pager when traversing over a
-// collection of firewall rules.
-type RulePage struct {
-	pagination.LinkedPageBase
-}
-
-// NextPageURL is invoked when a paginated collection of firewall rules has
-// reached the end of a page and the pager seeks to traverse over a new one.
-// In order to do this, it needs to construct the next page's URL.
-func (r RulePage) NextPageURL() (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"firewall_rules_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
-}
-
-// IsEmpty checks whether a RulePage struct is empty.
-func (r RulePage) IsEmpty() (bool, error) {
-	is, err := ExtractRules(r)
-	return len(is) == 0, err
-}
-
-type FirewallRules struct {											    // Added
-	Rules []Rule `json:"firewallrules"`
-}
-
-// ExtractRules accepts a Page struct, specifically a RouterPage struct,
-// and extracts the elements into a slice of Router structs. In other words,
-// a generic collection is mapped into a relevant slice.
-func ExtractRules(r pagination.Page) ([]Rule, error) {					// Modified
-	var s struct {
-		RuleList FirewallRules `json:"nc_listfirewallrulesresponse"`
-	}
-	err := (r.(RulePage)).ExtractInto(&s)
-	return s.RuleList.Rules, err
-}
 
 type commonResult struct {
 	gophercloud.Result
 }
 
-// Extract is a function that accepts a result and extracts a firewall rule.
-func (r commonResult) Extract() (*Rule, error) {
-	var s struct {
-		Rule *Rule `json:"firewall_rule"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Rule, err
+// CreateResult represents the result of a create operation. Call its Extract
+// method to interpret it as a FirewallRule.
+type CreateResult struct {
+	commonResult
 }
 
-type CreateFirewallRuleResponse struct {											// Added
-	JopID string `json:"job_id"`
-}
-
-func (r commonResult) ExtractJobInfo() (*CreateFirewallRuleResponse, error) {   	// Added
-	var s struct {
-		CreateFirewallRuleResponse *CreateFirewallRuleResponse `json:"nc_createfirewallruleresponse"`
-	}
-	err := r.ExtractInto(&s)
-	return s.CreateFirewallRuleResponse, err
-}
-
-// type DellFirewallRuleResponse struct {												// Added
-// 	JopID string `json:"job_id"`
-// }
-
-// func (r commonResult) ExtractDelJobInfo() (*DellFirewallRuleResponse, error) {   	// Added
-// 	var s struct {
-// 		DellFirewallRuleResponse *DellFirewallRuleResponse `json:"nc_deletefirewallruleresponse"`
-// 	}
-// 	err := r.ExtractInto(&s)
-// 	return s.DellFirewallRuleResponse, err
-// }
-
-// GetResult represents the result of a get operation.
+// GetResult represents the result of a get operation. Call its Extract
+// method to interpret it as a FirewallRule.
 type GetResult struct {
 	commonResult
 }
 
-// UpdateResult represents the result of an update operation.
-type UpdateResult struct {
-	commonResult
-}
-
-// DeleteResult represents the result of a delete operation.
+// DeleteResult represents the result of a delete operation. Call its
+// ExtractErr method to determine if the request succeeded or failed.
 type DeleteResult struct {
 	gophercloud.ErrResult
 }
+
 // type DeleteResult struct {															// Modified
 // 	commonResult
 // }
 
-// CreateResult represents the result of a create operation.
-type CreateResult struct {
-	commonResult
+// Extract will extract a Port Forwarding resource from a result.
+func (r commonResult) Extract() (*FirewallRule, error) {
+	var s FirewallRule
+	err := r.ExtractInto(&s)
+	return &s, err
+}
+
+
+// func (r commonResult) ExtractInto(v interface{}) error {
+// 	return r.Result.ExtractIntoStructPtr(v, "job_id")
+// }
+
+
+// RuleResponse represents the full response structure for P/F list.
+type RuleResponse struct {                    // Modified
+    HTTPStatus int              `json:"httpStatus"`
+    Meta       interface{}      `json:"meta"`
+    Pagination PaginationInfo   `json:"pagination"`
+    Data       []FirewallRule `json:"data"`
+}
+
+// PaginationInfo represents pagination information in API responses.
+type PaginationInfo struct {                // Added
+    Size   int `json:"size"`
+    Total  int `json:"total"`
+    Offset int `json:"offset"`
+}
+
+// FirewallRulePage is the page returned by a pager when traversing over a
+// collection of port forwardings.
+type FirewallRulePage struct {
+	pagination.LinkedPageBase
+}
+
+type CreateRuleJobResponse struct {
+    HTTPStatus int    `json:"httpStatus"`
+    JobID      string `json:"jobId"`
+}
+
+func ExtractJobID(result CreateResult) (string, error) {
+    var resp CreateRuleJobResponse
+    err := result.ExtractInto(&resp)
+    if err != nil {
+        return "", err
+    }
+    return resp.JobID, nil
+}
+
+// type DellPortforwardingResponse struct {											// Added
+// 	JopID string `json:"job_id"`
+// }
+
+// func (r commonResult) ExtractDelJobInfo() (*DellPortforwardingResponse, error) {   	// Added
+// 	var s struct {
+// 		DellPortforwardingResponse *DellPortforwardingResponse `json:"nc_deleteportforwardingruleresponse"`
+// 	}
+// 	err := r.ExtractInto(&s)
+// 	return s.DellPortforwardingResponse, err
+// }
+
+// IsEmpty checks whether a FirewallRulePage struct is empty.
+func (r FirewallRulePage) IsEmpty() (bool, error) {
+	is, err := ExtractRules(r)
+	return len(is) == 0, err
+}
+
+// NextPageURL returns the next page URL for traversing over VPC pages.
+func (r FirewallRulePage) NextPageURL() (string, error) {
+    // Pagination URL generation logic
+    // Currently, the API does not provide pagination links, so manual implementation is required.
+    return "", nil
+}
+
+
+// ExtractRules extracts 'a slice of FirewallRule' from a FirewallRulePage.
+func ExtractRules(r pagination.Page) ([]FirewallRule, error) {
+    var s RuleResponse
+    err := r.(FirewallRulePage).ExtractInto(&s)
+    return s.Data, err
+}
+
+// ExtractFirewallRule extracts 'a FirewallRule' from a GetResult.
+func (r GetResult) ExtractFirewallRule() (*FirewallRule, error) { // Added
+    var response RuleResponse
+    err := r.ExtractInto(&response)
+    if err != nil {
+        return nil, err
+    }
+    
+    if len(response.Data) == 0 {
+        return nil, gophercloud.ErrDefault404{}
+    }
+    
+    return &response.Data[0], nil
+}
+
+// ExtractRuleList extracts a RuleResponse from the result.
+func (r commonResult) ExtractRuleList() (*RuleResponse, error) { // Added
+    var s RuleResponse
+    err := r.Result.ExtractInto(&s)
+    return &s, err
+}
+
+// ExtractRuleResponse extracts the full RuleResponse from a result.
+func (r commonResult) ExtractRuleResponse() (*RuleResponse, error) { // Added
+    var s RuleResponse
+    err := r.ExtractInto(&s)
+    return &s, err
+}
+
+// ErrorResponse represents the error response structure for port forwarding API.
+type ErrorResponse struct {
+    HTTPStatus int    `json:"httpStatus"`
+    Title      string `json:"title"`
+    Detail     string `json:"detail"`
+    Instance   string `json:"instance"`
+    ServiceID  string `json:"serviceId"`
+    Status     int    `json:"status"`
+}
+
+// ExtractErrorResponse extracts ErrorResponse from a CreateResult, UpdateResult, or commonResult.
+func (r commonResult) ExtractErrorResponse() (*ErrorResponse, error) {
+    var e ErrorResponse
+    err := r.Result.ExtractInto(&e)
+    if err != nil {
+        return nil, err
+    }
+    return &e, nil
+}
+
+// For DeleteResult (which embeds ErrResult), add similar helper:
+func (r DeleteResult) ExtractErrorResponse() (*ErrorResponse, error) {
+    var e ErrorResponse
+    err := r.ErrResult.ExtractInto(&e)
+    if err != nil {
+        return nil, err
+    }
+    return &e, nil
 }

@@ -19,7 +19,7 @@ func init() {
 	cblogger = cblog.GetLogger("KTCloud VPC Client")
 }
 
-// ListOptsBuilder allows extensions to add additional parameters to the ListVPCV2 request.
+// ListOptsBuilder allows extensions to add additional parameters to the List request.
 type ListOptsBuilder interface {
     ToVPCListQuery() (string, error)
 }
