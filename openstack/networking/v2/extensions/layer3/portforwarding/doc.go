@@ -35,6 +35,19 @@ func main() {
     // Check for errors
     if result.Err != nil {
         log.Fatalf("Failed to create port forwarding: %v", result.Err)
+
+        detail := result.ExtractErrorDetail()
+        if detail != "" {
+            fmt.Println("Error Detail:", detail)
+        }
+
+        // Try to extract error response detail
+        errResp, err := result.ExtractErrorResponse()
+        if err == nil && errResp != nil {
+            fmt.Printf("Error Detail: %s\n", errResp.Detail)
+        } else {
+            fmt.Printf("Error: %v\n", result.Err)
+        }
     }
 
     // Extract the created PortForwarding resource
@@ -53,6 +66,14 @@ func main() {
     fmt.Printf("Public IP ID: %s\n", pf.PublicIPID)
     fmt.Printf("Stack Type: %s\n", pf.StackType)
     fmt.Printf("Created At: %s\n", pf.CreateDate)
+
+    // Extract the created PortForwarding ID
+    portForwardingId, err := portforward.ExtractPortForwardingID(result)
+    if err != nil {
+        fmt.Printf("Failed to extract portForwardingId: %v\n", err)
+    } else {
+        fmt.Printf("Created portForwardingId: %s\n", portForwardingId)
+    }
 }
 
 
@@ -77,10 +98,8 @@ func main() {
 
     // Set up filter options (example: filter by protocol and public IP)
     listOpts := portforwarding.ListOpts{
-        Protocol:  "TCP",
-        PublicIP:  "203.0.113.10",
         Page:      1,
-        Size:      10,
+        Size:      20,
     }
 
     // Call List() to get a Pager
