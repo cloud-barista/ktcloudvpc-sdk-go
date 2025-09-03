@@ -5,10 +5,44 @@ import (
 	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
-// List returns a Pager that allows you to iterate over a collection of FloatingIPs.
-func List(client *gophercloud.ServiceClient) pagination.Pager {
-	return pagination.NewPager(client, listURL(client), func(r pagination.PageResult) pagination.Page {
-		return FloatingIPPage{pagination.SinglePageBase(r)}
+// ListOptsBuilder allows extensions to add additional parameters to the
+// List request.
+type ListOptsBuilder interface {
+	ToFloatingIPListQuery() (string, error)
+}
+
+// ListOpts allows the filtering and sorting of paginated collections through
+// the API. Filtering is achieved by passing in struct field values that map to
+// the floating IP attributes you want to see returned. SortKey allows you to
+// sort by a particular network attribute. SortDir sets the direction, and is
+// either `asc' or `desc'. Marker and Limit are used for pagination.
+type ListOpts struct {
+	Page     	int    `q:"page"`
+    Size     	int    `q:"size"`
+	CIDR 	 	string `q:"cidr"`
+	PupblicIpID string `q:"publicIpId"`
+}
+
+// ToNetworkListQuery formats a ListOpts into a query string.
+func (opts ListOpts) ToFloatingIPListQuery() (string, error) {
+	q, err := gophercloud.BuildQueryString(opts)
+	return q.String(), err
+}
+
+// List returns a Pager which allows you to iterate over a collection of
+// floating IP resources. It accepts a ListOpts struct, which allows you to
+// filter and sort the returned collection for greater efficiency.
+func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+	url := listURL(c)
+	if opts != nil {
+		query, err := opts.ToFloatingIPListQuery()
+		if err != nil {
+			return pagination.Pager{Err: err}
+		}
+		url += query
+	}
+	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
+		return FloatingIPPage{pagination.LinkedPageBase{PageResult: r}}
 	})
 }
 
@@ -19,7 +53,7 @@ type CreateOptsBuilder interface {
 }
 
 // CreateOpts specifies a Floating IP allocation request.
-type CreateOpts struct {    					  // Modified
+type CreateOpts struct {
 }
 
 // ToFloatingIPCreateMap constructs a request body from CreateOpts.
@@ -49,71 +83,10 @@ func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
 }
 
 // Delete requests the deletion of a previous allocated Floating IP.
-func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {	// Modified
+func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
 	resp, err := client.Delete(deleteURL(client, id), &gophercloud.RequestOpts{
 		OkCodes: []int{200, 201},
 	})
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
-}
-
-// AssociateOptsBuilder allows extensions to add additional parameters to the
-// Associate request.
-type AssociateOptsBuilder interface {
-	ToFloatingIPAssociateMap() (map[string]interface{}, error)
-}
-
-// AssociateOpts specifies the required information to associate a Floating IP with an instance
-type AssociateOpts struct {
-	// FloatingIP is the Floating IP to associate with an instance.
-	FloatingIP string `json:"address" required:"true"`
-
-	// FixedIP is an optional fixed IP address of the server.
-	FixedIP string `json:"fixed_address,omitempty"`
-}
-
-// ToFloatingIPAssociateMap constructs a request body from AssociateOpts.
-func (opts AssociateOpts) ToFloatingIPAssociateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "addFloatingIp")
-}
-
-// AssociateInstance pairs an allocated Floating IP with a server.
-func AssociateInstance(client *gophercloud.ServiceClient, serverID string, opts AssociateOptsBuilder) (r AssociateResult) {
-	b, err := opts.ToFloatingIPAssociateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(associateURL(client, serverID), b, nil, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
-}
-
-// DisassociateOptsBuilder allows extensions to add additional parameters to
-// the Disassociate request.
-type DisassociateOptsBuilder interface {
-	ToFloatingIPDisassociateMap() (map[string]interface{}, error)
-}
-
-// DisassociateOpts specifies the required information to disassociate a
-// Floating IP with a server.
-type DisassociateOpts struct {
-	FloatingIP string `json:"address" required:"true"`
-}
-
-// ToFloatingIPDisassociateMap constructs a request body from DisassociateOpts.
-func (opts DisassociateOpts) ToFloatingIPDisassociateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "removeFloatingIp")
-}
-
-// DisassociateInstance decouples an allocated Floating IP from an instance
-func DisassociateInstance(client *gophercloud.ServiceClient, serverID string, opts DisassociateOptsBuilder) (r DisassociateResult) {
-	b, err := opts.ToFloatingIPDisassociateMap()
-	if err != nil {
-		r.Err = err
-		return
-	}
-	resp, err := client.Post(disassociateURL(client, serverID), b, nil, nil)
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
