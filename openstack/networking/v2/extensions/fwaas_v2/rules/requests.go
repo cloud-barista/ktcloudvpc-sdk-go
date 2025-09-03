@@ -3,6 +3,7 @@ package rules
 import (
 	cblog "github.com/cloud-barista/cb-log"	
 	"github.com/sirupsen/logrus"
+	// "github.com/davecgh/go-spew/spew"
 
 	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
@@ -42,9 +43,9 @@ type ListOptsBuilder interface {
 // the rule attributes you want to see returned. Marker and Limit are used
 // for pagination.
 type ListOpts struct {
-	PolicyID string `q:"policyId"`
 	Page     int    `q:"page"`
     Size     int    `q:"size"`
+	PolicyID string `q:"policyId"`
 }
 
 // ToRuleListQuery formats a ListOpts into a query string.
@@ -125,7 +126,7 @@ type CreateOpts struct {
 
 // ToRuleCreateMap casts a CreateOpts struct to a map.
 func (opts CreateOpts) ToRuleCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "firewall_rule")
+	return gophercloud.BuildRequestBody(opts, "") // Not "firewall_rule" but ""
 }
 
 // Create accepts a CreateOpts struct and uses the values to create a new
@@ -136,6 +137,10 @@ func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResul
 		r.Err = err
 		return
 	}
+	// cblogger.Info("\n\n### ToRuleCreate : ")
+	// spew.Dump(b)
+	// cblogger.Info("\n\n")
+
 	resp, err := c.Post(createURL(c), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200, 201, 202},
 	})
@@ -218,11 +223,6 @@ func (opts RemoveRuleOpts) ToRemoveRuleMap() (map[string]interface{}, error) {
 
 // 	return nil
 // }
-
-
-
-
-
 
 /*
 
