@@ -1,9 +1,18 @@
 package floatingips
 
 import (
-	"github.com/cloud-barista/ktcloudvpc-sdk-go"
-	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
+	cblog "github.com/cloud-barista/cb-log"	
+	"github.com/sirupsen/logrus"
+
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"  
+    "github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
+
+var cblogger *logrus.Logger
+
+func init() {
+	cblogger = cblog.GetLogger("KTCloud VPC Client")
+}
 
 // ListOptsBuilder allows extensions to add additional parameters to the
 // List request.
@@ -62,13 +71,13 @@ func (opts CreateOpts) ToFloatingIPCreateMap() (map[string]interface{}, error) {
 }
 
 // Create requests the creation of a new Floating IP.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
+func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToFloatingIPCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(createURL(client), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := c.Post(createURL(c), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200, 201},
 	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
@@ -76,15 +85,17 @@ func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r Create
 }
 
 // Get returns data about a previously created Floating IP.
-func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
-	resp, err := client.Get(getURL(client, id), &r.Body, nil)
+func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
+	// cblogger.Infof("# Get URL : %s", getURL(c, id))
+
+	resp, err := c.Get(getURL(c, id), &r.Body, nil)
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete requests the deletion of a previous allocated Floating IP.
-func Delete(client *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	resp, err := client.Delete(deleteURL(client, id), &gophercloud.RequestOpts{
+func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
+	resp, err := c.Delete(deleteURL(c, id), &gophercloud.RequestOpts{
 		OkCodes: []int{200, 201},
 	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
