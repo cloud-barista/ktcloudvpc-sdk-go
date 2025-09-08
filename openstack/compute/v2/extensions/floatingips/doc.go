@@ -63,6 +63,42 @@ func main() {
     }
 }
 
+// ################################################################################
+
+// Example: Get a Floating IP by publicIpId using floatingips.Get()
+
+package main
+
+import (
+    "fmt"
+    "log"
+
+    "github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/compute/v2/extensions/floatingips"
+    "github.com/cloud-barista/ktcloudvpc-sdk-go"
+)
+
+func main() {
+    // Assume you have a valid gophercloud.ServiceClient named 'client'
+    var client *gophercloud.ServiceClient // Initialize with your auth/session
+
+    // The public IP ID you want to query
+    publicIpId := "69d66144-0e40-46ca-9d17-3b08bea226c9"
+
+    // Call Get to retrieve the floating IP details
+    result := floatingips.Get(client, publicIpId)
+
+    // Extract the FloatingIP information
+    fip, err := result.ExtractFloatingIP()
+    if err != nil {
+        log.Fatalf("Failed to get floating IP: %v", err)
+    }
+
+    fmt.Printf("Public IP ID: %s\n", fip.PublicIpID)
+    fmt.Printf("Public IP Address: %s\n", fip.PublicIP)
+    fmt.Printf("VPC ID: %s\n", fip.VpcID)
+    fmt.Printf("Zone ID: %s\n", fip.ZoneID)
+    fmt.Printf("Type: %s\n", fip.Type)
+}
 
 */
 package floatingips
