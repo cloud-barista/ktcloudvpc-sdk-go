@@ -28,7 +28,7 @@ func getURL(c *gophercloud.ServiceClient, id string) string {  // Modified
     }
     q, err := gophercloud.BuildQueryString(params)
     if err != nil {
-		cblogger.Errorf("\n\nFailed to Ceate Query String : %v\n", err)
+		cblogger.Errorf("\n\nFailed to Create Query String : %v\n", err)
     }
 
     baseURL := c.ServiceURL(resourcePath)
