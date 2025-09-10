@@ -41,7 +41,7 @@ func main() {
         Page:       1,
         Size:       20,
         CIDR:       "",
-        PupblicIpID: "",
+        PublicIpID: "",
     }
 
     // Call List() to get a Pager
