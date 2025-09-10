@@ -107,7 +107,7 @@ func main() {
 
     // 1. Find the public IP ID by IP address
     publicIPID, err := vmHandler.FindPublicIPIDByIP(publicIpAddr)
-    if err != nil {		
+    if err != nil {
 		return nil, err
     }
 
