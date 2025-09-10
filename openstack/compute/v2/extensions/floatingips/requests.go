@@ -87,7 +87,6 @@ func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResul
 // Get returns data about a previously created Floating IP.
 func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
 	// cblogger.Infof("# Get URL : %s", getURL(c, id))
-
 	resp, err := c.Get(getURL(c, id), &r.Body, nil)
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
@@ -95,8 +94,9 @@ func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
 
 // Delete requests the deletion of a previous allocated Floating IP.
 func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
+	// cblogger.Infof("# Delete URL : %s", deleteURL(c, id))
 	resp, err := c.Delete(deleteURL(c, id), &gophercloud.RequestOpts{
-		OkCodes: []int{200, 201},
+		OkCodes: []int{200, 201, 204},
 	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return

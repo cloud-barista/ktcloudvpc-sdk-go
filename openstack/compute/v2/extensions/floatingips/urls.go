@@ -2,23 +2,27 @@ package floatingips
 
 import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
-const resourcePath = "publicIp"  						// Modified
+const resourcePath = "publicIp"
 
-func resourceURL(c *gophercloud.ServiceClient) string {
+func rootURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL(resourcePath)
 }
 
+func resourceURL(c *gophercloud.ServiceClient, id string) string {
+	return c.ServiceURL(resourcePath, id)
+}
+
 func listURL(c *gophercloud.ServiceClient) string {
-	return resourceURL(c)
+	return rootURL(c)
 }
 
 func createURL(c *gophercloud.ServiceClient) string {
-	return resourceURL(c)
+	return rootURL(c)
 }
 
 // getURL constructs a URL for a specific PublicIp with query parameter
 // Ex) https://api.ucloudbiz.olleh.com/d1/nsm/v1/publicIp?publicIpId=b6c6dae2-7c2d-497e-8117-989dce873fae
-func getURL(c *gophercloud.ServiceClient, id string) string {  // Modified
+func getURL(c *gophercloud.ServiceClient, id string) string {
     type PublicIpQueryParams struct {
         PublicIpID string `q:"publicIpId"`
     }
@@ -36,5 +40,5 @@ func getURL(c *gophercloud.ServiceClient, id string) string {  // Modified
 }
 
 func deleteURL(c *gophercloud.ServiceClient, id string) string {
-	return getURL(c, id)
+	return resourceURL(c, id)
 }
