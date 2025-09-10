@@ -101,7 +101,7 @@ func main() {
     fmt.Printf("Type: %s\n", fip.Type)
 }
 
-// Example: Delete a Floating IP by Floating IP Addres
+// Example: Delete a Floating IP by Floating IP Address
 
 	publicIpAddr := "XXX.XX.XXX.XXX"
 
