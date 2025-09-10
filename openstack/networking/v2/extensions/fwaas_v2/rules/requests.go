@@ -157,10 +157,7 @@ func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
 // Delete will permanently delete a particular firewall rule based on its
 // unique ID.
 func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	// _, r.Err = c.Delete(deleteURL(c, id), nil)
-	// return
-
-	cblogger.Infof("# Delete URL : %s\n", deleteURL(c, id))
+	// cblogger.Infof("# Delete URL : %s", deleteURL(c, id))
 	resp, err := c.Delete(deleteURL(c, id), &gophercloud.RequestOpts{
 		OkCodes: []int{200, 202, 204},
 	})

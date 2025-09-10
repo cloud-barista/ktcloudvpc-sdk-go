@@ -1,8 +1,9 @@
 /*
-Package floatingips provides the ability to manage floating ips through the
-Nova API.
+Package floatingips provides the ability to manage floating ips
 
-// Usage example:
+// Example: Create a floating IP using floatingips.Create()
+// filepath: ./github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/compute/v2/extensions/floatingips/
+
 result := floatingips.Create(client, opts)
 if result.Err != nil {
     fmt.Printf("Create error: %v\n", result.Err)
@@ -18,7 +19,7 @@ if result.Err != nil {
 // ################################################################################
 
 // Example: List floating IPs using floatingips.List()
-// filepath: /home/sean/go/src/github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/compute/v2/extensions/floatingips/
+// filepath: ./github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/compute/v2/extensions/floatingips/
 
 package main
 
@@ -38,9 +39,9 @@ func main() {
     // Set up filter options (example: filter by CIDR and page size)
     listOpts := floatingips.ListOpts{
         Page:       1,
-        Size:       10,
+        Size:       20,
         CIDR:       "",
-        PupblicIpID: "",
+        PublicIpID: "",
     }
 
     // Call List() to get a Pager
@@ -100,5 +101,22 @@ func main() {
     fmt.Printf("Type: %s\n", fip.Type)
 }
 
+// Example: Delete a Floating IP by Floating IP Address
+
+	publicIpAddr := "XXX.XX.XXX.XXX"
+
+    // 1. Find the public IP ID by IP address
+    publicIPID, err := vmHandler.FindPublicIPIDByIP(publicIpAddr)
+    if err != nil {
+		return nil, err
+    }
+
+    // 2. Delete the public IP using the found ID
+    result := ips.Delete(client, publicIPID)
+    if result.Err != nil {
+        return nil, result.Err
+    }
+    fmt.Printf("Successfully deleted public IP: %s (ID: %s)", publicIpAddr, publicIPID)
+    
 */
 package floatingips
