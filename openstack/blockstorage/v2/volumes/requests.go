@@ -100,7 +100,6 @@ func Delete(client *gophercloud.ServiceClient, id string, opts DeleteOptsBuilder
 // Get retrieves the Volume with the provided ID. To extract the Volume object
 // from the response, call the Extract method on the GetResult.
 func Get(client *gophercloud.ServiceClient, id string) (r GetResult) {
-	// cblogger.Infof("# Get URL : %s\n", getURL(client, id))
 	resp, err := client.Get(getURL(client, id), &r.Body, nil)
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
