@@ -1,9 +1,18 @@
 package volumes
 
 import (
+	cblog "github.com/cloud-barista/cb-log"	
+	"github.com/sirupsen/logrus"
+
 	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
+
+var cblogger *logrus.Logger
+
+func init() {
+	cblogger = cblog.GetLogger("KTCloud VPC Client")
+}
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
 // Create request.
@@ -105,34 +114,11 @@ type ListOptsBuilder interface {
 // ListOpts holds options for listing Volumes. It is passed to the volumes.List
 // function.
 type ListOpts struct {
-	// AllTenants will retrieve volumes of all tenants/projects.
-	AllTenants bool `q:"all_tenants"`
-
-	// Metadata will filter results based on specified metadata.
-	Metadata map[string]string `q:"metadata"`
-
-	// Name will filter by the specified volume name.
-	Name string `q:"name"`
-
-	// Status will filter by the specified status.
-	Status string `q:"status"`
-
-	// TenantID will filter by a specific tenant/project ID.
+	// ProjectID will filter by a specific tenant/project ID.
 	// Setting AllTenants is required for this.
-	TenantID string `q:"project_id"`
+	ProjectID string `q:"project_id"`
 
-	// Comma-separated list of sort keys and optional sort directions in the
-	// form of <key>[:<direction>].
-	Sort string `q:"sort"`
-
-	// Requests a page size of items.
-	Limit int `q:"limit"`
-
-	// Used in conjunction with limit to return a slice of items.
-	Offset int `q:"offset"`
-
-	// The ID of the last-seen item.
-	Marker string `q:"marker"`
+	VolumeID string `q:"volume_id"`	
 }
 
 // ToVolumeListQuery formats a ListOpts into a query string.
