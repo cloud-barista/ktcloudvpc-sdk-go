@@ -113,7 +113,7 @@ type ListOptsBuilder interface {
 
 // ListOpts holds options for listing Volumes. It is passed to the volumes.List
 // function.
-type ListOpts struct {											// Modified
+type ListOpts struct {
 	// ProjectID will filter by a specific tenant/project ID.
 	// Setting AllTenants is required for this.
 	ProjectID string `q:"project_id"`
