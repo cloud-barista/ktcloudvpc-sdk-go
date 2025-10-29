@@ -88,7 +88,7 @@ type CreateOpts struct {                    // Modified
 
 // ToVPCCreateMap builds a request body from CreateOpts.
 func (opts CreateOpts) ToVPCCreateMap() (map[string]interface{}, error) {
-    return gophercloud.BuildRequestBody(opts, "")
+    return gophercloud.BuildRequestBody(opts, "") // ""
 }
 
 // Create accepts a CreateOpts struct and creates a new VPC.

@@ -7,18 +7,17 @@ import "github.com/cloud-barista/ktcloudvpc-sdk-go"
 
 const resourcePath = "vpc"									    // Modified
 
-func resourceURL(c *gophercloud.ServiceClient, id string) string {
-	return c.ServiceURL(resourcePath, id)  // Modified
-}
-
 func rootURL(c *gophercloud.ServiceClient) string {
 	return c.ServiceURL(resourcePath)  // Modified
+}
+
+func resourceURL(c *gophercloud.ServiceClient, id string) string {
+	return c.ServiceURL(resourcePath, id)  // Modified
 }
 
 // getURL constructs a URL for a specific VPC with query parameter
 // Ex) https://api.ucloudbiz.olleh.com/d1/nsm/v1/vpc?vpcId=60e5d9da-55cd-47be-a0d9-6cf67c54f15c
 func getURL(c *gophercloud.ServiceClient, id string) string {  // Modified
-
     type VPCQueryParams struct {
         VPCID string `q:"vpcId"`
     }

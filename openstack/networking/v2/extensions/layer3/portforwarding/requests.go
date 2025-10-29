@@ -82,8 +82,7 @@ func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 
 // Get retrieves a particular port forwarding resource based on its unique ID.
 func Get(c *gophercloud.ServiceClient, floatingIpId string, pfId string) (r GetResult) {	
-	cblogger.Infof("# Get URL : %s\n", getURL(c, pfId))
-
+	// cblogger.Infof("# Get URL : %s\n", getURL(c, pfId))
 	resp, err := c.Get(getURL(c, pfId), &r.Body, nil)
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
