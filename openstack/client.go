@@ -7,6 +7,7 @@
 // This is a Cloud Driver Example for PoC Test.
 //
 // Updated by ETRI, 2022.07.
+// Updated by ETRI, 2025.10.
 
 package openstack
 
@@ -39,7 +40,7 @@ const (
 	imageEndpoint 	 = "https://api.ucloudbiz.olleh.com/d1/image/"  // Caution : Need to Add '/' at the end of the endpoint
 	networkEndpoint  = "https://api.ucloudbiz.olleh.com/d1/nsm/v1/"  // Caution : Need to Add '/' at the end of the endpoint
 	volumeV2Endpoint = "https://api.ucloudbiz.olleh.com/d1/volume/"  // Caution : Need to Add '/' at the end of the endpoint
-	lbV2Endpoint 	 = "https://api.ucloudbiz.olleh.com/d1/loadbalancer/api"  // Caution : Not need to Add '/' at the end of the endpoint
+	lbV2Endpoint 	 = "https://api.ucloudbiz.olleh.com/d1/loadbalancer/client/api"  // Caution : Not need to Add '/' at the end of the endpoint
 	// ### KT Cloud LB Info API URL ex) : https://api.ucloudbiz.olleh.com/d1/loadbalancer/api?command=listLoadBalancers&...
 )
 
