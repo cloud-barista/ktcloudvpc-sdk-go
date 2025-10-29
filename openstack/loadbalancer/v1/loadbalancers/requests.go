@@ -73,7 +73,7 @@ func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	}
 	
 	url = url + "&response=json"
-	fmt.Printf("\n### Call URL : %s\n\n", url)
+	fmt.Printf("\n### Call URL : %s\n", url)
 
 	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
 		return LoadBalancerPage{pagination.LinkedPageBase{PageResult: r}}
@@ -128,7 +128,7 @@ func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) pagination.Pag
 	}
 	
 	// url = url + "&response=json"
-	fmt.Printf("\n### Call URL : %s\n\n", url)
+	fmt.Printf("\n### Call URL : %s\n", url)
 
 	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
 		return LoadBalancerPage{pagination.LinkedPageBase{PageResult: r}}
@@ -148,7 +148,7 @@ func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResul
 	}
 	
 	url = url + "&response=json"
-	fmt.Printf("\n### Call URL : %s\n\n", url)
+	fmt.Printf("\n### Call URL : %s\n", url)
 
 	resp, err := c.Get(url, &r.Body, nil) // Caution!!
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
@@ -192,7 +192,7 @@ func Delete(c *gophercloud.ServiceClient, opts DeleteOptsBuilder) (r DeleteResul
 	}
 	
 	url = url + "&response=json"
-	fmt.Printf("\n### Call URL : %s\n\n", url)
+	fmt.Printf("\n### Call URL : %s\n", url)
 
 	resp, err := c.Get(url, &r.Body, nil) // Caution!!) Not c.Delete(url, nil)
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
@@ -246,7 +246,7 @@ func AddServer(c *gophercloud.ServiceClient, opts AddServerOptsBuilder) (r AddSe
 	}
 	
 	url = url + "&response=json"
-	fmt.Printf("\n### Call URL : %s\n\n", url)
+	fmt.Printf("\n### Call URL : %s\n", url)
 
 	resp, err := c.Get(url, &r.Body, nil) // Caution!!
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
@@ -279,7 +279,7 @@ func RemoveServer(c *gophercloud.ServiceClient, opts RemoveServerOptsBuilder) (r
 	}
 	
 	url = url + "&response=json"
-	fmt.Printf("\n### Call URL : %s\n\n", url)
+	fmt.Printf("\n### Call URL : %s\n", url)
 
 	resp, err := c.Get(url, &r.Body, nil) // Caution!!
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
@@ -318,7 +318,7 @@ func ListLbServer(c *gophercloud.ServiceClient, opts ListLbServerOptsBuilder) pa
 	}
 	
 	url = url + "&response=json"
-	fmt.Printf("\n### Call URL : %s\n\n", url)
+	fmt.Printf("\n### Call URL : %s\n", url)
 
 	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
 		return LoadBalancerPage{pagination.LinkedPageBase{PageResult: r}}
@@ -347,7 +347,7 @@ func CreateTag(c *gophercloud.ServiceClient, opts CreateTagOptsBuilder) (r Creat
 	}
 	
 	url = url + "&response=json"
-	fmt.Printf("\n### Call URL : %s\n\n", url)
+	fmt.Printf("\n### Call URL : %s\n", url)
 
 	resp, err := c.Get(url, &r.Body, nil) // Caution!!
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)

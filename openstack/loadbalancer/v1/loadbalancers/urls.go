@@ -18,10 +18,6 @@ const (
 	failoverPath   		= "failover"
 )
 
-// func rootURL(c *gophercloud.ServiceClient) string {
-// 	return c.GetServiceURL(rootPath, resourcePath)
-// }
-
 func listNlbURL(c *gophercloud.ServiceClient) string {
 	return c.GetServiceURL(listCommand, resourcePath)
 }
@@ -48,10 +44,6 @@ func listLbServerURL(c *gophercloud.ServiceClient) string {
 
 func createTagURL(c *gophercloud.ServiceClient) string {
 	return c.GetServiceURL(createTagCommand, resourcePath)
-}
-
-func resourceURL(c *gophercloud.ServiceClient, id string) string {
-	return c.GetServiceURL(rootPath, resourcePath, id)
 }
 
 func statusRootURL(c *gophercloud.ServiceClient, id string) string {
