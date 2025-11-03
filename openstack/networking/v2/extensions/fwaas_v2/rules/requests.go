@@ -1,19 +1,10 @@
 package rules
 
 import (
-	cblog "github.com/cloud-barista/cb-log"	
-	"github.com/sirupsen/logrus"
 	// "github.com/davecgh/go-spew/spew"
-
 	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
-
-var cblogger *logrus.Logger
-
-func init() {
-	cblogger = cblog.GetLogger("KTCloud VPC Client")
-}
 
 type (
 	Protocol string
@@ -58,7 +49,6 @@ func (opts ListOpts) ToRuleListQuery() (string, error) {
 // firewall rules. It accepts a ListOptsBuilder, which allows you to
 // filter and sort the returned collection for greater efficiency.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	// cblogger.Infof("# List URL : %s\n", rootURL(c))
 	url := rootURL(c)
 	if opts != nil {
 		query, err := opts.ToRuleListQuery()
@@ -137,9 +127,6 @@ func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResul
 		r.Err = err
 		return
 	}
-	// cblogger.Info("\n\n### ToRuleCreate : ")
-	// spew.Dump(b)
-	// cblogger.Info("\n\n")
 
 	resp, err := c.Post(createURL(c), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200, 201, 202},
@@ -157,7 +144,6 @@ func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
 // Delete will permanently delete a particular firewall rule based on its
 // unique ID.
 func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	// cblogger.Infof("# Delete URL : %s", deleteURL(c, id))
 	resp, err := c.Delete(deleteURL(c, id), &gophercloud.RequestOpts{
 		OkCodes: []int{200, 202, 204},
 	})
@@ -194,8 +180,6 @@ type RemoveRuleOpts struct {
 func (opts RemoveRuleOpts) ToRemoveRuleMap() (map[string]interface{}, error) {
 	return gophercloud.BuildRequestBody(opts, "")
 }
-
-
 
 
 // // ValidateCreateOpts validates the CreateOpts structure.

@@ -3,7 +3,10 @@
 
 package networks
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-go"
+import (
+    "github.com/rs/zerolog/log"
+    "github.com/cloud-barista/ktcloudvpc-sdk-go"
+)
 
 const resourcePath = "vpc"									    // Modified
 
@@ -27,7 +30,7 @@ func getURL(c *gophercloud.ServiceClient, id string) string {  // Modified
     }
     q, err := gophercloud.BuildQueryString(params)
     if err != nil {
-		cblogger.Errorf("\n\nFailed to Ceate Query String : %v\n", err)
+		log.Error().Msgf("\n\nFailed to Ceate Query String : %v\n", err)
     }
 
     baseURL := c.ServiceURL(resourcePath)        

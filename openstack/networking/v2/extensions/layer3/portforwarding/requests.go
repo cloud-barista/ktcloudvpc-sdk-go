@@ -1,19 +1,11 @@
 package portforwarding
 
 import (
-	cblog "github.com/cloud-barista/cb-log"	
-	"github.com/sirupsen/logrus"
 	// "github.com/davecgh/go-spew/spew"
 
 	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
-
-var cblogger *logrus.Logger
-
-func init() {
-	cblogger = cblog.GetLogger("KTCloud VPC Client")
-}
 
 // ListOptsBuilder allows extensions to add additional parameters to the List request.
 type ListOptsBuilder interface {
@@ -65,7 +57,6 @@ func (opts ListOpts) ToPortForwardingListQuery() (string, error) {
 // Port Forwarding resources. It accepts a ListOpts struct, which allows you to
 // filter and sort the returned collection for greater efficiency.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-	// cblogger.Infof("# List URL : %s\n", listURL(c))
 
 	url := listURL(c)
 	if opts != nil {
@@ -82,7 +73,6 @@ func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 
 // Get retrieves a particular port forwarding resource based on its unique ID.
 func Get(c *gophercloud.ServiceClient, floatingIpId string, pfId string) (r GetResult) {	
-	// cblogger.Infof("# Get URL : %s\n", getURL(c, pfId))
 	resp, err := c.Get(getURL(c, pfId), &r.Body, nil)
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
@@ -120,16 +110,12 @@ func (opts CreateOpts) ToPortForwardingCreateMap() (map[string]interface{}, erro
 
 // Create accepts a CreateOpts struct and uses the values provided to create a new port forwarding for an existing floating IP.
 func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {		
-	// cblogger.Infof("# Create URL : %s\n", createURL(c))
 
 	b, err := opts.ToPortForwardingCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	// cblogger.Info("\n\n### ToPortForwardingCreate : ")
-	// spew.Dump(b)
-	// cblogger.Info("\n\n")
 
 	resp, err := c.Post(createURL(c), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200, 201},

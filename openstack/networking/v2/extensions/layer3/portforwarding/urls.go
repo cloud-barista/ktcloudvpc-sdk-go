@@ -2,6 +2,7 @@ package portforwarding
 
 import (
 	"github.com/cloud-barista/ktcloudvpc-sdk-go"
+	"github.com/rs/zerolog/log"
 )
 
 const resourcePath = "portforwarding"
@@ -24,7 +25,7 @@ func getURL(c *gophercloud.ServiceClient, id string) string {
     }
     q, err := gophercloud.BuildQueryString(params)
     if err != nil {
-		cblogger.Errorf("\n\nFailed to Ceate Query String : %v\n", err)
+      log.Error().Msgf("\n\nFailed to Ceate Query String : %v\n", err)
     }
 
     baseURL := c.ServiceURL(resourcePath)        
@@ -33,7 +34,7 @@ func getURL(c *gophercloud.ServiceClient, id string) string {
 
 
 func createURL(c *gophercloud.ServiceClient) string {
-	// cblogger.Errorf("\n\nCreate URL : %v\n", c.ServiceURL(resourcePath))
+	// log.Error().Msgf("\n\nCreate URL : %v\n", c.ServiceURL(resourcePath))
 	return c.ServiceURL(resourcePath)
 }
 

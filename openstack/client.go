@@ -15,8 +15,8 @@ import (
 	"fmt"
 	"reflect"
 	"strings"
+	"github.com/rs/zerolog/log"
 	// "github.com/davecgh/go-spew/spew"
-	cblog "github.com/cloud-barista/cb-log"
 
 	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 	tokens2 "github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/identity/v2/tokens"
@@ -43,11 +43,6 @@ const (
 	lbV2Endpoint 	 = "https://api.ucloudbiz.olleh.com/d1/loadbalancer/client/api"  // Caution : Not need to Add '/' at the end of the endpoint
 	// ### KT Cloud LB Info API URL ex) : https://api.ucloudbiz.olleh.com/d1/loadbalancer/api?command=listLoadBalancers&...
 )
-
-func init() {
-	// cblog is a global variable.
-	cblogger = cblog.GetLogger("KTCloud VPC Client")
-}
 
 /*
 NewClient prepares an unauthenticated ProviderClient instance.
@@ -106,10 +101,6 @@ func AuthenticatedClient(options gophercloud.AuthOptions) (*gophercloud.Provider
 		return nil, err
 	}
 
-	// cblogger.Info("\n# options : ")
-	// spew.Dump(options)
-	// cblogger.Info("\n\n")
-
 	err = Authenticate(client, options)
 	if err != nil {
 		return nil, err
@@ -130,14 +121,6 @@ func Authenticate(client *gophercloud.ProviderClient, options gophercloud.AuthOp
 	if err != nil {
 		return err
 	}
-
-	// cblogger.Info("\n# version ID : ")
-	// spew.Dump(chosen.ID)
-	// cblogger.Info("\n\n")
-
-	// cblogger.Info("\n# endpoint : ")
-	// spew.Dump(endpoint)
-	// cblogger.Info("\n\n")
 
 	switch chosen.ID {
 	case v2:
@@ -225,10 +208,6 @@ func v3auth(client *gophercloud.ProviderClient, endpoint string, opts tokens3.Au
 		return err
 	}
 
-	// cblogger.Info("\n# v3Client : ")
-	// spew.Dump(v3Client)
-	// cblogger.Info("\n\n")
-
 	if endpoint != "" {
 		v3Client.Endpoint = v3Client.IdentityBase   // Modified.
 	}
@@ -236,10 +215,6 @@ func v3auth(client *gophercloud.ProviderClient, endpoint string, opts tokens3.Au
 	// if endpoint != "" {
 	// 	v3Client.Endpoint = endpoint
 	// }
-	
-	// cblogger.Info("\n# v3Client.Endpoint : ")
-	// spew.Dump(v3Client.Endpoint)
-	// cblogger.Info("\n\n")
 
 	var catalog *tokens3.ServiceCatalog
 
@@ -390,10 +365,6 @@ func NewIdentityV3(client *gophercloud.ProviderClient, eo gophercloud.EndpointOp
 
 	endpoint = gophercloud.NormalizeURL(base)  // Modified.
 
-	// cblogger.Info("\n")
-	// cblogger.Infof("\n# base endpoint : %s", endpoint)
-	// cblogger.Info("\n\n")
-
 	return &gophercloud.ServiceClient{
 		ProviderClient: client,
 		Endpoint:       endpoint,
@@ -457,13 +428,9 @@ func initClientOpts(client *gophercloud.ProviderClient, eo gophercloud.EndpointO
 	// ### KT Cloud Volume Info API URL : https://api.ucloudbiz.olleh.com/d1/volume/{project_id}/volumes/{volume_id}
 	// ### KT Cloud LB Info API URL ex) : https://api.ucloudbiz.olleh.com/d1/loadbalancer/api?command=listLoadBalancers&...
 
-	cblogger.Infof("\n# sc.Type in initClientOpts() : %s", sc.Type)
-	cblogger.Infof("\n# sc.Endpoint in initClientOpts() : %s", sc.Endpoint)
-	cblogger.Info("\n\n")
-
-	// cblogger.Info("\n# sc in initClientOpts() : ")
-	// spew.Dump(sc)
-	// cblogger.Info("\n\n")
+	log.Info().Msgf("\n# sc.Type in initClientOpts() : %s", sc.Type)
+	log.Info().Msgf("\n# sc.Endpoint in initClientOpts() : %s", sc.Endpoint)
+	log.Info().Msg("\n\n")
 
 	return sc, nil
 }

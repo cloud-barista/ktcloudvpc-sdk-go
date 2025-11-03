@@ -1,18 +1,11 @@
 package floatingips
 
 import (
-	cblog "github.com/cloud-barista/cb-log"	
-	"github.com/sirupsen/logrus"
+	// "github.com/rs/zerolog/log"
 
 	"github.com/cloud-barista/ktcloudvpc-sdk-go"  
     "github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
-
-var cblogger *logrus.Logger
-
-func init() {
-	cblogger = cblog.GetLogger("KTCloud VPC Client")
-}
 
 // ListOptsBuilder allows extensions to add additional parameters to the
 // List request.
@@ -86,7 +79,7 @@ func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResul
 
 // Get returns data about a previously created Floating IP.
 func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
-	// cblogger.Infof("# Get URL : %s", getURL(c, id))
+	// log.Info().Msgf("# Get URL : %s", getURL(c, id))
 	resp, err := c.Get(getURL(c, id), &r.Body, nil)
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
@@ -94,7 +87,7 @@ func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
 
 // Delete requests the deletion of a previous allocated Floating IP.
 func Delete(c *gophercloud.ServiceClient, id string) (r DeleteResult) {
-	// cblogger.Infof("# Delete URL : %s", deleteURL(c, id))
+	// log.Info().Msgf("# Delete URL : %s", deleteURL(c, id))
 	resp, err := c.Delete(deleteURL(c, id), &gophercloud.RequestOpts{
 		OkCodes: []int{200, 201, 204},
 	})

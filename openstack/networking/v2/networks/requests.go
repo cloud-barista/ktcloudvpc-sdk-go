@@ -4,20 +4,12 @@
 package networks
 
 import (
-	// "fmt"
+    "github.com/rs/zerolog/log"
     // "github.com/davecgh/go-spew/spew"
-	cblog "github.com/cloud-barista/cb-log"	
-	"github.com/sirupsen/logrus"
 
 	"github.com/cloud-barista/ktcloudvpc-sdk-go"  
     "github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
-
-var cblogger *logrus.Logger
-
-func init() {
-	cblogger = cblog.GetLogger("KTCloud VPC Client")
-}
 
 // ListOptsBuilder allows extensions to add additional parameters to the List request.
 type ListOptsBuilder interface {
@@ -68,7 +60,7 @@ func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 
 // Get retrieves a specific VPC based on its unique ID.
 func Get(c *gophercloud.ServiceClient, id string) (r GetResult) {
-    cblogger.Infof("# Get URL : %s\n", getURL(c, id))
+    log.Info().Msgf("# Get URL : %s\n", getURL(c, id))
 
     resp, err := c.Get(getURL(c, id), &r.Body, nil)
     _, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
