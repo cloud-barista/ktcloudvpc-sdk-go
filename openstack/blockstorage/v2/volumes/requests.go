@@ -1,18 +1,9 @@
 package volumes
 
 import (
-	cblog "github.com/cloud-barista/cb-log"	
-	"github.com/sirupsen/logrus"
-
 	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
-
-var cblogger *logrus.Logger
-
-func init() {
-	cblogger = cblog.GetLogger("KTCloud VPC Client")
-}
 
 // CreateOptsBuilder allows extensions to add additional parameters to the
 // Create request.

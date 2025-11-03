@@ -3,7 +3,10 @@
 
 package subnets
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-go"
+import (
+    "github.com/rs/zerolog/log"
+    "github.com/cloud-barista/ktcloudvpc-sdk-go"
+)
 
 func resourceURL(c *gophercloud.ServiceClient, id string) string {
 	return c.ServiceURL("network", id)  // Modified
@@ -30,7 +33,7 @@ func getURL(c *gophercloud.ServiceClient, id string) string {  // Modified
     }
     q, err := gophercloud.BuildQueryString(params)
     if err != nil {
-		cblogger.Errorf("\n\nFailed to Ceate Query String : %v\n", err)
+		log.Error().Msgf("\n\nFailed to Ceate Query String : %v\n", err)
     }
 
     baseURL := c.ServiceURL("network")        
