@@ -2,10 +2,7 @@ package loadbalancers
 
 import (
 	"fmt"
-	// "net/url"
 	"github.com/cloud-barista/ktcloudvpc-sdk-go"
-	// "github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/loadbalancer/v2/listeners"
-	// "github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/loadbalancer/v2/pools"
 	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
@@ -81,8 +78,7 @@ func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 }
 
 
-// CreateOptsBuilder allows extensions to add additional parameters to the
-// Create request.
+// CreateOptsBuilder allows extensions to add additional parameters to the Create request.
 type CreateOptsBuilder interface {
 	ToLoadBalancerCreateQuery() (string, error)
 }
