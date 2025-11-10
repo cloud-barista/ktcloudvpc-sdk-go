@@ -3,11 +3,8 @@ package loadbalancers
 import (
 	"encoding/json"
 	"time"
-	// "fmt"
 
 	"github.com/cloud-barista/ktcloudvpc-sdk-go"
-	// "github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/loadbalancer/v2/listeners"
-	// "github.com/cloud-barista/ktcloudvpc-sdk-go/openstack/loadbalancer/v2/pools"
 	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
@@ -190,19 +187,19 @@ type commonResult struct {
 
 type CreateNLBResponse struct {
 	Createnlbresponse struct {
-		NLBId    			string `json:"loadbalancerid"`
-		ZoneId            	string `json:"zoneid"`
-		ZoneName          	string `json:"zonename"`
-		ServiceIP         	string `json:"serviceip"`
-		ServicePort       	string `json:"serviceport"`
-		ServiceType       	string `json:"servicetype"`
-		Name              	string `json:"name"`
-		NLBOption 			string `json:"loadbalanceroption"`
-		HealthCheckType   	string `json:"healthchecktype"`
-		HealthCheckURL    	string `json:"healthcheckurl"`
-		ErrorCode    		string `json:"errorcode"`
-		ErrorText    		string `json:"errortext"`
-		DisplayText    		string `json:"displaytext"`		
+		NLBId    			int		`json:"loadbalancerid"`
+		ZoneId            	string 	`json:"zoneid"`
+		ZoneName          	string	`json:"zonename"`
+		ServiceIP         	string 	`json:"serviceip"`
+		ServicePort       	string 	`json:"serviceport"`
+		ServiceType       	string 	`json:"servicetype"`
+		Name              	string 	`json:"name"`
+		NLBOption 			string 	`json:"loadbalanceroption"`
+		HealthCheckType   	string 	`json:"healthchecktype"`
+		HealthCheckURL    	string 	`json:"healthcheckurl"`
+		ErrorCode    		string 	`json:"errorcode"`
+		ErrorText    		string	`json:"errortext"`
+		DisplayText    		string 	`json:"displaytext"`		
 	} `json:"createLoadBalancerresponse"`
 }
 // Caution!!) Not `json:"createLoadBalancerresponse"` : API manul is incorrect!!
@@ -311,6 +308,13 @@ func (r StatsResult) Extract() (*Stats, error) {
 	}
 	err := r.ExtractInto(&s)
 	return s.Stats, err
+}
+
+// ExtractCreate extracts a SubnetCreateResponse from a CreateResult.
+func (r CreateResult) ExtractCreate() (*CreateNLBResponse, error) { // Modified
+    var s CreateNLBResponse
+    err := r.ExtractInto(&s)
+    return &s, err
 }
 
 // CreateResult represents the result of a create operation. Call its Extract
