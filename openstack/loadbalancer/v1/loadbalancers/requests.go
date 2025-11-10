@@ -87,24 +87,28 @@ type CreateOptsBuilder interface {
 	ToLoadBalancerCreateQuery() (string, error)
 }
 
-// CreateOpts is the common options struct used in this package's Create
-// operation.
+// CreateOpts is the common options struct used in this package's Create operation.
 type CreateOpts struct {											// Modified
-	Name             string `q:"name"`				// Required
-	ZoneID           string `q:"zoneid"`				// Required. Zone ID that has the 'ServiceIP'
-	NlbOption 		 string `q:"loadbalanceroption"`	// Required. roundrobin / leastconnection / leastresponse / sourceiphash / srcipsrcporthash
-	ServiceIP        string `q:"serviceip"`			// Required. KT Cloud Virtual IP. 
+	Name            	string	`q:"name"`				// Required
+	NetworkID        	string 	`q:"networkid"` 		// Tier Network ID. Required in case of 'Enterprise Security'
 														// 'ServiceIP' : $$$ In case of an empty value(""), it is newly created.
-	ServicePort      string `q:"serviceport"`		// Required
-	ServiceType      string `q:"servicetype"`		// Required. NLB ServiceType : https / http / sslbridge / tcp / ftp
-	HealthCheckType  string `q:"healthchecktype"`	// Required. HealthCheckType : http / https / tcp
-	HealthCheckURL   string `q:"healthcheckurl"`		// Required. URL when the HealthCheckType is 'http' or 'https'.
-	CipherGroupName  string `q:"ciphergroupname"`	// Required when ServiceType is 'https'. Set CipherGroup Name
-	SSLv3        	 string `q:"sslv3"`				// Required when ServiceType is 'https'. Use SSLv3? : 'DISABLED' / 'ENABLED'
-	TLSv1        	 string `q:"tlsv1"`				// Required when ServiceType is 'https'. Use TLSv1? : 'DISABLED' / 'ENABLED'
-	TLSv11         	 string `q:"tlsv11"`				// Required when ServiceType is 'https'. Use TLSv11? : 'DISABLED' / 'ENABLED'
-	TLSv12        	 string `q:"tlsv12"`				// Required when ServiceType is 'https'. Use TLSv12? : 'DISABLED' / 'ENABLED'
-	NetworkID        string `q:"networkid"` 			// Tier Network ID. Required in case of 'Enterprise Security'
+	ServiceIP        	string 	`q:"serviceip"`			// Required. KT Cloud Virtual IP. 
+	ZoneID           	string 	`q:"zoneid"`			// Required. Zone ID that has the 'ServiceIP' (API manual is incorrect.)
+														
+	ServicePort      	string 	`q:"serviceport"`		// Required
+	ServiceType      	string 	`q:"servicetype"`		// Required. NLB ServiceType : https / http / sslbridge / tcp / ftp
+	NlbOption 		 	string 	`q:"loadbalanceroption"`// Required. roundrobin / leastconnection / leastresponse / sourceiphash / srcipsrcporthash
+	HealthCheckType  	string 	`q:"healthchecktype"`	// Required. HealthCheckType : http / https / tcp
+	HealthCheckURL   	string 	`q:"healthcheckurl"`	// Required. URL when the HealthCheckType is 'http' or 'https'.
+	CipherGroupName  	string 	`q:"ciphergroupname"`	// Required when ServiceType is 'https'. Set CipherGroup Name
+	// SSLv3        	 string	`q:"sslv3"`				// Required when ServiceType is 'https'. Use SSLv3? : 'DISABLED' / 'ENABLED'
+	TLSv1        	 	string 	`q:"tlsv1"`				// Required when ServiceType is 'https'. Use TLSv1? : 'DISABLED' / 'ENABLED'
+	TLSv11         	 	string 	`q:"tlsv11"`			// Required when ServiceType is 'https'. Use TLSv11? : 'DISABLED' / 'ENABLED'
+	TLSv12        	 	string 	`q:"tlsv12"`			// Required when ServiceType is 'https'. Use TLSv12? : 'DISABLED' / 'ENABLED'
+	RedirectURL      	string 	`q:"redirecturl"`		// Required when servicetype is 'REDIRECT'
+	IsWebSocket      	bool 	`q:"iswebsocket"`		// Whether supports WebSocket (true | false)
+	IsxForwardProto  	bool 	`q:"isxforwardproto"`	// Whether to add the X-Forwarded-Proto header (true | false)
+	Comment				string 	`q:"comment"`			// Administrative Comment
 }
 // ### To create query string : Not `json:"name"` But `q:"name"`
 
@@ -116,31 +120,11 @@ func (opts CreateOpts) ToLoadBalancerCreateQuery() (string, error) { 	// Addeed
 	return q, err
 }
 
-/*
-func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) pagination.Pager { 	// Modified
-	url := createNlbURL(c)
-	if opts != nil {
-		query, err := opts.ToLoadBalancerCreateQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query		
-	}
-	
-	// url = url + "&response=json"
-	fmt.Printf("\n### Call URL : %s\n", url)
-
-	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return LoadBalancerPage{pagination.LinkedPageBase{PageResult: r}}
-	})
-}
-*/
-
 func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult)  { 	// Modified
 	url := createNlbURL(c)
 	if opts != nil {
 		query, err := opts.ToLoadBalancerCreateQuery()
-		if err != nil {		
+		if err != nil {
 			r.commonResult.Result.Err = err		// Modified
 			return r
 		}
