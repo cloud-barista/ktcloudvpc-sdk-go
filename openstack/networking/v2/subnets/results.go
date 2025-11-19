@@ -8,34 +8,6 @@ import (
     "github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
-type commonResult struct {
-	gophercloud.Result
-}
-
-// GetResult represents the result of a get operation. Call its Extract
-// method to interpret it as a Subnet.
-type GetResult struct {
-	commonResult
-}
-
-// CreateResult represents the result of a create operation. Call its Extract
-// method to interpret it as a Subnet.
-type CreateResult struct {
-	commonResult
-}
-
-// UpdateResult represents the result of an update operation. Call its Extract
-// method to interpret it as a Subnet.
-type UpdateResult struct {
-	commonResult
-}
-
-// DeleteResult represents the result of a delete operation. Call its
-// ExtractErr method to determine if the request succeeded or failed.
-type DeleteResult struct {
-	gophercloud.ErrResult
-}
-
 type Subnet struct {                    // Modified
     AccountID        string  `json:"accountId"`
     NetworkID        string  `json:"networkId"`   // KT Cloud Tier's UUID (Note: differs from the Tier ID based on OpenStack Neutron.) 
@@ -69,6 +41,34 @@ type Subnet struct {                    // Modified
     Status           string  `json:"status"`      // Tier status
 }
 
+type commonResult struct {
+	gophercloud.Result
+}
+
+// GetResult represents the result of a get operation. Call its Extract
+// method to interpret it as a Subnet.
+type GetResult struct {
+	commonResult
+}
+
+// CreateResult represents the result of a create operation. Call its Extract
+// method to interpret it as a Subnet.
+type CreateResult struct {
+	commonResult
+}
+
+// UpdateResult represents the result of an update operation. Call its Extract
+// method to interpret it as a Subnet.
+type UpdateResult struct {
+	commonResult
+}
+
+// DeleteResult represents the result of a delete operation. Call its
+// ExtractErr method to determine if the request succeeded or failed.
+type DeleteResult struct {
+	gophercloud.ErrResult
+}
+
 // SubnetResponse represents the full response structure for Subnet list.
 type SubnetResponse struct {                        // Added
     HTTPStatus int              `json:"httpStatus"`
@@ -77,8 +77,8 @@ type SubnetResponse struct {                        // Added
     Data       []Subnet         `json:"data"`
 }
 
-// SubnetCreateResponse represents the response structure for subnet creation.
-type SubnetCreateResponse struct {                  // Modified
+// CreateSubnetResponse represents the response structure for subnet creation.
+type CreateSubnetResponse struct {                  // Modified
     HTTPStatus int    `json:"httpStatus"`
     JobID      string `json:"jobId,omitempty"`
     Data       struct {
@@ -148,9 +148,9 @@ func (r commonResult) ExtractSubnetResponse() (*SubnetResponse, error) { // Adde
     return &s, err
 }
 
-// ExtractCreate extracts a SubnetCreateResponse from a CreateResult.
-func (r CreateResult) ExtractCreate() (*SubnetCreateResponse, error) { // Modified
-    var s SubnetCreateResponse
+// ExtractCreate extracts a CreateSubnetResponse from a CreateResult.
+func (r CreateResult) ExtractCreate() (*CreateSubnetResponse, error) { // Modified
+    var s CreateSubnetResponse
     err := r.ExtractInto(&s)
     return &s, err
 }

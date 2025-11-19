@@ -51,6 +51,48 @@ type LbServer struct {
 	RequestsRate       int    `json:"requestsrate"`
 }
 
+// CreateResult represents the result of a create operation. Call its Extract
+// method to interpret it as a LoadBalancer.
+type CreateResult struct {
+	commonResult
+}
+
+// GetResult represents the result of a get operation. Call its Extract
+// method to interpret it as a LoadBalancer.
+type GetResult struct {
+	commonResult
+}
+
+// UpdateResult represents the result of an update operation. Call its Extract
+// method to interpret it as a LoadBalancer.
+type UpdateResult struct {
+	commonResult
+}
+
+// DeleteResult represents the result of a delete operation. Call its
+// ExtractErr method to determine if the request succeeded or failed.
+type DeleteResult struct {
+	gophercloud.ErrResult
+}
+
+// FailoverResult represents the result of a failover operation. Call its
+// ExtractErr method to determine if the request succeeded or failed.
+type FailoverResult struct {
+	gophercloud.ErrResult
+}
+
+type AddServerResult struct {
+	commonResult
+}
+
+type RemoveServerResult struct {
+	commonResult
+}
+
+type CreateTagResult struct {
+	commonResult
+}
+
 func (r *LoadBalancer) UnmarshalJSON(b []byte) error {
 	type tmp LoadBalancer
 
@@ -162,25 +204,6 @@ func ExtractLbServers(r pagination.Page) ([]LbServer, error) { 		// Modified
 	return s.ListLbServersResponse.LbVMs, err
 }
 
-// func ExtractLoadBalancers(r pagination.Page) ([]LoadBalancer, error) { 		// Modified
-// 	// var s struct {
-// 	// 	LoadBalancers []LoadBalancer `json:"loadbalancers"`
-// 	// }
-
-// 	var s struct {
-// 			ListLoadBalancersResponse struct {
-// 			Count        	int `json:"count"`
-// 			LoadBalancers 	[]LoadBalancer `json:"loadbalancer"`
-// 		} `json:"listloadbalancersresponse"`
-// 	}
-// 	err := ExtractLoadBalancersInto(r, &s.ListLoadBalancersResponse.LoadBalancers)
-// 	return s.ListLoadBalancersResponse.LoadBalancers, err
-// }
-
-// func ExtractLoadBalancersInto(r pagination.Page, v interface{}) error { // Added
-// 	return r.(LoadBalancerPage).Result.ExtractIntoSlicePtr(v, "loadbalancer")
-// }
-
 type commonResult struct {
 	gophercloud.Result
 }
@@ -265,8 +288,6 @@ func (r commonResult) RemoveServerExtract() (*RemoveServerResponse, error) {
 	return &resp, err
 }
 
-
-
 /*
 // Extract is a function that accepts a result and extracts a loadbalancer.
 func (r commonResult) Extract() (*LoadBalancer, error) {
@@ -315,46 +336,4 @@ func (r CreateResult) ExtractCreate() (*CreateNLBResponse, error) { // Modified
     var s CreateNLBResponse
     err := r.ExtractInto(&s)
     return &s, err
-}
-
-// CreateResult represents the result of a create operation. Call its Extract
-// method to interpret it as a LoadBalancer.
-type CreateResult struct {
-	commonResult
-}
-
-// GetResult represents the result of a get operation. Call its Extract
-// method to interpret it as a LoadBalancer.
-type GetResult struct {
-	commonResult
-}
-
-// UpdateResult represents the result of an update operation. Call its Extract
-// method to interpret it as a LoadBalancer.
-type UpdateResult struct {
-	commonResult
-}
-
-// DeleteResult represents the result of a delete operation. Call its
-// ExtractErr method to determine if the request succeeded or failed.
-type DeleteResult struct {
-	gophercloud.ErrResult
-}
-
-// FailoverResult represents the result of a failover operation. Call its
-// ExtractErr method to determine if the request succeeded or failed.
-type FailoverResult struct {
-	gophercloud.ErrResult
-}
-
-type AddServerResult struct {
-	commonResult
-}
-
-type RemoveServerResult struct {
-	commonResult
-}
-
-type CreateTagResult struct {
-	commonResult
 }

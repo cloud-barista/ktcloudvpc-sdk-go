@@ -18,31 +18,11 @@ type ListOptsBuilder interface {
 // sort by a particular attribute. SortDir sets the direction, and is
 // either `asc' or `desc'. Marker and Limit are used for pagination.
 type ListOpts struct {
-	Description        string   `q:"description"`
-	AdminStateUp       *bool    `q:"admin_state_up"`
-	ProjectID          string   `q:"project_id"`
-	ProvisioningStatus string   `q:"provisioning_status"`
-	VipAddress         string   `q:"vip_address"`
-	VipPortID          string   `q:"vip_port_id"`
-	VipSubnetID        string   `q:"vip_subnet_id"`
-	VipNetworkID       string   `q:"vip_network_id"`
-	
-	OperatingStatus    string   `q:"operating_status"`
-	Name               string   `q:"name"`
-	FlavorID           string   `q:"flavor_id"`
-	AvailabilityZone   string   `q:"availability_zone"`
-	Provider           string   `q:"provider"`
-	Limit              int      `q:"limit"`
-	Marker             string   `q:"marker"`
-	SortKey            string   `q:"sort_key"`
-	SortDir            string   `q:"sort_dir"`
-	Tags               []string `q:"tags"`
-	TagsAny            []string `q:"tags-any"`
-	TagsNot            []string `q:"not-tags"`
-	TagsNotAny         []string `q:"not-tags-any"`
-
+	Name               	string   `q:"name"`
 	ZoneID				string   `q:"zoneid"`
+	VipAddress         	string   `q:"serviceip"` 	// VipAddress
 	NlbID               string   `q:"loadbalancerid"`	
+	MemID          		string   `q:"memid"`		// User account ID
 }
 
 // ToLoadBalancerListQuery formats a ListOpts into a query string.
@@ -85,7 +65,7 @@ type CreateOptsBuilder interface {
 
 // CreateOpts is the common options struct used in this package's Create operation.
 type CreateOpts struct {											// Modified
-	Name            	string	`q:"name"`				// Required
+	Name            	string	`q:"name"`				// Required (API manual is incorrect.)
 	NetworkID        	string 	`q:"networkid"` 		// Tier Network ID. Required in case of 'Enterprise Security'
 														// 'ServiceIP' : $$$ In case of an empty value(""), it is newly created.
 	ServiceIP        	string 	`q:"serviceip"`			// Required. KT Cloud Virtual IP. 

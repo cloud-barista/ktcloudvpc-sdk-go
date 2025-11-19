@@ -6,13 +6,16 @@ import (
 )
 
 type StaticNAT struct {
-	PrivateIpAddr 	string `json:"vmguestip"`   // Private IP address (allocated to the server(VM))
-	PublicIpAddr  	string `json:"ipaddress"`	// Public IP to set up Static NAT
-	VPCID        	string `json:"vpcid"`
-	PublicIpID 		string `json:"ipaddressid"`	// Public IP ID to set up Static NAT
-	Name         	string `json:"name"`
-	SubnetID 		string `json:"networkid"`	// Tier ID
-	ID           	string `json:"id"`
+	PublicIpID   string  `json:"publicIpId"`	// Public IP ID to set up Static NAT
+	MappedIP     string  `json:"mappedIp"`
+	SrcAddress   *string `json:"srcAddress"` 	// nullable field
+	StaticNatID  string  `json:"staticNatId"`
+	VpcID        string  `json:"vpcId"`
+	CreateDate   string  `json:"createDate"`
+	Name         string  `json:"name"`
+	VlanName     string  `json:"vlanName"`
+	PublicIP     string  `json:"publicIp"`		// Public IP to set up Static NAT
+	NatSourceVip string  `json:"natSourceVip"`
 }
 
 type commonResult struct {
@@ -57,13 +60,20 @@ func (r commonResult) ExtractInto(v interface{}) error {
 	return r.Result.ExtractIntoStructPtr(v, "nc_enablestaticnatresponse")
 }
 
-type CreateStaticNatResponse struct {											// Added
-	DisplayText string 	`json:"displaytext"`
-	Success 	bool 	`json:"success"`
-	ID 			string 	`json:"id"`
+type Pagination struct {															// Added
+	Size   int `json:"size"`
+	Total  int `json:"total"`
+	Offset int `json:"offset"`
 }
 
-func (r commonResult) ExtractInfo() (*CreateStaticNatResponse, error) {   	// Added
+type CreateStaticNatResponse struct {												// Added
+	HTTPStatus int          `json:"httpStatus"`
+	Meta       interface{}  `json:"meta"` 		// nullable, use interface{} since it is unknown structure
+	Pagination Pagination   `json:"pagination"`
+	Data       []StaticNAT  `json:"data"`
+}
+
+func (r commonResult) ExtractInfo() (*CreateStaticNatResponse, error) {   			// Added
 	var s CreateStaticNatResponse
 	err := r.ExtractInto(&s)
 	return &s, err
@@ -120,4 +130,11 @@ func ExtractStaticNats(r pagination.Page) ([]StaticNAT, error) {		// Added
 	}
 	err := (r.(StaticNatPage)).ExtractInto(&s)
 	return s.SNAT.StaticNATs, err
+}
+
+// ExtractCreate extracts a CreateStaticNatResponse from a CreateResult.
+func (r CreateResult) ExtractCreate() (*CreateStaticNatResponse, error) { // Modified
+    var s CreateStaticNatResponse
+    err := r.ExtractInto(&s)
+    return &s, err
 }
