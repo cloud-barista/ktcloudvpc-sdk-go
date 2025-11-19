@@ -81,7 +81,6 @@ type FirewallRule struct {
 	CreateDate string `json:"createDate"`
 }
 
-
 type commonResult struct {
 	gophercloud.Result
 }
@@ -115,11 +114,9 @@ func (r commonResult) Extract() (*FirewallRule, error) {
 	return &s, err
 }
 
-
 // func (r commonResult) ExtractInto(v interface{}) error {
 // 	return r.Result.ExtractIntoStructPtr(v, "job_id")
 // }
-
 
 // RuleResponse represents the full response structure for P/F list.
 type RuleResponse struct {                    // Modified
