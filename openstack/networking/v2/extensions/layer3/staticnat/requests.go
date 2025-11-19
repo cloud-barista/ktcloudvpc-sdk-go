@@ -47,9 +47,9 @@ func Get(client *gophercloud.ServiceClient, floatingIpId string, pfId string) (r
 
 // CreateOpts contains all the values needed to create a new Static NAT resource. All attributes are required.
 type CreateOpts struct {																		// Added
-	PrivateIpAddr 	  	string `json:"vmguestip"`       // Private IP address (allocated to the server(VM))
-	SubnetID 		  	string `json:"vmnetworkid"`		// ID of the Tier the VM belongs to
-	PublicIpID 		  	string `json:"entpublicipid"`	// Public IP ID to set up Static NAT
+	PublicIpID 		  	string `json:"publicIpId"`		// [Required] Public IP ID to set up Static NAT
+	PrivateIpAddr 	  	string `json:"mappedIp"`        // [Required] Private IP address (allocated to the server(VM))
+	SourceAddress 		string `json:"sourceAddress"`	// [Optional] source address
 }
 
 // CreateOptsBuilder allows extensions to add additional parameters to the

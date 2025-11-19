@@ -4,7 +4,7 @@ import (
 	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
-const resourcePath = "StaticNat"									// Added
+const resourcePath = "staticNat"									// Added
 
 func staticNatUrl(c *gophercloud.ServiceClient) string {			// Added
 	return c.ServiceURL(resourcePath)
