@@ -1,7 +1,6 @@
 package loadbalancers
 
 import (
-	"fmt"
 	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
@@ -50,7 +49,6 @@ func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
 	}
 	
 	url = url + "&response=json"
-	fmt.Printf("\n### Call URL : %s\n", url)
 
 	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
 		return LoadBalancerPage{pagination.LinkedPageBase{PageResult: r}}
@@ -106,19 +104,39 @@ func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResul
 		}
 		url += query
 	}
-	
+
 	url = url + "&response=json"
-	fmt.Printf("\n### Call URL : %s\n", url)
 
 	resp, err := c.Get(url, &r.Body, nil) // Caution!!
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
-// ToLoadBalancerCreateMap builds a request body from CreateOpts.
-func (opts CreateOpts) ToLoadBalancerCreateMap() (map[string]interface{}, error) {
-	return gophercloud.BuildRequestBody(opts, "loadbalancer")
+/*
+type CreateOptsBuilder interface {
+	ToLoadBalancerCreateMap() (map[string]interface{}, error)
 }
+
+// ToStaticNatCreateMap allows CreateOpts to satisfy the CreateOptsBuilder
+// interface
+func (opts CreateOpts) ToLoadBalancerCreateMap() (map[string]interface{}, error) {			// Added
+	return gophercloud.BuildRequestBody(opts, "")	
+}
+
+// Create accepts a CreateOpts struct and uses the values provided to create a new LoadBalancer.
+func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {		// Added
+	b, err := opts.ToLoadBalancerCreateMap()
+	if err != nil {
+		r.Err = err
+		return
+	}
+	resp, err := c.Post(createNlbURL(c), b, &r.Body, &gophercloud.RequestOpts{
+		OkCodes: []int{200, 201},
+	})
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	return
+}
+*/
 
 // DeleteOptsBuilder allows extensions to add additional parameters to the
 // Delete request.
@@ -152,7 +170,6 @@ func Delete(c *gophercloud.ServiceClient, opts DeleteOptsBuilder) (r DeleteResul
 	}
 	
 	url = url + "&response=json"
-	fmt.Printf("\n### Call URL : %s\n", url)
 
 	resp, err := c.Get(url, &r.Body, nil) // Caution!!) Not c.Delete(url, nil)
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
@@ -206,7 +223,6 @@ func AddServer(c *gophercloud.ServiceClient, opts AddServerOptsBuilder) (r AddSe
 	}
 	
 	url = url + "&response=json"
-	fmt.Printf("\n### Call URL : %s\n", url)
 
 	resp, err := c.Get(url, &r.Body, nil) // Caution!!
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
@@ -239,7 +255,6 @@ func RemoveServer(c *gophercloud.ServiceClient, opts RemoveServerOptsBuilder) (r
 	}
 	
 	url = url + "&response=json"
-	fmt.Printf("\n### Call URL : %s\n", url)
 
 	resp, err := c.Get(url, &r.Body, nil) // Caution!!
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
@@ -278,7 +293,6 @@ func ListLbServer(c *gophercloud.ServiceClient, opts ListLbServerOptsBuilder) pa
 	}
 	
 	url = url + "&response=json"
-	fmt.Printf("\n### Call URL : %s\n", url)
 
 	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
 		return LoadBalancerPage{pagination.LinkedPageBase{PageResult: r}}
@@ -307,7 +321,6 @@ func CreateTag(c *gophercloud.ServiceClient, opts CreateTagOptsBuilder) (r Creat
 	}
 	
 	url = url + "&response=json"
-	fmt.Printf("\n### Call URL : %s\n", url)
 
 	resp, err := c.Get(url, &r.Body, nil) // Caution!!
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
