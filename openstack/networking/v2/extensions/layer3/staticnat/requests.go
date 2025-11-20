@@ -12,7 +12,9 @@ type ListOptsBuilder interface {
 // ListOpts allows the filtering and sorting of paginated collections through
 // the API. Filtering is achieved by passing in struct field values that map to
 // the Static NAT attributes you want to see returned.
-type ListOpts struct {
+type ListOpts struct {                  // Modified
+    Page            int    `q:"page"`               // [default: 1] page number
+    Size            int    `q:"size"`               // [default: 20] page size
 }
 
 // ToStaticNatListQuery formats a ListOpts into a query string.
@@ -24,8 +26,8 @@ func (opts ListOpts) ToStaticNatListQuery() (string, error) {
 // List returns a Pager which allows you to iterate over a collection of
 // Static NAT resources. It accepts a ListOpts struct, which allows you to
 // filter and sort the returned collection for greater efficiency.
-func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {  			// Modified
-	url := staticNatUrl(client)
+func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {  			// Modified
+	url := staticNatURL(c)
 	if opts != nil {
 		query, err := opts.ToStaticNatListQuery()
 		if err != nil {
@@ -33,16 +35,18 @@ func List(client *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pa
 		}
 		url += query
 	}
-	return pagination.NewPager(client, url, func(r pagination.PageResult) pagination.Page {
+
+	url = url + "&response=json"
+
+	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
 		return StaticNatPage{pagination.LinkedPageBase{PageResult: r}}
 	})
 }
 
-// Get retrieves a particular Static NAT resource based on its unique ID.
-func Get(client *gophercloud.ServiceClient, floatingIpId string, pfId string) (r GetResult) {	// Modified
-	resp, err := client.Get(singleStaticNatUrl(client, pfId), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
+// CreateOptsBuilder allows extensions to add additional parameters to the
+// Create request.
+type CreateOptsBuilder interface {
+	ToStaticNatCreateMap() (map[string]interface{}, error)
 }
 
 // CreateOpts contains all the values needed to create a new Static NAT resource. All attributes are required.
@@ -52,12 +56,6 @@ type CreateOpts struct {																		// Added
 	SourceAddress 		string `json:"sourceAddress"`	// [Optional] source address
 }
 
-// CreateOptsBuilder allows extensions to add additional parameters to the
-// Create request.
-type CreateOptsBuilder interface {
-	ToStaticNatCreateMap() (map[string]interface{}, error)
-}
-
 // ToStaticNatCreateMap allows CreateOpts to satisfy the CreateOptsBuilder
 // interface
 func (opts CreateOpts) ToStaticNatCreateMap() (map[string]interface{}, error) {			// Added
@@ -65,23 +63,23 @@ func (opts CreateOpts) ToStaticNatCreateMap() (map[string]interface{}, error) {	
 }
 
 // Create accepts a CreateOpts struct and uses the values provided to create a new Static NAT for an existing floating IP.
-func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {		// Added
+func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {		// Added
 	b, err := opts.ToStaticNatCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := client.Post(staticNatUrl(client), b, &r.Body, &gophercloud.RequestOpts{
-		OkCodes: []int{200},
+	resp, err := c.Post(staticNatURL(c), b, &r.Body, &gophercloud.RequestOpts{
+		OkCodes: []int{200, 201},
 	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
 // Delete will permanently delete a particular Static NAT for a given floating ID.
-func Delete(client *gophercloud.ServiceClient, pfId string) (r DeleteResult) {					// Added
-	resp, err := client.Delete(singleStaticNatUrl(client, pfId), &gophercloud.RequestOpts{
-		OkCodes: []int{200},
+func Delete(c *gophercloud.ServiceClient, pfId string) (r DeleteResult) {					// Added
+	resp, err := c.Delete(singleStaticNatURL(c, pfId), &gophercloud.RequestOpts{
+		OkCodes: []int{200, 201, 202, 204},
 	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return

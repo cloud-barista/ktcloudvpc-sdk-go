@@ -56,8 +56,21 @@ func (r commonResult) Extract() (*StaticNAT, error) {
 	return &s, err
 }
 
-func (r commonResult) ExtractInto(v interface{}) error {
-	return r.Result.ExtractIntoStructPtr(v, "nc_enablestaticnatresponse")
+
+
+
+// func (r commonResult) ExtractInto(v interface{}) error {
+// 	return r.Result.ExtractIntoStructPtr(v, "nc_enablestaticnatresponse")
+// }
+
+
+
+
+type StaticNatResponse struct {														// Added
+	HTTPStatus int          `json:"httpStatus"`
+	Meta       interface{}  `json:"meta"` 		// nullable, use interface{} since it is unknown structure
+	Pagination Pagination   `json:"pagination"`
+	Data       []StaticNAT  `json:"data"`
 }
 
 type Pagination struct {															// Added
@@ -67,10 +80,10 @@ type Pagination struct {															// Added
 }
 
 type CreateStaticNatResponse struct {												// Added
-	HTTPStatus int          `json:"httpStatus"`
-	Meta       interface{}  `json:"meta"` 		// nullable, use interface{} since it is unknown structure
-	Pagination Pagination   `json:"pagination"`
-	Data       []StaticNAT  `json:"data"`
+	HTTPStatus int `json:"httpStatus"`
+	Data       struct {
+        StaticNatID string `json:"staticNatId"`
+    } `json:"data"`
 }
 
 func (r commonResult) ExtractInfo() (*CreateStaticNatResponse, error) {   			// Added
@@ -117,19 +130,11 @@ func (r StaticNatPage) IsEmpty() (bool, error) {
 	return len(is) == 0, err
 }
 
-type SNATs struct {											  // Added
-	StaticNATs []StaticNAT `json:"staticnats"`
-}
-
-// ExtractPortForwardings accepts a Page struct, specifically a PortForwardingPage
-// struct, and extracts the elements into a slice of PortForwarding structs. In
-// other words, a generic collection is mapped into a relevant slice.
-func ExtractStaticNats(r pagination.Page) ([]StaticNAT, error) {		// Added
-	var s struct {
-		SNAT SNATs `json:"nc_liststaticnatsresponse"`
-	}
-	err := (r.(StaticNatPage)).ExtractInto(&s)
-	return s.SNAT.StaticNATs, err
+// ExtractRules extracts 'slice of StaticNAT' from a StaticNATPage.
+func ExtractStaticNats(r pagination.Page) ([]StaticNAT, error) {
+    var s StaticNatResponse
+    err := r.(StaticNatPage).ExtractInto(&s)
+    return s.Data, err
 }
 
 // ExtractCreate extracts a CreateStaticNatResponse from a CreateResult.
