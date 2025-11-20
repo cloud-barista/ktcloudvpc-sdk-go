@@ -57,7 +57,6 @@ func (opts ListOpts) ToPortForwardingListQuery() (string, error) {
 // Port Forwarding resources. It accepts a ListOpts struct, which allows you to
 // filter and sort the returned collection for greater efficiency.
 func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
-
 	url := listURL(c)
 	if opts != nil {
 		query, err := opts.ToPortForwardingListQuery()
@@ -110,7 +109,6 @@ func (opts CreateOpts) ToPortForwardingCreateMap() (map[string]interface{}, erro
 
 // Create accepts a CreateOpts struct and uses the values provided to create a new port forwarding for an existing floating IP.
 func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {		
-
 	b, err := opts.ToPortForwardingCreateMap()
 	if err != nil {
 		r.Err = err

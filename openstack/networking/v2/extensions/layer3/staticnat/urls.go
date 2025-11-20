@@ -6,10 +6,10 @@ import (
 
 const resourcePath = "staticNat"									// Added
 
-func staticNatUrl(c *gophercloud.ServiceClient) string {			// Added
+func staticNatURL(c *gophercloud.ServiceClient) string {			// Added
 	return c.ServiceURL(resourcePath)
 }
 
-func singleStaticNatUrl(c *gophercloud.ServiceClient, staticNatID string) string {	// Added
+func singleStaticNatURL(c *gophercloud.ServiceClient, staticNatID string) string {	// Added
 	return c.ServiceURL(resourcePath, staticNatID)
 }
