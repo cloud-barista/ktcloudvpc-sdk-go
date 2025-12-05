@@ -179,6 +179,24 @@ func (r LoadBalancerPage) IsEmpty() (bool, error) {
 	return len(is) == 0, err
 }
 
+// ServerPage is the page returned by a pager when traversing over a collection of Servers.
+type ServerPage struct {
+    pagination.LinkedPageBase
+}
+
+// IsEmpty checks whether a ServerPage struct is empty.
+func (r ServerPage) IsEmpty() (bool, error) {
+    servers, err := ExtractLbServers(r)
+    return len(servers) == 0, err
+}
+
+// NextPageURL returns the next page URL for traversing over Sever pages.
+func (r ServerPage) NextPageURL() (string, error) {
+    // Pagination URL generation logic
+    // Currently, the API does not provide pagination links, so manual implementation is required.
+    return "", nil
+}
+
 // ExtractLoadBalancers accepts a Page struct, specifically a LoadbalancerPage
 // struct, and extracts the elements into a slice of LoadBalancer structs. In
 // other words, a generic collection is mapped into a relevant slice.
@@ -196,11 +214,10 @@ func ExtractLoadBalancers(r pagination.Page) ([]LoadBalancer, error) { 		// Modi
 func ExtractLbServers(r pagination.Page) ([]LbServer, error) { 		// Modified
 	var s struct {
 			ListLbServersResponse struct {
-			Count        	int `json:"count"`
 			LbVMs 			[]LbServer `json:"loadbalancerwebserver"`
-		} `json:"listLoadBalancerWebServersresponse"`
+		} `json:"listloadbalancerwebserversresponse"` // API manual is incorrect
 	}
-	err := (r.(LoadBalancerPage)).ExtractInto(&s)
+	err := (r.(ServerPage)).ExtractInto(&s)
 	return s.ListLbServersResponse.LbVMs, err
 }
 

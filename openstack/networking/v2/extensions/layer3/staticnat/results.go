@@ -56,15 +56,9 @@ func (r commonResult) Extract() (*StaticNAT, error) {
 	return &s, err
 }
 
-
-
-
 // func (r commonResult) ExtractInto(v interface{}) error {
 // 	return r.Result.ExtractIntoStructPtr(v, "nc_enablestaticnatresponse")
 // }
-
-
-
 
 type StaticNatResponse struct {														// Added
 	HTTPStatus int          `json:"httpStatus"`

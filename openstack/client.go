@@ -37,10 +37,10 @@ const (
 
 	// Added.
 	computeEndpoint  = "https://api.ucloudbiz.olleh.com/d1/server/"   // Caution : Need to Add '/' at the end of the endpoint
-	imageEndpoint 	 = "https://api.ucloudbiz.olleh.com/d1/image/"  // Caution : Need to Add '/' at the end of the endpoint
 	networkEndpoint  = "https://api.ucloudbiz.olleh.com/d1/nsm/v1/"  // Caution : Need to Add '/' at the end of the endpoint
 	volumeV2Endpoint = "https://api.ucloudbiz.olleh.com/d1/volume/"  // Caution : Need to Add '/' at the end of the endpoint
-	lbV2Endpoint 	 = "https://api.ucloudbiz.olleh.com/d1/loadbalancer/client/api"  // Caution : Not need to Add '/' at the end of the endpoint
+	imageEndpoint 	 = "https://api.ucloudbiz.olleh.com/d1/image/"  // Caution : Need to Add '/' at the end of the endpoint
+	lbV1Endpoint 	 = "https://api.ucloudbiz.olleh.com/d1/loadbalancer/api"  // Caution : Not need to Add '/' at the end of the endpoint
 	// ### KT Cloud LB Info API URL ex) : https://api.ucloudbiz.olleh.com/d1/loadbalancer/api?command=listLoadBalancers&...
 )
 
@@ -423,7 +423,7 @@ func initClientOpts(client *gophercloud.ProviderClient, eo gophercloud.EndpointO
     case "volumev2":
 		sc.Endpoint = volumeV2Endpoint + projectID + "/"
 	case "load-balancer-v1":
-		sc.Endpoint = lbV2Endpoint
+		sc.Endpoint = lbV1Endpoint
     }
 	// ### KT Cloud Volume Info API URL : https://api.ucloudbiz.olleh.com/d1/volume/{project_id}/volumes/{volume_id}
 	// ### KT Cloud LB Info API URL ex) : https://api.ucloudbiz.olleh.com/d1/loadbalancer/api?command=listLoadBalancers&...

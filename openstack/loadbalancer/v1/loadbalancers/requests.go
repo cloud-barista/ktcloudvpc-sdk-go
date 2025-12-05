@@ -266,16 +266,16 @@ func (opts RemoveServerOpts) ToLoadBalancerRemoveServerQuery() (string, error) {
 	return q, err
 }
 
+type ListLbServerOptsBuilder interface {
+	ToLbServerListQuery() (string, error)
+}
+
 // List Load Balancer
 type ListLbServerOpts struct {
 	NlbID               string   `q:"loadbalancerid"`	
 }
 
-type ListLbServerOptsBuilder interface {
-	ToLbServerListQuery() (string, error)
-}
-
-func (opts ListOpts) ToLbServerListQuery() (string, error) { 	// Modified
+func (opts ListOpts) ToLbServerListQuery() (string, error) { 		// Modified
 	q, err := gophercloud.BuildGetMethodQueryString(opts)    		// # BuildGetMethodQueryString() method Created
 	// q, err := gophercloud.BuildQueryString(opts)	
 	// return q.String(), err
@@ -295,7 +295,7 @@ func ListLbServer(c *gophercloud.ServiceClient, opts ListLbServerOptsBuilder) pa
 	url = url + "&response=json"
 
 	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
-		return LoadBalancerPage{pagination.LinkedPageBase{PageResult: r}}
+		return ServerPage{pagination.LinkedPageBase{PageResult: r}}
 	})
 }
 
