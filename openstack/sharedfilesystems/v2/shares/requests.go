@@ -13,39 +13,23 @@ type CreateOptsBuilder interface {
 
 // CreateOpts contains the options for create a Share. This object is
 // passed to shares.Create(). For more information about these parameters,
-// please refer to the Share object, or the shared file systems API v2
-// documentation
+// please refer to the KT Cloud NAS API documentation:
+// https://cloud.kt.com/docs/open-api-guide/d/storage/nas
 type CreateOpts struct {
-	// Defines the share protocol to use
+	// Defines the share protocol to use: "NFS" or "CIFS"
 	ShareProto string `json:"share_proto" required:"true"`
-	// Size in GB
-	Size int `json:"size" required:"true"`
+	// The UUID of the share network to which the NAS volume belongs (Network ref id)
+	ShareNetworkID string `json:"share_network_id,omitempty"`
 	// Defines the share name
 	Name string `json:"name,omitempty"`
-	// Share description
-	Description string `json:"description,omitempty"`
-	// DisplayName is equivalent to Name. The API supports using both
-	// This is an inherited attribute from the block storage API
-	DisplayName string `json:"display_name,omitempty"`
-	// DisplayDescription is equivalent to Description. The API supports using both
-	// This is an inherited attribute from the block storage API
-	DisplayDescription string `json:"display_description,omitempty"`
-	// ShareType defines the sharetype. If omitted, a default share type is used
-	ShareType string `json:"share_type,omitempty"`
-	// VolumeType is deprecated but supported. Either ShareType or VolumeType can be used
-	VolumeType string `json:"volume_type,omitempty"`
-	// The UUID from which to create a share
-	SnapshotID string `json:"snapshot_id,omitempty"`
-	// Determines whether or not the share is public
+	// Determines whether or not the share is public. Default: false
 	IsPublic *bool `json:"is_public,omitempty"`
-	// Key value pairs of user defined metadata
-	Metadata map[string]string `json:"metadata,omitempty"`
-	// The UUID of the share network to which the share belongs to
-	ShareNetworkID string `json:"share_network_id,omitempty"`
-	// The UUID of the consistency group to which the share belongs to
-	ConsistencyGroupID string `json:"consistency_group_id,omitempty"`
-	// The availability zone of the share
+	// Size in GB (default: 1000, max: 10000)
+	Size int `json:"size" required:"true"`
+	// The availability zone of the share. Currently only "DX-M1" is supported
 	AvailabilityZone string `json:"availability_zone,omitempty"`
+	// NAS volume type. Currently only "HDD" is supported
+	ShareType string `json:"share_type,omitempty"`
 }
 
 // ToShareCreateMap assembles a request body based on the contents of a
@@ -73,64 +57,6 @@ func Create(client *gophercloud.ServiceClient, opts CreateOptsBuilder) (r Create
 // ListOpts holds options for listing Shares. It is passed to the
 // shares.List function.
 type ListOpts struct {
-	// (Admin only). Defines whether to list the requested resources for all projects.
-	AllTenants bool `q:"all_tenants"`
-	// The share name.
-	Name string `q:"name"`
-	// Filters by a share status.
-	Status string `q:"status"`
-	// The UUID of the share server.
-	ShareServerID string `q:"share_server_id"`
-	// One or more metadata key and value pairs as a dictionary of strings.
-	Metadata map[string]string `q:"metadata"`
-	// The extra specifications for the share type.
-	ExtraSpecs map[string]string `q:"extra_specs"`
-	// The UUID of the share type.
-	ShareTypeID string `q:"share_type_id"`
-	// The maximum number of shares to return.
-	Limit int `q:"limit"`
-	// The offset to define start point of share or share group listing.
-	Offset int `q:"offset"`
-	// The key to sort a list of shares.
-	SortKey string `q:"sort_key"`
-	// The direction to sort a list of shares.
-	SortDir string `q:"sort_dir"`
-	// The UUID of the share’s base snapshot to filter the request based on.
-	SnapshotID string `q:"snapshot_id"`
-	// The share host name.
-	Host string `q:"host"`
-	// The share network ID.
-	ShareNetworkID string `q:"share_network_id"`
-	// The UUID of the project in which the share was created. Useful with all_tenants parameter.
-	ProjectID string `q:"project_id"`
-	// The level of visibility for the share.
-	IsPublic *bool `q:"is_public"`
-	// The UUID of a share group to filter resource.
-	ShareGroupID string `q:"share_group_id"`
-	// The export location UUID that can be used to filter shares or share instances.
-	ExportLocationID string `q:"export_location_id"`
-	// The export location path that can be used to filter shares or share instances.
-	ExportLocationPath string `q:"export_location_path"`
-	// The name pattern that can be used to filter shares, share snapshots, share networks or share groups.
-	NamePattern string `q:"name~"`
-	// The description pattern that can be used to filter shares, share snapshots, share networks or share groups.
-	DescriptionPattern string `q:"description~"`
-	// Whether to show count in API response or not, default is False.
-	WithCount bool `q:"with_count"`
-	// DisplayName is equivalent to Name. The API supports using both
-	// This is an inherited attribute from the block storage API
-	DisplayName string `q:"display_name"`
-	// Equivalent to NamePattern.
-	DisplayNamePattern string `q:"display_name~"`
-	// VolumeTypeID is deprecated but supported. Either ShareTypeID or VolumeTypeID can be used
-	VolumeTypeID string `q:"volume_type_id"`
-	// The UUID of the share group snapshot.
-	ShareGroupSnapshotID string `q:"share_group_snapshot_id"`
-	// DisplayDescription is equivalent to Description. The API supports using both
-	// This is an inherited attribute from the block storage API
-	DisplayDescription string `q:"display_description"`
-	// Equivalent to DescriptionPattern
-	DisplayDescriptionPattern string `q:"display_description~"`
 }
 
 // ListOptsBuilder allows extensions to add additional parameters to the List

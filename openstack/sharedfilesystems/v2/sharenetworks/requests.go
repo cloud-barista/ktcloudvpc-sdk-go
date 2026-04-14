@@ -15,16 +15,10 @@ type CreateOptsBuilder interface {
 // passed to the sharenetworks.Create function. For more information about
 // these parameters, see the ShareNetwork object.
 type CreateOpts struct {
-	// The UUID of the Neutron network to set up for share servers
+	// The UUID of the Tier (ref ID of the Tier)
 	NeutronNetID string `json:"neutron_net_id,omitempty"`
-	// The UUID of the Neutron subnet to set up for share servers
-	NeutronSubnetID string `json:"neutron_subnet_id,omitempty"`
-	// The UUID of the nova network to set up for share servers
-	NovaNetID string `json:"nova_net_id,omitempty"`
-	// The share network name
+	// The Name of the shared network
 	Name string `json:"name"`
-	// The share network description
-	Description string `json:"description"`
 }
 
 // ToShareNetworkCreateMap assembles a request body based on the contents of a
@@ -65,34 +59,6 @@ type ListOptsBuilder interface {
 // ListOpts holds options for listing ShareNetworks. It is passed to the
 // sharenetworks.List function.
 type ListOpts struct {
-	// admin-only option. Set it to true to see all tenant share networks.
-	AllTenants bool `q:"all_tenants"`
-	// The UUID of the project where the share network was created
-	ProjectID string `q:"project_id"`
-	// The neutron network ID
-	NeutronNetID string `q:"neutron_net_id"`
-	// The neutron subnet ID
-	NeutronSubnetID string `q:"neutron_subnet_id"`
-	// The nova network ID
-	NovaNetID string `q:"nova_net_id"`
-	// The network type. A valid value is VLAN, VXLAN, GRE or flat
-	NetworkType string `q:"network_type"`
-	// The Share Network name
-	Name string `q:"name"`
-	// The Share Network description
-	Description string `q:"description"`
-	// The Share Network IP version
-	IPVersion gophercloud.IPVersion `q:"ip_version"`
-	// The Share Network segmentation ID
-	SegmentationID int `q:"segmentation_id"`
-	// List all share networks created after the given date
-	CreatedSince string `q:"created_since"`
-	// List all share networks created before the given date
-	CreatedBefore string `q:"created_before"`
-	// Limit specifies the page size.
-	Limit int `q:"limit"`
-	// Limit specifies the page number.
-	Offset int `q:"offset"`
 }
 
 // ToShareNetworkListQuery formats a ListOpts into a query string.

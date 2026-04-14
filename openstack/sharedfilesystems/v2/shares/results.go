@@ -16,65 +16,42 @@ const (
 
 // Share contains all information associated with an OpenStack Share
 type Share struct {
-	// The availability zone of the share
-	AvailabilityZone string `json:"availability_zone"`
-	// A description of the share
-	Description string `json:"description,omitempty"`
-	// DisplayDescription is inherited from BlockStorage API.
-	// Both Description and DisplayDescription can be used
-	DisplayDescription string `json:"display_description,omitempty"`
-	// DisplayName is inherited from BlockStorage API
-	// Both DisplayName and Name can be used
-	DisplayName string `json:"display_name,omitempty"`
-	// Indicates whether a share has replicas or not.
-	HasReplicas bool `json:"has_replicas"`
-	// The host name of the share
-	Host string `json:"host"`
 	// The UUID of the share
 	ID string `json:"id"`
-	// Indicates the visibility of the share
-	IsPublic bool `json:"is_public,omitempty"`
-	// Share links for pagination
-	Links []map[string]string `json:"links"`
-	// Key, value -pairs of custom metadata
-	Metadata map[string]string `json:"metadata,omitempty"`
+	// Size of the share in GB
+	Size int `json:"size"`
+	// The availability zone of the share
+	AvailabilityZone string `json:"availability_zone"`
+	// Timestamp when the share was created
+	CreatedAt time.Time `json:"-"`
+	// The share status
+	Status string `json:"status"`
 	// The name of the share
 	Name string `json:"name,omitempty"`
+	// A description of the share
+	Description string `json:"description,omitempty"`
 	// The UUID of the project to which this share belongs to
 	ProjectID string `json:"project_id"`
-	// The share replication type
-	ReplicationType string `json:"replication_type,omitempty"`
+	// UUID of the snapshot from which to create the share
+	SnapshotID string `json:"snapshot_id"`
 	// The UUID of the share network
 	ShareNetworkID string `json:"share_network_id"`
 	// The shared file system protocol
 	ShareProto string `json:"share_proto"`
-	// The UUID of the share server
-	ShareServerID string `json:"share_server_id"`
+	// The NAS volume access path.
+	ExportLocation string `json:"export_location,omitempty"`
+	// Key, value -pairs of custom metadata
+	Metadata map[string]string `json:"metadata,omitempty"`
 	// The UUID of the share type.
 	ShareType string `json:"share_type"`
-	// The name of the share type.
-	ShareTypeName string `json:"share_type_name"`
-	// Size of the share in GB
-	Size int `json:"size"`
-	// UUID of the snapshot from which to create the share
-	SnapshotID string `json:"snapshot_id"`
-	// The share status
-	Status string `json:"status"`
-	// The task state, used for share migration
-	TaskState string `json:"task_state"`
 	// The type of the volume
 	VolumeType string `json:"volume_type,omitempty"`
-	// The UUID of the consistency group this share belongs to
-	ConsistencyGroupID string `json:"consistency_group_id"`
-	// Used for filtering backends which either support or do not support share snapshots
-	SnapshotSupport          bool   `json:"snapshot_support"`
-	SourceCgsnapshotMemberID string `json:"source_cgsnapshot_member_id"`
-	// Used for filtering backends which either support or do not support creating shares from snapshots
-	CreateShareFromSnapshotSupport bool `json:"create_share_from_snapshot_support"`
-	// Timestamp when the share was created
-	CreatedAt time.Time `json:"-"`
-	// Timestamp when the share was updated
-	UpdatedAt time.Time `json:"-"`
+	// Share links for pagination
+	Links []map[string]string `json:"links"`
+	// Indicates the visibility of the share
+	IsPublic bool `json:"is_public,omitempty"`
+	// The NAS volume access path list.
+	ExportLocations []string `json:"export_locations,omitempty"`
 }
 
 func (r *Share) UnmarshalJSON(b []byte) error {
@@ -91,7 +68,6 @@ func (r *Share) UnmarshalJSON(b []byte) error {
 	*r = Share(s.tmp)
 
 	r.CreatedAt = time.Time(s.CreatedAt)
-	r.UpdatedAt = time.Time(s.UpdatedAt)
 
 	return nil
 }

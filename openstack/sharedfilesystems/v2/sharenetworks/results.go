@@ -15,14 +15,18 @@ import (
 type ShareNetwork struct {
 	// The Share Network ID
 	ID string `json:"id"`
+	// The Share Network name
+	Name string `json:"name"`
 	// The UUID of the project where the share network was created
 	ProjectID string `json:"project_id"`
+	// The date and time stamp when the Share Network was created
+	CreatedAt time.Time `json:"-"`
+	// The date and time stamp when the Share Network was updated
+	UpdatedAt time.Time `json:"-"`
 	// The neutron network ID
 	NeutronNetID string `json:"neutron_net_id"`
 	// The neutron subnet ID
 	NeutronSubnetID string `json:"neutron_subnet_id"`
-	// The nova network ID
-	NovaNetID string `json:"nova_net_id"`
 	// The network type. A valid value is VLAN, VXLAN, GRE or flat
 	NetworkType string `json:"network_type"`
 	// The segmentation ID
@@ -30,15 +34,11 @@ type ShareNetwork struct {
 	// The IP block from which to allocate the network, in CIDR notation
 	CIDR string `json:"cidr"`
 	// The IP version of the network. A valid value is 4 or 6
-	IPVersion int `json:"ip_version"`
-	// The Share Network name
-	Name string `json:"name"`
+	IPVersion int `json:"ip_version"`	
 	// The Share Network description
-	Description string `json:"description"`
-	// The date and time stamp when the Share Network was created
-	CreatedAt time.Time `json:"-"`
-	// The date and time stamp when the Share Network was updated
-	UpdatedAt time.Time `json:"-"`
+	Description string `json:"description"`	
+	// The nova network ID
+	NovaNetID string `json:"nova_net_id"`
 }
 
 func (r *ShareNetwork) UnmarshalJSON(b []byte) error {

@@ -8,6 +8,7 @@
 //
 // Updated by ETRI, 2022.07.
 // Updated by ETRI, 2025.10.
+// Updated by ETRI, 2026.04.
 
 package openstack
 
@@ -42,6 +43,8 @@ const (
 	imageEndpoint 	 = "https://api.ucloudbiz.olleh.com/d1/image/"  // Caution : Need to Add '/' at the end of the endpoint
 	lbV1Endpoint 	 = "https://api.ucloudbiz.olleh.com/d1/loadbalancer/api"  // Caution : Not need to Add '/' at the end of the endpoint
 	// ### KT Cloud LB Info API URL ex) : https://api.ucloudbiz.olleh.com/d1/loadbalancer/api?command=listLoadBalancers&...
+
+	nasEndpoint  	= "https://api.ucloudbiz.olleh.com/d1/nas/"  // Caution : Need to Add '/' at the end of the endpoint
 )
 
 /*
@@ -412,8 +415,8 @@ func initClientOpts(client *gophercloud.ProviderClient, eo gophercloud.EndpointO
 
 	sc.ProviderClient = client
 	sc.Type = clientType
-
-	switch eo.Type {   // Added. since Provider Client of KT Cloud does not provide correct endpoint URL.
+	
+	switch eo.Type { // Added. since Provider Client of KT Cloud does not provide correct endpoint URL.
     case "compute":
 		sc.Endpoint = computeEndpoint
     case "image":
@@ -424,9 +427,12 @@ func initClientOpts(client *gophercloud.ProviderClient, eo gophercloud.EndpointO
 		sc.Endpoint = volumeV2Endpoint + projectID + "/"
 	case "load-balancer-v1":
 		sc.Endpoint = lbV1Endpoint
+	case "sharev2": // For NAS
+		sc.Endpoint = nasEndpoint + projectID + "/"
     }
 	// ### KT Cloud Volume Info API URL : https://api.ucloudbiz.olleh.com/d1/volume/{project_id}/volumes/{volume_id}
 	// ### KT Cloud LB Info API URL ex) : https://api.ucloudbiz.olleh.com/d1/loadbalancer/api?command=listLoadBalancers&...
+	// ### KT Cloud NAS Info API URL ex) : https://api.ucloudbiz.olleh.com/d1/nas/{project_id}/shares/{share_id}
 
 	log.Info().Msgf("\n# sc.Type in initClientOpts() : %s", sc.Type)
 	log.Info().Msgf("\n# sc.Endpoint in initClientOpts() : %s", sc.Endpoint)
