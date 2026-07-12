@@ -1,3 +1,6 @@
+// ### KT Cloud D1 platform > 'NLB (Network Load-Balancer)' handler Go SDK
+// Open API Guide : https://cloud.kt.com/docs/open-api-guide/d/network/load-balancer
+
 package loadbalancers
 
 import (
@@ -5,329 +8,220 @@ import (
 	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
-// ListOptsBuilder allows extensions to add additional parameters to the
-// List request.
+// ############################## List ##############################
+
+// ListOptsBuilder allows extensions to add additional parameters to the List request.
 type ListOptsBuilder interface {
 	ToLoadBalancerListQuery() (string, error)
 }
 
-// ListOpts allows the filtering and sorting of paginated collections through
-// the API. Filtering is achieved by passing in struct field values that map to
-// the Loadbalancer attributes you want to see returned. SortKey allows you to
-// sort by a particular attribute. SortDir sets the direction, and is
-// either `asc' or `desc'. Marker and Limit are used for pagination.
+// ListOpts allows filtering of the paginated load balancer collection.
+// GET /loadbalancers?loadbalancerName=&loadbalancerId=&page=&size=
 type ListOpts struct {
-	Name               	string   `q:"name"`
-	ZoneID				string   `q:"zoneid"`
-	VipAddress         	string   `q:"serviceip"` 	// VipAddress
-	NlbID               string   `q:"loadbalancerid"`	
-	MemID          		string   `q:"memid"`		// User account ID
+	Name  string `q:"loadbalancerName"` // [Optional] Load Balancer name
+	NlbID string `q:"loadbalancerId"`   // [Optional] Load Balancer id
+	Page  int    `q:"page"`             // [Optional] [default: 1] page number
+	Size  int    `q:"size"`             // [Optional] [default: 20] page size
 }
 
 // ToLoadBalancerListQuery formats a ListOpts into a query string.
-func (opts ListOpts) ToLoadBalancerListQuery() (string, error) { 	// Modified
-	q, err := gophercloud.BuildGetMethodQueryString(opts)    		// # BuildGetMethodQueryString() method Created
-	// q, err := gophercloud.BuildQueryString(opts)	
-	// return q.String(), err
-	return q, err
+func (opts ListOpts) ToLoadBalancerListQuery() (string, error) {
+	q, err := gophercloud.BuildQueryString(opts)
+	return q.String(), err
 }
 
-// List returns a Pager which allows you to iterate over a collection of
-// load balancers. It accepts a ListOpts struct, which allows you to filter
-// and sort the returned collection for greater efficiency.
+// List returns a Pager which allows iterating over a collection of load balancers.
 //
-// Default policy settings return only those load balancers that are owned by
-// the project who submits the request, unless an admin user submits the request.
-func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager { 	// Modified
-	url := listNlbURL(c)
+//	GET /loadbalancers -> { "pagination": {...}, "data": [ {...} ] }
+func List(c *gophercloud.ServiceClient, opts ListOptsBuilder) pagination.Pager {
+	url := rootURL(c)
 	if opts != nil {
 		query, err := opts.ToLoadBalancerListQuery()
 		if err != nil {
 			return pagination.Pager{Err: err}
 		}
-		url += query		
+		url += query
 	}
-	
-	url = url + "&response=json"
 
 	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
 		return LoadBalancerPage{pagination.LinkedPageBase{PageResult: r}}
 	})
 }
 
+// ############################## Create ##############################
 
 // CreateOptsBuilder allows extensions to add additional parameters to the Create request.
-type CreateOptsBuilder interface {
-	ToLoadBalancerCreateQuery() (string, error)
-}
-
-// CreateOpts is the common options struct used in this package's Create operation.
-type CreateOpts struct {											// Modified
-	Name            	string	`q:"name"`				// Required (API manual is incorrect.)
-	NetworkID        	string 	`q:"networkid"` 		// Tier Network ID. Required in case of 'Enterprise Security'
-														// 'ServiceIP' : $$$ In case of an empty value(""), it is newly created.
-	ServiceIP        	string 	`q:"serviceip"`			// Required. KT Cloud Virtual IP. 
-	ZoneID           	string 	`q:"zoneid"`			// Required. Zone ID that has the 'ServiceIP' (API manual is incorrect.)
-														
-	ServicePort      	string 	`q:"serviceport"`		// Required
-	ServiceType      	string 	`q:"servicetype"`		// Required. NLB ServiceType : https / http / sslbridge / tcp / ftp
-	NlbOption 		 	string 	`q:"loadbalanceroption"`// Required. roundrobin / leastconnection / leastresponse / sourceiphash / srcipsrcporthash
-	HealthCheckType  	string 	`q:"healthchecktype"`	// Required. HealthCheckType : http / https / tcp
-	HealthCheckURL   	string 	`q:"healthcheckurl"`	// Required. URL when the HealthCheckType is 'http' or 'https'.
-	CipherGroupName  	string 	`q:"ciphergroupname"`	// Required when ServiceType is 'https'. Set CipherGroup Name
-	// SSLv3        	 string	`q:"sslv3"`				// Required when ServiceType is 'https'. Use SSLv3? : 'DISABLED' / 'ENABLED'
-	TLSv1        	 	string 	`q:"tlsv1"`				// Required when ServiceType is 'https'. Use TLSv1? : 'DISABLED' / 'ENABLED'
-	TLSv11         	 	string 	`q:"tlsv11"`			// Required when ServiceType is 'https'. Use TLSv11? : 'DISABLED' / 'ENABLED'
-	TLSv12        	 	string 	`q:"tlsv12"`			// Required when ServiceType is 'https'. Use TLSv12? : 'DISABLED' / 'ENABLED'
-	RedirectURL      	string 	`q:"redirecturl"`		// Required when servicetype is 'REDIRECT'
-	IsWebSocket      	bool 	`q:"iswebsocket"`		// Whether supports WebSocket (true | false)
-	IsxForwardProto  	bool 	`q:"isxforwardproto"`	// Whether to add the X-Forwarded-Proto header (true | false)
-	Comment				string 	`q:"comment"`			// Administrative Comment
-}
-// ### To create query string : Not `json:"name"` But `q:"name"`
-
-// ToLoadBalancerListQuery formats a ListOpts into a query string.
-func (opts CreateOpts) ToLoadBalancerCreateQuery() (string, error) { 	// Addeed
-	q, err := gophercloud.BuildGetMethodQueryString(opts)    		// # BuildGetMethodQueryString() method Created
-	// q, err := gophercloud.BuildQueryString(opts)	
-	// return q.String(), err
-	return q, err
-}
-
-func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult)  { 	// Modified
-	url := createNlbURL(c)
-	if opts != nil {
-		query, err := opts.ToLoadBalancerCreateQuery()
-		if err != nil {
-			r.commonResult.Result.Err = err		// Modified
-			return r
-		}
-		url += query
-	}
-
-	url = url + "&response=json"
-
-	resp, err := c.Get(url, &r.Body, nil) // Caution!!
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
-}
-
-/*
 type CreateOptsBuilder interface {
 	ToLoadBalancerCreateMap() (map[string]interface{}, error)
 }
 
-// ToStaticNatCreateMap allows CreateOpts to satisfy the CreateOptsBuilder
-// interface
-func (opts CreateOpts) ToLoadBalancerCreateMap() (map[string]interface{}, error) {			// Added
-	return gophercloud.BuildRequestBody(opts, "")	
+// CreateOpts is the request body for creating a Load Balancer.
+//
+//	POST /loadbalancers
+type CreateOpts struct {
+	Name            string `json:"loadbalancerName"`             // Required. Load Balancer name
+	NetworkID       string `json:"networkId"`                    // Required. Tier network id
+	ServiceIP       string `json:"serviceIp,omitempty"`          // [Optional] KT Cloud Virtual IP. Only when a new IP allocation is needed.
+	ServicePort     int    `json:"servicePort"`                  // Required. Service port
+	ServiceType     string `json:"serviceType"`                  // Required. HTTP | HTTPS | SSLBRIDGE | TCP | FTP | REDIRECT | DSR
+	NlbOption       string `json:"loadbalancerOption,omitempty"` // [Optional] ROUNDROBIN | LEASTCONNECTION | LEASTRESPONSE | SOURCEIPHASH | SRCIPSRCPORTHASH
+	HealthCheckType string `json:"healthCheckType,omitempty"`    // [Optional] HTTP | HTTPS | TCP
+	HealthCheckURL  string `json:"healthCheckUrl,omitempty"`     // [Conditional] Required when healthCheckType is HTTP/HTTPS
+	CipherGroupName string `json:"cipherGroupName,omitempty"`    // [Conditional] Required when serviceType is HTTPS
+	TLSv1           string `json:"tlsv1,omitempty"`              // [Conditional] DISABLED | ENABLED (HTTPS)
+	TLSv11          string `json:"tlsv11,omitempty"`             // [Conditional] DISABLED | ENABLED (HTTPS)
+	TLSv12          string `json:"tlsv12,omitempty"`             // [Conditional] DISABLED | ENABLED (HTTPS)
+	RedirectURL     string `json:"redirectUrl,omitempty"`        // [Conditional] Required when serviceType is REDIRECT
+	IsWebSocket     bool   `json:"isWebSocket,omitempty"`        // [Optional] WebSocket support (true | false)
+	IsxForwardProto bool   `json:"isXForwardProto,omitempty"`    // [Optional] Add X-Forwarded-Proto header (true | false)
+	Comment         string `json:"comment,omitempty"`            // [Optional] Administrative comment
 }
 
-// Create accepts a CreateOpts struct and uses the values provided to create a new LoadBalancer.
-func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {		// Added
+// ToLoadBalancerCreateMap builds the request body from CreateOpts.
+func (opts CreateOpts) ToLoadBalancerCreateMap() (map[string]interface{}, error) {
+	return gophercloud.BuildRequestBody(opts, "")
+}
+
+// Create accepts a CreateOpts and uses the values provided to create a new Load Balancer.
+//
+//	POST /loadbalancers -> { "data": { "loadbalancerId": "<uuid>" } }
+func Create(c *gophercloud.ServiceClient, opts CreateOptsBuilder) (r CreateResult) {
 	b, err := opts.ToLoadBalancerCreateMap()
 	if err != nil {
 		r.Err = err
 		return
 	}
-	resp, err := c.Post(createNlbURL(c), b, &r.Body, &gophercloud.RequestOpts{
+	resp, err := c.Post(rootURL(c), b, &r.Body, &gophercloud.RequestOpts{
 		OkCodes: []int{200, 201},
 	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
-*/
 
-// DeleteOptsBuilder allows extensions to add additional parameters to the
-// Delete request.
-type DeleteOptsBuilder interface {
-	ToLoadBalancerDeleteQuery() (string, error)
-}
+// ############################## Delete ##############################
 
-// DeleteOpts is the common options struct used in this package's Delete
-// operation.
+// DeleteOpts identifies the Load Balancer to delete.
 type DeleteOpts struct {
-	NlbID            string   `q:"loadbalancerid"`	
+	NlbID string // Required. Load Balancer id (URL path)
 }
 
-// ToLoadBalancerDeleteQuery formats a DeleteOpts into a query string.
-func (opts DeleteOpts) ToLoadBalancerDeleteQuery() (string, error) { // Modified
-	q, err := gophercloud.BuildGetMethodQueryString(opts)
-	return q, err
-}
-
-// Delete will permanently delete a particular LoadBalancer based on its
-// unique ID.
-func Delete(c *gophercloud.ServiceClient, opts DeleteOptsBuilder) (r DeleteResult) { // Modified
-	url := deleteNlbURL(c)
-	if opts != nil {
-		query, err := opts.ToLoadBalancerDeleteQuery()
-		if err != nil {		
-			r.ErrResult.Err = err
-			return r
-		}
-		url += query
-	}
-	
-	url = url + "&response=json"
-
-	resp, err := c.Get(url, &r.Body, nil) // Caution!!) Not c.Delete(url, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
-}
-
-// GetStatuses will return the status of a particular LoadBalancer.
-func GetStatuses(c *gophercloud.ServiceClient, id string) (r GetStatusesResult) {
-	resp, err := c.Get(statusRootURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
-}
-
-// GetStats will return the shows the current statistics of a particular LoadBalancer.
-func GetStats(c *gophercloud.ServiceClient, id string) (r StatsResult) {
-	resp, err := c.Get(statisticsRootURL(c, id), &r.Body, nil)
-	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
-	return
-}
-
-// Failover performs a failover of a load balancer.
-func Failover(c *gophercloud.ServiceClient, id string) (r FailoverResult) {
-	resp, err := c.Put(failoverRootURL(c, id), nil, nil, &gophercloud.RequestOpts{
-		OkCodes: []int{202},
+// Delete permanently deletes a particular Load Balancer based on its unique id.
+//
+//	DELETE /loadbalancers/{loadbalancerId} -> 204 No Content
+func Delete(c *gophercloud.ServiceClient, opts DeleteOpts) (r DeleteResult) {
+	resp, err := c.Delete(resourceURL(c, opts.NlbID), &gophercloud.RequestOpts{
+		OkCodes: []int{200, 204},
 	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
-// Add Load Balancer Server
-type AddServerOpts struct {											// Addied
-	NlbID 		 string `q:"loadbalancerid"`	// Required
-	VMID 		 string `q:"virtualmachineid"`	// Required
-	IPAddress    string `q:"ipaddress"`			// Required.	
-	PublicPort   string `q:"publicport"`		// Required
+// ############################## Add Server ##############################
+
+// AddServerOpts is the request for adding a server (VM) to a Load Balancer.
+//
+//	POST /loadbalancers/{loadbalancerId}/servers
+type AddServerOpts struct {
+	NlbID       string `json:"-"`                // Required. Load Balancer id (URL path, not sent in the body)
+	VMID        string `json:"vmId"`             // Required. VirtualMachine id
+	IPAddress   string `json:"ipAddress"`        // Required. VirtualMachine ip
+	PublicPort  string `json:"publicPort"`       // Required. Port
+	ServiceType string `json:"serviceType"`      // Required. HTTP | HTTPS
+	PortID      string `json:"portId,omitempty"` // [Conditional] Required when the Load Balancer serviceType is DSR
 }
 
-type AddServerOptsBuilder interface {
-	ToLoadBalancerAddServerQuery() (string, error)
+// ToLoadBalancerAddServerMap builds the request body from AddServerOpts.
+func (opts AddServerOpts) ToLoadBalancerAddServerMap() (map[string]interface{}, error) {
+	return gophercloud.BuildRequestBody(opts, "")
 }
 
-func AddServer(c *gophercloud.ServiceClient, opts AddServerOptsBuilder) (r AddServerResult)  { 	// Added
-	url := addServerURL(c)
-	if opts != nil {
-		query, err := opts.ToLoadBalancerAddServerQuery()
-		if err != nil {		
-			r.commonResult.Result.Err = err		// Modified
-			return r
-		}
-		url += query
+// AddServer adds a server (VM) to a Load Balancer.
+//
+//	POST /loadbalancers/{loadbalancerId}/servers
+//	-> { "data": { "loadbalancerId": "<uuid>", "webServiceId": "<uuid>" } }
+func AddServer(c *gophercloud.ServiceClient, opts AddServerOpts) (r AddServerResult) {
+	b, err := opts.ToLoadBalancerAddServerMap()
+	if err != nil {
+		r.Err = err
+		return
 	}
-	
-	url = url + "&response=json"
-
-	resp, err := c.Get(url, &r.Body, nil) // Caution!!
+	resp, err := c.Post(serversURL(c, opts.NlbID), b, &r.Body, &gophercloud.RequestOpts{
+		OkCodes: []int{200, 201},
+	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
-func (opts AddServerOpts) ToLoadBalancerAddServerQuery() (string, error) { 	// Addeed
-	q, err := gophercloud.BuildGetMethodQueryString(opts)    		// # BuildGetMethodQueryString() method Created
-	return q, err
+// ############################## Remove Server ##############################
+
+// RemoveServerOpts identifies the server to remove from a Load Balancer.
+type RemoveServerOpts struct {
+	NlbID     string // Required. Load Balancer id (URL path)
+	ServiceID string // Required. service id of the server to remove (URL path)
 }
 
-// Remove Load Balancer Server
-type RemoveServerOpts struct {											// Added
-	ServiceID 		 string `q:"serviceid"`	// Required
-}
-
-type RemoveServerOptsBuilder interface {
-	ToLoadBalancerRemoveServerQuery() (string, error)
-}
-
-func RemoveServer(c *gophercloud.ServiceClient, opts RemoveServerOptsBuilder) (r RemoveServerResult)  { 	// Added
-	url := removeServerURL(c)
-	if opts != nil {
-		query, err := opts.ToLoadBalancerRemoveServerQuery()
-		if err != nil {		
-			r.commonResult.Result.Err = err		// Modified
-			return r
-		}
-		url += query
-	}
-	
-	url = url + "&response=json"
-
-	resp, err := c.Get(url, &r.Body, nil) // Caution!!
+// RemoveServer removes a server (VM) from a Load Balancer.
+//
+//	DELETE /loadbalancers/{loadbalancerId}/servers/{serviceId} -> 204 No Content
+func RemoveServer(c *gophercloud.ServiceClient, opts RemoveServerOpts) (r RemoveServerResult) {
+	resp, err := c.Delete(serverURL(c, opts.NlbID, opts.ServiceID), &gophercloud.RequestOpts{
+		OkCodes: []int{200, 204},
+	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
-func (opts RemoveServerOpts) ToLoadBalancerRemoveServerQuery() (string, error) { 	// Addeed
-	q, err := gophercloud.BuildGetMethodQueryString(opts)    		// # BuildGetMethodQueryString() method Created
-	return q, err
-}
+// ############################## List Servers ##############################
 
-type ListLbServerOptsBuilder interface {
-	ToLbServerListQuery() (string, error)
-}
-
-// List Load Balancer
-type ListLbServerOpts struct {
-	NlbID               string   `q:"loadbalancerid"`	
-}
-
-func (opts ListOpts) ToLbServerListQuery() (string, error) { 		// Modified
-	q, err := gophercloud.BuildGetMethodQueryString(opts)    		// # BuildGetMethodQueryString() method Created
-	// q, err := gophercloud.BuildQueryString(opts)	
-	// return q.String(), err
-	return q, err
-}
-
-func ListLbServer(c *gophercloud.ServiceClient, opts ListLbServerOptsBuilder) pagination.Pager { 	// Modified
-	url := listLbServerURL(c)
-	if opts != nil {
-		query, err := opts.ToLbServerListQuery()
-		if err != nil {
-			return pagination.Pager{Err: err}
-		}
-		url += query		
-	}
-	
-	url = url + "&response=json"
-
+// ListLbServer returns a Pager which allows iterating over the servers (VMs)
+// of a Load Balancer.
+//
+//	GET /loadbalancers/{loadbalancerId}/servers -> { "data": { ..., "vm": [ {...} ] } }
+func ListLbServer(c *gophercloud.ServiceClient, opts ListOpts) pagination.Pager {
+	url := serversURL(c, opts.NlbID)
 	return pagination.NewPager(c, url, func(r pagination.PageResult) pagination.Page {
 		return ServerPage{pagination.LinkedPageBase{PageResult: r}}
 	})
 }
 
-// Create Tag for Load Balancer
-type CreateTagOpts struct {											// Addied
-	NlbID 		 string `q:"loadbalancerid"`	// Required
-	Tag 		 string `q:"tag"`				// Required
+// ############################## Tag ##############################
+
+// CreateTagOpts is the request for creating (registering) a Load Balancer tag.
+//
+//	PUT /loadbalancers/{loadbalancerId}/tag
+type CreateTagOpts struct {
+	NlbID string `json:"-"`   // Required. Load Balancer id (URL path, not sent in the body)
+	Tag   string `json:"tag"` // Required. Tag content
 }
 
-type CreateTagOptsBuilder interface {
-	ToLoadBalancerCreateTagQuery() (string, error)
+// ToLoadBalancerCreateTagMap builds the request body from CreateTagOpts.
+func (opts CreateTagOpts) ToLoadBalancerCreateTagMap() (map[string]interface{}, error) {
+	return gophercloud.BuildRequestBody(opts, "")
 }
 
-func CreateTag(c *gophercloud.ServiceClient, opts CreateTagOptsBuilder) (r CreateTagResult)  { 	// Added
-	url := createTagURL(c)
-	if opts != nil {
-		query, err := opts.ToLoadBalancerCreateTagQuery()
-		if err != nil {		
-			r.commonResult.Result.Err = err		// Modified
-			return r
-		}
-		url += query
+// CreateTag creates (registers) a tag for a Load Balancer.
+//
+//	PUT /loadbalancers/{loadbalancerId}/tag -> 200 OK
+func CreateTag(c *gophercloud.ServiceClient, opts CreateTagOpts) (r CreateTagResult) {
+	b, err := opts.ToLoadBalancerCreateTagMap()
+	if err != nil {
+		r.Err = err
+		return
 	}
-	
-	url = url + "&response=json"
-
-	resp, err := c.Get(url, &r.Body, nil) // Caution!!
+	resp, err := c.Put(tagURL(c, opts.NlbID), b, &r.Body, &gophercloud.RequestOpts{
+		OkCodes: []int{200, 201},
+	})
 	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
 	return
 }
 
-func (opts CreateTagOpts) ToLoadBalancerCreateTagQuery() (string, error) { 	// Addeed
-	q, err := gophercloud.BuildGetMethodQueryString(opts)    		// # BuildGetMethodQueryString() method Created
-	return q, err
+// DeleteTag deletes the tag of a Load Balancer.
+//
+//	DELETE /loadbalancers/{loadbalancerId}/tag -> 200 OK
+func DeleteTag(c *gophercloud.ServiceClient, opts DeleteOpts) (r DeleteTagResult) {
+	resp, err := c.Delete(tagURL(c, opts.NlbID), &gophercloud.RequestOpts{
+		OkCodes: []int{200, 204},
+	})
+	_, r.Header, r.Err = gophercloud.ParseResponse(resp, err)
+	return
 }
