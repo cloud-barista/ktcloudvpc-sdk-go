@@ -1,57 +1,43 @@
+// ### KT Cloud D1 platform > 'NLB (Network Load-Balancer)' handler Go SDK
+// Open API Guide : https://cloud.kt.com/docs/open-api-guide/d/network/load-balancer
+
 package loadbalancers
 
-import "github.com/cloud-barista/ktcloudvpc-sdk-go"
+import (
+	"strings"
 
-const (
-	rootPath       		= "?command=listLoadBalancers"
-	createCommand     	= "?command=createLoadBalancer"
-	deleteCommand     	= "?command=deleteLoadBalancer"
-	listLbServerCommand = "?command=listLoadBalancerWebServers"
-	addServerCommand  	= "?command=addLoadBalancerWebServer"
-	removeServerCommand = "?command=removeLoadBalancerWebServer"
-	createTagCommand   	= "?command=createTag"
-	resourcePath   		= ""
-	statusPath     		= "status"
-	statisticsPath 		= "stats"
-	failoverPath   		= "failover"
+	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 )
 
-func listNlbURL(c *gophercloud.ServiceClient) string {
-	return c.GetServiceURL(rootPath, resourcePath)
+// The NLBClient endpoint is '.../d1/loadbalancers/' (it ends with a '/').
+// See: openstack/client.go -> lbV1Endpoint
+
+// rootURL returns the collection URL '.../d1/loadbalancers' (the trailing '/' is trimmed).
+// It is used for the List (GET) and Create (POST) operations.
+func rootURL(c *gophercloud.ServiceClient) string {
+	return strings.TrimRight(c.ServiceURL(""), "/")
 }
 
-func createNlbURL(c *gophercloud.ServiceClient) string {
-	return c.GetServiceURL(createCommand, resourcePath)
+// resourceURL returns '.../d1/loadbalancers/{loadbalancerId}'.
+// It is used for the Delete (DELETE) and Update (PUT) operations.
+func resourceURL(c *gophercloud.ServiceClient, id string) string {
+	return c.ServiceURL(id)
 }
 
-func deleteNlbURL(c *gophercloud.ServiceClient) string {
-	return c.GetServiceURL(deleteCommand, resourcePath)
+// serversURL returns '.../d1/loadbalancers/{loadbalancerId}/servers'.
+// It is used for the AddServer (POST) and ListServers (GET) operations.
+func serversURL(c *gophercloud.ServiceClient, id string) string {
+	return c.ServiceURL(id, "servers")
 }
 
-func listLbServerURL(c *gophercloud.ServiceClient) string {
-	return c.GetServiceURL(listLbServerCommand, resourcePath)
+// serverURL returns '.../d1/loadbalancers/{loadbalancerId}/servers/{serviceId}'.
+// It is used for the RemoveServer (DELETE) operation.
+func serverURL(c *gophercloud.ServiceClient, id, serviceID string) string {
+	return c.ServiceURL(id, "servers", serviceID)
 }
 
-func addServerURL(c *gophercloud.ServiceClient) string {
-	return c.GetServiceURL(addServerCommand, resourcePath)
-}
-
-func removeServerURL(c *gophercloud.ServiceClient) string {
-	return c.GetServiceURL(removeServerCommand, resourcePath)
-}
-
-func createTagURL(c *gophercloud.ServiceClient) string {
-	return c.GetServiceURL(createTagCommand, resourcePath)
-}
-
-func statusRootURL(c *gophercloud.ServiceClient, id string) string {
-	return c.GetServiceURL(rootPath, resourcePath, id, statusPath)
-}
-
-func statisticsRootURL(c *gophercloud.ServiceClient, id string) string {
-	return c.GetServiceURL(rootPath, resourcePath, id, statisticsPath)
-}
-
-func failoverRootURL(c *gophercloud.ServiceClient, id string) string {
-	return c.GetServiceURL(rootPath, resourcePath, id, failoverPath)
+// tagURL returns '.../d1/loadbalancers/{loadbalancerId}/tag'.
+// It is used for the CreateTag (PUT) and DeleteTag (DELETE) operations.
+func tagURL(c *gophercloud.ServiceClient, id string) string {
+	return c.ServiceURL(id, "tag")
 }

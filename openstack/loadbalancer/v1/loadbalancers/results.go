@@ -1,156 +1,149 @@
-package loadbalancers 
+// ### KT Cloud D1 platform > 'NLB (Network Load-Balancer)' handler Go SDK
+// Open API Guide : https://cloud.kt.com/docs/open-api-guide/d/network/load-balancer
+
+package loadbalancers
 
 import (
-	"encoding/json"
-	"time"
-
 	"github.com/cloud-barista/ktcloudvpc-sdk-go"
 	"github.com/cloud-barista/ktcloudvpc-sdk-go/pagination"
 )
 
-// LoadBalancer is the primary load balancing configuration object that
-// specifies the virtual IP address on which client traffic is received, as well
-// as other details such as the load balancing method to be use, protocol, etc.
-
+// LoadBalancer represents a KT Cloud (Platform @D) load balancer, as returned by
+// the 'GET /loadbalancers' (list) API within the 'data' array.
 type LoadBalancer struct {
-	CertificateName    string `json:"certificatename"`
-	CipherGroupName    string `json:"cipherGroupName"`
-	ClientIpYn         string `json:"clientIpYn"`
-	EstablishedConn    int    `json:"establishedconn"` 	// Caution!!) int
-	HealthCheckType    string `json:"healthchecktype"` 	// Health CheckType : http / https / tcp
-	HealthCheckURL     string `json:"healthcheckurl"`
-	NlbID     		   int    `json:"loadbalancerid"`  	// Caution!!) int
-	NlbOption 		   string `json:"loadbalanceroption"`
-	Name               string `json:"name"`
-	NetworkID          string `json:"networkid"`
-	RequestsRate       int 	`  json:"requestsrate"` 	// Caution!!) int
-	ServiceIP          string `json:"serviceip"`
-	ServicePort        string `json:"serviceport"`
-	ServiceType        string `json:"servicetype"` 		// NLB Service Type : https / http / sslbridge / tcp / ftp
-	SSLv2              string `json:"sslv2"`
-	SSLv3              string `json:"sslv3"`
-	State              string `json:"state"`
-	Tag                string `json:"tag"`
-	TLSv1              string `json:"tlsv1"`
-	TLSv11             string `json:"tlsv11"`
-	TLSv12             string `json:"tlsv12"`
-	ZoneID             string `json:"zoneid"`
-	ZoneName           string `json:"zonename"`
+	AccountID       string        `json:"accountId"`
+	ZoneID          string        `json:"zoneId"`
+	ZoneName        string        `json:"zoneName"`
+	NetworkID       string        `json:"networkId"`
+	NlbID           string        `json:"loadbalancerId"`
+	Name            string        `json:"loadbalancerName"`
+	DeviceID        string        `json:"deviceId"`
+	IPPoolID        string        `json:"ippoolId"`
+	ServiceType     string        `json:"serviceType"`
+	ServiceIP       string        `json:"serviceIp"`
+	ServicePort     int           `json:"servicePort"`
+	NlbOption       string        `json:"loadbalancerOption"`
+	Certificates    []interface{} `json:"certificates"`
+	CipherGroupName string        `json:"cipherGroupName"`
+	HealthCheckType string        `json:"healthCheckType"`
+	HealthCheckURL  string        `json:"healthCheckUrl"`
+	State           string        `json:"state"`
+	IsWebSocket     bool          `json:"isWebSocket"`
+	IsXForwardProto bool          `json:"isXForwardProto"`
+	RedirectURL     string        `json:"redirectUrl"`
+	Tag             string        `json:"tag"`
+	EstablishedConn int           `json:"establishedConn"`
+	RequestsRate    int           `json:"requestsRate"`
+	TLSv1           string        `json:"tlsv1"`
+	TLSv11          string        `json:"tlsv11"`
+	TLSv12          string        `json:"tlsv12"`
+	Comment         string        `json:"comment"`
 }
 
+// LbServer represents a server (VM) serviced by a load balancer. It corresponds to
+// an item of the 'data.vm' array in the 'GET /loadbalancers/{loadbalancerId}/servers'
+// response.
 type LbServer struct {
-	NlbID     		   int    `json:"loadbalancerid"`  // Caution!!) int
-	ServiceID          int    `json:"serviceid"`
-	VmID          	   string `json:"virtualmachineid"`
-	IPAddress          string `json:"ipaddress"`
-	PublicPort         string `json:"publicport"`		// Caution!!) API doc incorrect!!
-	CurSrvRConnections int    `json:"cursrvrconnections"`	
-	VmState            string `json:"state"`
-	ThroughputRate     int    `json:"throughputrate"`
-	AvgSvrTTFB         int    `json:"avgsvrttfb"`
-	RequestsRate       int    `json:"requestsrate"`
+	ServiceID           string `json:"id"`   // Load Balancer web service id
+	Name                string `json:"name"`
+	PortID              string `json:"portId"`
+	VmID                string `json:"vmId"`
+	ServiceType         string `json:"serviceType"` // HTTP | HTTPS
+	IPAddress           string `json:"ipAddress"`
+	PublicPort          int    `json:"publicPort"`
+	MonitorState        string `json:"monitorState"`
+	MonitorStatusMsg    string `json:"monitorStatusMessage"`
+	VSvrServiceHitsRate int    `json:"vSvrServiceHitsRate"`
+	AvgSvrTTFB          int    `json:"avgSvrTtfb"`
+	CurCLntConnections  int    `json:"curCLntConnections"`
+	RequestByteRate     int    `json:"requestByteRate"`
+	ResponseByteRate    int    `json:"responseByteRate"`
 }
 
-// CreateResult represents the result of a create operation. Call its Extract
-// method to interpret it as a LoadBalancer.
+// PaginationInfo represents the 'pagination' object included in list responses.
+type PaginationInfo struct {
+	Size   int `json:"size"`
+	Total  int `json:"total"`
+	Offset int `json:"offset"`
+}
+
+type commonResult struct {
+	gophercloud.Result
+}
+
+// CreateResult represents the result of a Create operation.
+// Call its ExtractCreate method to interpret it as a CreateNLBResponse.
 type CreateResult struct {
 	commonResult
 }
 
-// GetResult represents the result of a get operation. Call its Extract
-// method to interpret it as a LoadBalancer.
-type GetResult struct {
-	commonResult
-}
-
-// UpdateResult represents the result of an update operation. Call its Extract
-// method to interpret it as a LoadBalancer.
-type UpdateResult struct {
-	commonResult
-}
-
-// DeleteResult represents the result of a delete operation. Call its
-// ExtractErr method to determine if the request succeeded or failed.
-type DeleteResult struct {
-	gophercloud.ErrResult
-}
-
-// FailoverResult represents the result of a failover operation. Call its
-// ExtractErr method to determine if the request succeeded or failed.
-type FailoverResult struct {
-	gophercloud.ErrResult
-}
-
+// AddServerResult represents the result of an AddServer operation.
+// Call its ExtractAddServer method to interpret it as an AddServerResponse.
 type AddServerResult struct {
 	commonResult
 }
 
+// RemoveServerResult represents the result of a RemoveServer operation.
 type RemoveServerResult struct {
 	commonResult
 }
 
+// CreateTagResult represents the result of a CreateTag operation.
 type CreateTagResult struct {
 	commonResult
 }
 
-func (r *LoadBalancer) UnmarshalJSON(b []byte) error {
-	type tmp LoadBalancer
-
-	// Support for older neutron time format
-	var s1 struct {
-		tmp
-		CreatedAt gophercloud.JSONRFC3339NoZ `json:"created_at"`
-		UpdatedAt gophercloud.JSONRFC3339NoZ `json:"updated_at"`
-	}
-
-	err := json.Unmarshal(b, &s1)
-	if err == nil {
-		*r = LoadBalancer(s1.tmp)
-		// r.CreatedAt = time.Time(s1.CreatedAt)
-		// r.UpdatedAt = time.Time(s1.UpdatedAt)
-
-		return nil
-	}
-
-	// Support for newer neutron time format
-	var s2 struct {
-		tmp
-		CreatedAt time.Time `json:"created_at"`
-		UpdatedAt time.Time `json:"updated_at"`
-	}
-
-	err = json.Unmarshal(b, &s2)
-	if err != nil {
-		return err
-	}
-
-	*r = LoadBalancer(s2.tmp)
-	// r.CreatedAt = time.Time(s2.CreatedAt)
-	// r.UpdatedAt = time.Time(s2.UpdatedAt)
-
-	return nil
+// DeleteResult represents the result of a Delete operation. Call its ExtractErr
+// method to determine if the request succeeded or failed.
+type DeleteResult struct {
+	gophercloud.ErrResult
 }
 
-// StatusTree represents the status of a loadbalancer.
-type StatusTree struct {
-	Loadbalancer *LoadBalancer `json:"loadbalancer"`
+// DeleteTagResult represents the result of a DeleteTag operation. Call its
+// ExtractErr method to determine if the request succeeded or failed.
+type DeleteTagResult struct {
+	gophercloud.ErrResult
 }
 
-type Stats struct {
-	// The currently active connections.
-	ActiveConnections int `json:"active_connections"`
+// CreateNLBResponse is the response body of the Create (POST /loadbalancers) API:
+//
+//	{ "data": { "loadbalancerId": "<uuid>" } }
+type CreateNLBResponse struct {
+	Data struct {
+		LoadBalancerID string `json:"loadbalancerId"`
+	} `json:"data"`
+}
 
-	// The total bytes received.
-	BytesIn int `json:"bytes_in"`
+// AddServerResponse is the response body of the AddServer
+// (POST /loadbalancers/{loadbalancerId}/servers) API:
+//
+//	{ "data": { "loadbalancerId": "<uuid>", "webServiceId": "<uuid>" } }
+type AddServerResponse struct {
+	Data struct {
+		LoadBalancerID string `json:"loadbalancerId"`
+		WebServiceID   string `json:"webServiceId"`
+	} `json:"data"`
+}
 
-	// The total bytes sent.
-	BytesOut int `json:"bytes_out"`
+// Extract interprets any commonResult as a CreateNLBResponse.
+func (r commonResult) Extract() (*CreateNLBResponse, error) {
+	var s CreateNLBResponse
+	err := r.ExtractInto(&s)
+	return &s, err
+}
 
-	// The total requests that were unable to be fulfilled.
-	RequestErrors int `json:"request_errors"`
+// ExtractCreate interprets a CreateResult as a CreateNLBResponse.
+func (r CreateResult) ExtractCreate() (*CreateNLBResponse, error) {
+	var s CreateNLBResponse
+	err := r.ExtractInto(&s)
+	return &s, err
+}
 
-	// The total connections handled.
-	TotalConnections int `json:"total_connections"`
+// ExtractAddServer interprets an AddServerResult as an AddServerResponse.
+func (r AddServerResult) ExtractAddServer() (*AddServerResponse, error) {
+	var s AddServerResponse
+	err := r.ExtractInto(&s)
+	return &s, err
 }
 
 // LoadBalancerPage is the page returned by a pager when traversing over a
@@ -159,198 +152,55 @@ type LoadBalancerPage struct {
 	pagination.LinkedPageBase
 }
 
-// NextPageURL is invoked when a paginated collection of load balancers has
-// reached the end of a page and the pager seeks to traverse over a new one.
-// In order to do this, it needs to construct the next page's URL.
-func (r LoadBalancerPage) NextPageURL() (string, error) {
-	var s struct {
-		Links []gophercloud.Link `json:"loadbalancers_links"`
-	}
-	err := r.ExtractInto(&s)
-	if err != nil {
-		return "", err
-	}
-	return gophercloud.ExtractNextURL(s.Links)
-}
-
 // IsEmpty checks whether a LoadBalancerPage struct is empty.
 func (r LoadBalancerPage) IsEmpty() (bool, error) {
 	is, err := ExtractLoadBalancers(r)
 	return len(is) == 0, err
 }
 
-// ServerPage is the page returned by a pager when traversing over a collection of Servers.
+// NextPageURL returns the next page URL. The API uses 'page'/'size' query
+// parameters rather than link-based pagination, so no next URL is provided.
+func (r LoadBalancerPage) NextPageURL() (string, error) {
+	return "", nil
+}
+
+// ServerPage is the page returned by a pager when traversing over a collection
+// of servers within a load balancer.
 type ServerPage struct {
-    pagination.LinkedPageBase
+	pagination.LinkedPageBase
 }
 
 // IsEmpty checks whether a ServerPage struct is empty.
 func (r ServerPage) IsEmpty() (bool, error) {
-    servers, err := ExtractLbServers(r)
-    return len(servers) == 0, err
+	servers, err := ExtractLbServers(r)
+	return len(servers) == 0, err
 }
 
-// NextPageURL returns the next page URL for traversing over Sever pages.
+// NextPageURL returns the next page URL. The servers API does not provide
+// pagination links.
 func (r ServerPage) NextPageURL() (string, error) {
-    // Pagination URL generation logic
-    // Currently, the API does not provide pagination links, so manual implementation is required.
-    return "", nil
+	return "", nil
 }
 
-// ExtractLoadBalancers accepts a Page struct, specifically a LoadbalancerPage
-// struct, and extracts the elements into a slice of LoadBalancer structs. In
-// other words, a generic collection is mapped into a relevant slice.
-func ExtractLoadBalancers(r pagination.Page) ([]LoadBalancer, error) { 		// Modified
+// ExtractLoadBalancers accepts a LoadBalancerPage and extracts the load balancers
+// from the 'data' array.
+func ExtractLoadBalancers(r pagination.Page) ([]LoadBalancer, error) {
 	var s struct {
-			ListLoadBalancersResponse struct {
-			Count        	int `json:"count"`
-			LoadBalancers 	[]LoadBalancer `json:"loadbalancer"`
-		} `json:"listloadbalancersresponse"`
+		Pagination PaginationInfo `json:"pagination"`
+		Data       []LoadBalancer `json:"data"`
 	}
 	err := (r.(LoadBalancerPage)).ExtractInto(&s)
-	return s.ListLoadBalancersResponse.LoadBalancers, err
+	return s.Data, err
 }
 
-func ExtractLbServers(r pagination.Page) ([]LbServer, error) { 		// Modified
+// ExtractLbServers accepts a ServerPage and extracts the servers from the
+// 'data.vm' array.
+func ExtractLbServers(r pagination.Page) ([]LbServer, error) {
 	var s struct {
-			ListLbServersResponse struct {
-			LbVMs 			[]LbServer `json:"loadbalancerwebserver"`
-		} `json:"listloadbalancerwebserversresponse"` // API manual is incorrect
+		Data struct {
+			VMs []LbServer `json:"vm"`
+		} `json:"data"`
 	}
 	err := (r.(ServerPage)).ExtractInto(&s)
-	return s.ListLbServersResponse.LbVMs, err
-}
-
-type commonResult struct {
-	gophercloud.Result
-}
-
-type CreateNLBResponse struct {
-	Createnlbresponse struct {
-		NLBId    			int		`json:"loadbalancerid"`
-		ZoneId            	string 	`json:"zoneid"`
-		ZoneName          	string	`json:"zonename"`
-		ServiceIP         	string 	`json:"serviceip"`
-		ServicePort       	string 	`json:"serviceport"`
-		ServiceType       	string 	`json:"servicetype"`
-		Name              	string 	`json:"name"`
-		NLBOption 			string 	`json:"loadbalanceroption"`
-		HealthCheckType   	string 	`json:"healthchecktype"`
-		HealthCheckURL    	string 	`json:"healthcheckurl"`
-		ErrorCode    		string 	`json:"errorcode"`
-		ErrorText    		string	`json:"errortext"`
-		DisplayText    		string 	`json:"displaytext"`		
-	} `json:"createLoadBalancerresponse"`
-}
-// Caution!!) Not `json:"createLoadBalancerresponse"` : API manul is incorrect!!
-
-type DeleteNLBResponse struct {
-	Deletenlbresponse struct {
-		Success    			bool `json:"success"`
-		DisplayText    		string `json:"displaytext"`		
-	} `json:"deleteLoadBalancerresponse"`
-}
-
-type AddServerResponse struct {
-	Addserverresponse struct {
-		NlbID     		   int    `json:"loadbalancerid"`  // Caution!!) int
-		ServiceID          int    `json:"serviceid"`
-		VmID          	   string `json:"virtualmachineid"`
-		IPAddress          string `json:"ipaddress"`
-		PublicPort         string `json:"publicport"`		// Caution!!) API doc incorrect!!
-	} `json:"addLoadBalancerWebServerresponse"`
-}
-
-type RemoveServerResponse struct {
-	Removeserverresponse struct {
-		Success    			bool `json:"success"`
-		DisplayText    		string `json:"displaytext"`		
-	} `json:"removeLoadbalancerWebServerresponse"`
-}
-
-type DeleteServerResponse struct {
-	Deleteserverresponse struct {
-		Success    			bool `json:"success"`
-		DisplayText    		string `json:"displaytext"`		
-	} `json:"removeLoadbalancerWebServerresponse"`
-}
-
-// Extract is a function that accepts a result and extracts a loadbalancer.
-// func (r commonResult) CreateNLBExtract() (*CreateNLBResponse, error) {
-func (r commonResult) Extract() (*CreateNLBResponse, error) {
-	var resp CreateNLBResponse
-
-	err := r.ExtractInto(&resp.Createnlbresponse)
-	return &resp, err
-}
-
-func (r commonResult) DeleteNLBExtract() (*DeleteNLBResponse, error) {
-	var resp DeleteNLBResponse
-
-	err := r.ExtractInto(&resp.Deletenlbresponse)
-	return &resp, err
-}
-
-func (r commonResult) AddServerExtract() (*AddServerResponse, error) {
-	var resp AddServerResponse
-
-	err := r.ExtractInto(&resp.Addserverresponse)
-	return &resp, err
-}
-
-func (r commonResult) RemoveServerExtract() (*RemoveServerResponse, error) {
-	var resp RemoveServerResponse
-
-	err := r.ExtractInto(&resp.Removeserverresponse)
-	return &resp, err
-}
-
-/*
-// Extract is a function that accepts a result and extracts a loadbalancer.
-func (r commonResult) Extract() (*LoadBalancer, error) {
-	var s struct {
-		LoadBalancer *LoadBalancer `json:"loadbalancer"`
-	}
-	err := r.ExtractInto(&s)
-	return s.LoadBalancer, err
-}
-*/
-
-// GetStatusesResult represents the result of a GetStatuses operation.
-// Call its Extract method to interpret it as a StatusTree.
-type GetStatusesResult struct {
-	gophercloud.Result
-}
-
-// Extract is a function that accepts a result and extracts the status of
-// a Loadbalancer.
-func (r GetStatusesResult) Extract() (*StatusTree, error) {
-	var s struct {
-		Statuses *StatusTree `json:"statuses"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Statuses, err
-}
-
-// StatsResult represents the result of a GetStats operation.
-// Call its Extract method to interpret it as a Stats.
-type StatsResult struct {
-	gophercloud.Result
-}
-
-// Extract is a function that accepts a result and extracts the status of
-// a Loadbalancer.
-func (r StatsResult) Extract() (*Stats, error) {
-	var s struct {
-		Stats *Stats `json:"stats"`
-	}
-	err := r.ExtractInto(&s)
-	return s.Stats, err
-}
-
-// ExtractCreate extracts a SubnetCreateResponse from a CreateResult.
-func (r CreateResult) ExtractCreate() (*CreateNLBResponse, error) { // Modified
-    var s CreateNLBResponse
-    err := r.ExtractInto(&s)
-    return &s, err
+	return s.Data.VMs, err
 }
