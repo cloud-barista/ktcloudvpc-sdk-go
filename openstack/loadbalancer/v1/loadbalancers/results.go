@@ -44,7 +44,7 @@ type LoadBalancer struct {
 // an item of the 'data.vm' array in the 'GET /loadbalancers/{loadbalancerId}/servers'
 // response.
 type LbServer struct {
-	ServiceID           string `json:"id"`   // Load Balancer web service id
+	ServiceID           string `json:"webServiceId"`   // Load Balancer web service id
 	Name                string `json:"name"`
 	PortID              string `json:"portId"`
 	VmID                string `json:"vmId"`
